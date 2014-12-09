@@ -1,0 +1,346 @@
+/*
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions
+ * are met:
+ * 1. Redistributions of source code must retain the above copyright
+ *    notice, this list of conditions and the following disclaimer.
+ * 2. Redistributions in binary form must reproduce the above copyright
+ *    notice, this list of conditions and the following disclaimer in the
+ *    documentation and/or other materials provided with the distribution.
+ * 3. Neither the name of the Institute nor the names of its contributors
+ *    may be used to endorse or promote products derived from this software
+ *    without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE INSTITUTE AND CONTRIBUTORS ``AS IS'' AND
+ * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ * ARE DISCLAIMED.  IN NO EVENT SHALL THE INSTITUTE OR CONTRIBUTORS BE LIABLE
+ * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+ * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
+ * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+ * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+ * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
+ * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
+ * SUCH DAMAGE.
+ *
+ * This file is part of the Contiki operating system.
+ *
+ */
+
+#include "contiki.h"
+#include "contiki-lib.h"
+#include "contiki-net.h"
+
+#include <string.h>
+#include "dev/leds.h"
+
+#include "debug.h"
+/***********************************/
+#include"cc253x.h"
+ 
+/***********************************/
+#define DEBUG DEBUG_PRINT
+#include "net/uip-debug.h"
+/***********************************/
+
+#define DEVICE_ID               0x03
+/***********************************/
+#define UIP_IP_BUF                ((struct uip_ip_hdr *)&uip_buf[UIP_LLH_LEN])
+#define UIP_ICMP_BUF            ((struct uip_icmp_hdr *)&uip_buf[uip_l2_l3_hdr_len])
+
+
+/***********************************/
+/*---------------------------------------------------------------------------*/
+#define CL_DQ  P1_1=0
+#define SET_DQ P1_1=1 
+#define SET_OUT P1DIR|=0x02
+#define SET_IN  P1DIR&=~0x02
+#define IN_DQ  P1_1
+#define CLKCONCMD_32MHZ  (0)
+#define OSC_32KHZ  0x00
+/*---------------------------------------------------------------------------*/
+
+uip_ipaddr_t server_ipaddr;
+static struct uip_udp_conn *client_conn;
+static uint8_t buf[15]={0};
+static struct uip_udp_conn *server_conn;
+extern uint8_t in_net_flag;
+uint8_t sended_flag=0;
+/*---------------------------------------------------------------------------*/
+uint8_t temh,teml;
+uint8_t id[8];
+uint8_t flag;
+uint8_t ds18b20_cunzai;   
+uint8_t wendu[8];          
+/*---------------------------------------------------------------------------*/
+PROCESS(udp_client_process, "UDP client process");
+AUTOSTART_PROCESSES(&udp_client_process);
+/*---------------------------------------------------------------------------*/
+/*---------------------------------------------------------------------------*/
+void Hal_HW_WaitUs(uint16_t microSecs)
+{
+  while(microSecs--)
+  {
+    /* 1 usecs */
+    	
+ __asm nop __endasm;
+ __asm nop __endasm;   
+  ASM(nop);     
+  }
+}
+
+
+void init_1820(void) 
+{
+  SET_OUT;//使P11为输出状态 
+  SET_DQ;//输出1
+  Hal_HW_WaitUs(7);
+  CL_DQ; //输出0
+  Hal_HW_WaitUs(530);//拉低一段时间 
+  
+  SET_DQ;//使P11为高，  
+  SET_IN;//使P11成为输入状态，等待18b20的存在低脉冲进来 
+  Hal_HW_WaitUs(44); //使P11为1后等待15-60us，这里等待44us
+  if( IN_DQ == 0)
+    ds18b20_cunzai = 1;
+      else
+        ds18b20_cunzai = 0;//等待回复 
+  Hal_HW_WaitUs(150);//回复的低电平在60到240us  
+  SET_OUT; 
+  SET_DQ;//回到初始DQ=1；
+}
+
+void write_1820(uint16_t x)  
+{  
+  uint8_t m;    
+  SET_OUT;
+  for(m=0;m<8;m++)  
+  {  
+     CL_DQ;
+     Hal_HW_WaitUs(1);//看时序图，至少延时1us，才产生写"时间隙" 
+     if(x&(1<<m))    //写数据，从低位开始  
+     SET_DQ; 
+     else  
+     CL_DQ;  
+     Hal_HW_WaitUs(40);   //15~60us  
+     SET_DQ;  
+  }
+  SET_DQ;  
+} 
+
+
+uint8_t read_1820(void)  
+{   
+  uint8_t temp,k,n;    
+  temp=0;  
+  for(n=0;n<8;n++)  
+  {  
+    CL_DQ; 
+    Hal_HW_WaitUs(1);  //读时隙起始于微处理器将总线置低至少1微秒   
+    SET_DQ;            //拉低总线后接着释放总线，让从机18b20能够接管总线，输出有效数据
+    SET_IN;  
+    k=IN_DQ;    //读数据,从低位开始  
+    if(k)  
+    temp|=(1<<n);  
+    else  
+    temp&=~(1<<n);  
+    Hal_HW_WaitUs(70); //60~120us      
+    SET_OUT;
+  
+  }  
+  return (temp);  
+}  
+ 
+void read_data(void)
+{
+  uint8_t a,b,c;
+
+  init_1820();  //复位18b20  
+  write_1820(0xcc);   // 发出转换命令 搜索器件 
+  write_1820(0x44);     //启动  
+  Hal_HW_WaitUs(2000);
+  init_1820();  
+  write_1820(0xcc);
+  write_1820(0xbe); 
+       
+  teml=read_1820();  //读数据  
+  temh=read_1820();  
+  if(temh&0x80)//判断正负
+  {
+    flag=1;
+    c=0;
+    c=c|temh;
+    c=c&0x00ff;
+    c=c<<8;
+    a=c;
+
+    a=c|teml;
+
+    a=(a^0xffff);//异或
+    a=a+1;  //取反加1
+    teml=a&0x0f;
+    temh=a>>4;
+  }
+  else
+  {
+    flag=0;   //为正
+    a=temh<<4;
+    a+=(teml&0xf0)>>4; //得到高位的值
+    b=teml&0x0f;
+    temh=a;
+    teml=b&0x00ff;
+  }
+}
+
+
+/*---------------------------------------------------------------------------*/
+void login(void)
+{
+  uip_ip6addr(&server_ipaddr, 0xaaaa, 0, 0, 0, 0, 0, 0, 0x01);
+
+ 
+ 	buf[0] = 0xEF;// start  of cmd 
+	buf[1] = DEVICE_ID;// deviceID
+        buf[2] = 0x00;//cmd      
+	buf[3] = 0x00;// data length 0
+        buf[4] = 0xFe; //end of cmd
+uip_udp_packet_sendto(client_conn, buf, 5, &server_ipaddr, UIP_HTONS(5775));
+
+}
+
+
+/*---------------------------------------------------------------------------*/
+void DelayMS(uint32_t msec)//not enough 1ms
+{  
+    uint32_t i,j;
+    
+    for (i=0; i<msec; i++)
+        for (j=0; j<1070; j++);
+}
+/*---------------------------------------------------------------------------*/
+ void send_data(void)
+{
+	
+
+
+uip_ip6addr(&server_ipaddr, 0xaaaa, 0, 0, 0, 0, 0, 0, 0x01); 
+ read_data();
+ 	buf[0] = 0xEF;// start  of cmd 
+	buf[1] = DEVICE_ID;// deviceID
+        buf[2] = 0xAA;// light on          
+	buf[3] = 0x02;// data length 0
+        buf[4] = temh; 
+	buf[5] =  teml;
+        buf[6] = 0xFE; //end of cmd
+uip_udp_packet_sendto(client_conn, buf, 7, &server_ipaddr, UIP_HTONS(5775));
+leds_toggle(LEDS_GREEN);
+
+}
+/*---------------------------------------------------------------------------*/
+ void
+tcpip_handler(void)
+{
+  uint8_t * p=uip_appdata;
+  
+ if(p[0]==0xEF&&p[1]==DEVICE_ID&&p[2]==0xCA&&p[3]==0x00&&p[4]==0xFE)send_data();
+
+}
+/*---------------------------------------------------------------------------*/
+static void
+set_global_address(void)
+{
+  uip_ipaddr_t ipaddr;
+
+  uip_ip6addr(&ipaddr, 0xaaaa, 0, 0, 0, 0, 0, 0, 0);
+  uip_ds6_set_addr_iid(&ipaddr, &uip_lladdr);
+  uip_ds6_addr_add(&ipaddr, 0, ADDR_AUTOCONF);
+}
+/*---------------------------------------------------------------------------*/
+uint8_t myApp_ReadTemperature( void )
+{
+   
+  uint16_t num;
+  //uint8 P
+  read_data();           // 读取温度
+  num=teml*625;          //小数部分的取值每位代表0.0625（精度）
+  if(flag==1)            //判断正负温度
+  {
+   wendu[0]='-';              //+0x2d 为变"-"ASCII码
+  }
+  else wendu[0]='+';   
+  if(temh/100==0)
+   wendu[1]=' ';
+  else wendu[1]=temh/100+0x30;      //+0x30 为变 0~9 ASCII码
+  if((temh/10%10==0)&&(temh/100==0))
+   wendu[2]=' ';
+  else wendu[2]=temh/10%10+0x30;
+  wendu[3]=temh%10+0x30;
+  wendu[4]='.';
+  wendu[5]=num/1000+0x30;//忽略小数点后1位的数
+  wendu[6]='C';//忽略小数点后1位的数
+  wendu[7]=0;//结束符 
+  
+  return wendu[0];
+}
+/*---------------------------------------------------------------------------------------*/
+PROCESS_THREAD(udp_client_process, ev, data)
+{
+  
+     static struct etimer et,get_period;
+    PROCESS_BEGIN();
+
+	CLKCONCMD &= ~0x40;               //设置系统时钟源为32MHZ晶振
+    while(CLKCONSTA & 0x40);          //等待晶振稳定为32M
+   CLKCONCMD &= ~0x47;               //设置系统主时钟频率为32MHZ 
+   
+    PRINTF("UDP client process started\n\r");
+    set_global_address();
+
+
+    client_conn = udp_new(NULL, UIP_HTONS(5775), NULL);
+     /*-------------two conn must seprate--------------------*/      
+  udp_bind(client_conn, UIP_HTONS(5885));
+    server_conn = udp_new(NULL, UIP_HTONS(0), NULL);  
+    udp_bind(server_conn, UIP_HTONS(5885));
+
+       DelayMS(3000);
+	read_data();
+       DelayMS(1000);
+       read_data();
+       DelayMS(1000);
+       read_data();
+	DelayMS(1000);
+       read_data();
+etimer_set(&et,10*CLOCK_SECOND);
+  while(1) 
+ {
+   
+    PROCESS_YIELD();
+
+  if(etimer_expired(&et)&&(sended_flag!=1)) 
+{
+
+    if(in_net_flag==1)
+  {
+     leds_on(LEDS_GREEN);
+      login();
+      sended_flag=1;
+	
+   }
+  else etimer_set(&et,10*CLOCK_SECOND);
+
+}
+if(ev == tcpip_event)
+    
+    {
+      tcpip_handler();
+
+    }
+
+
+
+
+ }
+     PROCESS_END();
+}
+/*---------------------------------------------------------------------------*/

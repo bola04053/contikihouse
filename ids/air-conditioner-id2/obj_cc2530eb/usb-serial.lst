@@ -1,0 +1,2034 @@
+                                      1 ;--------------------------------------------------------
+                                      2 ; File Created by SDCC : free open source ANSI-C Compiler
+                                      3 ; Version 3.3.1 #8804 (Aug  6 2013) (Linux)
+                                      4 ; This file was generated Mon Aug 25 04:16:53 2014
+                                      5 ;--------------------------------------------------------
+                                      6 	.module usb_serial
+                                      7 	.optsdcc -mmcs51 --model-huge
+                                      8 	
+                                      9 ;--------------------------------------------------------
+                                     10 ; Public variables in this module
+                                     11 ;--------------------------------------------------------
+                                     12 	.globl _usb_serial_init
+                                     13 	.globl _usb_serial_set_input
+                                     14 	.globl _usb_serial_writeb
+                                     15 	.globl _usb_serial_flush
+                                     16 	.globl _usb_class_get_string_descriptor
+                                     17 	.globl _usb_cdc_acm_setup
+                                     18 	.globl _usb_get_ep_events
+                                     19 	.globl _usb_get_global_events
+                                     20 	.globl _usb_set_global_event_process
+                                     21 	.globl _usb_set_ep_event_process
+                                     22 	.globl _usb_submit_xmit_buffer
+                                     23 	.globl _usb_submit_recv_buffer
+                                     24 	.globl _usb_setup_bulk_endpoint
+                                     25 	.globl _usb_setup
+                                     26 	.globl _process_start
+                                     27 	.globl _ACTIVE
+                                     28 	.globl _TX_BYTE
+                                     29 	.globl _RX_BYTE
+                                     30 	.globl _ERR
+                                     31 	.globl _FE
+                                     32 	.globl _SLAVE
+                                     33 	.globl _RE
+                                     34 	.globl _MODE
+                                     35 	.globl _T3OVFIF
+                                     36 	.globl _T3CH0IF
+                                     37 	.globl _T3CH1IF
+                                     38 	.globl _T4OVFIF
+                                     39 	.globl _T4CH0IF
+                                     40 	.globl _T4CH1IF
+                                     41 	.globl _OVFIM
+                                     42 	.globl _B_0
+                                     43 	.globl _B_1
+                                     44 	.globl _B_2
+                                     45 	.globl _B_3
+                                     46 	.globl _B_4
+                                     47 	.globl _B_5
+                                     48 	.globl _B_6
+                                     49 	.globl _B_7
+                                     50 	.globl _P2IF
+                                     51 	.globl _UTX0IF
+                                     52 	.globl _UTX1IF
+                                     53 	.globl _P1IF
+                                     54 	.globl _WDTIF
+                                     55 	.globl _ACC_0
+                                     56 	.globl _ACC_1
+                                     57 	.globl _ACC_2
+                                     58 	.globl _ACC_3
+                                     59 	.globl _ACC_4
+                                     60 	.globl _ACC_5
+                                     61 	.globl _ACC_6
+                                     62 	.globl _ACC_7
+                                     63 	.globl _P
+                                     64 	.globl _F1
+                                     65 	.globl _OV
+                                     66 	.globl _RS0
+                                     67 	.globl _RS1
+                                     68 	.globl _F0
+                                     69 	.globl _AC
+                                     70 	.globl _CY
+                                     71 	.globl _DMAIF
+                                     72 	.globl _T1IF
+                                     73 	.globl _T2IF
+                                     74 	.globl _T3IF
+                                     75 	.globl _T4IF
+                                     76 	.globl _P0IF
+                                     77 	.globl _STIF
+                                     78 	.globl _DMAIE
+                                     79 	.globl _T1IE
+                                     80 	.globl _T2IE
+                                     81 	.globl _T3IE
+                                     82 	.globl _T4IE
+                                     83 	.globl _P0IE
+                                     84 	.globl _RFERRIE
+                                     85 	.globl _ADCIE
+                                     86 	.globl _URX0IE
+                                     87 	.globl _URX1IE
+                                     88 	.globl _ENCIE
+                                     89 	.globl _STIE
+                                     90 	.globl _EA
+                                     91 	.globl _P2_0
+                                     92 	.globl _P2_1
+                                     93 	.globl _P2_2
+                                     94 	.globl _P2_3
+                                     95 	.globl _P2_4
+                                     96 	.globl _P2_5
+                                     97 	.globl _P2_6
+                                     98 	.globl _P2_7
+                                     99 	.globl _ENCIF_0
+                                    100 	.globl _ENCIF_1
+                                    101 	.globl _P1_0
+                                    102 	.globl _P1_1
+                                    103 	.globl _P1_2
+                                    104 	.globl _P1_3
+                                    105 	.globl _P1_4
+                                    106 	.globl _P1_5
+                                    107 	.globl _P1_6
+                                    108 	.globl _P1_7
+                                    109 	.globl _IT0
+                                    110 	.globl _RFERRIF
+                                    111 	.globl _IT1
+                                    112 	.globl _URX0IF
+                                    113 	.globl _ADCIF
+                                    114 	.globl _URX1IF
+                                    115 	.globl _P0_0
+                                    116 	.globl _P0_1
+                                    117 	.globl _P0_2
+                                    118 	.globl _P0_3
+                                    119 	.globl _P0_4
+                                    120 	.globl _P0_5
+                                    121 	.globl _P0_6
+                                    122 	.globl _P0_7
+                                    123 	.globl _WDCTL
+                                    124 	.globl _U1GCR
+                                    125 	.globl _U1UCR
+                                    126 	.globl _U1BAUD
+                                    127 	.globl _U1DBUF
+                                    128 	.globl _U1CSR
+                                    129 	.globl _U0GCR
+                                    130 	.globl _U0UCR
+                                    131 	.globl _U0BAUD
+                                    132 	.globl _U0DBUF
+                                    133 	.globl _U0CSR
+                                    134 	.globl _TIMIF
+                                    135 	.globl _T4CC1
+                                    136 	.globl _T4CCTL1
+                                    137 	.globl _T4CC0
+                                    138 	.globl _T4CCTL0
+                                    139 	.globl _T4CTL
+                                    140 	.globl _T4CNT
+                                    141 	.globl _T3CC1
+                                    142 	.globl _T3CCTL1
+                                    143 	.globl _T3CC0
+                                    144 	.globl _T3CCTL0
+                                    145 	.globl _T3CTL
+                                    146 	.globl _T3CNT
+                                    147 	.globl _T2MSEL
+                                    148 	.globl _T2IRQM
+                                    149 	.globl _T2MOVF2
+                                    150 	.globl _T2MOVF1
+                                    151 	.globl _T2MOVF0
+                                    152 	.globl _T2M1
+                                    153 	.globl _T2M0
+                                    154 	.globl _T2IRQF
+                                    155 	.globl _T2EVTCFG
+                                    156 	.globl _T2CTRL
+                                    157 	.globl _T1STAT
+                                    158 	.globl _T1CCTL2
+                                    159 	.globl _T1CCTL1
+                                    160 	.globl _T1CCTL0
+                                    161 	.globl _T1CTL
+                                    162 	.globl _T1CNTH
+                                    163 	.globl _T1CNTL
+                                    164 	.globl _T1CC2H
+                                    165 	.globl _T1CC2L
+                                    166 	.globl _T1CC1H
+                                    167 	.globl _T1CC1L
+                                    168 	.globl _T1CC0H
+                                    169 	.globl _T1CC0L
+                                    170 	.globl _CLKCONSTA
+                                    171 	.globl _CLKCONCMD
+                                    172 	.globl _SLEEPSTA
+                                    173 	.globl _SLEEPCMD
+                                    174 	.globl _STLOAD
+                                    175 	.globl _ST2
+                                    176 	.globl _ST1
+                                    177 	.globl _ST0
+                                    178 	.globl _RFERRF
+                                    179 	.globl _RFIRQF0
+                                    180 	.globl _RFST
+                                    181 	.globl _RFD
+                                    182 	.globl _RFIRQF1
+                                    183 	.globl _PSBANK
+                                    184 	.globl _FMAP
+                                    185 	.globl _MEMCTR
+                                    186 	.globl __XPAGE
+                                    187 	.globl _MPAGE
+                                    188 	.globl _PMUX
+                                    189 	.globl _P2DIR
+                                    190 	.globl _P1DIR
+                                    191 	.globl _P0DIR
+                                    192 	.globl _P2INP
+                                    193 	.globl _P1INP
+                                    194 	.globl _P2SEL
+                                    195 	.globl _P1SEL
+                                    196 	.globl _P0SEL
+                                    197 	.globl _APCFG
+                                    198 	.globl _PERCFG
+                                    199 	.globl _P0INP
+                                    200 	.globl _P2IEN
+                                    201 	.globl _P1IEN
+                                    202 	.globl _P0IEN
+                                    203 	.globl _PICTL
+                                    204 	.globl _P2IFG
+                                    205 	.globl _P1IFG
+                                    206 	.globl _P0IFG
+                                    207 	.globl _DMAREQ
+                                    208 	.globl _DMAARM
+                                    209 	.globl _DMA0CFGH
+                                    210 	.globl _DMA0CFGL
+                                    211 	.globl _DMA1CFGH
+                                    212 	.globl _DMA1CFGL
+                                    213 	.globl _DMAIRQ
+                                    214 	.globl _ENCCS
+                                    215 	.globl _ENCDO
+                                    216 	.globl _ENCDI
+                                    217 	.globl _RNDH
+                                    218 	.globl _RNDL
+                                    219 	.globl _ADCH
+                                    220 	.globl _ADCL
+                                    221 	.globl _ADCCON3
+                                    222 	.globl _ADCCON2
+                                    223 	.globl _ADCCON1
+                                    224 	.globl _B
+                                    225 	.globl _IRCON2
+                                    226 	.globl _ACC
+                                    227 	.globl _PSW
+                                    228 	.globl _IRCON
+                                    229 	.globl _IP1
+                                    230 	.globl _IEN1
+                                    231 	.globl _IP0
+                                    232 	.globl _IEN0
+                                    233 	.globl _P2
+                                    234 	.globl _S1CON
+                                    235 	.globl _IEN2
+                                    236 	.globl _S0CON
+                                    237 	.globl _DPS
+                                    238 	.globl _P1
+                                    239 	.globl _TCON
+                                    240 	.globl _PCON
+                                    241 	.globl _DPH1
+                                    242 	.globl _DPL1
+                                    243 	.globl _DPH0
+                                    244 	.globl _DPL0
+                                    245 	.globl _SP
+                                    246 	.globl _P0
+                                    247 	.globl _usb_serial_process
+                                    248 	.globl _X_IEEE_ADDR
+                                    249 	.globl _X_INFOPAGE
+                                    250 	.globl _X_P2DIR
+                                    251 	.globl _X_P1DIR
+                                    252 	.globl _X_P0DIR
+                                    253 	.globl _X_U1GCR
+                                    254 	.globl _X_U1UCR
+                                    255 	.globl _X_U1BAUD
+                                    256 	.globl _X_U1DBUF
+                                    257 	.globl _X_U1CSR
+                                    258 	.globl _X_P2INP
+                                    259 	.globl _X_P1INP
+                                    260 	.globl _X_P2SEL
+                                    261 	.globl _X_P1SEL
+                                    262 	.globl _X_P0SEL
+                                    263 	.globl _X_APCFG
+                                    264 	.globl _X_PERCFG
+                                    265 	.globl _X_T4CC1
+                                    266 	.globl _X_T4CCTL1
+                                    267 	.globl _X_T4CC0
+                                    268 	.globl _X_T4CCTL0
+                                    269 	.globl _X_T4CTL
+                                    270 	.globl _X_T4CNT
+                                    271 	.globl _X_RFIRQF0
+                                    272 	.globl _X_T1CCTL2
+                                    273 	.globl _X_T1CCTL1
+                                    274 	.globl _X_T1CCTL0
+                                    275 	.globl _X_T1CTL
+                                    276 	.globl _X_T1CNTH
+                                    277 	.globl _X_T1CNTL
+                                    278 	.globl _X_RFST
+                                    279 	.globl _X_T1CC2H
+                                    280 	.globl _X_T1CC2L
+                                    281 	.globl _X_T1CC1H
+                                    282 	.globl _X_T1CC1L
+                                    283 	.globl _X_T1CC0H
+                                    284 	.globl _X_T1CC0L
+                                    285 	.globl _X_RFD
+                                    286 	.globl _X_TIMIF
+                                    287 	.globl _X_DMAREQ
+                                    288 	.globl _X_DMAARM
+                                    289 	.globl _X_DMA0CFGH
+                                    290 	.globl _X_DMA0CFGL
+                                    291 	.globl _X_DMA1CFGH
+                                    292 	.globl _X_DMA1CFGL
+                                    293 	.globl _X_DMAIRQ
+                                    294 	.globl _X_T3CC1
+                                    295 	.globl _X_T3CCTL1
+                                    296 	.globl _X_T3CC0
+                                    297 	.globl _X_T3CCTL0
+                                    298 	.globl _X_T3CTL
+                                    299 	.globl _X_T3CNT
+                                    300 	.globl _X_WDCTL
+                                    301 	.globl _X_MEMCTR
+                                    302 	.globl _X_CLKCONCMD
+                                    303 	.globl _X_U0GCR
+                                    304 	.globl _X_U0UCR
+                                    305 	.globl _X_T2MSEL
+                                    306 	.globl _X_U0BAUD
+                                    307 	.globl _X_U0DBUF
+                                    308 	.globl _X_RFERRF
+                                    309 	.globl _X_SLEEPCMD
+                                    310 	.globl _X_RNDH
+                                    311 	.globl _X_RNDL
+                                    312 	.globl _X_ADCH
+                                    313 	.globl _X_ADCL
+                                    314 	.globl _X_ADCCON3
+                                    315 	.globl _X_ADCCON2
+                                    316 	.globl _X_ADCCON1
+                                    317 	.globl _X_ENCCS
+                                    318 	.globl _X_ENCDO
+                                    319 	.globl _X_ENCDI
+                                    320 	.globl _X_T1STAT
+                                    321 	.globl _X_PMUX
+                                    322 	.globl _X_STLOAD
+                                    323 	.globl _X_P2IEN
+                                    324 	.globl _X_P0IEN
+                                    325 	.globl _X_T2IRQM
+                                    326 	.globl _X_T2MOVF2
+                                    327 	.globl _X_T2MOVF1
+                                    328 	.globl _X_T2MOVF0
+                                    329 	.globl _X_T2M1
+                                    330 	.globl _X_T2M0
+                                    331 	.globl _X_T2IRQF
+                                    332 	.globl _X_P2
+                                    333 	.globl _X_PSBANK
+                                    334 	.globl _X_FMAP
+                                    335 	.globl _X_CLKCONSTA
+                                    336 	.globl _X_SLEEPSTA
+                                    337 	.globl _X_T2EVTCFG
+                                    338 	.globl _X_ST2
+                                    339 	.globl _X_ST1
+                                    340 	.globl _X_ST0
+                                    341 	.globl _X_T2CTRL
+                                    342 	.globl _X__XPAGE
+                                    343 	.globl _X_MPAGE
+                                    344 	.globl _X_RFIRQF1
+                                    345 	.globl _X_P1
+                                    346 	.globl _X_P0INP
+                                    347 	.globl _X_P1IEN
+                                    348 	.globl _X_PICTL
+                                    349 	.globl _X_P2IFG
+                                    350 	.globl _X_P1IFG
+                                    351 	.globl _X_P0IFG
+                                    352 	.globl _X_U0CSR
+                                    353 	.globl _X_P0
+                                    354 	.globl _USBF5
+                                    355 	.globl _USBF4
+                                    356 	.globl _USBF3
+                                    357 	.globl _USBF2
+                                    358 	.globl _USBF1
+                                    359 	.globl _USBF0
+                                    360 	.globl _USBCNTH
+                                    361 	.globl _USBCNTL
+                                    362 	.globl _USBCNT0
+                                    363 	.globl _USBCSOH
+                                    364 	.globl _USBCSOL
+                                    365 	.globl _USBMAXO
+                                    366 	.globl _USBCSIH
+                                    367 	.globl _USBCSIL
+                                    368 	.globl _USBCS0
+                                    369 	.globl _USBMAXI
+                                    370 	.globl _USBCTRL
+                                    371 	.globl _USBINDEX
+                                    372 	.globl _USBFRMH
+                                    373 	.globl _USBFRML
+                                    374 	.globl _USBCIE
+                                    375 	.globl _USBOIE
+                                    376 	.globl _USBIIE
+                                    377 	.globl _USBCIF
+                                    378 	.globl _USBOIF
+                                    379 	.globl _USBIIF
+                                    380 	.globl _USBPOW
+                                    381 	.globl _USBADDR
+                                    382 	.globl _CSPT
+                                    383 	.globl _CSPZ
+                                    384 	.globl _CSPY
+                                    385 	.globl _CSPX
+                                    386 	.globl _CSPSTAT
+                                    387 	.globl _CSPCTRL
+                                    388 	.globl _CSPPROG23
+                                    389 	.globl _CSPPROG22
+                                    390 	.globl _CSPPROG21
+                                    391 	.globl _CSPPROG20
+                                    392 	.globl _CSPPROG19
+                                    393 	.globl _CSPPROG18
+                                    394 	.globl _CSPPROG17
+                                    395 	.globl _CSPPROG16
+                                    396 	.globl _CSPPROG15
+                                    397 	.globl _CSPPROG14
+                                    398 	.globl _CSPPROG13
+                                    399 	.globl _CSPPROG12
+                                    400 	.globl _CSPPROG11
+                                    401 	.globl _CSPPROG10
+                                    402 	.globl _CSPPROG9
+                                    403 	.globl _CSPPROG8
+                                    404 	.globl _CSPPROG7
+                                    405 	.globl _CSPPROG6
+                                    406 	.globl _CSPPROG5
+                                    407 	.globl _CSPPROG4
+                                    408 	.globl _CSPPROG3
+                                    409 	.globl _CSPPROG2
+                                    410 	.globl _CSPPROG1
+                                    411 	.globl _CSPPROG0
+                                    412 	.globl _RFC_OBS_CTRL2
+                                    413 	.globl _RFC_OBS_CTRL1
+                                    414 	.globl _RFC_OBS_CTRL0
+                                    415 	.globl _TXFILTCFG
+                                    416 	.globl _PTEST1
+                                    417 	.globl _PTEST0
+                                    418 	.globl _ATEST
+                                    419 	.globl _DACTEST2
+                                    420 	.globl _DACTEST1
+                                    421 	.globl _DACTEST0
+                                    422 	.globl _MDMTEST1
+                                    423 	.globl _MDMTEST0
+                                    424 	.globl _ADCTEST2
+                                    425 	.globl _ADCTEST1
+                                    426 	.globl _ADCTEST0
+                                    427 	.globl _AGCCTRL3
+                                    428 	.globl _AGCCTRL2
+                                    429 	.globl _AGCCTRL1
+                                    430 	.globl _AGCCTRL0
+                                    431 	.globl _FSCAL3
+                                    432 	.globl _FSCAL2
+                                    433 	.globl _FSCAL1
+                                    434 	.globl _FSCAL0
+                                    435 	.globl _FSCTRL
+                                    436 	.globl _RXCTRL
+                                    437 	.globl _FREQEST
+                                    438 	.globl _MDMCTRL1
+                                    439 	.globl _MDMCTRL0
+                                    440 	.globl _RFRND
+                                    441 	.globl _RFERRM
+                                    442 	.globl _RFIRQM1
+                                    443 	.globl _RFIRQM0
+                                    444 	.globl _TXLAST_PTR
+                                    445 	.globl _TXFIRST_PTR
+                                    446 	.globl _RXP1_PTR
+                                    447 	.globl _RXLAST_PTR
+                                    448 	.globl _RXFIRST_PTR
+                                    449 	.globl _TXFIFOCNT
+                                    450 	.globl _RXFIFOCNT
+                                    451 	.globl _RXFIRST
+                                    452 	.globl _RSSISTAT
+                                    453 	.globl _RSSI
+                                    454 	.globl _CCACTRL1
+                                    455 	.globl _CCACTRL0
+                                    456 	.globl _FSMCTRL
+                                    457 	.globl _FIFOPCTRL
+                                    458 	.globl _FSMSTAT1
+                                    459 	.globl _FSMSTAT0
+                                    460 	.globl _TXCTRL
+                                    461 	.globl _TXPOWER
+                                    462 	.globl _FREQCTRL
+                                    463 	.globl _FREQTUNE
+                                    464 	.globl _RXMASKCLR
+                                    465 	.globl _RXMASKSET
+                                    466 	.globl _RXENABLE
+                                    467 	.globl _FRMCTRL1
+                                    468 	.globl _FRMCTRL0
+                                    469 	.globl _SRCEXTEN2
+                                    470 	.globl _SRCEXTEN1
+                                    471 	.globl _SRCEXTEN0
+                                    472 	.globl _SRCSHORTEN2
+                                    473 	.globl _SRCSHORTEN1
+                                    474 	.globl _SRCSHORTEN0
+                                    475 	.globl _SRCMATCH
+                                    476 	.globl _FRMFILT1
+                                    477 	.globl _FRMFILT0
+                                    478 	.globl _SHORT_ADDR1
+                                    479 	.globl _SHORT_ADDR0
+                                    480 	.globl _PAN_ID1
+                                    481 	.globl _PAN_ID0
+                                    482 	.globl _EXT_ADDR7
+                                    483 	.globl _EXT_ADDR6
+                                    484 	.globl _EXT_ADDR5
+                                    485 	.globl _EXT_ADDR4
+                                    486 	.globl _EXT_ADDR3
+                                    487 	.globl _EXT_ADDR2
+                                    488 	.globl _EXT_ADDR1
+                                    489 	.globl _EXT_ADDR0
+                                    490 	.globl _SRCSHORTPENDEN2
+                                    491 	.globl _SRCSHORTPENDEN1
+                                    492 	.globl _SRCSHORTPENDEN0
+                                    493 	.globl _SRCEXTPENDEN2
+                                    494 	.globl _SRCEXTPENDEN1
+                                    495 	.globl _SRCEXTPENDEN0
+                                    496 	.globl _SRCRESINDEX
+                                    497 	.globl _SRCRESMASK2
+                                    498 	.globl _SRCRESMASK1
+                                    499 	.globl _SRCRESMASK0
+                                    500 	.globl _SRC_ADDR_TABLE
+                                    501 	.globl _TXFIFO
+                                    502 	.globl _RXFIFO
+                                    503 	.globl _RFCORE_RAM
+                                    504 	.globl _CMPCTL
+                                    505 	.globl _OPAMPS
+                                    506 	.globl _OPAMPC
+                                    507 	.globl _STCV2
+                                    508 	.globl _STCV1
+                                    509 	.globl _STCV0
+                                    510 	.globl _STCS
+                                    511 	.globl _STCC
+                                    512 	.globl _T1CC4H
+                                    513 	.globl _T1CC4L
+                                    514 	.globl _T1CC3H
+                                    515 	.globl _T1CC3L
+                                    516 	.globl _XX_T1CC2H
+                                    517 	.globl _XX_T1CC2L
+                                    518 	.globl _XX_T1CC1H
+                                    519 	.globl _XX_T1CC1L
+                                    520 	.globl _XX_T1CC0H
+                                    521 	.globl _XX_T1CC0L
+                                    522 	.globl _T1CCTL4
+                                    523 	.globl _T1CCTL3
+                                    524 	.globl _XX_T1CCTL2
+                                    525 	.globl _XX_T1CCTL1
+                                    526 	.globl _XX_T1CCTL0
+                                    527 	.globl _CLD
+                                    528 	.globl _IRCTL
+                                    529 	.globl _CHIPINFO1
+                                    530 	.globl _CHIPINFO0
+                                    531 	.globl _FWDATA
+                                    532 	.globl _FADDRH
+                                    533 	.globl _FADDRL
+                                    534 	.globl _FCTL
+                                    535 	.globl _IVCTRL
+                                    536 	.globl _BATTMON
+                                    537 	.globl _SRCRC
+                                    538 	.globl _DBGDATA
+                                    539 	.globl _TESTREG0
+                                    540 	.globl _CHIPID
+                                    541 	.globl _CHVER
+                                    542 	.globl _OBSSEL5
+                                    543 	.globl _OBSSEL4
+                                    544 	.globl _OBSSEL3
+                                    545 	.globl _OBSSEL2
+                                    546 	.globl _OBSSEL1
+                                    547 	.globl _OBSSEL0
+                                    548 	.globl _I2CIO
+                                    549 	.globl _I2CWC
+                                    550 	.globl _I2CADDR
+                                    551 	.globl _I2CDATA
+                                    552 	.globl _I2CSTAT
+                                    553 	.globl _I2CCFG
+                                    554 	.globl _OPAMPMC
+                                    555 	.globl _MONMUX
+                                    556 ;--------------------------------------------------------
+                                    557 ; special function registers
+                                    558 ;--------------------------------------------------------
+                                    559 	.area RSEG    (ABS,DATA)
+      000000                        560 	.org 0x0000
+                           000080   561 _P0	=	0x0080
+                           000081   562 _SP	=	0x0081
+                           000082   563 _DPL0	=	0x0082
+                           000083   564 _DPH0	=	0x0083
+                           000084   565 _DPL1	=	0x0084
+                           000085   566 _DPH1	=	0x0085
+                           000087   567 _PCON	=	0x0087
+                           000088   568 _TCON	=	0x0088
+                           000090   569 _P1	=	0x0090
+                           000092   570 _DPS	=	0x0092
+                           000098   571 _S0CON	=	0x0098
+                           00009A   572 _IEN2	=	0x009a
+                           00009B   573 _S1CON	=	0x009b
+                           0000A0   574 _P2	=	0x00a0
+                           0000A8   575 _IEN0	=	0x00a8
+                           0000A9   576 _IP0	=	0x00a9
+                           0000B8   577 _IEN1	=	0x00b8
+                           0000B9   578 _IP1	=	0x00b9
+                           0000C0   579 _IRCON	=	0x00c0
+                           0000D0   580 _PSW	=	0x00d0
+                           0000E0   581 _ACC	=	0x00e0
+                           0000E8   582 _IRCON2	=	0x00e8
+                           0000F0   583 _B	=	0x00f0
+                           0000B4   584 _ADCCON1	=	0x00b4
+                           0000B5   585 _ADCCON2	=	0x00b5
+                           0000B6   586 _ADCCON3	=	0x00b6
+                           0000BA   587 _ADCL	=	0x00ba
+                           0000BB   588 _ADCH	=	0x00bb
+                           0000BC   589 _RNDL	=	0x00bc
+                           0000BD   590 _RNDH	=	0x00bd
+                           0000B1   591 _ENCDI	=	0x00b1
+                           0000B2   592 _ENCDO	=	0x00b2
+                           0000B3   593 _ENCCS	=	0x00b3
+                           0000D1   594 _DMAIRQ	=	0x00d1
+                           0000D2   595 _DMA1CFGL	=	0x00d2
+                           0000D3   596 _DMA1CFGH	=	0x00d3
+                           0000D4   597 _DMA0CFGL	=	0x00d4
+                           0000D5   598 _DMA0CFGH	=	0x00d5
+                           0000D6   599 _DMAARM	=	0x00d6
+                           0000D7   600 _DMAREQ	=	0x00d7
+                           000089   601 _P0IFG	=	0x0089
+                           00008A   602 _P1IFG	=	0x008a
+                           00008B   603 _P2IFG	=	0x008b
+                           00008C   604 _PICTL	=	0x008c
+                           0000AB   605 _P0IEN	=	0x00ab
+                           00008D   606 _P1IEN	=	0x008d
+                           0000AC   607 _P2IEN	=	0x00ac
+                           00008F   608 _P0INP	=	0x008f
+                           0000F1   609 _PERCFG	=	0x00f1
+                           0000F2   610 _APCFG	=	0x00f2
+                           0000F3   611 _P0SEL	=	0x00f3
+                           0000F4   612 _P1SEL	=	0x00f4
+                           0000F5   613 _P2SEL	=	0x00f5
+                           0000F6   614 _P1INP	=	0x00f6
+                           0000F7   615 _P2INP	=	0x00f7
+                           0000FD   616 _P0DIR	=	0x00fd
+                           0000FE   617 _P1DIR	=	0x00fe
+                           0000FF   618 _P2DIR	=	0x00ff
+                           0000AE   619 _PMUX	=	0x00ae
+                           000093   620 _MPAGE	=	0x0093
+                           000093   621 __XPAGE	=	0x0093
+                           0000C7   622 _MEMCTR	=	0x00c7
+                           00009F   623 _FMAP	=	0x009f
+                           00009F   624 _PSBANK	=	0x009f
+                           000091   625 _RFIRQF1	=	0x0091
+                           0000D9   626 _RFD	=	0x00d9
+                           0000E1   627 _RFST	=	0x00e1
+                           0000E9   628 _RFIRQF0	=	0x00e9
+                           0000BF   629 _RFERRF	=	0x00bf
+                           000095   630 _ST0	=	0x0095
+                           000096   631 _ST1	=	0x0096
+                           000097   632 _ST2	=	0x0097
+                           0000AD   633 _STLOAD	=	0x00ad
+                           0000BE   634 _SLEEPCMD	=	0x00be
+                           00009D   635 _SLEEPSTA	=	0x009d
+                           0000C6   636 _CLKCONCMD	=	0x00c6
+                           00009E   637 _CLKCONSTA	=	0x009e
+                           0000DA   638 _T1CC0L	=	0x00da
+                           0000DB   639 _T1CC0H	=	0x00db
+                           0000DC   640 _T1CC1L	=	0x00dc
+                           0000DD   641 _T1CC1H	=	0x00dd
+                           0000DE   642 _T1CC2L	=	0x00de
+                           0000DF   643 _T1CC2H	=	0x00df
+                           0000E2   644 _T1CNTL	=	0x00e2
+                           0000E3   645 _T1CNTH	=	0x00e3
+                           0000E4   646 _T1CTL	=	0x00e4
+                           0000E5   647 _T1CCTL0	=	0x00e5
+                           0000E6   648 _T1CCTL1	=	0x00e6
+                           0000E7   649 _T1CCTL2	=	0x00e7
+                           0000AF   650 _T1STAT	=	0x00af
+                           000094   651 _T2CTRL	=	0x0094
+                           00009C   652 _T2EVTCFG	=	0x009c
+                           0000A1   653 _T2IRQF	=	0x00a1
+                           0000A2   654 _T2M0	=	0x00a2
+                           0000A3   655 _T2M1	=	0x00a3
+                           0000A4   656 _T2MOVF0	=	0x00a4
+                           0000A5   657 _T2MOVF1	=	0x00a5
+                           0000A6   658 _T2MOVF2	=	0x00a6
+                           0000A7   659 _T2IRQM	=	0x00a7
+                           0000C3   660 _T2MSEL	=	0x00c3
+                           0000CA   661 _T3CNT	=	0x00ca
+                           0000CB   662 _T3CTL	=	0x00cb
+                           0000CC   663 _T3CCTL0	=	0x00cc
+                           0000CD   664 _T3CC0	=	0x00cd
+                           0000CE   665 _T3CCTL1	=	0x00ce
+                           0000CF   666 _T3CC1	=	0x00cf
+                           0000EA   667 _T4CNT	=	0x00ea
+                           0000EB   668 _T4CTL	=	0x00eb
+                           0000EC   669 _T4CCTL0	=	0x00ec
+                           0000ED   670 _T4CC0	=	0x00ed
+                           0000EE   671 _T4CCTL1	=	0x00ee
+                           0000EF   672 _T4CC1	=	0x00ef
+                           0000D8   673 _TIMIF	=	0x00d8
+                           000086   674 _U0CSR	=	0x0086
+                           0000C1   675 _U0DBUF	=	0x00c1
+                           0000C2   676 _U0BAUD	=	0x00c2
+                           0000C4   677 _U0UCR	=	0x00c4
+                           0000C5   678 _U0GCR	=	0x00c5
+                           0000F8   679 _U1CSR	=	0x00f8
+                           0000F9   680 _U1DBUF	=	0x00f9
+                           0000FA   681 _U1BAUD	=	0x00fa
+                           0000FB   682 _U1UCR	=	0x00fb
+                           0000FC   683 _U1GCR	=	0x00fc
+                           0000C9   684 _WDCTL	=	0x00c9
+                                    685 ;--------------------------------------------------------
+                                    686 ; special function bits
+                                    687 ;--------------------------------------------------------
+                                    688 	.area RSEG    (ABS,DATA)
+      000000                        689 	.org 0x0000
+                           000087   690 _P0_7	=	0x0087
+                           000086   691 _P0_6	=	0x0086
+                           000085   692 _P0_5	=	0x0085
+                           000084   693 _P0_4	=	0x0084
+                           000083   694 _P0_3	=	0x0083
+                           000082   695 _P0_2	=	0x0082
+                           000081   696 _P0_1	=	0x0081
+                           000080   697 _P0_0	=	0x0080
+                           00008F   698 _URX1IF	=	0x008f
+                           00008D   699 _ADCIF	=	0x008d
+                           00008B   700 _URX0IF	=	0x008b
+                           00008A   701 _IT1	=	0x008a
+                           000089   702 _RFERRIF	=	0x0089
+                           000088   703 _IT0	=	0x0088
+                           000097   704 _P1_7	=	0x0097
+                           000096   705 _P1_6	=	0x0096
+                           000095   706 _P1_5	=	0x0095
+                           000094   707 _P1_4	=	0x0094
+                           000093   708 _P1_3	=	0x0093
+                           000092   709 _P1_2	=	0x0092
+                           000091   710 _P1_1	=	0x0091
+                           000090   711 _P1_0	=	0x0090
+                           000099   712 _ENCIF_1	=	0x0099
+                           000098   713 _ENCIF_0	=	0x0098
+                           0000A7   714 _P2_7	=	0x00a7
+                           0000A6   715 _P2_6	=	0x00a6
+                           0000A5   716 _P2_5	=	0x00a5
+                           0000A4   717 _P2_4	=	0x00a4
+                           0000A3   718 _P2_3	=	0x00a3
+                           0000A2   719 _P2_2	=	0x00a2
+                           0000A1   720 _P2_1	=	0x00a1
+                           0000A0   721 _P2_0	=	0x00a0
+                           0000AF   722 _EA	=	0x00af
+                           0000AD   723 _STIE	=	0x00ad
+                           0000AC   724 _ENCIE	=	0x00ac
+                           0000AB   725 _URX1IE	=	0x00ab
+                           0000AA   726 _URX0IE	=	0x00aa
+                           0000A9   727 _ADCIE	=	0x00a9
+                           0000A8   728 _RFERRIE	=	0x00a8
+                           0000BD   729 _P0IE	=	0x00bd
+                           0000BC   730 _T4IE	=	0x00bc
+                           0000BB   731 _T3IE	=	0x00bb
+                           0000BA   732 _T2IE	=	0x00ba
+                           0000B9   733 _T1IE	=	0x00b9
+                           0000B8   734 _DMAIE	=	0x00b8
+                           0000C7   735 _STIF	=	0x00c7
+                           0000C5   736 _P0IF	=	0x00c5
+                           0000C4   737 _T4IF	=	0x00c4
+                           0000C3   738 _T3IF	=	0x00c3
+                           0000C2   739 _T2IF	=	0x00c2
+                           0000C1   740 _T1IF	=	0x00c1
+                           0000C0   741 _DMAIF	=	0x00c0
+                           0000D7   742 _CY	=	0x00d7
+                           0000D6   743 _AC	=	0x00d6
+                           0000D5   744 _F0	=	0x00d5
+                           0000D4   745 _RS1	=	0x00d4
+                           0000D3   746 _RS0	=	0x00d3
+                           0000D2   747 _OV	=	0x00d2
+                           0000D1   748 _F1	=	0x00d1
+                           0000D0   749 _P	=	0x00d0
+                           0000E7   750 _ACC_7	=	0x00e7
+                           0000E6   751 _ACC_6	=	0x00e6
+                           0000E5   752 _ACC_5	=	0x00e5
+                           0000E4   753 _ACC_4	=	0x00e4
+                           0000E3   754 _ACC_3	=	0x00e3
+                           0000E2   755 _ACC_2	=	0x00e2
+                           0000E1   756 _ACC_1	=	0x00e1
+                           0000E0   757 _ACC_0	=	0x00e0
+                           0000EC   758 _WDTIF	=	0x00ec
+                           0000EB   759 _P1IF	=	0x00eb
+                           0000EA   760 _UTX1IF	=	0x00ea
+                           0000E9   761 _UTX0IF	=	0x00e9
+                           0000E8   762 _P2IF	=	0x00e8
+                           0000F7   763 _B_7	=	0x00f7
+                           0000F6   764 _B_6	=	0x00f6
+                           0000F5   765 _B_5	=	0x00f5
+                           0000F4   766 _B_4	=	0x00f4
+                           0000F3   767 _B_3	=	0x00f3
+                           0000F2   768 _B_2	=	0x00f2
+                           0000F1   769 _B_1	=	0x00f1
+                           0000F0   770 _B_0	=	0x00f0
+                           0000DE   771 _OVFIM	=	0x00de
+                           0000DD   772 _T4CH1IF	=	0x00dd
+                           0000DC   773 _T4CH0IF	=	0x00dc
+                           0000DB   774 _T4OVFIF	=	0x00db
+                           0000DA   775 _T3CH1IF	=	0x00da
+                           0000D9   776 _T3CH0IF	=	0x00d9
+                           0000D8   777 _T3OVFIF	=	0x00d8
+                           0000FF   778 _MODE	=	0x00ff
+                           0000FE   779 _RE	=	0x00fe
+                           0000FD   780 _SLAVE	=	0x00fd
+                           0000FC   781 _FE	=	0x00fc
+                           0000FB   782 _ERR	=	0x00fb
+                           0000FA   783 _RX_BYTE	=	0x00fa
+                           0000F9   784 _TX_BYTE	=	0x00f9
+                           0000F8   785 _ACTIVE	=	0x00f8
+                                    786 ;--------------------------------------------------------
+                                    787 ; overlayable register banks
+                                    788 ;--------------------------------------------------------
+                                    789 	.area REG_BANK_0	(REL,OVR,DATA)
+      000000                        790 	.ds 8
+                                    791 ;--------------------------------------------------------
+                                    792 ; internal ram data
+                                    793 ;--------------------------------------------------------
+                                    794 	.area DSEG    (DATA)
+                                    795 ;--------------------------------------------------------
+                                    796 ; overlayable items in internal ram 
+                                    797 ;--------------------------------------------------------
+                                    798 ;--------------------------------------------------------
+                                    799 ; indirectly addressable internal ram data
+                                    800 ;--------------------------------------------------------
+                                    801 	.area ISEG    (DATA)
+                                    802 ;--------------------------------------------------------
+                                    803 ; absolute internal ram data
+                                    804 ;--------------------------------------------------------
+                                    805 	.area IABS    (ABS,DATA)
+                                    806 	.area IABS    (ABS,DATA)
+                                    807 ;--------------------------------------------------------
+                                    808 ; bit data
+                                    809 ;--------------------------------------------------------
+                                    810 	.area BSEG    (BIT)
+                                    811 ;--------------------------------------------------------
+                                    812 ; paged external ram data
+                                    813 ;--------------------------------------------------------
+                                    814 	.area PSEG    (PAG,XDATA)
+                                    815 ;--------------------------------------------------------
+                                    816 ; external ram data
+                                    817 ;--------------------------------------------------------
+                                    818 	.area XSEG    (XDATA)
+                           0061A6   819 _MONMUX	=	0x61a6
+                           0061A6   820 _OPAMPMC	=	0x61a6
+                           006230   821 _I2CCFG	=	0x6230
+                           006231   822 _I2CSTAT	=	0x6231
+                           006232   823 _I2CDATA	=	0x6232
+                           006233   824 _I2CADDR	=	0x6233
+                           006234   825 _I2CWC	=	0x6234
+                           006235   826 _I2CIO	=	0x6235
+                           006243   827 _OBSSEL0	=	0x6243
+                           006244   828 _OBSSEL1	=	0x6244
+                           006245   829 _OBSSEL2	=	0x6245
+                           006246   830 _OBSSEL3	=	0x6246
+                           006247   831 _OBSSEL4	=	0x6247
+                           006248   832 _OBSSEL5	=	0x6248
+                           006249   833 _CHVER	=	0x6249
+                           00624A   834 _CHIPID	=	0x624a
+                           00624B   835 _TESTREG0	=	0x624b
+                           006260   836 _DBGDATA	=	0x6260
+                           006262   837 _SRCRC	=	0x6262
+                           006264   838 _BATTMON	=	0x6264
+                           006265   839 _IVCTRL	=	0x6265
+                           006270   840 _FCTL	=	0x6270
+                           006271   841 _FADDRL	=	0x6271
+                           006272   842 _FADDRH	=	0x6272
+                           006273   843 _FWDATA	=	0x6273
+                           006276   844 _CHIPINFO0	=	0x6276
+                           006277   845 _CHIPINFO1	=	0x6277
+                           006281   846 _IRCTL	=	0x6281
+                           006290   847 _CLD	=	0x6290
+                           0062A0   848 _XX_T1CCTL0	=	0x62a0
+                           0062A1   849 _XX_T1CCTL1	=	0x62a1
+                           0062A2   850 _XX_T1CCTL2	=	0x62a2
+                           0062A3   851 _T1CCTL3	=	0x62a3
+                           0062A4   852 _T1CCTL4	=	0x62a4
+                           0062A6   853 _XX_T1CC0L	=	0x62a6
+                           0062A7   854 _XX_T1CC0H	=	0x62a7
+                           0062A8   855 _XX_T1CC1L	=	0x62a8
+                           0062A9   856 _XX_T1CC1H	=	0x62a9
+                           0062AA   857 _XX_T1CC2L	=	0x62aa
+                           0062AB   858 _XX_T1CC2H	=	0x62ab
+                           0062AC   859 _T1CC3L	=	0x62ac
+                           0062AD   860 _T1CC3H	=	0x62ad
+                           0062AE   861 _T1CC4L	=	0x62ae
+                           0062AF   862 _T1CC4H	=	0x62af
+                           0062B0   863 _STCC	=	0x62b0
+                           0062B1   864 _STCS	=	0x62b1
+                           0062B2   865 _STCV0	=	0x62b2
+                           0062B3   866 _STCV1	=	0x62b3
+                           0062B4   867 _STCV2	=	0x62b4
+                           0062C0   868 _OPAMPC	=	0x62c0
+                           0062C1   869 _OPAMPS	=	0x62c1
+                           0062D0   870 _CMPCTL	=	0x62d0
+                           006000   871 _RFCORE_RAM	=	0x6000
+                           006000   872 _RXFIFO	=	0x6000
+                           006080   873 _TXFIFO	=	0x6080
+                           006100   874 _SRC_ADDR_TABLE	=	0x6100
+                           006160   875 _SRCRESMASK0	=	0x6160
+                           006161   876 _SRCRESMASK1	=	0x6161
+                           006162   877 _SRCRESMASK2	=	0x6162
+                           006163   878 _SRCRESINDEX	=	0x6163
+                           006164   879 _SRCEXTPENDEN0	=	0x6164
+                           006165   880 _SRCEXTPENDEN1	=	0x6165
+                           006166   881 _SRCEXTPENDEN2	=	0x6166
+                           006167   882 _SRCSHORTPENDEN0	=	0x6167
+                           006168   883 _SRCSHORTPENDEN1	=	0x6168
+                           006169   884 _SRCSHORTPENDEN2	=	0x6169
+                           00616A   885 _EXT_ADDR0	=	0x616a
+                           00616B   886 _EXT_ADDR1	=	0x616b
+                           00616C   887 _EXT_ADDR2	=	0x616c
+                           00616D   888 _EXT_ADDR3	=	0x616d
+                           00616E   889 _EXT_ADDR4	=	0x616e
+                           00616F   890 _EXT_ADDR5	=	0x616f
+                           006170   891 _EXT_ADDR6	=	0x6170
+                           006171   892 _EXT_ADDR7	=	0x6171
+                           006172   893 _PAN_ID0	=	0x6172
+                           006173   894 _PAN_ID1	=	0x6173
+                           006174   895 _SHORT_ADDR0	=	0x6174
+                           006175   896 _SHORT_ADDR1	=	0x6175
+                           006180   897 _FRMFILT0	=	0x6180
+                           006181   898 _FRMFILT1	=	0x6181
+                           006182   899 _SRCMATCH	=	0x6182
+                           006183   900 _SRCSHORTEN0	=	0x6183
+                           006184   901 _SRCSHORTEN1	=	0x6184
+                           006185   902 _SRCSHORTEN2	=	0x6185
+                           006186   903 _SRCEXTEN0	=	0x6186
+                           006187   904 _SRCEXTEN1	=	0x6187
+                           006188   905 _SRCEXTEN2	=	0x6188
+                           006189   906 _FRMCTRL0	=	0x6189
+                           00618A   907 _FRMCTRL1	=	0x618a
+                           00618B   908 _RXENABLE	=	0x618b
+                           00618C   909 _RXMASKSET	=	0x618c
+                           00618D   910 _RXMASKCLR	=	0x618d
+                           00618E   911 _FREQTUNE	=	0x618e
+                           00618F   912 _FREQCTRL	=	0x618f
+                           006190   913 _TXPOWER	=	0x6190
+                           006191   914 _TXCTRL	=	0x6191
+                           006192   915 _FSMSTAT0	=	0x6192
+                           006193   916 _FSMSTAT1	=	0x6193
+                           006194   917 _FIFOPCTRL	=	0x6194
+                           006195   918 _FSMCTRL	=	0x6195
+                           006196   919 _CCACTRL0	=	0x6196
+                           006197   920 _CCACTRL1	=	0x6197
+                           006198   921 _RSSI	=	0x6198
+                           006199   922 _RSSISTAT	=	0x6199
+                           00619A   923 _RXFIRST	=	0x619a
+                           00619B   924 _RXFIFOCNT	=	0x619b
+                           00619C   925 _TXFIFOCNT	=	0x619c
+                           00619D   926 _RXFIRST_PTR	=	0x619d
+                           00619E   927 _RXLAST_PTR	=	0x619e
+                           00619F   928 _RXP1_PTR	=	0x619f
+                           0061A1   929 _TXFIRST_PTR	=	0x61a1
+                           0061A2   930 _TXLAST_PTR	=	0x61a2
+                           0061A3   931 _RFIRQM0	=	0x61a3
+                           0061A4   932 _RFIRQM1	=	0x61a4
+                           0061A5   933 _RFERRM	=	0x61a5
+                           0061A7   934 _RFRND	=	0x61a7
+                           0061A8   935 _MDMCTRL0	=	0x61a8
+                           0061A9   936 _MDMCTRL1	=	0x61a9
+                           0061AA   937 _FREQEST	=	0x61aa
+                           0061AB   938 _RXCTRL	=	0x61ab
+                           0061AC   939 _FSCTRL	=	0x61ac
+                           0061AD   940 _FSCAL0	=	0x61ad
+                           0061AE   941 _FSCAL1	=	0x61ae
+                           0061AF   942 _FSCAL2	=	0x61af
+                           0061B0   943 _FSCAL3	=	0x61b0
+                           0061B1   944 _AGCCTRL0	=	0x61b1
+                           0061B2   945 _AGCCTRL1	=	0x61b2
+                           0061B3   946 _AGCCTRL2	=	0x61b3
+                           0061B4   947 _AGCCTRL3	=	0x61b4
+                           0061B5   948 _ADCTEST0	=	0x61b5
+                           0061B6   949 _ADCTEST1	=	0x61b6
+                           0061B7   950 _ADCTEST2	=	0x61b7
+                           0061B8   951 _MDMTEST0	=	0x61b8
+                           0061B9   952 _MDMTEST1	=	0x61b9
+                           0061BA   953 _DACTEST0	=	0x61ba
+                           0061BB   954 _DACTEST1	=	0x61bb
+                           0061BC   955 _DACTEST2	=	0x61bc
+                           0061BD   956 _ATEST	=	0x61bd
+                           0061BE   957 _PTEST0	=	0x61be
+                           0061BF   958 _PTEST1	=	0x61bf
+                           0061FA   959 _TXFILTCFG	=	0x61fa
+                           0061EB   960 _RFC_OBS_CTRL0	=	0x61eb
+                           0061EC   961 _RFC_OBS_CTRL1	=	0x61ec
+                           0061ED   962 _RFC_OBS_CTRL2	=	0x61ed
+                           0061C0   963 _CSPPROG0	=	0x61c0
+                           0061C1   964 _CSPPROG1	=	0x61c1
+                           0061C2   965 _CSPPROG2	=	0x61c2
+                           0061C3   966 _CSPPROG3	=	0x61c3
+                           0061C4   967 _CSPPROG4	=	0x61c4
+                           0061C5   968 _CSPPROG5	=	0x61c5
+                           0061C6   969 _CSPPROG6	=	0x61c6
+                           0061C7   970 _CSPPROG7	=	0x61c7
+                           0061C8   971 _CSPPROG8	=	0x61c8
+                           0061C9   972 _CSPPROG9	=	0x61c9
+                           0061CA   973 _CSPPROG10	=	0x61ca
+                           0061CB   974 _CSPPROG11	=	0x61cb
+                           0061CC   975 _CSPPROG12	=	0x61cc
+                           0061CD   976 _CSPPROG13	=	0x61cd
+                           0061CE   977 _CSPPROG14	=	0x61ce
+                           0061CF   978 _CSPPROG15	=	0x61cf
+                           0061D0   979 _CSPPROG16	=	0x61d0
+                           0061D1   980 _CSPPROG17	=	0x61d1
+                           0061D2   981 _CSPPROG18	=	0x61d2
+                           0061D3   982 _CSPPROG19	=	0x61d3
+                           0061D4   983 _CSPPROG20	=	0x61d4
+                           0061D5   984 _CSPPROG21	=	0x61d5
+                           0061D6   985 _CSPPROG22	=	0x61d6
+                           0061D7   986 _CSPPROG23	=	0x61d7
+                           0061E0   987 _CSPCTRL	=	0x61e0
+                           0061E1   988 _CSPSTAT	=	0x61e1
+                           0061E2   989 _CSPX	=	0x61e2
+                           0061E3   990 _CSPY	=	0x61e3
+                           0061E4   991 _CSPZ	=	0x61e4
+                           0061E5   992 _CSPT	=	0x61e5
+                           006200   993 _USBADDR	=	0x6200
+                           006201   994 _USBPOW	=	0x6201
+                           006202   995 _USBIIF	=	0x6202
+                           006204   996 _USBOIF	=	0x6204
+                           006206   997 _USBCIF	=	0x6206
+                           006207   998 _USBIIE	=	0x6207
+                           006209   999 _USBOIE	=	0x6209
+                           00620B  1000 _USBCIE	=	0x620b
+                           00620C  1001 _USBFRML	=	0x620c
+                           00620D  1002 _USBFRMH	=	0x620d
+                           00620E  1003 _USBINDEX	=	0x620e
+                           00620F  1004 _USBCTRL	=	0x620f
+                           006210  1005 _USBMAXI	=	0x6210
+                           006211  1006 _USBCS0	=	0x6211
+                           006211  1007 _USBCSIL	=	0x6211
+                           006212  1008 _USBCSIH	=	0x6212
+                           006213  1009 _USBMAXO	=	0x6213
+                           006214  1010 _USBCSOL	=	0x6214
+                           006215  1011 _USBCSOH	=	0x6215
+                           006216  1012 _USBCNT0	=	0x6216
+                           006216  1013 _USBCNTL	=	0x6216
+                           006217  1014 _USBCNTH	=	0x6217
+                           006220  1015 _USBF0	=	0x6220
+                           006222  1016 _USBF1	=	0x6222
+                           006224  1017 _USBF2	=	0x6224
+                           006226  1018 _USBF3	=	0x6226
+                           006228  1019 _USBF4	=	0x6228
+                           00622A  1020 _USBF5	=	0x622a
+                           007080  1021 _X_P0	=	0x7080
+                           007086  1022 _X_U0CSR	=	0x7086
+                           007089  1023 _X_P0IFG	=	0x7089
+                           00708A  1024 _X_P1IFG	=	0x708a
+                           00708B  1025 _X_P2IFG	=	0x708b
+                           00708C  1026 _X_PICTL	=	0x708c
+                           00708D  1027 _X_P1IEN	=	0x708d
+                           00708F  1028 _X_P0INP	=	0x708f
+                           007090  1029 _X_P1	=	0x7090
+                           007091  1030 _X_RFIRQF1	=	0x7091
+                           007093  1031 _X_MPAGE	=	0x7093
+                           007093  1032 _X__XPAGE	=	0x7093
+                           007094  1033 _X_T2CTRL	=	0x7094
+                           007095  1034 _X_ST0	=	0x7095
+                           007096  1035 _X_ST1	=	0x7096
+                           007097  1036 _X_ST2	=	0x7097
+                           00709C  1037 _X_T2EVTCFG	=	0x709c
+                           00709D  1038 _X_SLEEPSTA	=	0x709d
+                           00709E  1039 _X_CLKCONSTA	=	0x709e
+                           00709F  1040 _X_FMAP	=	0x709f
+                           00709F  1041 _X_PSBANK	=	0x709f
+                           0070A0  1042 _X_P2	=	0x70a0
+                           0070A1  1043 _X_T2IRQF	=	0x70a1
+                           0070A2  1044 _X_T2M0	=	0x70a2
+                           0070A3  1045 _X_T2M1	=	0x70a3
+                           0070A4  1046 _X_T2MOVF0	=	0x70a4
+                           0070A5  1047 _X_T2MOVF1	=	0x70a5
+                           0070A6  1048 _X_T2MOVF2	=	0x70a6
+                           0070A7  1049 _X_T2IRQM	=	0x70a7
+                           0070AB  1050 _X_P0IEN	=	0x70ab
+                           0070AC  1051 _X_P2IEN	=	0x70ac
+                           0070AD  1052 _X_STLOAD	=	0x70ad
+                           0070AE  1053 _X_PMUX	=	0x70ae
+                           0070AF  1054 _X_T1STAT	=	0x70af
+                           0070B1  1055 _X_ENCDI	=	0x70b1
+                           0070B2  1056 _X_ENCDO	=	0x70b2
+                           0070B3  1057 _X_ENCCS	=	0x70b3
+                           0070B4  1058 _X_ADCCON1	=	0x70b4
+                           0070B5  1059 _X_ADCCON2	=	0x70b5
+                           0070B6  1060 _X_ADCCON3	=	0x70b6
+                           0070BA  1061 _X_ADCL	=	0x70ba
+                           0070BB  1062 _X_ADCH	=	0x70bb
+                           0070BC  1063 _X_RNDL	=	0x70bc
+                           0070BD  1064 _X_RNDH	=	0x70bd
+                           0070BE  1065 _X_SLEEPCMD	=	0x70be
+                           0070BF  1066 _X_RFERRF	=	0x70bf
+                           0070C1  1067 _X_U0DBUF	=	0x70c1
+                           0070C2  1068 _X_U0BAUD	=	0x70c2
+                           0070C3  1069 _X_T2MSEL	=	0x70c3
+                           0070C4  1070 _X_U0UCR	=	0x70c4
+                           0070C5  1071 _X_U0GCR	=	0x70c5
+                           0070C6  1072 _X_CLKCONCMD	=	0x70c6
+                           0070C7  1073 _X_MEMCTR	=	0x70c7
+                           0070C9  1074 _X_WDCTL	=	0x70c9
+                           0070CA  1075 _X_T3CNT	=	0x70ca
+                           0070CB  1076 _X_T3CTL	=	0x70cb
+                           0070CC  1077 _X_T3CCTL0	=	0x70cc
+                           0070CD  1078 _X_T3CC0	=	0x70cd
+                           0070CE  1079 _X_T3CCTL1	=	0x70ce
+                           0070CF  1080 _X_T3CC1	=	0x70cf
+                           0070D1  1081 _X_DMAIRQ	=	0x70d1
+                           0070D2  1082 _X_DMA1CFGL	=	0x70d2
+                           0070D3  1083 _X_DMA1CFGH	=	0x70d3
+                           0070D4  1084 _X_DMA0CFGL	=	0x70d4
+                           0070D5  1085 _X_DMA0CFGH	=	0x70d5
+                           0070D6  1086 _X_DMAARM	=	0x70d6
+                           0070D7  1087 _X_DMAREQ	=	0x70d7
+                           0070D8  1088 _X_TIMIF	=	0x70d8
+                           0070D9  1089 _X_RFD	=	0x70d9
+                           0070DA  1090 _X_T1CC0L	=	0x70da
+                           0070DB  1091 _X_T1CC0H	=	0x70db
+                           0070DC  1092 _X_T1CC1L	=	0x70dc
+                           0070DD  1093 _X_T1CC1H	=	0x70dd
+                           0070DE  1094 _X_T1CC2L	=	0x70de
+                           0070DF  1095 _X_T1CC2H	=	0x70df
+                           0070E1  1096 _X_RFST	=	0x70e1
+                           0070E2  1097 _X_T1CNTL	=	0x70e2
+                           0070E3  1098 _X_T1CNTH	=	0x70e3
+                           0070E4  1099 _X_T1CTL	=	0x70e4
+                           0070E5  1100 _X_T1CCTL0	=	0x70e5
+                           0070E6  1101 _X_T1CCTL1	=	0x70e6
+                           0070E7  1102 _X_T1CCTL2	=	0x70e7
+                           0070E9  1103 _X_RFIRQF0	=	0x70e9
+                           0070EA  1104 _X_T4CNT	=	0x70ea
+                           0070EB  1105 _X_T4CTL	=	0x70eb
+                           0070EC  1106 _X_T4CCTL0	=	0x70ec
+                           0070ED  1107 _X_T4CC0	=	0x70ed
+                           0070EE  1108 _X_T4CCTL1	=	0x70ee
+                           0070EF  1109 _X_T4CC1	=	0x70ef
+                           0070F1  1110 _X_PERCFG	=	0x70f1
+                           0070F2  1111 _X_APCFG	=	0x70f2
+                           0070F3  1112 _X_P0SEL	=	0x70f3
+                           0070F4  1113 _X_P1SEL	=	0x70f4
+                           0070F5  1114 _X_P2SEL	=	0x70f5
+                           0070F6  1115 _X_P1INP	=	0x70f6
+                           0070F7  1116 _X_P2INP	=	0x70f7
+                           0070F8  1117 _X_U1CSR	=	0x70f8
+                           0070F9  1118 _X_U1DBUF	=	0x70f9
+                           0070FA  1119 _X_U1BAUD	=	0x70fa
+                           0070FB  1120 _X_U1UCR	=	0x70fb
+                           0070FC  1121 _X_U1GCR	=	0x70fc
+                           0070FD  1122 _X_P0DIR	=	0x70fd
+                           0070FE  1123 _X_P1DIR	=	0x70fe
+                           0070FF  1124 _X_P2DIR	=	0x70ff
+                           007800  1125 _X_INFOPAGE	=	0x7800
+                           00780C  1126 _X_IEEE_ADDR	=	0x780c
+      000000                       1127 _data_rx_urb:
+      000000                       1128 	.ds 14
+      00000E                       1129 _data_tx_urb:
+      00000E                       1130 	.ds 14
+      00001C                       1131 _usb_rx_data:
+      00001C                       1132 	.ds 8
+      000024                       1133 _usb_tx_data:
+      000024                       1134 	.ds 8
+      00002C                       1135 _input_handler:
+      00002C                       1136 	.ds 3
+                                   1137 ;--------------------------------------------------------
+                                   1138 ; absolute external ram data
+                                   1139 ;--------------------------------------------------------
+                                   1140 	.area XABS    (ABS,XDATA)
+                                   1141 ;--------------------------------------------------------
+                                   1142 ; external initialized ram data
+                                   1143 ;--------------------------------------------------------
+                                   1144 	.area XISEG   (XDATA)
+      000000                       1145 _string_serial_nr:
+      000000                       1146 	.ds 34
+      000022                       1147 _enabled:
+      000022                       1148 	.ds 1
+      000023                       1149 _buffered_data:
+      000023                       1150 	.ds 1
+      000024                       1151 _usb_serial_process::
+      000024                       1152 	.ds 10
+                                   1153 	.area HOME    (CODE)
+                                   1154 	.area GSINIT0 (CODE)
+                                   1155 	.area GSINIT1 (CODE)
+                                   1156 	.area GSINIT2 (CODE)
+                                   1157 	.area GSINIT3 (CODE)
+                                   1158 	.area GSINIT4 (CODE)
+                                   1159 	.area GSINIT5 (CODE)
+                                   1160 	.area GSINIT  (CODE)
+                                   1161 	.area GSFINAL (CODE)
+                                   1162 	.area CSEG    (CODE)
+                                   1163 ;--------------------------------------------------------
+                                   1164 ; global & static initialisations
+                                   1165 ;--------------------------------------------------------
+                                   1166 	.area HOME    (CODE)
+                                   1167 	.area GSINIT  (CODE)
+                                   1168 	.area GSFINAL (CODE)
+                                   1169 	.area GSINIT  (CODE)
+                                   1170 ;--------------------------------------------------------
+                                   1171 ; Home
+                                   1172 ;--------------------------------------------------------
+                                   1173 	.area HOME    (CODE)
+                                   1174 	.area HOME    (CODE)
+                                   1175 ;--------------------------------------------------------
+                                   1176 ; code
+                                   1177 ;--------------------------------------------------------
+                                   1178 	.area BANK1   (CODE)
+                                   1179 ;------------------------------------------------------------
+                                   1180 ;Allocation info for local variables in function 'usb_class_get_string_descriptor'
+                                   1181 ;------------------------------------------------------------
+                                   1182 ;string                    Allocated to stack - sp -3
+                                   1183 ;lang                      Allocated to registers 
+                                   1184 ;------------------------------------------------------------
+                                   1185 ;	../../../../platform/cc2530eb/dev/usb-serial.c:110: usb_class_get_string_descriptor(uint16_t lang, uint8_t string)
+                                   1186 ;	-----------------------------------------
+                                   1187 ;	 function usb_class_get_string_descriptor
+                                   1188 ;	-----------------------------------------
+      000000                       1189 _usb_class_get_string_descriptor:
+                           000007  1190 	ar7 = 0x07
+                           000006  1191 	ar6 = 0x06
+                           000005  1192 	ar5 = 0x05
+                           000004  1193 	ar4 = 0x04
+                           000003  1194 	ar3 = 0x03
+                           000002  1195 	ar2 = 0x02
+                           000001  1196 	ar1 = 0x01
+                           000000  1197 	ar0 = 0x00
+                                   1198 ;	../../../../platform/cc2530eb/dev/usb-serial.c:112: switch (string) {
+      000000 E5 81            [12] 1199 	mov	a,sp
+      000002 24 FD            [12] 1200 	add	a,#0xfd
+      000004 F8               [12] 1201 	mov	r0,a
+      000005 E6               [12] 1202 	mov	a,@r0
+      000006 24 FC            [12] 1203 	add	a,#0xff - 0x03
+      000008 40 50            [24] 1204 	jc	00105$
+      00000A E5 81            [12] 1205 	mov	a,sp
+      00000C 24 FD            [12] 1206 	add	a,#0xfd
+      00000E F8               [12] 1207 	mov	r0,a
+      00000F E6               [12] 1208 	mov	a,@r0
+      000010 26               [12] 1209 	add	a,@r0
+      000011 26               [12] 1210 	add	a,@r0
+      000012 90r00r16         [24] 1211 	mov	dptr,#00113$
+      000015 73               [24] 1212 	jmp	@a+dptr
+      000016                       1213 00113$:
+      000016 02r00r22         [24] 1214 	ljmp	00101$
+      000019 02r00r30         [24] 1215 	ljmp	00102$
+      00001C 02r00r3E         [24] 1216 	ljmp	00103$
+      00001F 02r00r4C         [24] 1217 	ljmp	00104$
+                                   1218 ;	../../../../platform/cc2530eb/dev/usb-serial.c:113: case 0:
+      000022                       1219 00101$:
+                                   1220 ;	../../../../platform/cc2530eb/dev/usb-serial.c:114: return (uint8_t *)&lang_id;
+      000022 7Er00            [12] 1221 	mov	r6,#_lang_id
+      000024 7Fs00            [12] 1222 	mov	r7,#(_lang_id >> 8)
+      000026 7D 80            [12] 1223 	mov	r5,#0x80
+      000028 8E 82            [24] 1224 	mov	dpl,r6
+      00002A 8F 83            [24] 1225 	mov	dph,r7
+      00002C 8D F0            [24] 1226 	mov	b,r5
+                                   1227 ;	../../../../platform/cc2530eb/dev/usb-serial.c:115: case 1:
+      00002E 80 30            [24] 1228 	sjmp	00107$
+      000030                       1229 00102$:
+                                   1230 ;	../../../../platform/cc2530eb/dev/usb-serial.c:116: return (uint8_t *)&string_manufacturer;
+      000030 7Er04            [12] 1231 	mov	r6,#_string_manufacturer
+      000032 7Fs00            [12] 1232 	mov	r7,#(_string_manufacturer >> 8)
+      000034 7D 80            [12] 1233 	mov	r5,#0x80
+      000036 8E 82            [24] 1234 	mov	dpl,r6
+      000038 8F 83            [24] 1235 	mov	dph,r7
+      00003A 8D F0            [24] 1236 	mov	b,r5
+                                   1237 ;	../../../../platform/cc2530eb/dev/usb-serial.c:117: case 2:
+      00003C 80 22            [24] 1238 	sjmp	00107$
+      00003E                       1239 00103$:
+                                   1240 ;	../../../../platform/cc2530eb/dev/usb-serial.c:118: return (uint8_t *)&string_product;
+      00003E 7Er1A            [12] 1241 	mov	r6,#_string_product
+      000040 7Fs00            [12] 1242 	mov	r7,#(_string_product >> 8)
+      000042 7D 80            [12] 1243 	mov	r5,#0x80
+      000044 8E 82            [24] 1244 	mov	dpl,r6
+      000046 8F 83            [24] 1245 	mov	dph,r7
+      000048 8D F0            [24] 1246 	mov	b,r5
+                                   1247 ;	../../../../platform/cc2530eb/dev/usb-serial.c:119: case 3:
+      00004A 80 14            [24] 1248 	sjmp	00107$
+      00004C                       1249 00104$:
+                                   1250 ;	../../../../platform/cc2530eb/dev/usb-serial.c:120: return (uint8_t *)&string_serial_nr;
+      00004C 7Er00            [12] 1251 	mov	r6,#_string_serial_nr
+      00004E 7Fs00            [12] 1252 	mov	r7,#(_string_serial_nr >> 8)
+      000050 7D 00            [12] 1253 	mov	r5,#0x00
+      000052 8E 82            [24] 1254 	mov	dpl,r6
+      000054 8F 83            [24] 1255 	mov	dph,r7
+      000056 8D F0            [24] 1256 	mov	b,r5
+                                   1257 ;	../../../../platform/cc2530eb/dev/usb-serial.c:121: default:
+      000058 80 06            [24] 1258 	sjmp	00107$
+      00005A                       1259 00105$:
+                                   1260 ;	../../../../platform/cc2530eb/dev/usb-serial.c:122: return NULL;
+      00005A 90 00 00         [24] 1261 	mov	dptr,#0x0000
+      00005D 75 F0 00         [24] 1262 	mov	b,#0x00
+                                   1263 ;	../../../../platform/cc2530eb/dev/usb-serial.c:123: }
+      000060                       1264 00107$:
+      000060 02r00r00         [24] 1265 	ljmp	__sdcc_banked_ret
+                                   1266 ;------------------------------------------------------------
+                                   1267 ;Allocation info for local variables in function 'set_serial_number'
+                                   1268 ;------------------------------------------------------------
+                                   1269 ;i                         Allocated to registers r7 
+                                   1270 ;ieee                      Allocated to registers 
+                                   1271 ;lown                      Allocated to registers r6 
+                                   1272 ;highn                     Allocated to registers r5 
+                                   1273 ;c                         Allocated to registers r6 
+                                   1274 ;------------------------------------------------------------
+                                   1275 ;	../../../../platform/cc2530eb/dev/usb-serial.c:127: set_serial_number(void)
+                                   1276 ;	-----------------------------------------
+                                   1277 ;	 function set_serial_number
+                                   1278 ;	-----------------------------------------
+      000063                       1279 _set_serial_number:
+                                   1280 ;	../../../../platform/cc2530eb/dev/usb-serial.c:130: uint8_t *ieee = &X_IEEE_ADDR;
+                                   1281 ;	../../../../platform/cc2530eb/dev/usb-serial.c:134: for(i = 0; i < 8; i++) {
+      000063 7F 00            [12] 1282 	mov	r7,#0x00
+      000065                       1283 00102$:
+                                   1284 ;	../../../../platform/cc2530eb/dev/usb-serial.c:135: lown = ieee[i] & 0x0F;
+      000065 EF               [12] 1285 	mov	a,r7
+      000066 24 0C            [12] 1286 	add	a,#_X_IEEE_ADDR
+      000068 FC               [12] 1287 	mov	r4,a
+      000069 E4               [12] 1288 	clr	a
+      00006A 34 78            [12] 1289 	addc	a,#(_X_IEEE_ADDR >> 8)
+      00006C FD               [12] 1290 	mov	r5,a
+      00006D 7E 00            [12] 1291 	mov	r6,#0x00
+      00006F 8C 82            [24] 1292 	mov	dpl,r4
+      000071 8D 83            [24] 1293 	mov	dph,r5
+      000073 8E F0            [24] 1294 	mov	b,r6
+      000075 12r00r00         [24] 1295 	lcall	__gptrget
+      000078 FC               [12] 1296 	mov	r4,a
+      000079 74 0F            [12] 1297 	mov	a,#0x0F
+      00007B 5C               [12] 1298 	anl	a,r4
+      00007C FE               [12] 1299 	mov	r6,a
+                                   1300 ;	../../../../platform/cc2530eb/dev/usb-serial.c:136: highn = ieee[i] >> 4;
+      00007D EC               [12] 1301 	mov	a,r4
+      00007E C4               [12] 1302 	swap	a
+      00007F 54 0F            [12] 1303 	anl	a,#0x0F
+      000081 FD               [12] 1304 	mov	r5,a
+                                   1305 ;	../../../../platform/cc2530eb/dev/usb-serial.c:137: c = lown > 9 ? 'A' + lown - 0xA : lown + '0';
+      000082 EE               [12] 1306 	mov	a,r6
+      000083 24 F6            [12] 1307 	add	a,#0xff - 0x09
+      000085 50 08            [24] 1308 	jnc	00106$
+      000087 8E 04            [24] 1309 	mov	ar4,r6
+      000089 74 37            [12] 1310 	mov	a,#0x37
+      00008B 2C               [12] 1311 	add	a,r4
+      00008C FC               [12] 1312 	mov	r4,a
+      00008D 80 04            [24] 1313 	sjmp	00107$
+      00008F                       1314 00106$:
+      00008F 74 30            [12] 1315 	mov	a,#0x30
+      000091 2E               [12] 1316 	add	a,r6
+      000092 FC               [12] 1317 	mov	r4,a
+      000093                       1318 00107$:
+      000093 8C 06            [24] 1319 	mov	ar6,r4
+                                   1320 ;	../../../../platform/cc2530eb/dev/usb-serial.c:138: string_serial_nr.string[14 - i * 2 + 1] = c;
+      000095 EF               [12] 1321 	mov	a,r7
+      000096 2F               [12] 1322 	add	a,r7
+      000097 FC               [12] 1323 	mov	r4,a
+      000098 74 0F            [12] 1324 	mov	a,#0x0F
+      00009A C3               [12] 1325 	clr	c
+      00009B 9C               [12] 1326 	subb	a,r4
+      00009C 25 E0            [12] 1327 	add	a,acc
+      00009E 24r02            [12] 1328 	add	a,#(_string_serial_nr + 0x0002)
+      0000A0 FC               [12] 1329 	mov	r4,a
+      0000A1 E4               [12] 1330 	clr	a
+      0000A2 34s00            [12] 1331 	addc	a,#((_string_serial_nr + 0x0002) >> 8)
+      0000A4 FB               [12] 1332 	mov	r3,a
+      0000A5 C0 07            [24] 1333 	push	ar7
+      0000A7 8E 02            [24] 1334 	mov	ar2,r6
+      0000A9 7F 00            [12] 1335 	mov	r7,#0x00
+      0000AB 8C 82            [24] 1336 	mov	dpl,r4
+      0000AD 8B 83            [24] 1337 	mov	dph,r3
+      0000AF EA               [12] 1338 	mov	a,r2
+      0000B0 F0               [24] 1339 	movx	@dptr,a
+      0000B1 EF               [12] 1340 	mov	a,r7
+      0000B2 A3               [24] 1341 	inc	dptr
+      0000B3 F0               [24] 1342 	movx	@dptr,a
+                                   1343 ;	../../../../platform/cc2530eb/dev/usb-serial.c:139: c = highn > 9 ? 'A' + highn - 0xA : highn + '0';
+      0000B4 C3               [12] 1344 	clr	c
+      0000B5 74 09            [12] 1345 	mov	a,#0x09
+      0000B7 9D               [12] 1346 	subb	a,r5
+      0000B8 D0 07            [24] 1347 	pop	ar7
+      0000BA 50 08            [24] 1348 	jnc	00108$
+      0000BC 8D 04            [24] 1349 	mov	ar4,r5
+      0000BE 74 37            [12] 1350 	mov	a,#0x37
+      0000C0 2C               [12] 1351 	add	a,r4
+      0000C1 FC               [12] 1352 	mov	r4,a
+      0000C2 80 04            [24] 1353 	sjmp	00109$
+      0000C4                       1354 00108$:
+      0000C4 74 30            [12] 1355 	mov	a,#0x30
+      0000C6 2D               [12] 1356 	add	a,r5
+      0000C7 FC               [12] 1357 	mov	r4,a
+      0000C8                       1358 00109$:
+      0000C8 8C 06            [24] 1359 	mov	ar6,r4
+                                   1360 ;	../../../../platform/cc2530eb/dev/usb-serial.c:140: string_serial_nr.string[14 - i * 2] = c;
+      0000CA EF               [12] 1361 	mov	a,r7
+      0000CB 2F               [12] 1362 	add	a,r7
+      0000CC FD               [12] 1363 	mov	r5,a
+      0000CD 74 0E            [12] 1364 	mov	a,#0x0E
+      0000CF C3               [12] 1365 	clr	c
+      0000D0 9D               [12] 1366 	subb	a,r5
+      0000D1 25 E0            [12] 1367 	add	a,acc
+      0000D3 24r02            [12] 1368 	add	a,#(_string_serial_nr + 0x0002)
+      0000D5 FD               [12] 1369 	mov	r5,a
+      0000D6 E4               [12] 1370 	clr	a
+      0000D7 34s00            [12] 1371 	addc	a,#((_string_serial_nr + 0x0002) >> 8)
+      0000D9 FC               [12] 1372 	mov	r4,a
+      0000DA 7B 00            [12] 1373 	mov	r3,#0x00
+      0000DC 8D 82            [24] 1374 	mov	dpl,r5
+      0000DE 8C 83            [24] 1375 	mov	dph,r4
+      0000E0 EE               [12] 1376 	mov	a,r6
+      0000E1 F0               [24] 1377 	movx	@dptr,a
+      0000E2 EB               [12] 1378 	mov	a,r3
+      0000E3 A3               [24] 1379 	inc	dptr
+      0000E4 F0               [24] 1380 	movx	@dptr,a
+                                   1381 ;	../../../../platform/cc2530eb/dev/usb-serial.c:134: for(i = 0; i < 8; i++) {
+      0000E5 0F               [12] 1382 	inc	r7
+      0000E6 BF 08 00         [24] 1383 	cjne	r7,#0x08,00122$
+      0000E9                       1384 00122$:
+      0000E9 50 03            [24] 1385 	jnc	00123$
+      0000EB 02r00r65         [24] 1386 	ljmp	00102$
+      0000EE                       1387 00123$:
+      0000EE 02r00r00         [24] 1388 	ljmp	__sdcc_banked_ret
+                                   1389 ;------------------------------------------------------------
+                                   1390 ;Allocation info for local variables in function 'queue_rx_urb'
+                                   1391 ;------------------------------------------------------------
+                                   1392 ;	../../../../platform/cc2530eb/dev/usb-serial.c:145: queue_rx_urb(void)
+                                   1393 ;	-----------------------------------------
+                                   1394 ;	 function queue_rx_urb
+                                   1395 ;	-----------------------------------------
+      0000F1                       1396 _queue_rx_urb:
+                                   1397 ;	../../../../platform/cc2530eb/dev/usb-serial.c:147: data_rx_urb.flags = USB_BUFFER_PACKET_END;    /* Make sure we are getting immediately the packet. */
+      0000F1 90r00r08         [24] 1398 	mov	dptr,#(_data_rx_urb + 0x0008)
+      0000F4 74 04            [12] 1399 	mov	a,#0x04
+      0000F6 F0               [24] 1400 	movx	@dptr,a
+      0000F7 E4               [12] 1401 	clr	a
+      0000F8 A3               [24] 1402 	inc	dptr
+      0000F9 F0               [24] 1403 	movx	@dptr,a
+                                   1404 ;	../../../../platform/cc2530eb/dev/usb-serial.c:148: data_rx_urb.flags |= USB_BUFFER_NOTIFY;
+      0000FA 90r00r08         [24] 1405 	mov	dptr,#(_data_rx_urb + 0x0008)
+      0000FD E0               [24] 1406 	movx	a,@dptr
+      0000FE FE               [12] 1407 	mov	r6,a
+      0000FF A3               [24] 1408 	inc	dptr
+      000100 E0               [24] 1409 	movx	a,@dptr
+      000101 FF               [12] 1410 	mov	r7,a
+      000102 43 06 08         [24] 1411 	orl	ar6,#0x08
+      000105 90r00r08         [24] 1412 	mov	dptr,#(_data_rx_urb + 0x0008)
+      000108 EE               [12] 1413 	mov	a,r6
+      000109 F0               [24] 1414 	movx	@dptr,a
+      00010A EF               [12] 1415 	mov	a,r7
+      00010B A3               [24] 1416 	inc	dptr
+      00010C F0               [24] 1417 	movx	@dptr,a
+                                   1418 ;	../../../../platform/cc2530eb/dev/usb-serial.c:149: data_rx_urb.data = usb_rx_data;
+      00010D 90r00r03         [24] 1419 	mov	dptr,#(_data_rx_urb + 0x0003)
+      000110 74r1C            [12] 1420 	mov	a,#_usb_rx_data
+      000112 F0               [24] 1421 	movx	@dptr,a
+      000113 74s00            [12] 1422 	mov	a,#(_usb_rx_data >> 8)
+      000115 A3               [24] 1423 	inc	dptr
+      000116 F0               [24] 1424 	movx	@dptr,a
+      000117 E4               [12] 1425 	clr	a
+      000118 A3               [24] 1426 	inc	dptr
+      000119 F0               [24] 1427 	movx	@dptr,a
+                                   1428 ;	../../../../platform/cc2530eb/dev/usb-serial.c:150: data_rx_urb.left = BUFFER_SIZE;
+      00011A 90r00r06         [24] 1429 	mov	dptr,#(_data_rx_urb + 0x0006)
+      00011D 74 08            [12] 1430 	mov	a,#0x08
+      00011F F0               [24] 1431 	movx	@dptr,a
+      000120 E4               [12] 1432 	clr	a
+      000121 A3               [24] 1433 	inc	dptr
+      000122 F0               [24] 1434 	movx	@dptr,a
+                                   1435 ;	../../../../platform/cc2530eb/dev/usb-serial.c:151: data_rx_urb.next = NULL;
+      000123 90r00r00         [24] 1436 	mov	dptr,#_data_rx_urb
+      000126 E4               [12] 1437 	clr	a
+      000127 F0               [24] 1438 	movx	@dptr,a
+      000128 E4               [12] 1439 	clr	a
+      000129 A3               [24] 1440 	inc	dptr
+      00012A F0               [24] 1441 	movx	@dptr,a
+      00012B E4               [12] 1442 	clr	a
+      00012C A3               [24] 1443 	inc	dptr
+      00012D F0               [24] 1444 	movx	@dptr,a
+                                   1445 ;	../../../../platform/cc2530eb/dev/usb-serial.c:152: usb_submit_recv_buffer(EPOUT, &data_rx_urb);
+      00012E 74r00            [12] 1446 	mov	a,#_data_rx_urb
+      000130 C0 E0            [24] 1447 	push	acc
+      000132 74s00            [12] 1448 	mov	a,#(_data_rx_urb >> 8)
+      000134 C0 E0            [24] 1449 	push	acc
+      000136 E4               [12] 1450 	clr	a
+      000137 C0 E0            [24] 1451 	push	acc
+      000139 75 82 03         [24] 1452 	mov	dpl,#0x03
+      00013C 78r00            [12] 1453 	mov	r0,#_usb_submit_recv_buffer
+      00013E 79s00            [12] 1454 	mov	r1,#(_usb_submit_recv_buffer >> 8)
+      000140 7As00            [12] 1455 	mov	r2,#(_usb_submit_recv_buffer >> 16)
+      000142 12r00r00         [24] 1456 	lcall	__sdcc_banked_call
+      000145 15 81            [12] 1457 	dec	sp
+      000147 15 81            [12] 1458 	dec	sp
+      000149 15 81            [12] 1459 	dec	sp
+      00014B 02r00r00         [24] 1460 	ljmp	__sdcc_banked_ret
+                                   1461 ;------------------------------------------------------------
+                                   1462 ;Allocation info for local variables in function 'do_work'
+                                   1463 ;------------------------------------------------------------
+                                   1464 ;events                    Allocated to registers r6 r7 
+                                   1465 ;len                       Allocated to registers r7 
+                                   1466 ;i                         Allocated to registers r6 
+                                   1467 ;------------------------------------------------------------
+                                   1468 ;	../../../../platform/cc2530eb/dev/usb-serial.c:156: do_work(void)
+                                   1469 ;	-----------------------------------------
+                                   1470 ;	 function do_work
+                                   1471 ;	-----------------------------------------
+      00014E                       1472 _do_work:
+                                   1473 ;	../../../../platform/cc2530eb/dev/usb-serial.c:160: events = usb_get_global_events();
+      00014E 78r00            [12] 1474 	mov	r0,#_usb_get_global_events
+      000150 79s00            [12] 1475 	mov	r1,#(_usb_get_global_events >> 8)
+      000152 7As00            [12] 1476 	mov	r2,#(_usb_get_global_events >> 16)
+      000154 12r00r00         [24] 1477 	lcall	__sdcc_banked_call
+      000157 AE 82            [24] 1478 	mov	r6,dpl
+      000159 AF 83            [24] 1479 	mov	r7,dph
+                                   1480 ;	../../../../platform/cc2530eb/dev/usb-serial.c:161: if(events & USB_EVENT_CONFIG) {
+      00015B EE               [12] 1481 	mov	a,r6
+      00015C 30 E0 2F         [24] 1482 	jnb	acc.0,00102$
+                                   1483 ;	../../../../platform/cc2530eb/dev/usb-serial.c:163: enabled = 1;
+      00015F 90r00r22         [24] 1484 	mov	dptr,#_enabled
+      000162 74 01            [12] 1485 	mov	a,#0x01
+      000164 F0               [24] 1486 	movx	@dptr,a
+                                   1487 ;	../../../../platform/cc2530eb/dev/usb-serial.c:164: usb_setup_bulk_endpoint(EPIN);
+      000165 75 82 82         [24] 1488 	mov	dpl,#0x82
+      000168 C0 07            [24] 1489 	push	ar7
+      00016A C0 06            [24] 1490 	push	ar6
+      00016C 78r00            [12] 1491 	mov	r0,#_usb_setup_bulk_endpoint
+      00016E 79s00            [12] 1492 	mov	r1,#(_usb_setup_bulk_endpoint >> 8)
+      000170 7As00            [12] 1493 	mov	r2,#(_usb_setup_bulk_endpoint >> 16)
+      000172 12r00r00         [24] 1494 	lcall	__sdcc_banked_call
+                                   1495 ;	../../../../platform/cc2530eb/dev/usb-serial.c:165: usb_setup_bulk_endpoint(EPOUT);
+      000175 75 82 03         [24] 1496 	mov	dpl,#0x03
+      000178 78r00            [12] 1497 	mov	r0,#_usb_setup_bulk_endpoint
+      00017A 79s00            [12] 1498 	mov	r1,#(_usb_setup_bulk_endpoint >> 8)
+      00017C 7As00            [12] 1499 	mov	r2,#(_usb_setup_bulk_endpoint >> 16)
+      00017E 12r00r00         [24] 1500 	lcall	__sdcc_banked_call
+                                   1501 ;	../../../../platform/cc2530eb/dev/usb-serial.c:167: queue_rx_urb();
+      000181 78rF1            [12] 1502 	mov	r0,#_queue_rx_urb
+      000183 79s00            [12] 1503 	mov	r1,#(_queue_rx_urb >> 8)
+      000185 7As00            [12] 1504 	mov	r2,#(_queue_rx_urb >> 16)
+      000187 12r00r00         [24] 1505 	lcall	__sdcc_banked_call
+      00018A D0 06            [24] 1506 	pop	ar6
+      00018C D0 07            [24] 1507 	pop	ar7
+      00018E                       1508 00102$:
+                                   1509 ;	../../../../platform/cc2530eb/dev/usb-serial.c:169: if(events & USB_EVENT_RESET) {
+      00018E EE               [12] 1510 	mov	a,r6
+      00018F 30 E3 05         [24] 1511 	jnb	acc.3,00104$
+                                   1512 ;	../../../../platform/cc2530eb/dev/usb-serial.c:170: enabled = 0;
+      000192 90r00r22         [24] 1513 	mov	dptr,#_enabled
+      000195 E4               [12] 1514 	clr	a
+      000196 F0               [24] 1515 	movx	@dptr,a
+      000197                       1516 00104$:
+                                   1517 ;	../../../../platform/cc2530eb/dev/usb-serial.c:173: if(!enabled) {
+      000197 90r00r22         [24] 1518 	mov	dptr,#_enabled
+      00019A E0               [24] 1519 	movx	a,@dptr
+      00019B FD               [12] 1520 	mov	r5,a
+      00019C 70 03            [24] 1521 	jnz	00106$
+                                   1522 ;	../../../../platform/cc2530eb/dev/usb-serial.c:174: return;
+      00019E 02r02r24         [24] 1523 	ljmp	00118$
+      0001A1                       1524 00106$:
+                                   1525 ;	../../../../platform/cc2530eb/dev/usb-serial.c:177: events = usb_get_ep_events(EPOUT);
+      0001A1 75 82 03         [24] 1526 	mov	dpl,#0x03
+      0001A4 78r00            [12] 1527 	mov	r0,#_usb_get_ep_events
+      0001A6 79s00            [12] 1528 	mov	r1,#(_usb_get_ep_events >> 8)
+      0001A8 7As00            [12] 1529 	mov	r2,#(_usb_get_ep_events >> 16)
+      0001AA 12r00r00         [24] 1530 	lcall	__sdcc_banked_call
+      0001AD AC 82            [24] 1531 	mov	r4,dpl
+      0001AF AD 83            [24] 1532 	mov	r5,dph
+      0001B1 8C 06            [24] 1533 	mov	ar6,r4
+      0001B3 8D 07            [24] 1534 	mov	ar7,r5
+                                   1535 ;	../../../../platform/cc2530eb/dev/usb-serial.c:178: if((events & USB_EP_EVENT_NOTIFICATION)
+      0001B5 EE               [12] 1536 	mov	a,r6
+      0001B6 30 E0 6B         [24] 1537 	jnb	acc.0,00118$
+                                   1538 ;	../../../../platform/cc2530eb/dev/usb-serial.c:179: && !(data_rx_urb.flags & USB_BUFFER_SUBMITTED)) {
+      0001B9 90r00r08         [24] 1539 	mov	dptr,#(_data_rx_urb + 0x0008)
+      0001BC E0               [24] 1540 	movx	a,@dptr
+      0001BD FE               [12] 1541 	mov	r6,a
+      0001BE A3               [24] 1542 	inc	dptr
+      0001BF E0               [24] 1543 	movx	a,@dptr
+      0001C0 FF               [12] 1544 	mov	r7,a
+      0001C1 EE               [12] 1545 	mov	a,r6
+      0001C2 20 E0 5F         [24] 1546 	jb	acc.0,00118$
+                                   1547 ;	../../../../platform/cc2530eb/dev/usb-serial.c:180: if(!(data_rx_urb.flags & USB_BUFFER_FAILED)) {
+      0001C5 EE               [12] 1548 	mov	a,r6
+      0001C6 20 E7 52         [24] 1549 	jb	acc.7,00111$
+                                   1550 ;	../../../../platform/cc2530eb/dev/usb-serial.c:181: if(input_handler) {
+      0001C9 90r00r2C         [24] 1551 	mov	dptr,#_input_handler
+      0001CC E0               [24] 1552 	movx	a,@dptr
+      0001CD FD               [12] 1553 	mov	r5,a
+      0001CE A3               [24] 1554 	inc	dptr
+      0001CF E0               [24] 1555 	movx	a,@dptr
+      0001D0 FE               [12] 1556 	mov	r6,a
+      0001D1 A3               [24] 1557 	inc	dptr
+      0001D2 E0               [24] 1558 	movx	a,@dptr
+      0001D3 FF               [12] 1559 	mov	r7,a
+      0001D4 ED               [12] 1560 	mov	a,r5
+      0001D5 4E               [12] 1561 	orl	a,r6
+      0001D6 60 43            [24] 1562 	jz	00111$
+                                   1563 ;	../../../../platform/cc2530eb/dev/usb-serial.c:185: len = BUFFER_SIZE - data_rx_urb.left;
+      0001D8 90r00r06         [24] 1564 	mov	dptr,#(_data_rx_urb + 0x0006)
+      0001DB E0               [24] 1565 	movx	a,@dptr
+      0001DC FE               [12] 1566 	mov	r6,a
+      0001DD A3               [24] 1567 	inc	dptr
+      0001DE E0               [24] 1568 	movx	a,@dptr
+      0001DF 74 08            [12] 1569 	mov	a,#0x08
+      0001E1 C3               [12] 1570 	clr	c
+      0001E2 9E               [12] 1571 	subb	a,r6
+      0001E3 FF               [12] 1572 	mov	r7,a
+                                   1573 ;	../../../../platform/cc2530eb/dev/usb-serial.c:186: for(i = 0; i < len; i++) {
+      0001E4 7E 00            [12] 1574 	mov	r6,#0x00
+      0001E6                       1575 00116$:
+      0001E6 C3               [12] 1576 	clr	c
+      0001E7 EE               [12] 1577 	mov	a,r6
+      0001E8 9F               [12] 1578 	subb	a,r7
+      0001E9 50 30            [24] 1579 	jnc	00111$
+                                   1580 ;	../../../../platform/cc2530eb/dev/usb-serial.c:187: input_handler(usb_rx_data[i]);
+      0001EB EE               [12] 1581 	mov	a,r6
+      0001EC 24r1C            [12] 1582 	add	a,#_usb_rx_data
+      0001EE F5 82            [12] 1583 	mov	dpl,a
+      0001F0 E4               [12] 1584 	clr	a
+      0001F1 34s00            [12] 1585 	addc	a,#(_usb_rx_data >> 8)
+      0001F3 F5 83            [12] 1586 	mov	dph,a
+      0001F5 E0               [24] 1587 	movx	a,@dptr
+      0001F6 FD               [12] 1588 	mov	r5,a
+      0001F7 C0 07            [24] 1589 	push	ar7
+      0001F9 C0 06            [24] 1590 	push	ar6
+      0001FB 90r00r2C         [24] 1591 	mov	dptr,#_input_handler
+      0001FE E0               [24] 1592 	movx	a,@dptr
+      0001FF C0 E0            [24] 1593 	push	acc
+      000201 A3               [24] 1594 	inc	dptr
+      000202 E0               [24] 1595 	movx	a,@dptr
+      000203 C0 E0            [24] 1596 	push	acc
+      000205 A3               [24] 1597 	inc	dptr
+      000206 E0               [24] 1598 	movx	a,@dptr
+      000207 C0 E0            [24] 1599 	push	acc
+      000209 8D 82            [24] 1600 	mov	dpl,r5
+      00020B D0 02            [24] 1601 	pop	ar2
+      00020D D0 01            [24] 1602 	pop	ar1
+      00020F D0 00            [24] 1603 	pop	ar0
+      000211 12r00r00         [24] 1604 	lcall	__sdcc_banked_call
+      000214 D0 06            [24] 1605 	pop	ar6
+      000216 D0 07            [24] 1606 	pop	ar7
+                                   1607 ;	../../../../platform/cc2530eb/dev/usb-serial.c:186: for(i = 0; i < len; i++) {
+      000218 0E               [12] 1608 	inc	r6
+      000219 80 CB            [24] 1609 	sjmp	00116$
+      00021B                       1610 00111$:
+                                   1611 ;	../../../../platform/cc2530eb/dev/usb-serial.c:191: queue_rx_urb();
+      00021B 78rF1            [12] 1612 	mov	r0,#_queue_rx_urb
+      00021D 79s00            [12] 1613 	mov	r1,#(_queue_rx_urb >> 8)
+      00021F 7As00            [12] 1614 	mov	r2,#(_queue_rx_urb >> 16)
+      000221 12r00r00         [24] 1615 	lcall	__sdcc_banked_call
+      000224                       1616 00118$:
+      000224 02r00r00         [24] 1617 	ljmp	__sdcc_banked_ret
+                                   1618 ;------------------------------------------------------------
+                                   1619 ;Allocation info for local variables in function 'usb_serial_flush'
+                                   1620 ;------------------------------------------------------------
+                                   1621 ;	../../../../platform/cc2530eb/dev/usb-serial.c:197: usb_serial_flush()
+                                   1622 ;	-----------------------------------------
+                                   1623 ;	 function usb_serial_flush
+                                   1624 ;	-----------------------------------------
+      000227                       1625 _usb_serial_flush:
+                                   1626 ;	../../../../platform/cc2530eb/dev/usb-serial.c:199: if(buffered_data == BUFFER_SIZE) {
+      000227 90r00r23         [24] 1627 	mov	dptr,#_buffered_data
+      00022A E0               [24] 1628 	movx	a,@dptr
+      00022B FF               [12] 1629 	mov	r7,a
+      00022C BF 08 0A         [24] 1630 	cjne	r7,#0x08,00102$
+                                   1631 ;	../../../../platform/cc2530eb/dev/usb-serial.c:200: data_tx_urb.flags = 0;
+      00022F 90r00r16         [24] 1632 	mov	dptr,#(_data_tx_urb + 0x0008)
+      000232 E4               [12] 1633 	clr	a
+      000233 F0               [24] 1634 	movx	@dptr,a
+      000234 E4               [12] 1635 	clr	a
+      000235 A3               [24] 1636 	inc	dptr
+      000236 F0               [24] 1637 	movx	@dptr,a
+      000237 80 09            [24] 1638 	sjmp	00103$
+      000239                       1639 00102$:
+                                   1640 ;	../../../../platform/cc2530eb/dev/usb-serial.c:202: data_tx_urb.flags = USB_BUFFER_SHORT_END;
+      000239 90r00r16         [24] 1641 	mov	dptr,#(_data_tx_urb + 0x0008)
+      00023C 74 02            [12] 1642 	mov	a,#0x02
+      00023E F0               [24] 1643 	movx	@dptr,a
+      00023F E4               [12] 1644 	clr	a
+      000240 A3               [24] 1645 	inc	dptr
+      000241 F0               [24] 1646 	movx	@dptr,a
+      000242                       1647 00103$:
+                                   1648 ;	../../../../platform/cc2530eb/dev/usb-serial.c:204: data_tx_urb.flags |= USB_BUFFER_NOTIFY;
+      000242 90r00r16         [24] 1649 	mov	dptr,#(_data_tx_urb + 0x0008)
+      000245 E0               [24] 1650 	movx	a,@dptr
+      000246 FE               [12] 1651 	mov	r6,a
+      000247 A3               [24] 1652 	inc	dptr
+      000248 E0               [24] 1653 	movx	a,@dptr
+      000249 FF               [12] 1654 	mov	r7,a
+      00024A 43 06 08         [24] 1655 	orl	ar6,#0x08
+      00024D 90r00r16         [24] 1656 	mov	dptr,#(_data_tx_urb + 0x0008)
+      000250 EE               [12] 1657 	mov	a,r6
+      000251 F0               [24] 1658 	movx	@dptr,a
+      000252 EF               [12] 1659 	mov	a,r7
+      000253 A3               [24] 1660 	inc	dptr
+      000254 F0               [24] 1661 	movx	@dptr,a
+                                   1662 ;	../../../../platform/cc2530eb/dev/usb-serial.c:205: data_tx_urb.next = NULL;
+      000255 90r00r0E         [24] 1663 	mov	dptr,#_data_tx_urb
+      000258 E4               [12] 1664 	clr	a
+      000259 F0               [24] 1665 	movx	@dptr,a
+      00025A E4               [12] 1666 	clr	a
+      00025B A3               [24] 1667 	inc	dptr
+      00025C F0               [24] 1668 	movx	@dptr,a
+      00025D E4               [12] 1669 	clr	a
+      00025E A3               [24] 1670 	inc	dptr
+      00025F F0               [24] 1671 	movx	@dptr,a
+                                   1672 ;	../../../../platform/cc2530eb/dev/usb-serial.c:206: data_tx_urb.data = usb_tx_data;
+      000260 90r00r11         [24] 1673 	mov	dptr,#(_data_tx_urb + 0x0003)
+      000263 74r24            [12] 1674 	mov	a,#_usb_tx_data
+      000265 F0               [24] 1675 	movx	@dptr,a
+      000266 74s00            [12] 1676 	mov	a,#(_usb_tx_data >> 8)
+      000268 A3               [24] 1677 	inc	dptr
+      000269 F0               [24] 1678 	movx	@dptr,a
+      00026A E4               [12] 1679 	clr	a
+      00026B A3               [24] 1680 	inc	dptr
+      00026C F0               [24] 1681 	movx	@dptr,a
+                                   1682 ;	../../../../platform/cc2530eb/dev/usb-serial.c:207: data_tx_urb.left = buffered_data;
+      00026D 90r00r23         [24] 1683 	mov	dptr,#_buffered_data
+      000270 E0               [24] 1684 	movx	a,@dptr
+      000271 FF               [12] 1685 	mov	r7,a
+      000272 7E 00            [12] 1686 	mov	r6,#0x00
+      000274 90r00r14         [24] 1687 	mov	dptr,#(_data_tx_urb + 0x0006)
+      000277 EF               [12] 1688 	mov	a,r7
+      000278 F0               [24] 1689 	movx	@dptr,a
+      000279 EE               [12] 1690 	mov	a,r6
+      00027A A3               [24] 1691 	inc	dptr
+      00027B F0               [24] 1692 	movx	@dptr,a
+                                   1693 ;	../../../../platform/cc2530eb/dev/usb-serial.c:208: buffered_data = 0;
+      00027C 90r00r23         [24] 1694 	mov	dptr,#_buffered_data
+      00027F E4               [12] 1695 	clr	a
+      000280 F0               [24] 1696 	movx	@dptr,a
+                                   1697 ;	../../../../platform/cc2530eb/dev/usb-serial.c:209: usb_submit_xmit_buffer(EPIN, &data_tx_urb);
+      000281 74r0E            [12] 1698 	mov	a,#_data_tx_urb
+      000283 C0 E0            [24] 1699 	push	acc
+      000285 74s00            [12] 1700 	mov	a,#(_data_tx_urb >> 8)
+      000287 C0 E0            [24] 1701 	push	acc
+      000289 E4               [12] 1702 	clr	a
+      00028A C0 E0            [24] 1703 	push	acc
+      00028C 75 82 82         [24] 1704 	mov	dpl,#0x82
+      00028F 78r00            [12] 1705 	mov	r0,#_usb_submit_xmit_buffer
+      000291 79s00            [12] 1706 	mov	r1,#(_usb_submit_xmit_buffer >> 8)
+      000293 7As00            [12] 1707 	mov	r2,#(_usb_submit_xmit_buffer >> 16)
+      000295 12r00r00         [24] 1708 	lcall	__sdcc_banked_call
+      000298 15 81            [12] 1709 	dec	sp
+      00029A 15 81            [12] 1710 	dec	sp
+      00029C 15 81            [12] 1711 	dec	sp
+      00029E 02r00r00         [24] 1712 	ljmp	__sdcc_banked_ret
+                                   1713 ;------------------------------------------------------------
+                                   1714 ;Allocation info for local variables in function 'usb_serial_writeb'
+                                   1715 ;------------------------------------------------------------
+                                   1716 ;b                         Allocated to registers r7 
+                                   1717 ;------------------------------------------------------------
+                                   1718 ;	../../../../platform/cc2530eb/dev/usb-serial.c:213: usb_serial_writeb(uint8_t b)
+                                   1719 ;	-----------------------------------------
+                                   1720 ;	 function usb_serial_writeb
+                                   1721 ;	-----------------------------------------
+      0002A1                       1722 _usb_serial_writeb:
+      0002A1 AF 82            [24] 1723 	mov	r7,dpl
+                                   1724 ;	../../../../platform/cc2530eb/dev/usb-serial.c:215: if(!enabled) {
+      0002A3 90r00r22         [24] 1725 	mov	dptr,#_enabled
+      0002A6 E0               [24] 1726 	movx	a,@dptr
+      0002A7 FE               [12] 1727 	mov	r6,a
+      0002A8 70 07            [24] 1728 	jnz	00102$
+                                   1729 ;	../../../../platform/cc2530eb/dev/usb-serial.c:216: buffered_data = 0;
+      0002AA 90r00r23         [24] 1730 	mov	dptr,#_buffered_data
+      0002AD E4               [12] 1731 	clr	a
+      0002AE F0               [24] 1732 	movx	@dptr,a
+                                   1733 ;	../../../../platform/cc2530eb/dev/usb-serial.c:217: return;
+      0002AF 80 31            [24] 1734 	sjmp	00107$
+      0002B1                       1735 00102$:
+                                   1736 ;	../../../../platform/cc2530eb/dev/usb-serial.c:220: usb_tx_data[buffered_data] = b;
+      0002B1 90r00r23         [24] 1737 	mov	dptr,#_buffered_data
+      0002B4 E0               [24] 1738 	movx	a,@dptr
+      0002B5 24r24            [12] 1739 	add	a,#_usb_tx_data
+      0002B7 F5 82            [12] 1740 	mov	dpl,a
+      0002B9 E4               [12] 1741 	clr	a
+      0002BA 34s00            [12] 1742 	addc	a,#(_usb_tx_data >> 8)
+      0002BC F5 83            [12] 1743 	mov	dph,a
+      0002BE EF               [12] 1744 	mov	a,r7
+      0002BF F0               [24] 1745 	movx	@dptr,a
+                                   1746 ;	../../../../platform/cc2530eb/dev/usb-serial.c:221: buffered_data++;
+      0002C0 90r00r23         [24] 1747 	mov	dptr,#_buffered_data
+      0002C3 E0               [24] 1748 	movx	a,@dptr
+      0002C4 24 01            [12] 1749 	add	a,#0x01
+      0002C6 F0               [24] 1750 	movx	@dptr,a
+                                   1751 ;	../../../../platform/cc2530eb/dev/usb-serial.c:223: if(buffered_data == BUFFER_SIZE || b == SLIP_END || b == '\n') {
+      0002C7 90r00r23         [24] 1752 	mov	dptr,#_buffered_data
+      0002CA E0               [24] 1753 	movx	a,@dptr
+      0002CB FE               [12] 1754 	mov	r6,a
+      0002CC BE 08 02         [24] 1755 	cjne	r6,#0x08,00119$
+      0002CF 80 08            [24] 1756 	sjmp	00103$
+      0002D1                       1757 00119$:
+      0002D1 BF C0 02         [24] 1758 	cjne	r7,#0xC0,00120$
+      0002D4 80 03            [24] 1759 	sjmp	00103$
+      0002D6                       1760 00120$:
+      0002D6 BF 0A 09         [24] 1761 	cjne	r7,#0x0A,00107$
+      0002D9                       1762 00103$:
+                                   1763 ;	../../../../platform/cc2530eb/dev/usb-serial.c:224: usb_serial_flush();
+      0002D9 78r27            [12] 1764 	mov	r0,#_usb_serial_flush
+      0002DB 79s02            [12] 1765 	mov	r1,#(_usb_serial_flush >> 8)
+      0002DD 7As00            [12] 1766 	mov	r2,#(_usb_serial_flush >> 16)
+      0002DF 12r00r00         [24] 1767 	lcall	__sdcc_banked_call
+      0002E2                       1768 00107$:
+      0002E2 02r00r00         [24] 1769 	ljmp	__sdcc_banked_ret
+                                   1770 ;------------------------------------------------------------
+                                   1771 ;Allocation info for local variables in function 'process_thread_usb_serial_process'
+                                   1772 ;------------------------------------------------------------
+                                   1773 ;ev                        Allocated to stack - sp -3
+                                   1774 ;data                      Allocated to stack - sp -6
+                                   1775 ;process_pt                Allocated to registers r5 r6 r7 
+                                   1776 ;PT_YIELD_FLAG             Allocated to registers r4 
+                                   1777 ;------------------------------------------------------------
+                                   1778 ;	../../../../platform/cc2530eb/dev/usb-serial.c:247: PROCESS_THREAD(usb_serial_process, ev, data)
+                                   1779 ;	-----------------------------------------
+                                   1780 ;	 function process_thread_usb_serial_process
+                                   1781 ;	-----------------------------------------
+      0002E5                       1782 _process_thread_usb_serial_process:
+                                   1783 ;	../../../../platform/cc2530eb/dev/usb-serial.c:250: PROCESS_BEGIN();
+      0002E5 AD 82            [24] 1784 	mov	r5,dpl
+      0002E7 AE 83            [24] 1785 	mov	r6,dph
+      0002E9 AF F0            [24] 1786 	mov	r7,b
+      0002EB 7C 01            [12] 1787 	mov	r4,#0x01
+      0002ED 12r00r00         [24] 1788 	lcall	__gptrget
+      0002F0 FA               [12] 1789 	mov	r2,a
+      0002F1 A3               [24] 1790 	inc	dptr
+      0002F2 12r00r00         [24] 1791 	lcall	__gptrget
+      0002F5 FB               [12] 1792 	mov	r3,a
+      0002F6 BA 00 05         [24] 1793 	cjne	r2,#0x00,00136$
+      0002F9 BB 00 02         [24] 1794 	cjne	r3,#0x00,00136$
+      0002FC 80 0C            [24] 1795 	sjmp	00101$
+      0002FE                       1796 00136$:
+      0002FE BA 05 06         [24] 1797 	cjne	r2,#0x05,00137$
+      000301 BB 01 03         [24] 1798 	cjne	r3,#0x01,00137$
+      000304 02r03r8D         [24] 1799 	ljmp	00102$
+      000307                       1800 00137$:
+      000307 02r03rBE         [24] 1801 	ljmp	00115$
+      00030A                       1802 00101$:
+                                   1803 ;	../../../../platform/cc2530eb/dev/usb-serial.c:252: set_serial_number();
+      00030A C0 07            [24] 1804 	push	ar7
+      00030C C0 06            [24] 1805 	push	ar6
+      00030E C0 05            [24] 1806 	push	ar5
+      000310 78r63            [12] 1807 	mov	r0,#_set_serial_number
+      000312 79s00            [12] 1808 	mov	r1,#(_set_serial_number >> 8)
+      000314 7As00            [12] 1809 	mov	r2,#(_set_serial_number >> 16)
+      000316 12r00r00         [24] 1810 	lcall	__sdcc_banked_call
+                                   1811 ;	../../../../platform/cc2530eb/dev/usb-serial.c:254: usb_setup();
+      000319 78r00            [12] 1812 	mov	r0,#_usb_setup
+      00031B 79s00            [12] 1813 	mov	r1,#(_usb_setup >> 8)
+      00031D 7As00            [12] 1814 	mov	r2,#(_usb_setup >> 16)
+      00031F 12r00r00         [24] 1815 	lcall	__sdcc_banked_call
+                                   1816 ;	../../../../platform/cc2530eb/dev/usb-serial.c:255: usb_cdc_acm_setup();
+      000322 78r00            [12] 1817 	mov	r0,#_usb_cdc_acm_setup
+      000324 79s00            [12] 1818 	mov	r1,#(_usb_cdc_acm_setup >> 8)
+      000326 7As00            [12] 1819 	mov	r2,#(_usb_cdc_acm_setup >> 16)
+      000328 12r00r00         [24] 1820 	lcall	__sdcc_banked_call
+                                   1821 ;	../../../../platform/cc2530eb/dev/usb-serial.c:256: usb_set_global_event_process(&usb_serial_process);
+      00032B 90r00r24         [24] 1822 	mov	dptr,#_usb_serial_process
+      00032E 75 F0 00         [24] 1823 	mov	b,#0x00
+      000331 78r00            [12] 1824 	mov	r0,#_usb_set_global_event_process
+      000333 79s00            [12] 1825 	mov	r1,#(_usb_set_global_event_process >> 8)
+      000335 7As00            [12] 1826 	mov	r2,#(_usb_set_global_event_process >> 16)
+      000337 12r00r00         [24] 1827 	lcall	__sdcc_banked_call
+                                   1828 ;	../../../../platform/cc2530eb/dev/usb-serial.c:257: usb_set_ep_event_process(EPIN, &usb_serial_process);
+      00033A 74r24            [12] 1829 	mov	a,#_usb_serial_process
+      00033C C0 E0            [24] 1830 	push	acc
+      00033E 74s00            [12] 1831 	mov	a,#(_usb_serial_process >> 8)
+      000340 C0 E0            [24] 1832 	push	acc
+      000342 E4               [12] 1833 	clr	a
+      000343 C0 E0            [24] 1834 	push	acc
+      000345 75 82 82         [24] 1835 	mov	dpl,#0x82
+      000348 78r00            [12] 1836 	mov	r0,#_usb_set_ep_event_process
+      00034A 79s00            [12] 1837 	mov	r1,#(_usb_set_ep_event_process >> 8)
+      00034C 7As00            [12] 1838 	mov	r2,#(_usb_set_ep_event_process >> 16)
+      00034E 12r00r00         [24] 1839 	lcall	__sdcc_banked_call
+      000351 15 81            [12] 1840 	dec	sp
+      000353 15 81            [12] 1841 	dec	sp
+      000355 15 81            [12] 1842 	dec	sp
+                                   1843 ;	../../../../platform/cc2530eb/dev/usb-serial.c:258: usb_set_ep_event_process(EPOUT, &usb_serial_process);
+      000357 74r24            [12] 1844 	mov	a,#_usb_serial_process
+      000359 C0 E0            [24] 1845 	push	acc
+      00035B 74s00            [12] 1846 	mov	a,#(_usb_serial_process >> 8)
+      00035D C0 E0            [24] 1847 	push	acc
+      00035F E4               [12] 1848 	clr	a
+      000360 C0 E0            [24] 1849 	push	acc
+      000362 75 82 03         [24] 1850 	mov	dpl,#0x03
+      000365 78r00            [12] 1851 	mov	r0,#_usb_set_ep_event_process
+      000367 79s00            [12] 1852 	mov	r1,#(_usb_set_ep_event_process >> 8)
+      000369 7As00            [12] 1853 	mov	r2,#(_usb_set_ep_event_process >> 16)
+      00036B 12r00r00         [24] 1854 	lcall	__sdcc_banked_call
+      00036E 15 81            [12] 1855 	dec	sp
+      000370 15 81            [12] 1856 	dec	sp
+      000372 15 81            [12] 1857 	dec	sp
+      000374 D0 05            [24] 1858 	pop	ar5
+      000376 D0 06            [24] 1859 	pop	ar6
+      000378 D0 07            [24] 1860 	pop	ar7
+                                   1861 ;	../../../../platform/cc2530eb/dev/usb-serial.c:260: while(1) {
+      00037A                       1862 00113$:
+                                   1863 ;	../../../../platform/cc2530eb/dev/usb-serial.c:261: PROCESS_WAIT_EVENT();
+      00037A 7C 00            [12] 1864 	mov	r4,#0x00
+      00037C 8D 82            [24] 1865 	mov	dpl,r5
+      00037E 8E 83            [24] 1866 	mov	dph,r6
+      000380 8F F0            [24] 1867 	mov	b,r7
+      000382 74 05            [12] 1868 	mov	a,#0x05
+      000384 12r00r00         [24] 1869 	lcall	__gptrput
+      000387 A3               [24] 1870 	inc	dptr
+      000388 74 01            [12] 1871 	mov	a,#0x01
+      00038A 12r00r00         [24] 1872 	lcall	__gptrput
+      00038D                       1873 00102$:
+      00038D EC               [12] 1874 	mov	a,r4
+      00038E 70 05            [24] 1875 	jnz	00106$
+      000390 75 82 01         [24] 1876 	mov	dpl,#0x01
+      000393 80 3B            [24] 1877 	sjmp	00116$
+      000395                       1878 00106$:
+                                   1879 ;	../../../../platform/cc2530eb/dev/usb-serial.c:262: if(ev == PROCESS_EVENT_EXIT) {
+      000395 E5 81            [12] 1880 	mov	a,sp
+      000397 24 FD            [12] 1881 	add	a,#0xfd
+      000399 F8               [12] 1882 	mov	r0,a
+      00039A B6 83 02         [24] 1883 	cjne	@r0,#0x83,00139$
+      00039D 80 1F            [24] 1884 	sjmp	00115$
+      00039F                       1885 00139$:
+                                   1886 ;	../../../../platform/cc2530eb/dev/usb-serial.c:265: if(ev == PROCESS_EVENT_POLL) {
+      00039F E5 81            [12] 1887 	mov	a,sp
+      0003A1 24 FD            [12] 1888 	add	a,#0xfd
+      0003A3 F8               [12] 1889 	mov	r0,a
+      0003A4 B6 82 D3         [24] 1890 	cjne	@r0,#0x82,00113$
+                                   1891 ;	../../../../platform/cc2530eb/dev/usb-serial.c:266: do_work();
+      0003A7 C0 07            [24] 1892 	push	ar7
+      0003A9 C0 06            [24] 1893 	push	ar6
+      0003AB C0 05            [24] 1894 	push	ar5
+      0003AD 78r4E            [12] 1895 	mov	r0,#_do_work
+      0003AF 79s01            [12] 1896 	mov	r1,#(_do_work >> 8)
+      0003B1 7As00            [12] 1897 	mov	r2,#(_do_work >> 16)
+      0003B3 12r00r00         [24] 1898 	lcall	__sdcc_banked_call
+      0003B6 D0 05            [24] 1899 	pop	ar5
+      0003B8 D0 06            [24] 1900 	pop	ar6
+      0003BA D0 07            [24] 1901 	pop	ar7
+                                   1902 ;	../../../../platform/cc2530eb/dev/usb-serial.c:270: PROCESS_END();
+      0003BC 80 BC            [24] 1903 	sjmp	00113$
+      0003BE                       1904 00115$:
+      0003BE 8D 82            [24] 1905 	mov	dpl,r5
+      0003C0 8E 83            [24] 1906 	mov	dph,r6
+      0003C2 8F F0            [24] 1907 	mov	b,r7
+      0003C4 E4               [12] 1908 	clr	a
+      0003C5 12r00r00         [24] 1909 	lcall	__gptrput
+      0003C8 A3               [24] 1910 	inc	dptr
+      0003C9 E4               [12] 1911 	clr	a
+      0003CA 12r00r00         [24] 1912 	lcall	__gptrput
+      0003CD 75 82 03         [24] 1913 	mov	dpl,#0x03
+      0003D0                       1914 00116$:
+      0003D0 02r00r00         [24] 1915 	ljmp	__sdcc_banked_ret
+                                   1916 ;------------------------------------------------------------
+                                   1917 ;Allocation info for local variables in function 'usb_serial_set_input'
+                                   1918 ;------------------------------------------------------------
+                                   1919 ;input                     Allocated to registers r5 r6 r7 
+                                   1920 ;------------------------------------------------------------
+                                   1921 ;	../../../../platform/cc2530eb/dev/usb-serial.c:274: usb_serial_set_input(int (* input)(unsigned char c))
+                                   1922 ;	-----------------------------------------
+                                   1923 ;	 function usb_serial_set_input
+                                   1924 ;	-----------------------------------------
+      0003D3                       1925 _usb_serial_set_input:
+      0003D3 AD 82            [24] 1926 	mov	r5,dpl
+      0003D5 AE 83            [24] 1927 	mov	r6,dph
+      0003D7 AF F0            [24] 1928 	mov	r7,b
+                                   1929 ;	../../../../platform/cc2530eb/dev/usb-serial.c:276: input_handler = input;
+      0003D9 90r00r2C         [24] 1930 	mov	dptr,#_input_handler
+      0003DC ED               [12] 1931 	mov	a,r5
+      0003DD F0               [24] 1932 	movx	@dptr,a
+      0003DE EE               [12] 1933 	mov	a,r6
+      0003DF A3               [24] 1934 	inc	dptr
+      0003E0 F0               [24] 1935 	movx	@dptr,a
+      0003E1 EF               [12] 1936 	mov	a,r7
+      0003E2 A3               [24] 1937 	inc	dptr
+      0003E3 F0               [24] 1938 	movx	@dptr,a
+      0003E4 02r00r00         [24] 1939 	ljmp	__sdcc_banked_ret
+                                   1940 ;------------------------------------------------------------
+                                   1941 ;Allocation info for local variables in function 'usb_serial_init'
+                                   1942 ;------------------------------------------------------------
+                                   1943 ;	../../../../platform/cc2530eb/dev/usb-serial.c:280: usb_serial_init()
+                                   1944 ;	-----------------------------------------
+                                   1945 ;	 function usb_serial_init
+                                   1946 ;	-----------------------------------------
+      0003E7                       1947 _usb_serial_init:
+                                   1948 ;	../../../../platform/cc2530eb/dev/usb-serial.c:282: process_start(&usb_serial_process, NULL);
+      0003E7 E4               [12] 1949 	clr	a
+      0003E8 C0 E0            [24] 1950 	push	acc
+      0003EA C0 E0            [24] 1951 	push	acc
+      0003EC C0 E0            [24] 1952 	push	acc
+      0003EE 90r00r24         [24] 1953 	mov	dptr,#_usb_serial_process
+      0003F1 75 F0 00         [24] 1954 	mov	b,#0x00
+      0003F4 78r00            [12] 1955 	mov	r0,#_process_start
+      0003F6 79s00            [12] 1956 	mov	r1,#(_process_start >> 8)
+      0003F8 7As00            [12] 1957 	mov	r2,#(_process_start >> 16)
+      0003FA 12r00r00         [24] 1958 	lcall	__sdcc_banked_call
+      0003FD 15 81            [12] 1959 	dec	sp
+      0003FF 15 81            [12] 1960 	dec	sp
+      000401 15 81            [12] 1961 	dec	sp
+      000403 02r00r00         [24] 1962 	ljmp	__sdcc_banked_ret
+                                   1963 	.area CSEG    (CODE)
+                                   1964 	.area CONST   (CODE)
+      000000                       1965 _lang_id:
+      000000 04                    1966 	.db #0x04	; 4
+      000001 03                    1967 	.db #0x03	; 3
+      000002 09 04                 1968 	.byte #0x09,#0x04	; 1033
+      000004                       1969 _string_manufacturer:
+      000004 16                    1970 	.db #0x16	; 22
+      000005 03                    1971 	.db #0x03	; 3
+      000006 45 00                 1972 	.byte #0x45,#0x00	; 69
+      000008 50 00                 1973 	.byte #0x50,#0x00	; 80
+      00000A 46 00                 1974 	.byte #0x46,#0x00	; 70
+      00000C 4C 00                 1975 	.byte #0x4C,#0x00	; 76
+      00000E 2D 00                 1976 	.byte #0x2D,#0x00	; 45
+      000010 4C 00                 1977 	.byte #0x4C,#0x00	; 76
+      000012 53 00                 1978 	.byte #0x53,#0x00	; 83
+      000014 52 00                 1979 	.byte #0x52,#0x00	; 82
+      000016 4F 00                 1980 	.byte #0x4F,#0x00	; 79
+      000018 31 00                 1981 	.byte #0x31,#0x00	; 49
+      00001A                       1982 _string_product:
+      00001A 26                    1983 	.db #0x26	; 38
+      00001B 03                    1984 	.db #0x03	; 3
+      00001C 43 00                 1985 	.byte #0x43,#0x00	; 67
+      00001E 43 00                 1986 	.byte #0x43,#0x00	; 67
+      000020 32 00                 1987 	.byte #0x32,#0x00	; 50
+      000022 35 00                 1988 	.byte #0x35,#0x00	; 53
+      000024 33 00                 1989 	.byte #0x33,#0x00	; 51
+      000026 31 00                 1990 	.byte #0x31,#0x00	; 49
+      000028 20 00                 1991 	.byte #0x20,#0x00	; 32
+      00002A 44 00                 1992 	.byte #0x44,#0x00	; 68
+      00002C 65 00                 1993 	.byte #0x65,#0x00	; 101
+      00002E 76 00                 1994 	.byte #0x76,#0x00	; 118
+      000030 65 00                 1995 	.byte #0x65,#0x00	; 101
+      000032 6C 00                 1996 	.byte #0x6C,#0x00	; 108
+      000034 2D 00                 1997 	.byte #0x2D,#0x00	; 45
+      000036 42 00                 1998 	.byte #0x42,#0x00	; 66
+      000038 6F 00                 1999 	.byte #0x6F,#0x00	; 111
+      00003A 61 00                 2000 	.byte #0x61,#0x00	; 97
+      00003C 72 00                 2001 	.byte #0x72,#0x00	; 114
+      00003E 64 00                 2002 	.byte #0x64,#0x00	; 100
+                                   2003 	.area XINIT   (CODE)
+      000000                       2004 __xinit__string_serial_nr:
+      000000 22                    2005 	.db #0x22	; 34
+      000001 03                    2006 	.db #0x03	; 3
+      000002 41 00                 2007 	.byte #0x41,#0x00	; 65
+      000004 41 00                 2008 	.byte #0x41,#0x00	; 65
+      000006 41 00                 2009 	.byte #0x41,#0x00	; 65
+      000008 41 00                 2010 	.byte #0x41,#0x00	; 65
+      00000A 41 00                 2011 	.byte #0x41,#0x00	; 65
+      00000C 41 00                 2012 	.byte #0x41,#0x00	; 65
+      00000E 41 00                 2013 	.byte #0x41,#0x00	; 65
+      000010 41 00                 2014 	.byte #0x41,#0x00	; 65
+      000012 41 00                 2015 	.byte #0x41,#0x00	; 65
+      000014 41 00                 2016 	.byte #0x41,#0x00	; 65
+      000016 41 00                 2017 	.byte #0x41,#0x00	; 65
+      000018 41 00                 2018 	.byte #0x41,#0x00	; 65
+      00001A 41 00                 2019 	.byte #0x41,#0x00	; 65
+      00001C 41 00                 2020 	.byte #0x41,#0x00	; 65
+      00001E 41 00                 2021 	.byte #0x41,#0x00	; 65
+      000020 41 00                 2022 	.byte #0x41,#0x00	; 65
+      000022                       2023 __xinit__enabled:
+      000022 00                    2024 	.db #0x00	; 0
+      000023                       2025 __xinit__buffered_data:
+      000023 00                    2026 	.db #0x00	; 0
+      000024                       2027 __xinit__usb_serial_process:
+                                   2028 ; generic printIvalPtr
+      000024 00 00 00              2029 	.byte #0x00,#0x00,#0x00
+      000027rE5s02s00              2030 	.byte _process_thread_usb_serial_process,(_process_thread_usb_serial_process >> 8),(_process_thread_usb_serial_process >> 16)
+      00002A 00 00                 2031 	.byte #0x00,#0x00	; 0
+      00002C 00                    2032 	.db #0x00	; 0
+      00002D 00                    2033 	.db #0x00	; 0
+                                   2034 	.area CABS    (ABS,CODE)

@@ -1,0 +1,1482 @@
+ASxxxx Linker V03.00 + NoICE + sdld,  page 1.
+Hexadecimal  [32-Bits]
+
+Area                                    Addr        Size        Decimal Bytes (Attributes)
+--------------------------------        ----        ----        ------- ----- ------------
+XABS2                               00000000    00000004 =           4. bytes (ABS,CON,XDATA)
+
+      Value  Global                              Global Defined In Module
+      -----  --------------------------------   ------------------------
+D:   00000000  l_BSEG                          
+D:   00000000  l_BSEG_BYTES                    
+D:   00000000  l_CABS                          
+D:   00000000  l_GSINIT1                       
+D:   00000000  l_GSINIT5                       
+D:   00000000  l_IABS                          
+D:   00000000  l_ISEG                          
+D:   00000000  l_OSEG                          
+D:   00000000  l_PSEG                          
+D:   00000000  l_REG_BANK_1                    
+D:   00000000  l_REG_BANK_2                    
+D:   00000000  l_REG_BANK_3                    
+D:   00000000  l_RSEG                          
+D:   00000000  l_RSEG0                         
+D:   00000000  l_RSEG1                         
+D:   00000000  l_XABS                          
+D:   00000000  l__CODE                         
+D:   00000000  s_BSEG                          
+D:   00000000  s_CABS                          
+D:   00000000  s_DSEG                          
+D:   00000000  s_HOME                          
+D:   00000000  s_IABS                          
+D:   00000000  s_ISEG                          
+D:   00000000  s_PSEG                          
+D:   00000000  s_REG_BANK_0                    
+D:   00000000  s_RSEG                          
+D:   00000000  s_RSEG0                         
+D:   00000000  s_RSEG1                         
+D:   00000000  s_XABS                          
+D:   00000000  s_XABS2                         
+D:   00000000  s_XSEG                          
+D:   00000001  l_BIT_BANK                      
+D:   00000003  l_GSFINAL                       
+D:   00000003  l_GSINIT0                       
+D:   00000004  l_XABS2                         
+D:   00000008  l_REG_BANK_0                    
+D:   00000008  s_REG_BANK_1                    
+D:   0000000A  l_GSINIT2                       
+D:   00000010  s_REG_BANK_2                    
+D:   00000018  s_REG_BANK_3                    
+D:   00000020  s_BIT_BANK                      
+D:   00000020  s_BSEG_BYTES                    
+D:   00000020  s_OSEG                          
+D:   00000020  s__CODE                         
+D:   00000021  s_SSEG                          
+D:   00000022  l_GSINIT3                       
+D:   00000028  l_GSINIT                        
+D:   0000002A  l_GSINIT4                       
+D:   00000074  l_DSEG                          
+D:   000000DF  l_SSEG                          
+ASxxxx Linker V03.00 + NoICE + sdld,  page 2.
+Hexadecimal  [32-Bits]
+
+Area                                    Addr        Size        Decimal Bytes (Attributes)
+--------------------------------        ----        ----        ------- ----- ------------
+XABS2                               00000000    00000004 =           4. bytes (ABS,CON,XDATA)
+
+      Value  Global                              Global Defined In Module
+      -----  --------------------------------   ------------------------
+D:   00000100  l_IRAM                          
+D:   0000015B  l_XINIT                         
+D:   0000015B  l_XISEG                         
+D:   000001D3  l_CONST                         
+D:   00000ACA  l_CSEG                          
+D:   000012E8  l_BANK4                         
+D:   0000186B  l_XSEG                          
+D:   0000186F  s_XISEG                         
+D:   00007181  l_HOME                          
+D:   00007181  s_GSINIT0                       
+D:   00007184  s_GSINIT1                       
+D:   00007184  s_GSINIT2                       
+D:   0000718E  s_GSINIT3                       
+D:   000071B0  s_GSINIT4                       
+D:   000071DA  s_GSINIT                        
+D:   000071DA  s_GSINIT5                       
+D:   00007202  s_GSFINAL                       
+D:   00007205  s_CSEG                          
+D:   00007CCF  s_CONST                         
+D:   00007EA2  s_XINIT                         
+D:   00007FF5  l_BANK1                         
+D:   00007FFC  l_BANK2                         
+D:   00007FFD  l_BANK3                         
+D:   00018000  s_BANK1                         
+D:   00028000  s_BANK2                         
+D:   00038000  s_BANK3                         
+D:   00048000  s_BANK4                         
+
+ASxxxx Linker V03.00 + NoICE + sdld,  page 3.
+Hexadecimal  [32-Bits]
+
+Area                                    Addr        Size        Decimal Bytes (Attributes)
+--------------------------------        ----        ----        ------- ----- ------------
+.  .ABS.                            00000000    00000000 =           0. bytes (ABS,CON)
+
+      Value  Global                              Global Defined In Module
+      -----  --------------------------------   ------------------------
+     00000000  .__.ABS.                           frame802154
+     00000080  _P0                                rpl_of_etx
+     00000080  _P0_0                              rpl_of_etx
+     00000081  _P0_1                              rpl_of_etx
+     00000081  _SP                                rpl_of_etx
+     00000082  _DPL0                              rpl_of_etx
+     00000082  _P0_2                              rpl_of_etx
+     00000083  _DPH0                              rpl_of_etx
+     00000083  _P0_3                              rpl_of_etx
+     00000084  _DPL1                              rpl_of_etx
+     00000084  _P0_4                              rpl_of_etx
+     00000085  _DPH1                              rpl_of_etx
+     00000085  _P0_5                              rpl_of_etx
+     00000086  _P0_6                              rpl_of_etx
+     00000086  _U0CSR                             rpl_of_etx
+     00000087  _P0_7                              rpl_of_etx
+     00000087  _PCON                              rpl_of_etx
+     00000088  _IT0                               rpl_of_etx
+     00000088  _TCON                              rpl_of_etx
+     00000089  _P0IFG                             rpl_of_etx
+     00000089  _RFERRIF                           rpl_of_etx
+     0000008A  _IT1                               rpl_of_etx
+     0000008A  _P1IFG                             rpl_of_etx
+     0000008B  _P2IFG                             rpl_of_etx
+     0000008B  _URX0IF                            rpl_of_etx
+     0000008C  _PICTL                             rpl_of_etx
+     0000008D  _ADCIF                             rpl_of_etx
+     0000008D  _P1IEN                             rpl_of_etx
+     0000008F  _P0INP                             rpl_of_etx
+     0000008F  _URX1IF                            rpl_of_etx
+     00000090  _P1                                rpl_of_etx
+     00000090  _P1_0                              rpl_of_etx
+     00000091  _P1_1                              rpl_of_etx
+     00000091  _RFIRQF1                           rpl_of_etx
+     00000092  _DPS                               rpl_of_etx
+     00000092  _P1_2                              rpl_of_etx
+     00000093  _MPAGE                             rpl_of_etx
+     00000093  _P1_3                              rpl_of_etx
+     00000093  __XPAGE                            rpl_of_etx
+     00000094  _P1_4                              rpl_of_etx
+     00000094  _T2CTRL                            rpl_of_etx
+     00000095  _P1_5                              rpl_of_etx
+     00000095  _ST0                               rpl_of_etx
+     00000096  _P1_6                              rpl_of_etx
+     00000096  _ST1                               rpl_of_etx
+     00000097  _P1_7                              rpl_of_etx
+     00000097  _ST2                               rpl_of_etx
+     00000098  _ENCIF_0                           rpl_of_etx
+     00000098  _S0CON                             rpl_of_etx
+     00000099  _ENCIF_1                           rpl_of_etx
+ASxxxx Linker V03.00 + NoICE + sdld,  page 4.
+Hexadecimal  [32-Bits]
+
+Area                                    Addr        Size        Decimal Bytes (Attributes)
+--------------------------------        ----        ----        ------- ----- ------------
+.  .ABS.                            00000000    00000000 =           0. bytes (ABS,CON)
+
+      Value  Global                              Global Defined In Module
+      -----  --------------------------------   ------------------------
+     0000009A  _IEN2                              rpl_of_etx
+     0000009B  _S1CON                             rpl_of_etx
+     0000009C  _T2EVTCFG                          rpl_of_etx
+     0000009D  _SLEEPSTA                          rpl_of_etx
+     0000009E  _CLKCONSTA                         rpl_of_etx
+     0000009F  _FMAP                              rpl_of_etx
+     0000009F  _PSBANK                            rpl_of_etx
+     000000A0  _P2                                rpl_of_etx
+     000000A0  _P2_0                              rpl_of_etx
+     000000A1  _P2_1                              rpl_of_etx
+     000000A1  _T2IRQF                            rpl_of_etx
+     000000A2  _P2_2                              rpl_of_etx
+     000000A2  _T2M0                              rpl_of_etx
+     000000A3  _P2_3                              rpl_of_etx
+     000000A3  _T2M1                              rpl_of_etx
+     000000A4  _P2_4                              rpl_of_etx
+     000000A4  _T2MOVF0                           rpl_of_etx
+     000000A5  _P2_5                              rpl_of_etx
+     000000A5  _T2MOVF1                           rpl_of_etx
+     000000A6  _P2_6                              rpl_of_etx
+     000000A6  _T2MOVF2                           rpl_of_etx
+     000000A7  _P2_7                              rpl_of_etx
+     000000A7  _T2IRQM                            rpl_of_etx
+     000000A8  _IEN0                              rpl_of_etx
+     000000A8  _RFERRIE                           rpl_of_etx
+     000000A9  _ADCIE                             rpl_of_etx
+     000000A9  _IP0                               rpl_of_etx
+     000000AA  _URX0IE                            rpl_of_etx
+     000000AB  _P0IEN                             rpl_of_etx
+     000000AB  _URX1IE                            rpl_of_etx
+     000000AC  _ENCIE                             rpl_of_etx
+     000000AC  _P2IEN                             rpl_of_etx
+     000000AD  _STIE                              rpl_of_etx
+     000000AD  _STLOAD                            rpl_of_etx
+     000000AE  _PMUX                              rpl_of_etx
+     000000AF  _EA                                rpl_of_etx
+     000000AF  _T1STAT                            rpl_of_etx
+     000000B1  _ENCDI                             rpl_of_etx
+     000000B2  _ENCDO                             rpl_of_etx
+     000000B3  _ENCCS                             rpl_of_etx
+     000000B4  _ADCCON1                           rpl_of_etx
+     000000B5  _ADCCON2                           rpl_of_etx
+     000000B6  _ADCCON3                           rpl_of_etx
+     000000B8  _DMAIE                             rpl_of_etx
+     000000B8  _IEN1                              rpl_of_etx
+     000000B9  _IP1                               rpl_of_etx
+     000000B9  _T1IE                              rpl_of_etx
+     000000BA  _ADCL                              rpl_of_etx
+     000000BA  _T2IE                              rpl_of_etx
+     000000BB  _ADCH                              rpl_of_etx
+     000000BB  _T3IE                              rpl_of_etx
+ASxxxx Linker V03.00 + NoICE + sdld,  page 5.
+Hexadecimal  [32-Bits]
+
+Area                                    Addr        Size        Decimal Bytes (Attributes)
+--------------------------------        ----        ----        ------- ----- ------------
+.  .ABS.                            00000000    00000000 =           0. bytes (ABS,CON)
+
+      Value  Global                              Global Defined In Module
+      -----  --------------------------------   ------------------------
+     000000BC  _RNDL                              rpl_of_etx
+     000000BC  _T4IE                              rpl_of_etx
+     000000BD  _P0IE                              rpl_of_etx
+     000000BD  _RNDH                              rpl_of_etx
+     000000BE  _SLEEPCMD                          rpl_of_etx
+     000000BF  _RFERRF                            rpl_of_etx
+     000000C0  _DMAIF                             rpl_of_etx
+     000000C0  _IRCON                             rpl_of_etx
+     000000C1  _T1IF                              rpl_of_etx
+     000000C1  _U0DBUF                            rpl_of_etx
+     000000C2  _T2IF                              rpl_of_etx
+     000000C2  _U0BAUD                            rpl_of_etx
+     000000C3  _T2MSEL                            rpl_of_etx
+     000000C3  _T3IF                              rpl_of_etx
+     000000C4  _T4IF                              rpl_of_etx
+     000000C4  _U0UCR                             rpl_of_etx
+     000000C5  _P0IF                              rpl_of_etx
+     000000C5  _U0GCR                             rpl_of_etx
+     000000C6  _CLKCONCMD                         rpl_of_etx
+     000000C7  _MEMCTR                            rpl_of_etx
+     000000C7  _STIF                              rpl_of_etx
+     000000C9  _WDCTL                             rpl_of_etx
+     000000CA  _T3CNT                             rpl_of_etx
+     000000CB  _T3CTL                             rpl_of_etx
+     000000CC  _T3CCTL0                           rpl_of_etx
+     000000CD  _T3CC0                             rpl_of_etx
+     000000CE  _T3CCTL1                           rpl_of_etx
+     000000CF  _T3CC1                             rpl_of_etx
+     000000D0  _P                                 rpl_of_etx
+     000000D0  _PSW                               rpl_of_etx
+     000000D1  _DMAIRQ                            rpl_of_etx
+     000000D1  _F1                                rpl_of_etx
+     000000D2  _DMA1CFGL                          rpl_of_etx
+     000000D2  _OV                                rpl_of_etx
+     000000D3  _DMA1CFGH                          rpl_of_etx
+     000000D3  _RS0                               rpl_of_etx
+     000000D4  _DMA0CFGL                          rpl_of_etx
+     000000D4  _RS1                               rpl_of_etx
+     000000D5  _DMA0CFGH                          rpl_of_etx
+     000000D5  _F0                                rpl_of_etx
+     000000D6  _AC                                rpl_of_etx
+     000000D6  _DMAARM                            rpl_of_etx
+     000000D7  _CY                                rpl_of_etx
+     000000D7  _DMAREQ                            rpl_of_etx
+     000000D8  _T3OVFIF                           rpl_of_etx
+     000000D8  _TIMIF                             rpl_of_etx
+     000000D9  _RFD                               rpl_of_etx
+     000000D9  _T3CH0IF                           rpl_of_etx
+     000000DA  _T1CC0L                            rpl_of_etx
+     000000DA  _T3CH1IF                           rpl_of_etx
+     000000DB  _T1CC0H                            rpl_of_etx
+ASxxxx Linker V03.00 + NoICE + sdld,  page 6.
+Hexadecimal  [32-Bits]
+
+Area                                    Addr        Size        Decimal Bytes (Attributes)
+--------------------------------        ----        ----        ------- ----- ------------
+.  .ABS.                            00000000    00000000 =           0. bytes (ABS,CON)
+
+      Value  Global                              Global Defined In Module
+      -----  --------------------------------   ------------------------
+     000000DB  _T4OVFIF                           rpl_of_etx
+     000000DC  _T1CC1L                            rpl_of_etx
+     000000DC  _T4CH0IF                           rpl_of_etx
+     000000DD  _T1CC1H                            rpl_of_etx
+     000000DD  _T4CH1IF                           rpl_of_etx
+     000000DE  _OVFIM                             rpl_of_etx
+     000000DE  _T1CC2L                            rpl_of_etx
+     000000DF  _T1CC2H                            rpl_of_etx
+     000000E0  _ACC                               rpl_of_etx
+     000000E0  _ACC_0                             rpl_of_etx
+     000000E1  _ACC_1                             rpl_of_etx
+     000000E1  _RFST                              rpl_of_etx
+     000000E2  _ACC_2                             rpl_of_etx
+     000000E2  _T1CNTL                            rpl_of_etx
+     000000E3  _ACC_3                             rpl_of_etx
+     000000E3  _T1CNTH                            rpl_of_etx
+     000000E4  _ACC_4                             rpl_of_etx
+     000000E4  _T1CTL                             rpl_of_etx
+     000000E5  _ACC_5                             rpl_of_etx
+     000000E5  _T1CCTL0                           rpl_of_etx
+     000000E6  _ACC_6                             rpl_of_etx
+     000000E6  _T1CCTL1                           rpl_of_etx
+     000000E7  _ACC_7                             rpl_of_etx
+     000000E7  _T1CCTL2                           rpl_of_etx
+     000000E8  _IRCON2                            rpl_of_etx
+     000000E8  _P2IF                              rpl_of_etx
+     000000E9  _RFIRQF0                           rpl_of_etx
+     000000E9  _UTX0IF                            rpl_of_etx
+     000000EA  _T4CNT                             rpl_of_etx
+     000000EA  _UTX1IF                            rpl_of_etx
+     000000EB  _P1IF                              rpl_of_etx
+     000000EB  _T4CTL                             rpl_of_etx
+     000000EC  _T4CCTL0                           rpl_of_etx
+     000000EC  _WDTIF                             rpl_of_etx
+     000000ED  _T4CC0                             rpl_of_etx
+     000000EE  _T4CCTL1                           rpl_of_etx
+     000000EF  _T4CC1                             rpl_of_etx
+     000000F0  _B                                 rpl_of_etx
+     000000F0  _B_0                               rpl_of_etx
+     000000F1  _B_1                               rpl_of_etx
+     000000F1  _PERCFG                            rpl_of_etx
+     000000F2  _APCFG                             rpl_of_etx
+     000000F2  _B_2                               rpl_of_etx
+     000000F3  _B_3                               rpl_of_etx
+     000000F3  _P0SEL                             rpl_of_etx
+     000000F4  _B_4                               rpl_of_etx
+     000000F4  _P1SEL                             rpl_of_etx
+     000000F5  _B_5                               rpl_of_etx
+     000000F5  _P2SEL                             rpl_of_etx
+     000000F6  _B_6                               rpl_of_etx
+     000000F6  _P1INP                             rpl_of_etx
+ASxxxx Linker V03.00 + NoICE + sdld,  page 7.
+Hexadecimal  [32-Bits]
+
+Area                                    Addr        Size        Decimal Bytes (Attributes)
+--------------------------------        ----        ----        ------- ----- ------------
+.  .ABS.                            00000000    00000000 =           0. bytes (ABS,CON)
+
+      Value  Global                              Global Defined In Module
+      -----  --------------------------------   ------------------------
+     000000F7  _B_7                               rpl_of_etx
+     000000F7  _P2INP                             rpl_of_etx
+     000000F8  _ACTIVE                            rpl_of_etx
+     000000F8  _U1CSR                             rpl_of_etx
+     000000F9  _TX_BYTE                           rpl_of_etx
+     000000F9  _U1DBUF                            rpl_of_etx
+     000000FA  _RX_BYTE                           rpl_of_etx
+     000000FA  _U1BAUD                            rpl_of_etx
+     000000FB  _ERR                               rpl_of_etx
+     000000FB  _U1UCR                             rpl_of_etx
+     000000FC  _FE                                rpl_of_etx
+     000000FC  _U1GCR                             rpl_of_etx
+     000000FD  _P0DIR                             rpl_of_etx
+     000000FD  _SLAVE                             rpl_of_etx
+     000000FE  _P1DIR                             rpl_of_etx
+     000000FE  _RE                                rpl_of_etx
+     000000FF  _MODE                              rpl_of_etx
+     000000FF  _P2DIR                             rpl_of_etx
+     00006000  _RFCORE_RAM                        rpl_of_etx
+     00006000  _RXFIFO                            rpl_of_etx
+     00006080  _TXFIFO                            rpl_of_etx
+     00006100  _SRC_ADDR_TABLE                    rpl_of_etx
+     00006160  _SRCRESMASK0                       rpl_of_etx
+     00006161  _SRCRESMASK1                       rpl_of_etx
+     00006162  _SRCRESMASK2                       rpl_of_etx
+     00006163  _SRCRESINDEX                       rpl_of_etx
+     00006164  _SRCEXTPENDEN0                     rpl_of_etx
+     00006165  _SRCEXTPENDEN1                     rpl_of_etx
+     00006166  _SRCEXTPENDEN2                     rpl_of_etx
+     00006167  _SRCSHORTPENDEN0                   rpl_of_etx
+     00006168  _SRCSHORTPENDEN1                   rpl_of_etx
+     00006169  _SRCSHORTPENDEN2                   rpl_of_etx
+     0000616A  _EXT_ADDR0                         rpl_of_etx
+     0000616B  _EXT_ADDR1                         rpl_of_etx
+     0000616C  _EXT_ADDR2                         rpl_of_etx
+     0000616D  _EXT_ADDR3                         rpl_of_etx
+     0000616E  _EXT_ADDR4                         rpl_of_etx
+     0000616F  _EXT_ADDR5                         rpl_of_etx
+     00006170  _EXT_ADDR6                         rpl_of_etx
+     00006171  _EXT_ADDR7                         rpl_of_etx
+     00006172  _PAN_ID0                           rpl_of_etx
+     00006173  _PAN_ID1                           rpl_of_etx
+     00006174  _SHORT_ADDR0                       rpl_of_etx
+     00006175  _SHORT_ADDR1                       rpl_of_etx
+     00006180  _FRMFILT0                          rpl_of_etx
+     00006181  _FRMFILT1                          rpl_of_etx
+     00006182  _SRCMATCH                          rpl_of_etx
+     00006183  _SRCSHORTEN0                       rpl_of_etx
+     00006184  _SRCSHORTEN1                       rpl_of_etx
+     00006185  _SRCSHORTEN2                       rpl_of_etx
+     00006186  _SRCEXTEN0                         rpl_of_etx
+ASxxxx Linker V03.00 + NoICE + sdld,  page 8.
+Hexadecimal  [32-Bits]
+
+Area                                    Addr        Size        Decimal Bytes (Attributes)
+--------------------------------        ----        ----        ------- ----- ------------
+.  .ABS.                            00000000    00000000 =           0. bytes (ABS,CON)
+
+      Value  Global                              Global Defined In Module
+      -----  --------------------------------   ------------------------
+     00006187  _SRCEXTEN1                         rpl_of_etx
+     00006188  _SRCEXTEN2                         rpl_of_etx
+     00006189  _FRMCTRL0                          rpl_of_etx
+     0000618A  _FRMCTRL1                          rpl_of_etx
+     0000618B  _RXENABLE                          rpl_of_etx
+     0000618C  _RXMASKSET                         rpl_of_etx
+     0000618D  _RXMASKCLR                         rpl_of_etx
+     0000618E  _FREQTUNE                          rpl_of_etx
+     0000618F  _FREQCTRL                          rpl_of_etx
+     00006190  _TXPOWER                           rpl_of_etx
+     00006191  _TXCTRL                            rpl_of_etx
+     00006192  _FSMSTAT0                          rpl_of_etx
+     00006193  _FSMSTAT1                          rpl_of_etx
+     00006194  _FIFOPCTRL                         rpl_of_etx
+     00006195  _FSMCTRL                           rpl_of_etx
+     00006196  _CCACTRL0                          rpl_of_etx
+     00006197  _CCACTRL1                          rpl_of_etx
+     00006198  _RSSI                              rpl_of_etx
+     00006199  _RSSISTAT                          rpl_of_etx
+     0000619A  _RXFIRST                           rpl_of_etx
+     0000619B  _RXFIFOCNT                         rpl_of_etx
+     0000619C  _TXFIFOCNT                         rpl_of_etx
+     0000619D  _RXFIRST_PTR                       rpl_of_etx
+     0000619E  _RXLAST_PTR                        rpl_of_etx
+     0000619F  _RXP1_PTR                          rpl_of_etx
+     000061A1  _TXFIRST_PTR                       rpl_of_etx
+     000061A2  _TXLAST_PTR                        rpl_of_etx
+     000061A3  _RFIRQM0                           rpl_of_etx
+     000061A4  _RFIRQM1                           rpl_of_etx
+     000061A5  _RFERRM                            rpl_of_etx
+     000061A6  _MONMUX                            rpl_of_etx
+     000061A6  _OPAMPMC                           rpl_of_etx
+     000061A7  _RFRND                             rpl_of_etx
+     000061A8  _MDMCTRL0                          rpl_of_etx
+     000061A9  _MDMCTRL1                          rpl_of_etx
+     000061AA  _FREQEST                           rpl_of_etx
+     000061AB  _RXCTRL                            rpl_of_etx
+     000061AC  _FSCTRL                            rpl_of_etx
+     000061AD  _FSCAL0                            rpl_of_etx
+     000061AE  _FSCAL1                            rpl_of_etx
+     000061AF  _FSCAL2                            rpl_of_etx
+     000061B0  _FSCAL3                            rpl_of_etx
+     000061B1  _AGCCTRL0                          rpl_of_etx
+     000061B2  _AGCCTRL1                          rpl_of_etx
+     000061B3  _AGCCTRL2                          rpl_of_etx
+     000061B4  _AGCCTRL3                          rpl_of_etx
+     000061B5  _ADCTEST0                          rpl_of_etx
+     000061B6  _ADCTEST1                          rpl_of_etx
+     000061B7  _ADCTEST2                          rpl_of_etx
+     000061B8  _MDMTEST0                          rpl_of_etx
+     000061B9  _MDMTEST1                          rpl_of_etx
+ASxxxx Linker V03.00 + NoICE + sdld,  page 9.
+Hexadecimal  [32-Bits]
+
+Area                                    Addr        Size        Decimal Bytes (Attributes)
+--------------------------------        ----        ----        ------- ----- ------------
+.  .ABS.                            00000000    00000000 =           0. bytes (ABS,CON)
+
+      Value  Global                              Global Defined In Module
+      -----  --------------------------------   ------------------------
+     000061BA  _DACTEST0                          rpl_of_etx
+     000061BB  _DACTEST1                          rpl_of_etx
+     000061BC  _DACTEST2                          rpl_of_etx
+     000061BD  _ATEST                             rpl_of_etx
+     000061BE  _PTEST0                            rpl_of_etx
+     000061BF  _PTEST1                            rpl_of_etx
+     000061C0  _CSPPROG0                          rpl_of_etx
+     000061C1  _CSPPROG1                          rpl_of_etx
+     000061C2  _CSPPROG2                          rpl_of_etx
+     000061C3  _CSPPROG3                          rpl_of_etx
+     000061C4  _CSPPROG4                          rpl_of_etx
+     000061C5  _CSPPROG5                          rpl_of_etx
+     000061C6  _CSPPROG6                          rpl_of_etx
+     000061C7  _CSPPROG7                          rpl_of_etx
+     000061C8  _CSPPROG8                          rpl_of_etx
+     000061C9  _CSPPROG9                          rpl_of_etx
+     000061CA  _CSPPROG10                         rpl_of_etx
+     000061CB  _CSPPROG11                         rpl_of_etx
+     000061CC  _CSPPROG12                         rpl_of_etx
+     000061CD  _CSPPROG13                         rpl_of_etx
+     000061CE  _CSPPROG14                         rpl_of_etx
+     000061CF  _CSPPROG15                         rpl_of_etx
+     000061D0  _CSPPROG16                         rpl_of_etx
+     000061D1  _CSPPROG17                         rpl_of_etx
+     000061D2  _CSPPROG18                         rpl_of_etx
+     000061D3  _CSPPROG19                         rpl_of_etx
+     000061D4  _CSPPROG20                         rpl_of_etx
+     000061D5  _CSPPROG21                         rpl_of_etx
+     000061D6  _CSPPROG22                         rpl_of_etx
+     000061D7  _CSPPROG23                         rpl_of_etx
+     000061E0  _CSPCTRL                           rpl_of_etx
+     000061E1  _CSPSTAT                           rpl_of_etx
+     000061E2  _CSPX                              rpl_of_etx
+     000061E3  _CSPY                              rpl_of_etx
+     000061E4  _CSPZ                              rpl_of_etx
+     000061E5  _CSPT                              rpl_of_etx
+     000061EB  _RFC_OBS_CTRL0                     rpl_of_etx
+     000061EC  _RFC_OBS_CTRL1                     rpl_of_etx
+     000061ED  _RFC_OBS_CTRL2                     rpl_of_etx
+     000061FA  _TXFILTCFG                         rpl_of_etx
+     00006200  _USBADDR                           rpl_of_etx
+     00006201  _USBPOW                            rpl_of_etx
+     00006202  _USBIIF                            rpl_of_etx
+     00006204  _USBOIF                            rpl_of_etx
+     00006206  _USBCIF                            rpl_of_etx
+     00006207  _USBIIE                            rpl_of_etx
+     00006209  _USBOIE                            rpl_of_etx
+     0000620B  _USBCIE                            rpl_of_etx
+     0000620C  _USBFRML                           rpl_of_etx
+     0000620D  _USBFRMH                           rpl_of_etx
+     0000620E  _USBINDEX                          rpl_of_etx
+ASxxxx Linker V03.00 + NoICE + sdld,  page 10.
+Hexadecimal  [32-Bits]
+
+Area                                    Addr        Size        Decimal Bytes (Attributes)
+--------------------------------        ----        ----        ------- ----- ------------
+.  .ABS.                            00000000    00000000 =           0. bytes (ABS,CON)
+
+      Value  Global                              Global Defined In Module
+      -----  --------------------------------   ------------------------
+     0000620F  _USBCTRL                           rpl_of_etx
+     00006210  _USBMAXI                           rpl_of_etx
+     00006211  _USBCS0                            rpl_of_etx
+     00006211  _USBCSIL                           rpl_of_etx
+     00006212  _USBCSIH                           rpl_of_etx
+     00006213  _USBMAXO                           rpl_of_etx
+     00006214  _USBCSOL                           rpl_of_etx
+     00006215  _USBCSOH                           rpl_of_etx
+     00006216  _USBCNT0                           rpl_of_etx
+     00006216  _USBCNTL                           rpl_of_etx
+     00006217  _USBCNTH                           rpl_of_etx
+     00006220  _USBF0                             rpl_of_etx
+     00006222  _USBF1                             rpl_of_etx
+     00006224  _USBF2                             rpl_of_etx
+     00006226  _USBF3                             rpl_of_etx
+     00006228  _USBF4                             rpl_of_etx
+     0000622A  _USBF5                             rpl_of_etx
+     00006230  _I2CCFG                            rpl_of_etx
+     00006231  _I2CSTAT                           rpl_of_etx
+     00006232  _I2CDATA                           rpl_of_etx
+     00006233  _I2CADDR                           rpl_of_etx
+     00006234  _I2CWC                             rpl_of_etx
+     00006235  _I2CIO                             rpl_of_etx
+     00006243  _OBSSEL0                           rpl_of_etx
+     00006244  _OBSSEL1                           rpl_of_etx
+     00006245  _OBSSEL2                           rpl_of_etx
+     00006246  _OBSSEL3                           rpl_of_etx
+     00006247  _OBSSEL4                           rpl_of_etx
+     00006248  _OBSSEL5                           rpl_of_etx
+     00006249  _CHVER                             rpl_of_etx
+     0000624A  _CHIPID                            rpl_of_etx
+     0000624B  _TESTREG0                          rpl_of_etx
+     00006260  _DBGDATA                           rpl_of_etx
+     00006262  _SRCRC                             rpl_of_etx
+     00006264  _BATTMON                           rpl_of_etx
+     00006265  _IVCTRL                            rpl_of_etx
+     00006270  _FCTL                              rpl_of_etx
+     00006271  _FADDRL                            rpl_of_etx
+     00006272  _FADDRH                            rpl_of_etx
+     00006273  _FWDATA                            rpl_of_etx
+     00006276  _CHIPINFO0                         rpl_of_etx
+     00006277  _CHIPINFO1                         rpl_of_etx
+     00006281  _IRCTL                             rpl_of_etx
+     00006290  _CLD                               rpl_of_etx
+     000062A0  _XX_T1CCTL0                        rpl_of_etx
+     000062A1  _XX_T1CCTL1                        rpl_of_etx
+     000062A2  _XX_T1CCTL2                        rpl_of_etx
+     000062A3  _T1CCTL3                           rpl_of_etx
+     000062A4  _T1CCTL4                           rpl_of_etx
+     000062A6  _XX_T1CC0L                         rpl_of_etx
+     000062A7  _XX_T1CC0H                         rpl_of_etx
+ASxxxx Linker V03.00 + NoICE + sdld,  page 11.
+Hexadecimal  [32-Bits]
+
+Area                                    Addr        Size        Decimal Bytes (Attributes)
+--------------------------------        ----        ----        ------- ----- ------------
+.  .ABS.                            00000000    00000000 =           0. bytes (ABS,CON)
+
+      Value  Global                              Global Defined In Module
+      -----  --------------------------------   ------------------------
+     000062A8  _XX_T1CC1L                         rpl_of_etx
+     000062A9  _XX_T1CC1H                         rpl_of_etx
+     000062AA  _XX_T1CC2L                         rpl_of_etx
+     000062AB  _XX_T1CC2H                         rpl_of_etx
+     000062AC  _T1CC3L                            rpl_of_etx
+     000062AD  _T1CC3H                            rpl_of_etx
+     000062AE  _T1CC4L                            rpl_of_etx
+     000062AF  _T1CC4H                            rpl_of_etx
+     000062B0  _STCC                              rpl_of_etx
+     000062B1  _STCS                              rpl_of_etx
+     000062B2  _STCV0                             rpl_of_etx
+     000062B3  _STCV1                             rpl_of_etx
+     000062B4  _STCV2                             rpl_of_etx
+     000062C0  _OPAMPC                            rpl_of_etx
+     000062C1  _OPAMPS                            rpl_of_etx
+     000062D0  _CMPCTL                            rpl_of_etx
+     00007080  _X_P0                              rpl_of_etx
+     00007086  _X_U0CSR                           rpl_of_etx
+     00007089  _X_P0IFG                           rpl_of_etx
+     0000708A  _X_P1IFG                           rpl_of_etx
+     0000708B  _X_P2IFG                           rpl_of_etx
+     0000708C  _X_PICTL                           rpl_of_etx
+     0000708D  _X_P1IEN                           rpl_of_etx
+     0000708F  _X_P0INP                           rpl_of_etx
+     00007090  _X_P1                              rpl_of_etx
+     00007091  _X_RFIRQF1                         rpl_of_etx
+     00007093  _X_MPAGE                           rpl_of_etx
+     00007093  _X__XPAGE                          rpl_of_etx
+     00007094  _X_T2CTRL                          rpl_of_etx
+     00007095  _X_ST0                             rpl_of_etx
+     00007096  _X_ST1                             rpl_of_etx
+     00007097  _X_ST2                             rpl_of_etx
+     0000709C  _X_T2EVTCFG                        rpl_of_etx
+     0000709D  _X_SLEEPSTA                        rpl_of_etx
+     0000709E  _X_CLKCONSTA                       rpl_of_etx
+     0000709F  _X_FMAP                            rpl_of_etx
+     0000709F  _X_PSBANK                          rpl_of_etx
+     000070A0  _X_P2                              rpl_of_etx
+     000070A1  _X_T2IRQF                          rpl_of_etx
+     000070A2  _X_T2M0                            rpl_of_etx
+     000070A3  _X_T2M1                            rpl_of_etx
+     000070A4  _X_T2MOVF0                         rpl_of_etx
+     000070A5  _X_T2MOVF1                         rpl_of_etx
+     000070A6  _X_T2MOVF2                         rpl_of_etx
+     000070A7  _X_T2IRQM                          rpl_of_etx
+     000070AB  _X_P0IEN                           rpl_of_etx
+     000070AC  _X_P2IEN                           rpl_of_etx
+     000070AD  _X_STLOAD                          rpl_of_etx
+     000070AE  _X_PMUX                            rpl_of_etx
+     000070AF  _X_T1STAT                          rpl_of_etx
+     000070B1  _X_ENCDI                           rpl_of_etx
+ASxxxx Linker V03.00 + NoICE + sdld,  page 12.
+Hexadecimal  [32-Bits]
+
+Area                                    Addr        Size        Decimal Bytes (Attributes)
+--------------------------------        ----        ----        ------- ----- ------------
+.  .ABS.                            00000000    00000000 =           0. bytes (ABS,CON)
+
+      Value  Global                              Global Defined In Module
+      -----  --------------------------------   ------------------------
+     000070B2  _X_ENCDO                           rpl_of_etx
+     000070B3  _X_ENCCS                           rpl_of_etx
+     000070B4  _X_ADCCON1                         rpl_of_etx
+     000070B5  _X_ADCCON2                         rpl_of_etx
+     000070B6  _X_ADCCON3                         rpl_of_etx
+     000070BA  _X_ADCL                            rpl_of_etx
+     000070BB  _X_ADCH                            rpl_of_etx
+     000070BC  _X_RNDL                            rpl_of_etx
+     000070BD  _X_RNDH                            rpl_of_etx
+     000070BE  _X_SLEEPCMD                        rpl_of_etx
+     000070BF  _X_RFERRF                          rpl_of_etx
+     000070C1  _X_U0DBUF                          rpl_of_etx
+     000070C2  _X_U0BAUD                          rpl_of_etx
+     000070C3  _X_T2MSEL                          rpl_of_etx
+     000070C4  _X_U0UCR                           rpl_of_etx
+     000070C5  _X_U0GCR                           rpl_of_etx
+     000070C6  _X_CLKCONCMD                       rpl_of_etx
+     000070C7  _X_MEMCTR                          rpl_of_etx
+     000070C9  _X_WDCTL                           rpl_of_etx
+     000070CA  _X_T3CNT                           rpl_of_etx
+     000070CB  _X_T3CTL                           rpl_of_etx
+     000070CC  _X_T3CCTL0                         rpl_of_etx
+     000070CD  _X_T3CC0                           rpl_of_etx
+     000070CE  _X_T3CCTL1                         rpl_of_etx
+     000070CF  _X_T3CC1                           rpl_of_etx
+     000070D1  _X_DMAIRQ                          rpl_of_etx
+     000070D2  _X_DMA1CFGL                        rpl_of_etx
+     000070D3  _X_DMA1CFGH                        rpl_of_etx
+     000070D4  _X_DMA0CFGL                        rpl_of_etx
+     000070D5  _X_DMA0CFGH                        rpl_of_etx
+     000070D6  _X_DMAARM                          rpl_of_etx
+     000070D7  _X_DMAREQ                          rpl_of_etx
+     000070D8  _X_TIMIF                           rpl_of_etx
+     000070D9  _X_RFD                             rpl_of_etx
+     000070DA  _X_T1CC0L                          rpl_of_etx
+     000070DB  _X_T1CC0H                          rpl_of_etx
+     000070DC  _X_T1CC1L                          rpl_of_etx
+     000070DD  _X_T1CC1H                          rpl_of_etx
+     000070DE  _X_T1CC2L                          rpl_of_etx
+     000070DF  _X_T1CC2H                          rpl_of_etx
+     000070E1  _X_RFST                            rpl_of_etx
+     000070E2  _X_T1CNTL                          rpl_of_etx
+     000070E3  _X_T1CNTH                          rpl_of_etx
+     000070E4  _X_T1CTL                           rpl_of_etx
+     000070E5  _X_T1CCTL0                         rpl_of_etx
+     000070E6  _X_T1CCTL1                         rpl_of_etx
+     000070E7  _X_T1CCTL2                         rpl_of_etx
+     000070E9  _X_RFIRQF0                         rpl_of_etx
+     000070EA  _X_T4CNT                           rpl_of_etx
+     000070EB  _X_T4CTL                           rpl_of_etx
+     000070EC  _X_T4CCTL0                         rpl_of_etx
+ASxxxx Linker V03.00 + NoICE + sdld,  page 13.
+Hexadecimal  [32-Bits]
+
+Area                                    Addr        Size        Decimal Bytes (Attributes)
+--------------------------------        ----        ----        ------- ----- ------------
+.  .ABS.                            00000000    00000000 =           0. bytes (ABS,CON)
+
+      Value  Global                              Global Defined In Module
+      -----  --------------------------------   ------------------------
+     000070ED  _X_T4CC0                           rpl_of_etx
+     000070EE  _X_T4CCTL1                         rpl_of_etx
+     000070EF  _X_T4CC1                           rpl_of_etx
+     000070F1  _X_PERCFG                          rpl_of_etx
+     000070F2  _X_APCFG                           rpl_of_etx
+     000070F3  _X_P0SEL                           rpl_of_etx
+     000070F4  _X_P1SEL                           rpl_of_etx
+     000070F5  _X_P2SEL                           rpl_of_etx
+     000070F6  _X_P1INP                           rpl_of_etx
+     000070F7  _X_P2INP                           rpl_of_etx
+     000070F8  _X_U1CSR                           rpl_of_etx
+     000070F9  _X_U1DBUF                          rpl_of_etx
+     000070FA  _X_U1BAUD                          rpl_of_etx
+     000070FB  _X_U1UCR                           rpl_of_etx
+     000070FC  _X_U1GCR                           rpl_of_etx
+     000070FD  _X_P0DIR                           rpl_of_etx
+     000070FE  _X_P1DIR                           rpl_of_etx
+     000070FF  _X_P2DIR                           rpl_of_etx
+     00007800  _X_INFOPAGE                        rpl_of_etx
+     0000780C  _X_IEEE_ADDR                       rpl_of_etx
+
+ASxxxx Linker V03.00 + NoICE + sdld,  page 14.
+Hexadecimal  [32-Bits]
+
+Area                                    Addr        Size        Decimal Bytes (Attributes)
+--------------------------------        ----        ----        ------- ----- ------------
+REG_BANK_0                          00000000    00000008 =           8. bytes (REL,OVR)
+
+      Value  Global                              Global Defined In Module
+      -----  --------------------------------   ------------------------
+ASxxxx Linker V03.00 + NoICE + sdld,  page 15.
+Hexadecimal  [32-Bits]
+
+Area                                    Addr        Size        Decimal Bytes (Attributes)
+--------------------------------        ----        ----        ------- ----- ------------
+BIT_BANK                            00000020    00000001 =           1. bytes (REL,OVR)
+
+      Value  Global                              Global Defined In Module
+      -----  --------------------------------   ------------------------
+ASxxxx Linker V03.00 + NoICE + sdld,  page 16.
+Hexadecimal  [32-Bits]
+
+Area                                    Addr        Size        Decimal Bytes (Attributes)
+--------------------------------        ----        ----        ------- ----- ------------
+DSEG                                00000000    00000074 =         116. bytes (REL,CON)
+
+      Value  Global                              Global Defined In Module
+      -----  --------------------------------   ------------------------
+     00000013  _bp                                _bp
+
+ASxxxx Linker V03.00 + NoICE + sdld,  page 17.
+Hexadecimal  [32-Bits]
+
+Area                                    Addr        Size        Decimal Bytes (Attributes)
+--------------------------------        ----        ----        ------- ----- ------------
+SSEG                                00000021    000000DF =         223. bytes (REL,OVR)
+
+      Value  Global                              Global Defined In Module
+      -----  --------------------------------   ------------------------
+     00000021  __start__stack                     contiki_main
+
+ASxxxx Linker V03.00 + NoICE + sdld,  page 18.
+Hexadecimal  [32-Bits]
+
+Area                                    Addr        Size        Decimal Bytes (Attributes)
+--------------------------------        ----        ----        ------- ----- ------------
+XSEG                                00000000    0000186B =        6251. bytes (REL,CON,XDATA)
+
+      Value  Global                              Global Defined In Module
+      -----  --------------------------------   ------------------------
+D:   00000004  _server_ipaddr                     client
+D:   00000024  _tcpip_event                       tcpip
+D:   00000025  _tcpip_icmp6_event                 tcpip
+D:   000000C1  _uip_ds6_timer_periodic            uip_ds6
+D:   000000CB  _uip_ds6_timer_ra                  uip_ds6
+D:   000000D3  _uip_ds6_if                        uip_ds6
+D:   000001B0  _uip_ds6_nbr_cache                 uip_ds6
+D:   00000268  _uip_ds6_prefix_list               uip_ds6
+D:   000002BC  _uip_ds6_addr_size                 uip_ds6
+D:   000002BD  _uip_ds6_netif_addr_list_offset    uip_ds6
+D:   00000564  _serial_line_event_message         serial_line
+D:   000005FE  _sensors_event                     sensors
+D:   00000604  _uip_lladdr                        uip6
+D:   0000060C  _uip_next_hdr                      uip6
+D:   0000060F  _uip_aligned_buf                   uip6
+D:   000006FF  _uip_appdata                       uip6
+D:   00000702  _uip_sappdata                      uip6
+D:   00000705  _uip_len                           uip6
+D:   00000707  _uip_slen                          uip6
+D:   00000709  _uip_flags                         uip6
+D:   0000070A  _uip_conn                          uip6
+D:   00000710  _uip_conns                         uip6
+D:   000008DC  _uip_listenports                   uip6
+D:   00000908  _uip_acc32                         uip6
+D:   0000090F  _uip_udp_conn                      uip6
+D:   00000912  _uip_udp_conns                     uip6
+D:   00000A20  _uip_icmp6_conns                   uip6
+D:   00000A56  _packetbuf_attrs                   packetbuf
+D:   00000A86  _packetbuf_addrs                   packetbuf
+D:   0000135E  _instance_table                    rpl_dag
+D:   00001423  _default_instance                  rpl_dag
+D:   00001459  _sensors_flags                     smartrf_sensors
+D:   0000146E  _sleep_flag                        clock
+D:   0000164D  _dest_addr_pi                      rpl_icmp6
+D:   00001678  _rimeaddr_node_addr                rimeaddr
+D:   0000174F  _rimestats                         rimestats
+ASxxxx Linker V03.00 + NoICE + sdld,  page 19.
+Hexadecimal  [32-Bits]
+
+Area                                    Addr        Size        Decimal Bytes (Attributes)
+--------------------------------        ----        ----        ------- ----- ------------
+XISEG                               0000186F    0000015B =         347. bytes (REL,CON,XDATA)
+
+      Value  Global                              Global Defined In Module
+      -----  --------------------------------   ------------------------
+D:   0000186F  _light_state                       client
+D:   00001875  _sended_flag                       client
+D:   00001876  _temperature_now                   client
+D:   00001877  _oshi_now                          client
+D:   00001878  _onoff_now                         client
+D:   000018AF  _udp_client_process                client
+D:   000018B9  _tcpip_process                     tcpip
+D:   000018C3  _process_list                      process
+D:   000018C6  _process_current                   process
+D:   000018C9  _etimer_process                    etimer
+D:   000018F9  _serial_line_process               serial_line
+D:   00001903  _sensors_process                   sensors
+D:   0000190D  _uip_ext_bitmap                    uip6
+D:   0000190E  _uip_ext_len                       uip6
+D:   0000190F  _uip_ext_opt_offset                uip6
+D:   00001934  _viztool_process                   viztool
+D:   0000193E  _in_net_flag                       rpl_dag
+D:   00001949  _sensors                           smartrf_sensors
+D:   00001952  _attr_etx                          neighbor_info
+D:   0000195D  _attr_timestamp                    neighbor_info
+D:   00001987  _ctimer_process                    ctimer
+D:   000019B5  _rpl_of_etx                        rpl_of_etx
+
+ASxxxx Linker V03.00 + NoICE + sdld,  page 20.
+Hexadecimal  [32-Bits]
+
+Area                                    Addr        Size        Decimal Bytes (Attributes)
+--------------------------------        ----        ----        ------- ----- ------------
+HOME                                00000000    00007181 =       29057. bytes (REL,CON,CODE)
+
+      Value  Global                              Global Defined In Module
+      -----  --------------------------------   ------------------------
+C:   0000004E  __sdcc_program_startup             contiki_main
+C:   0000022E  _main                              contiki_main
+C:   00000712  _uart0_set_input                   uart_intr
+C:   00000725  __sdcc_banked_call                 
+C:   00000737  __sdcc_banked_ret                  
+C:   0000073A  _netstack_init                     netstack
+C:   00000867  _uip_nd6_ns_input                  uip_nd6
+C:   00000FDE  _uip_nd6_ns_output                 uip_nd6
+C:   000014CB  _uip_nd6_na_input                  uip_nd6
+C:   000021EB  _rpl_set_root                      rpl_dag
+C:   00002705  _rpl_repair_root                   rpl_dag
+C:   00002AEF  _rpl_set_prefix                    rpl_dag
+C:   00002C16  _rpl_set_default_route             rpl_dag
+C:   00002D82  _rpl_alloc_instance                rpl_dag
+C:   00002EA3  _rpl_alloc_dag                     rpl_dag
+C:   000030C0  _rpl_set_default_instance          rpl_dag
+C:   000030D4  _rpl_free_instance                 rpl_dag
+C:   00003221  _rpl_free_dag                      rpl_dag
+C:   00003307  _rpl_add_parent                    rpl_dag
+C:   0000355C  _rpl_find_parent                   rpl_dag
+C:   000037F0  _rpl_find_parent_any_dag           rpl_dag
+C:   00003956  _rpl_select_dag                    rpl_dag
+C:   00004317  _rpl_select_parent                 rpl_dag
+C:   00004507  _rpl_remove_parent                 rpl_dag
+C:   000045AC  _rpl_nullify_parent                rpl_dag
+C:   000046F7  _rpl_move_parent                   rpl_dag
+C:   00004948  _rpl_get_any_dag                   rpl_dag
+C:   000049D6  _rpl_get_instance                  rpl_dag
+C:   00004A87  _rpl_find_of                       rpl_dag
+C:   00004B26  _rpl_join_instance                 rpl_dag
+C:   0000531D  _rpl_add_dag                       rpl_dag
+C:   00005E2A  _rpl_local_repair                  rpl_dag
+C:   00005F2F  _rpl_recalculate_ranks             rpl_dag
+C:   00006124  _rpl_process_parent_event          rpl_dag
+C:   000062F7  _rpl_process_dio                   rpl_dag
+C:   00006B76  _putchar                           putchar
+C:   00006B82  _clock_delay_usec                  clock
+C:   00006B9D  _clock_wait                        clock
+C:   00006BE4  _clock_time                        clock
+C:   00006BED  _clock_seconds                     clock
+C:   00006BFF  _clock_init                        clock
+C:   00006CCE  _clock_isr                         clock
+C:   00006DDF  _rtimer_arch_init                  rtimer_arch
+C:   00006DEF  _rtimer_arch_schedule              rtimer_arch
+C:   00006E0A  _rtimer_isr                        rtimer_arch
+C:   00006E61  _ringbuf_init                      ringbuf
+C:   00006EE2  _ringbuf_put                       ringbuf
+C:   00006FFB  _ringbuf_get                       ringbuf
+C:   000070D8  _ringbuf_size                      ringbuf
+C:   000070FD  _ringbuf_elements                  ringbuf
+ASxxxx Linker V03.00 + NoICE + sdld,  page 21.
+Hexadecimal  [32-Bits]
+
+Area                                    Addr        Size        Decimal Bytes (Attributes)
+--------------------------------        ----        ----        ------- ----- ------------
+HOME                                00000000    00007181 =       29057. bytes (REL,CON,CODE)
+
+      Value  Global                              Global Defined In Module
+      -----  --------------------------------   ------------------------
+C:   00007153  ___gptr_cmp                        
+ASxxxx Linker V03.00 + NoICE + sdld,  page 22.
+Hexadecimal  [32-Bits]
+
+Area                                    Addr        Size        Decimal Bytes (Attributes)
+--------------------------------        ----        ----        ------- ----- ------------
+GSINIT0                             00007181    00000003 =           3. bytes (REL,CON,CODE)
+
+      Value  Global                              Global Defined In Module
+      -----  --------------------------------   ------------------------
+C:   00007181  __sdcc_gsinit_startup              
+
+ASxxxx Linker V03.00 + NoICE + sdld,  page 23.
+Hexadecimal  [32-Bits]
+
+Area                                    Addr        Size        Decimal Bytes (Attributes)
+--------------------------------        ----        ----        ------- ----- ------------
+GSINIT2                             00007184    0000000A =          10. bytes (REL,CON,CODE)
+
+      Value  Global                              Global Defined In Module
+      -----  --------------------------------   ------------------------
+ASxxxx Linker V03.00 + NoICE + sdld,  page 24.
+Hexadecimal  [32-Bits]
+
+Area                                    Addr        Size        Decimal Bytes (Attributes)
+--------------------------------        ----        ----        ------- ----- ------------
+GSINIT3                             0000718E    00000022 =          34. bytes (REL,CON,CODE)
+
+      Value  Global                              Global Defined In Module
+      -----  --------------------------------   ------------------------
+C:   0000718E  __mcs51_genXINIT                   
+
+ASxxxx Linker V03.00 + NoICE + sdld,  page 25.
+Hexadecimal  [32-Bits]
+
+Area                                    Addr        Size        Decimal Bytes (Attributes)
+--------------------------------        ----        ----        ------- ----- ------------
+GSINIT4                             000071B0    0000002A =          42. bytes (REL,CON,CODE)
+
+      Value  Global                              Global Defined In Module
+      -----  --------------------------------   ------------------------
+C:   000071B0  __mcs51_genRAMCLEAR                
+C:   000071B6  __mcs51_genXRAMCLEAR               
+
+ASxxxx Linker V03.00 + NoICE + sdld,  page 26.
+Hexadecimal  [32-Bits]
+
+Area                                    Addr        Size        Decimal Bytes (Attributes)
+--------------------------------        ----        ----        ------- ----- ------------
+GSINIT                              000071DA    00000028 =          40. bytes (REL,CON,CODE)
+
+      Value  Global                              Global Defined In Module
+      -----  --------------------------------   ------------------------
+ASxxxx Linker V03.00 + NoICE + sdld,  page 27.
+Hexadecimal  [32-Bits]
+
+Area                                    Addr        Size        Decimal Bytes (Attributes)
+--------------------------------        ----        ----        ------- ----- ------------
+GSFINAL                             00007202    00000003 =           3. bytes (REL,CON,CODE)
+
+      Value  Global                              Global Defined In Module
+      -----  --------------------------------   ------------------------
+ASxxxx Linker V03.00 + NoICE + sdld,  page 28.
+Hexadecimal  [32-Bits]
+
+Area                                    Addr        Size        Decimal Bytes (Attributes)
+--------------------------------        ----        ----        ------- ----- ------------
+CSEG                                00007205    00000ACA =        2762. bytes (REL,CON,CODE)
+
+      Value  Global                              Global Defined In Module
+      -----  --------------------------------   ------------------------
+C:   00007205  __gptrput                          _gptrput
+C:   00007220  _memmove                           _memmove
+C:   000073A4  __mulint                           _mulint
+C:   0000747C  _memcmp                            _memcmp
+C:   00007571  __modulong                         _modulong
+C:   00007634  _strncmp                           _strncmp
+C:   000076FC  __divulong                         _divulong
+C:   00007786  _memset                            _memset
+C:   000077F2  _memcpy                            _memcpy
+C:   00007887  _strlen                            _strlen
+C:   000078A1  __gptrget                          _gptrget
+C:   000078BD  __mullong                          _mullong
+C:   00007A89  __moduint                          _moduint
+C:   00007B0B  __divsint                          _divsint
+C:   00007B81  __divuint                          _divuint
+C:   00007BCE  __sdcc_external_startup            _startup
+C:   00007BD2  __divslong                         _divslong
+
+ASxxxx Linker V03.00 + NoICE + sdld,  page 29.
+Hexadecimal  [32-Bits]
+
+Area                                    Addr        Size        Decimal Bytes (Attributes)
+--------------------------------        ----        ----        ------- ----- ------------
+CONST                               00007CCF    000001D3 =         467. bytes (REL,CON,CODE)
+
+      Value  Global                              Global Defined In Module
+      -----  --------------------------------   ------------------------
+C:   00007DD4  _autostart_processes               client
+C:   00007DDA  _adc_sensor                        adc_sensor
+C:   00007DEA  _joystick_sensor                   joystick_sensor
+C:   00007DFF  _cc2530_rf_driver                  cc2530_rf
+C:   00007E1D  _unc_llconf                        sicslowpan
+C:   00007E21  _unc_ctxconf                       sicslowpan
+C:   00007E25  _unc_mxconf                        sicslowpan
+C:   00007E29  _llprefix                          sicslowpan
+C:   00007E2F  _sicslowpan_driver                 sicslowpan
+C:   00007E5A  _rimeaddr_null                     rimeaddr
+C:   00007E62  _csma_driver                       csma
+C:   00007E7C  _nullrdc_driver                    nullrdc
+C:   00007E9C  _framer_802154                     framer_802154
+
+ASxxxx Linker V03.00 + NoICE + sdld,  page 30.
+Hexadecimal  [32-Bits]
+
+Area                                    Addr        Size        Decimal Bytes (Attributes)
+--------------------------------        ----        ----        ------- ----- ------------
+XINIT                               00007EA2    0000015B =         347. bytes (REL,CON,CODE)
+
+      Value  Global                              Global Defined In Module
+      -----  --------------------------------   ------------------------
+ASxxxx Linker V03.00 + NoICE + sdld,  page 31.
+Hexadecimal  [32-Bits]
+
+Area                                    Addr        Size        Decimal Bytes (Attributes)
+--------------------------------        ----        ----        ------- ----- ------------
+BANK1                               00018000    00007FF5 =       32757. bytes (REL,CON,CODE)
+
+      Value  Global                              Global Defined In Module
+      -----  --------------------------------   ------------------------
+C:   00018000  _InitUart                          client
+C:   00018021  _login                             client
+C:   000180C7  _set_temp                          client
+C:   0001814A  _turn_off                          client
+C:   000181C5  _turn_on                           client
+C:   00018212  _DelayMS                           client
+C:   00018281  _send_state                        client
+C:   0001835F  _tcpip_handler                     client
+C:   00018808  _tcpip_output                      tcpip
+C:   00018846  _tcpip_set_outputfunc              tcpip
+C:   000188ED  _tcp_connect                       tcpip
+C:   000189BC  _tcp_unlisten                      tcpip
+C:   00018AAE  _tcp_listen                        tcpip
+C:   00018B75  _tcp_attach                        tcpip
+C:   00018BC6  _udp_attach                        tcpip
+C:   00018C17  _udp_new                           tcpip
+C:   00018CDC  _udp_broadcast_new                 tcpip
+C:   00018D87  _icmp6_new                         tcpip
+C:   00018DC8  _tcpip_icmp6_call                  tcpip
+C:   000191F0  _tcpip_input                       tcpip
+C:   00019209  _tcpip_ipv6_output                 tcpip
+C:   0001965F  _tcpip_poll_udp                    tcpip
+C:   00019687  _tcpip_poll_tcp                    tcpip
+C:   000196AE  _tcpip_uipcall                     tcpip
+C:   00019A9E  _uip_add32                         uip6
+C:   00019D0C  _uip_chksum                        uip6
+C:   00019D4E  _uip_ipchksum                      uip6
+C:   00019E98  _uip_icmp6chksum                   uip6
+C:   00019EAB  _uip_tcpchksum                     uip6
+C:   00019EBE  _uip_udpchksum                     uip6
+C:   00019ED1  _uip_init                          uip6
+C:   00019F78  _uip_connect                       uip6
+C:   0001A3C5  _remove_ext_hdr                    uip6
+C:   0001A48E  _uip_udp_new                       uip6
+C:   0001A688  _uip_unlisten                      uip6
+C:   0001A6D1  _uip_listen                        uip6
+C:   0001A966  _uip_process                       uip6
+C:   0001D643  _uip_htons                         uip6
+C:   0001D65C  _uip_htonl                         uip6
+C:   0001D6A8  _uip_send                          uip6
+C:   0001D7AE  _rime_sniffer_add                  sicslowpan
+C:   0001D7C1  _rime_sniffer_remove               sicslowpan
+C:   0001FFBA  _sicslowpan_init                   sicslowpan
+C:   0001FFE3  _energest_type_set                 energest
+C:   0001FFE6  _energest_init                     energest
+C:   0001FFE9  _energest_type_time                energest
+C:   0001FFF2  _energest_flush                    energest
+
+ASxxxx Linker V03.00 + NoICE + sdld,  page 32.
+Hexadecimal  [32-Bits]
+
+Area                                    Addr        Size        Decimal Bytes (Attributes)
+--------------------------------        ----        ----        ------- ----- ------------
+BANK2                               00028000    00007FFC =       32764. bytes (REL,CON,CODE)
+
+      Value  Global                              Global Defined In Module
+      -----  --------------------------------   ------------------------
+C:   00028000  _uip_ds6_init                      uip_ds6
+C:   00028221  _uip_ds6_periodic                  uip_ds6
+C:   0002872D  _uip_ds6_list_loop                 uip_ds6
+C:   000288FB  _uip_ds6_nbr_add                   uip_ds6
+C:   00028CAE  _uip_ds6_nbr_rm                    uip_ds6
+C:   00028CD4  _uip_ds6_nbr_lookup                uip_ds6
+C:   00028D6B  _uip_ds6_nbr_ll_lookup             uip_ds6
+C:   00028E1E  _uip_ds6_prefix_add                uip_ds6
+C:   00028FA1  _uip_ds6_prefix_rm                 uip_ds6
+C:   00028FB8  _uip_ds6_prefix_lookup             uip_ds6
+C:   00029019  _uip_ds6_is_addr_onlink            uip_ds6
+C:   00029100  _uip_ds6_addr_add                  uip_ds6
+C:   00029322  _uip_ds6_addr_rm                   uip_ds6
+C:   00029408  _uip_ds6_addr_lookup               uip_ds6
+C:   00029465  _uip_ds6_get_link_local            uip_ds6
+C:   0002952A  _uip_ds6_get_global                uip_ds6
+C:   000295F1  _uip_ds6_maddr_add                 uip_ds6
+C:   000296A2  _uip_ds6_maddr_rm                  uip_ds6
+C:   000296B9  _uip_ds6_maddr_lookup              uip_ds6
+C:   00029716  _uip_ds6_aaddr_add                 uip_ds6
+C:   000297C7  _uip_ds6_aaddr_rm                  uip_ds6
+C:   000297DE  _uip_ds6_aaddr_lookup              uip_ds6
+C:   0002983B  _uip_ds6_select_src                uip_ds6
+C:   00029B0D  _uip_ds6_set_addr_iid              uip_ds6
+C:   00029B91  _get_match_length                  uip_ds6
+C:   00029C58  _uip_ds6_compute_reachable_time    uip_ds6
+C:   00029EDA  _uip_ds6_notification_add          uip_ds6_route
+C:   00029F3B  _uip_ds6_notification_rm           uip_ds6_route
+C:   00029F6A  _uip_ds6_route_init                uip_ds6_route
+C:   00029FD9  _uip_ds6_route_list_head           uip_ds6_route
+C:   00029FFC  _uip_ds6_route_num_routes          uip_ds6_route
+C:   0002A01D  _uip_ds6_route_lookup              uip_ds6_route
+C:   0002A18F  _uip_ds6_route_add                 uip_ds6_route
+C:   0002A35E  _uip_ds6_route_rm                  uip_ds6_route
+C:   0002A485  _uip_ds6_route_rm_by_nexthop       uip_ds6_route
+C:   0002A5F7  _uip_ds6_defrt_add                 uip_ds6_route
+C:   0002A7CA  _uip_ds6_defrt_rm                  uip_ds6_route
+C:   0002A8E2  _uip_ds6_defrt_lookup              uip_ds6_route
+C:   0002A9D2  _uip_ds6_defrt_choose              uip_ds6_route
+C:   0002AAE4  _uip_ds6_defrt_periodic            uip_ds6_route
+C:   0002ABAB  _uart0_init                        uart0
+C:   0002ABD8  _uart0_writeb                      uart0
+C:   0002ACCE  _neighbor_attr_list_neighbors      neighbor_attr
+C:   0002AE83  _neighbor_attr_register            neighbor_attr
+C:   0002AF59  _neighbor_attr_has_neighbor        neighbor_attr
+C:   0002AF99  _neighbor_attr_add_neighbor        neighbor_attr
+C:   0002B1A6  _neighbor_attr_remove_neighbor     neighbor_attr
+C:   0002B23A  _neighbor_attr_get_data            neighbor_attr
+C:   0002B30C  _neighbor_attr_set_data            neighbor_attr
+C:   0002B48A  _neighbor_attr_tick                neighbor_attr
+ASxxxx Linker V03.00 + NoICE + sdld,  page 33.
+Hexadecimal  [32-Bits]
+
+Area                                    Addr        Size        Decimal Bytes (Attributes)
+--------------------------------        ----        ----        ------- ----- ------------
+BANK2                               00028000    00007FFC =       32764. bytes (REL,CON,CODE)
+
+      Value  Global                              Global Defined In Module
+      -----  --------------------------------   ------------------------
+C:   0002B4B6  _neighbor_attr_get_timeout         neighbor_attr
+C:   0002B679  _neighbor_attr_set_timeout         neighbor_attr
+C:   0002BBA0  _dis_output                        rpl_icmp6
+C:   0002C54E  _dio_output                        rpl_icmp6
+C:   0002DA43  _dao_output                        rpl_icmp6
+C:   0002DD24  _dao_ack_output                    rpl_icmp6
+C:   0002DDB9  _uip_rpl_input                     rpl_icmp6
+C:   0002EE70  _soc_init                          soc
+C:   0002F504  _frame802154_hdrlen                frame802154
+C:   0002F550  _frame802154_create                frame802154
+C:   0002F966  _frame802154_parse                 frame802154
+
+ASxxxx Linker V03.00 + NoICE + sdld,  page 34.
+Hexadecimal  [32-Bits]
+
+Area                                    Addr        Size        Decimal Bytes (Attributes)
+--------------------------------        ----        ----        ------- ----- ------------
+BANK4                               00048000    000012E8 =        4840. bytes (REL,CON,CODE)
+
+      Value  Global                              Global Defined In Module
+      -----  --------------------------------   ------------------------
+C:   00048000  _stimer_set                        stimer
+C:   0004806E  _stimer_reset                      stimer
+C:   00048106  _stimer_restart                    stimer
+C:   00048144  _stimer_expired                    stimer
+C:   00048212  _stimer_remaining                  stimer
+C:   0004828D  _stimer_elapsed                    stimer
+C:   000482F7  _leds_init                         leds
+C:   0004830C  _leds_blink                        leds
+C:   00048343  _leds_get                          leds
+C:   00048351  _leds_on                           leds
+C:   00048371  _leds_off                          leds
+C:   00048390  _leds_toggle                       leds
+C:   0004839C  _leds_invert                       leds
+C:   000483B2  _watchdog_init                     watchdog
+C:   000483B8  _watchdog_start                    watchdog
+C:   000483BE  _watchdog_periodic                 watchdog
+C:   000483D1  _watchdog_reboot                   watchdog
+C:   000483DF  _rtimer_init                       rtimer
+C:   000483EB  _rtimer_set                        rtimer
+C:   000484A2  _rtimer_run_next                   rtimer
+C:   0004857F  _serial_line_input_byte            serial_line
+C:   000487B4  _serial_line_init                  serial_line
+C:   000488FE  _port_2_isr                        joystick_sensor
+C:   0004898E  _putstring                         debug
+C:   000489C1  _puthex                            debug
+C:   000489EF  _putbin                            debug
+C:   00048A24  _putdec                            debug
+C:   00048A65  _autostart_start                   autostart
+C:   00048AEA  _autostart_exit                    autostart
+C:   00048B62  _leds_arch_init                    leds_arch
+C:   00048B7C  _leds_arch_get                     leds_arch
+C:   00048BA5  _leds_arch_set                     leds_arch
+C:   00048BD2  _uip_udp_packet_send               uip_udp_packet
+C:   00048C6B  _uip_udp_packet_sendto             uip_udp_packet
+C:   00048FD4  _neighbor_info_packet_sent         neighbor_info
+C:   00049092  _neighbor_info_packet_received     neighbor_info
+C:   000490ED  _neighbor_info_subscribe           neighbor_info
+C:   00049141  _neighbor_info_get_metric          neighbor_info
+C:   00049185  _random_rand                       random
+C:   0004919D  _random_init                       random
+C:   00049205  _rimeaddr_copy                     rimeaddr
+C:   0004925D  _rimeaddr_cmp                      rimeaddr
+C:   000492C4  _rimeaddr_set_node_addr            rimeaddr
+
+ASxxxx Linker V03.00 + NoICE + sdld,  page 35.
+Hexadecimal  [32-Bits]
+
+Area                                    Addr        Size        Decimal Bytes (Attributes)
+--------------------------------        ----        ----        ------- ----- ------------
+BANK3                               00038000    00007FFD =       32765. bytes (REL,CON,CODE)
+
+      Value  Global                              Global Defined In Module
+      -----  --------------------------------   ------------------------
+C:   00038000  _process_alloc_event               process
+C:   0003800F  _process_start                     process
+C:   0003861B  _process_exit                      process
+C:   00038647  _process_init                      process
+C:   000388C1  _process_run                       process
+C:   000388F4  _process_nevents                   process
+C:   0003890E  _process_post                      process
+C:   00038994  _process_post_synch                process
+C:   000389EC  _process_poll                      process
+C:   00038A2C  _process_is_running                process
+C:   00039050  _etimer_request_poll               etimer
+C:   00039186  _etimer_set                        etimer
+C:   000391C9  _etimer_reset                      etimer
+C:   000391F6  _etimer_restart                    etimer
+C:   00039223  _etimer_adjust                     etimer
+C:   00039275  _etimer_expired                    etimer
+C:   000392C1  _etimer_expiration_time            etimer
+C:   000392F3  _etimer_start_time                 etimer
+C:   00039305  _etimer_pending                    etimer
+C:   00039341  _etimer_next_expiration_time       etimer
+C:   00039368  _etimer_stop                       etimer
+C:   000394C2  _list_init                         list
+C:   000394D9  _list_head                         list
+C:   000394F0  _list_copy                         list
+C:   0003952E  _list_tail                         list
+C:   00039586  _list_add                          list
+C:   00039644  _list_push                         list
+C:   000396DB  _list_chop                         list
+C:   00039825  _list_pop                          list
+C:   00039892  _list_remove                       list
+C:   000399F0  _list_length                       list
+C:   00039A3E  _list_insert                       list
+C:   00039AF3  _list_item_next                    list
+C:   00039B28  _rpl_purge_routes                  rpl
+C:   00039CC0  _rpl_remove_routes                 rpl
+C:   00039D8C  _rpl_remove_routes_by_nexthop      rpl
+C:   00039EC4  _rpl_add_route                     rpl
+C:   0003A2C8  _rpl_ipv6_neighbor_callback        rpl
+C:   0003A3B8  _rpl_init                          rpl
+C:   0003A4F8  _sensors_first                     sensors
+C:   0003A50C  _sensors_next                      sensors
+C:   0003A54E  _sensors_changed                   sensors
+C:   0003A584  _sensors_find                      sensors
+C:   0003A952  _cc2530_rf_channel_set             cc2530_rf
+C:   0003A98F  _cc2530_rf_power_set               cc2530_rf
+C:   0003A99F  _cc2530_rf_set_addr                cc2530_rf
+C:   0003AE78  _packetbuf_clear                   packetbuf
+C:   0003AEB3  _packetbuf_clear_hdr               packetbuf
+C:   0003AEBC  _packetbuf_copyfrom                packetbuf
+C:   0003AF3A  _packetbuf_compact                 packetbuf
+ASxxxx Linker V03.00 + NoICE + sdld,  page 36.
+Hexadecimal  [32-Bits]
+
+Area                                    Addr        Size        Decimal Bytes (Attributes)
+--------------------------------        ----        ----        ------- ----- ------------
+BANK3                               00038000    00007FFD =       32765. bytes (REL,CON,CODE)
+
+      Value  Global                              Global Defined In Module
+      -----  --------------------------------   ------------------------
+C:   0003B07A  _packetbuf_copyto_hdr              packetbuf
+C:   0003B0F7  _packetbuf_copyto                  packetbuf
+C:   0003B218  _packetbuf_hdralloc                packetbuf
+C:   0003B26F  _packetbuf_hdr_remove              packetbuf
+C:   0003B27F  _packetbuf_hdrreduce               packetbuf
+C:   0003B2BA  _packetbuf_set_datalen             packetbuf
+C:   0003B2C8  _packetbuf_dataptr                 packetbuf
+C:   0003B2F5  _packetbuf_hdrptr                  packetbuf
+C:   0003B314  _packetbuf_reference               packetbuf
+C:   0003B34B  _packetbuf_is_reference            packetbuf
+C:   0003B396  _packetbuf_reference_ptr           packetbuf
+C:   0003B3AA  _packetbuf_datalen                 packetbuf
+C:   0003B3B9  _packetbuf_hdrlen                  packetbuf
+C:   0003B3C8  _packetbuf_totlen                  packetbuf
+C:   0003B3F7  _packetbuf_attr_clear              packetbuf
+C:   0003B47F  _packetbuf_attr_copyto             packetbuf
+C:   0003B4E1  _packetbuf_attr_copyfrom           packetbuf
+C:   0003B539  _packetbuf_set_attr                packetbuf
+C:   0003B55B  _packetbuf_attr                    packetbuf
+C:   0003B577  _packetbuf_set_addr                packetbuf
+C:   0003B5B4  _packetbuf_addr                    packetbuf
+C:   0003B5CF  _timer_set                         timer
+C:   0003B61E  _timer_reset                       timer
+C:   0003B65D  _timer_restart                     timer
+C:   0003B68E  _timer_expired                     timer
+C:   0003B6F9  _timer_remaining                   timer
+C:   0003B747  _memb_init                         memb
+C:   0003B849  _memb_alloc                        memb
+C:   0003B997  _memb_free                         memb
+C:   0003BB1A  _memb_inmemb                       memb
+C:   0003BC54  _queuebuf_init                     queuebuf
+C:   0003BC84  _queuebuf_new_from_packetbuf       queuebuf
+C:   0003BE9A  _queuebuf_update_attr_from_packe   queuebuf
+C:   0003BED7  _queuebuf_free                     queuebuf
+C:   0003BFC3  _queuebuf_to_packetbuf             queuebuf
+C:   0003C1EA  _queuebuf_dataptr                  queuebuf
+C:   0003C2AA  _queuebuf_datalen                  queuebuf
+C:   0003C2C5  _queuebuf_addr                     queuebuf
+C:   0003C2F6  _queuebuf_attr                     queuebuf
+C:   0003C330  _queuebuf_debug_print              queuebuf
+C:   0003D2CF  _rpl_reset_periodic_timer          rpl_timers
+C:   0003D365  _rpl_reset_dio_timer               rpl_timers
+C:   0003D51C  _rpl_schedule_dao                  rpl_timers
+C:   0003D5FA  _uip_icmp6_echo_request_input      uip_icmp6
+C:   0003DA02  _uip_icmp6_error_output            uip_icmp6
+C:   0003DE0C  _uip_icmp6_send                    uip_icmp6
+C:   0003E313  _ctimer_init                       ctimer
+C:   0003E351  _ctimer_set                        ctimer
+C:   0003E4D7  _ctimer_reset                      ctimer
+C:   0003E5A4  _ctimer_restart                    ctimer
+C:   0003E671  _ctimer_stop                       ctimer
+ASxxxx Linker V03.00 + NoICE + sdld,  page 37.
+Hexadecimal  [32-Bits]
+
+Area                                    Addr        Size        Decimal Bytes (Attributes)
+--------------------------------        ----        ----        ------- ----- ------------
+BANK3                               00038000    00007FFD =       32765. bytes (REL,CON,CODE)
+
+      Value  Global                              Global Defined In Module
+      -----  --------------------------------   ------------------------
+C:   0003E734  _ctimer_expired                    ctimer
+C:   0003E7DE  _rpl_verify_header                 rpl_ext_header
+C:   0003EB59  _rpl_update_header_empty           rpl_ext_header
+C:   0003ED4A  _rpl_update_header_final           rpl_ext_header
+C:   0003EF51  _rpl_remove_header                 rpl_ext_header
+C:   0003F06A  _rpl_invert_header                 rpl_ext_header
+
+ASxxxx Linker V03.00 + NoICE + sdld,  page 38.
+
+Files Linked                              [ module(s) ]
+
+obj_cc2530eb/contiki-main.rel             [  ]
+obj_cc2530eb/client.app.rel               [  ]
+
+
+Libraries Linked                          [ object file ]
+
+contiki-cc2530eb.lib                      [ obj_cc2530eb/tcpip.rel ]
+contiki-cc2530eb.lib                      [ obj_cc2530eb/adc-sensor.rel ]
+contiki-cc2530eb.lib                      [ obj_cc2530eb/uip-ds6.rel ]
+contiki-cc2530eb.lib                      [ obj_cc2530eb/stimer.rel ]
+contiki-cc2530eb.lib                      [ obj_cc2530eb/process.rel ]
+contiki-cc2530eb.lib                      [ obj_cc2530eb/leds.rel ]
+contiki-cc2530eb.lib                      [ obj_cc2530eb/watchdog.rel ]
+contiki-cc2530eb.lib                      [ obj_cc2530eb/etimer.rel ]
+contiki-cc2530eb.lib                      [ obj_cc2530eb/uart-intr.rel ]
+contiki-cc2530eb.lib                      [ obj_cc2530eb/rtimer.rel ]
+contiki-cc2530eb.lib                      [ obj_cc2530eb/uip-ds6-route.rel ]
+contiki-cc2530eb.lib                      [ obj_cc2530eb/list.rel ]
+/usr/local/sdcc/bin/../share/sdcc/lib/huge-stack-auto/mcs51.lib
+                                          [ crtclear.rel ]
+contiki-cc2530eb.lib                      [ obj_cc2530eb/serial-line.rel ]
+contiki-cc2530eb.lib                      [ obj_cc2530eb/joystick-sensor.rel ]
+/usr/local/sdcc/bin/../share/sdcc/lib/huge-stack-auto/mcs51.lib
+                                          [ crtbank.rel ]
+contiki-cc2530eb.lib                      [ obj_cc2530eb/rpl.rel ]
+contiki-cc2530eb.lib                      [ obj_cc2530eb/sensors.rel ]
+contiki-cc2530eb.lib                      [ obj_cc2530eb/uip6.rel ]
+contiki-cc2530eb.lib                      [ obj_cc2530eb/cc2530-rf.rel ]
+/usr/local/sdcc/bin/../share/sdcc/lib/huge-stack-auto/mcs51.lib
+                                          [ crtxinit.rel ]
+contiki-cc2530eb.lib                      [ obj_cc2530eb/sicslowpan.rel ]
+contiki-cc2530eb.lib                      [ obj_cc2530eb/packetbuf.rel ]
+contiki-cc2530eb.lib                      [ obj_cc2530eb/debug.rel ]
+contiki-cc2530eb.lib                      [ obj_cc2530eb/netstack.rel ]
+contiki-cc2530eb.lib                      [ obj_cc2530eb/energest.rel ]
+contiki-cc2530eb.lib                      [ obj_cc2530eb/timer.rel ]
+contiki-cc2530eb.lib                      [ obj_cc2530eb/uip-nd6.rel ]
+contiki-cc2530eb.lib                      [ obj_cc2530eb/memb.rel ]
+contiki-cc2530eb.lib                      [ obj_cc2530eb/autostart.rel ]
+/usr/local/sdcc/bin/../share/sdcc/lib/huge-stack-auto/libsdcc.lib
+                                          [ _gptrput.rel ]
+contiki-cc2530eb.lib                      [ obj_cc2530eb/queuebuf.rel ]
+contiki-cc2530eb.lib                      [ obj_cc2530eb/viztool.rel ]
+/usr/local/sdcc/bin/../share/sdcc/lib/huge-stack-auto/libsdcc.lib
+                                          [ _memmove.rel ]
+contiki-cc2530eb.lib                      [ obj_cc2530eb/rpl-dag.rel ]
+contiki-cc2530eb.lib                      [ obj_cc2530eb/putchar.rel ]
+contiki-cc2530eb.lib                      [ obj_cc2530eb/leds-arch.rel ]
+/usr/local/sdcc/bin/../share/sdcc/lib/huge-stack-auto/libint.lib
+                                          [ _mulint.rel ]
+contiki-cc2530eb.lib                      [ obj_cc2530eb/smartrf-sensors.rel ]
+contiki-cc2530eb.lib                      [ obj_cc2530eb/uip-udp-packet.rel ]
+contiki-cc2530eb.lib                      [ obj_cc2530eb/clock.rel ]
+contiki-cc2530eb.lib                      [ obj_cc2530eb/neighbor-info.rel ]
+contiki-cc2530eb.lib                      [ obj_cc2530eb/rtimer-arch.rel ]
+contiki-cc2530eb.lib                      [ obj_cc2530eb/rpl-timers.rel ]
+/usr/local/sdcc/bin/../share/sdcc/lib/huge-stack-auto/libsdcc.lib
+                                          [ _memcmp.rel ]
+contiki-cc2530eb.lib                      [ obj_cc2530eb/uart0.rel ]
+contiki-cc2530eb.lib                      [ obj_cc2530eb/neighbor-attr.rel ]
+contiki-cc2530eb.lib                      [ obj_cc2530eb/ringbuf.rel ]
+/usr/local/sdcc/bin/../share/sdcc/lib/huge-stack-auto/mcs51.lib
+                                          [ crtxclear.rel ]
+contiki-cc2530eb.lib                      [ obj_cc2530eb/uip-icmp6.rel ]
+contiki-cc2530eb.lib                      [ obj_cc2530eb/rpl-icmp6.rel ]
+/usr/local/sdcc/bin/../share/sdcc/lib/huge-stack-auto/liblong.lib
+                                          [ _modulong.rel ]
+contiki-cc2530eb.lib                      [ obj_cc2530eb/random.rel ]
+contiki-cc2530eb.lib                      [ obj_cc2530eb/ctimer.rel ]
+contiki-cc2530eb.lib                      [ obj_cc2530eb/rpl-ext-header.rel ]
+/usr/local/sdcc/bin/../share/sdcc/lib/huge-stack-auto/libsdcc.lib
+                                          [ _strncmp.rel ]
+/usr/local/sdcc/bin/../share/sdcc/lib/huge-stack-auto/liblong.lib
+                                          [ _divulong.rel ]
+contiki-cc2530eb.lib                      [ obj_cc2530eb/rimeaddr.rel ]
+/usr/local/sdcc/bin/../share/sdcc/lib/huge-stack-auto/libsdcc.lib
+                                          [ _memset.rel ]
+/usr/local/sdcc/bin/../share/sdcc/lib/huge-stack-auto/libsdcc.lib
+                                          [ _memcpy.rel ]
+contiki-cc2530eb.lib                      [ obj_cc2530eb/csma.rel ]
+/usr/local/sdcc/bin/../share/sdcc/lib/huge-stack-auto/libsdcc.lib
+                                          [ _bp.rel ]
+/usr/local/sdcc/bin/../share/sdcc/lib/huge-stack-auto/libsdcc.lib
+                                          [ _strlen.rel ]
+contiki-cc2530eb.lib                      [ obj_cc2530eb/soc.rel ]
+/usr/local/sdcc/bin/../share/sdcc/lib/huge-stack-auto/mcs51.lib
+                                          [ gptr_cmp.rel ]
+/usr/local/sdcc/bin/../share/sdcc/lib/huge-stack-auto/mcs51.lib
+                                          [ crtstart.rel ]
+contiki-cc2530eb.lib                      [ obj_cc2530eb/rimestats.rel ]
+/usr/local/sdcc/bin/../share/sdcc/lib/huge-stack-auto/libsdcc.lib
+                                          [ _gptrget.rel ]
+/usr/local/sdcc/bin/../share/sdcc/lib/huge-stack-auto/liblong.lib
+                                          [ _mullong.rel ]
+/usr/local/sdcc/bin/../share/sdcc/lib/huge-stack-auto/libint.lib
+                                          [ _moduint.rel ]
+contiki-cc2530eb.lib                      [ obj_cc2530eb/nullrdc.rel ]
+/usr/local/sdcc/bin/../share/sdcc/lib/huge-stack-auto/libint.lib
+                                          [ _divsint.rel ]
+/usr/local/sdcc/bin/../share/sdcc/lib/huge-stack-auto/libint.lib
+                                          [ _divuint.rel ]
+/usr/local/sdcc/bin/../share/sdcc/lib/huge-stack-auto/libsdcc.lib
+                                          [ _startup.rel ]
+contiki-cc2530eb.lib                      [ obj_cc2530eb/rpl-of-etx.rel ]
+/usr/local/sdcc/bin/../share/sdcc/lib/huge-stack-auto/liblong.lib
+                                          [ _divslong.rel ]
+contiki-cc2530eb.lib                      [ obj_cc2530eb/framer-802154.rel ]
+contiki-cc2530eb.lib                      [ obj_cc2530eb/frame802154.rel ]
+
+ASxxxx Linker V03.00 + NoICE + sdld,  page 39.
+
+User Base Address Definitions
+
+HOME = 0x0000
+ISEG = 0x0000
+BSEG = 0x0000
+BANK1=0x018000
+BANK2=0x028000
+BANK3=0x038000
+BANK4=0x048000
+
+

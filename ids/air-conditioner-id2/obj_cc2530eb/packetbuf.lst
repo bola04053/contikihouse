@@ -1,0 +1,2688 @@
+                                      1 ;--------------------------------------------------------
+                                      2 ; File Created by SDCC : free open source ANSI-C Compiler
+                                      3 ; Version 3.3.1 #8804 (Aug  6 2013) (Linux)
+                                      4 ; This file was generated Mon Aug 25 04:16:31 2014
+                                      5 ;--------------------------------------------------------
+                                      6 	.module packetbuf
+                                      7 	.optsdcc -mmcs51 --model-huge
+                                      8 	
+                                      9 ;--------------------------------------------------------
+                                     10 ; Public variables in this module
+                                     11 ;--------------------------------------------------------
+                                     12 	.globl _rimeaddr_copy
+                                     13 	.globl _memcpy
+                                     14 	.globl _ACTIVE
+                                     15 	.globl _TX_BYTE
+                                     16 	.globl _RX_BYTE
+                                     17 	.globl _ERR
+                                     18 	.globl _FE
+                                     19 	.globl _SLAVE
+                                     20 	.globl _RE
+                                     21 	.globl _MODE
+                                     22 	.globl _T3OVFIF
+                                     23 	.globl _T3CH0IF
+                                     24 	.globl _T3CH1IF
+                                     25 	.globl _T4OVFIF
+                                     26 	.globl _T4CH0IF
+                                     27 	.globl _T4CH1IF
+                                     28 	.globl _OVFIM
+                                     29 	.globl _B_0
+                                     30 	.globl _B_1
+                                     31 	.globl _B_2
+                                     32 	.globl _B_3
+                                     33 	.globl _B_4
+                                     34 	.globl _B_5
+                                     35 	.globl _B_6
+                                     36 	.globl _B_7
+                                     37 	.globl _P2IF
+                                     38 	.globl _UTX0IF
+                                     39 	.globl _UTX1IF
+                                     40 	.globl _P1IF
+                                     41 	.globl _WDTIF
+                                     42 	.globl _ACC_0
+                                     43 	.globl _ACC_1
+                                     44 	.globl _ACC_2
+                                     45 	.globl _ACC_3
+                                     46 	.globl _ACC_4
+                                     47 	.globl _ACC_5
+                                     48 	.globl _ACC_6
+                                     49 	.globl _ACC_7
+                                     50 	.globl _P
+                                     51 	.globl _F1
+                                     52 	.globl _OV
+                                     53 	.globl _RS0
+                                     54 	.globl _RS1
+                                     55 	.globl _F0
+                                     56 	.globl _AC
+                                     57 	.globl _CY
+                                     58 	.globl _DMAIF
+                                     59 	.globl _T1IF
+                                     60 	.globl _T2IF
+                                     61 	.globl _T3IF
+                                     62 	.globl _T4IF
+                                     63 	.globl _P0IF
+                                     64 	.globl _STIF
+                                     65 	.globl _DMAIE
+                                     66 	.globl _T1IE
+                                     67 	.globl _T2IE
+                                     68 	.globl _T3IE
+                                     69 	.globl _T4IE
+                                     70 	.globl _P0IE
+                                     71 	.globl _RFERRIE
+                                     72 	.globl _ADCIE
+                                     73 	.globl _URX0IE
+                                     74 	.globl _URX1IE
+                                     75 	.globl _ENCIE
+                                     76 	.globl _STIE
+                                     77 	.globl _EA
+                                     78 	.globl _P2_0
+                                     79 	.globl _P2_1
+                                     80 	.globl _P2_2
+                                     81 	.globl _P2_3
+                                     82 	.globl _P2_4
+                                     83 	.globl _P2_5
+                                     84 	.globl _P2_6
+                                     85 	.globl _P2_7
+                                     86 	.globl _ENCIF_0
+                                     87 	.globl _ENCIF_1
+                                     88 	.globl _P1_0
+                                     89 	.globl _P1_1
+                                     90 	.globl _P1_2
+                                     91 	.globl _P1_3
+                                     92 	.globl _P1_4
+                                     93 	.globl _P1_5
+                                     94 	.globl _P1_6
+                                     95 	.globl _P1_7
+                                     96 	.globl _IT0
+                                     97 	.globl _RFERRIF
+                                     98 	.globl _IT1
+                                     99 	.globl _URX0IF
+                                    100 	.globl _ADCIF
+                                    101 	.globl _URX1IF
+                                    102 	.globl _P0_0
+                                    103 	.globl _P0_1
+                                    104 	.globl _P0_2
+                                    105 	.globl _P0_3
+                                    106 	.globl _P0_4
+                                    107 	.globl _P0_5
+                                    108 	.globl _P0_6
+                                    109 	.globl _P0_7
+                                    110 	.globl _WDCTL
+                                    111 	.globl _U1GCR
+                                    112 	.globl _U1UCR
+                                    113 	.globl _U1BAUD
+                                    114 	.globl _U1DBUF
+                                    115 	.globl _U1CSR
+                                    116 	.globl _U0GCR
+                                    117 	.globl _U0UCR
+                                    118 	.globl _U0BAUD
+                                    119 	.globl _U0DBUF
+                                    120 	.globl _U0CSR
+                                    121 	.globl _TIMIF
+                                    122 	.globl _T4CC1
+                                    123 	.globl _T4CCTL1
+                                    124 	.globl _T4CC0
+                                    125 	.globl _T4CCTL0
+                                    126 	.globl _T4CTL
+                                    127 	.globl _T4CNT
+                                    128 	.globl _T3CC1
+                                    129 	.globl _T3CCTL1
+                                    130 	.globl _T3CC0
+                                    131 	.globl _T3CCTL0
+                                    132 	.globl _T3CTL
+                                    133 	.globl _T3CNT
+                                    134 	.globl _T2MSEL
+                                    135 	.globl _T2IRQM
+                                    136 	.globl _T2MOVF2
+                                    137 	.globl _T2MOVF1
+                                    138 	.globl _T2MOVF0
+                                    139 	.globl _T2M1
+                                    140 	.globl _T2M0
+                                    141 	.globl _T2IRQF
+                                    142 	.globl _T2EVTCFG
+                                    143 	.globl _T2CTRL
+                                    144 	.globl _T1STAT
+                                    145 	.globl _T1CCTL2
+                                    146 	.globl _T1CCTL1
+                                    147 	.globl _T1CCTL0
+                                    148 	.globl _T1CTL
+                                    149 	.globl _T1CNTH
+                                    150 	.globl _T1CNTL
+                                    151 	.globl _T1CC2H
+                                    152 	.globl _T1CC2L
+                                    153 	.globl _T1CC1H
+                                    154 	.globl _T1CC1L
+                                    155 	.globl _T1CC0H
+                                    156 	.globl _T1CC0L
+                                    157 	.globl _CLKCONSTA
+                                    158 	.globl _CLKCONCMD
+                                    159 	.globl _SLEEPSTA
+                                    160 	.globl _SLEEPCMD
+                                    161 	.globl _STLOAD
+                                    162 	.globl _ST2
+                                    163 	.globl _ST1
+                                    164 	.globl _ST0
+                                    165 	.globl _RFERRF
+                                    166 	.globl _RFIRQF0
+                                    167 	.globl _RFST
+                                    168 	.globl _RFD
+                                    169 	.globl _RFIRQF1
+                                    170 	.globl _PSBANK
+                                    171 	.globl _FMAP
+                                    172 	.globl _MEMCTR
+                                    173 	.globl __XPAGE
+                                    174 	.globl _MPAGE
+                                    175 	.globl _PMUX
+                                    176 	.globl _P2DIR
+                                    177 	.globl _P1DIR
+                                    178 	.globl _P0DIR
+                                    179 	.globl _P2INP
+                                    180 	.globl _P1INP
+                                    181 	.globl _P2SEL
+                                    182 	.globl _P1SEL
+                                    183 	.globl _P0SEL
+                                    184 	.globl _APCFG
+                                    185 	.globl _PERCFG
+                                    186 	.globl _P0INP
+                                    187 	.globl _P2IEN
+                                    188 	.globl _P1IEN
+                                    189 	.globl _P0IEN
+                                    190 	.globl _PICTL
+                                    191 	.globl _P2IFG
+                                    192 	.globl _P1IFG
+                                    193 	.globl _P0IFG
+                                    194 	.globl _DMAREQ
+                                    195 	.globl _DMAARM
+                                    196 	.globl _DMA0CFGH
+                                    197 	.globl _DMA0CFGL
+                                    198 	.globl _DMA1CFGH
+                                    199 	.globl _DMA1CFGL
+                                    200 	.globl _DMAIRQ
+                                    201 	.globl _ENCCS
+                                    202 	.globl _ENCDO
+                                    203 	.globl _ENCDI
+                                    204 	.globl _RNDH
+                                    205 	.globl _RNDL
+                                    206 	.globl _ADCH
+                                    207 	.globl _ADCL
+                                    208 	.globl _ADCCON3
+                                    209 	.globl _ADCCON2
+                                    210 	.globl _ADCCON1
+                                    211 	.globl _B
+                                    212 	.globl _IRCON2
+                                    213 	.globl _ACC
+                                    214 	.globl _PSW
+                                    215 	.globl _IRCON
+                                    216 	.globl _IP1
+                                    217 	.globl _IEN1
+                                    218 	.globl _IP0
+                                    219 	.globl _IEN0
+                                    220 	.globl _P2
+                                    221 	.globl _S1CON
+                                    222 	.globl _IEN2
+                                    223 	.globl _S0CON
+                                    224 	.globl _DPS
+                                    225 	.globl _P1
+                                    226 	.globl _TCON
+                                    227 	.globl _PCON
+                                    228 	.globl _DPH1
+                                    229 	.globl _DPL1
+                                    230 	.globl _DPH0
+                                    231 	.globl _DPL0
+                                    232 	.globl _SP
+                                    233 	.globl _P0
+                                    234 	.globl _packetbuf_addrs
+                                    235 	.globl _packetbuf_attrs
+                                    236 	.globl _X_IEEE_ADDR
+                                    237 	.globl _X_INFOPAGE
+                                    238 	.globl _X_P2DIR
+                                    239 	.globl _X_P1DIR
+                                    240 	.globl _X_P0DIR
+                                    241 	.globl _X_U1GCR
+                                    242 	.globl _X_U1UCR
+                                    243 	.globl _X_U1BAUD
+                                    244 	.globl _X_U1DBUF
+                                    245 	.globl _X_U1CSR
+                                    246 	.globl _X_P2INP
+                                    247 	.globl _X_P1INP
+                                    248 	.globl _X_P2SEL
+                                    249 	.globl _X_P1SEL
+                                    250 	.globl _X_P0SEL
+                                    251 	.globl _X_APCFG
+                                    252 	.globl _X_PERCFG
+                                    253 	.globl _X_T4CC1
+                                    254 	.globl _X_T4CCTL1
+                                    255 	.globl _X_T4CC0
+                                    256 	.globl _X_T4CCTL0
+                                    257 	.globl _X_T4CTL
+                                    258 	.globl _X_T4CNT
+                                    259 	.globl _X_RFIRQF0
+                                    260 	.globl _X_T1CCTL2
+                                    261 	.globl _X_T1CCTL1
+                                    262 	.globl _X_T1CCTL0
+                                    263 	.globl _X_T1CTL
+                                    264 	.globl _X_T1CNTH
+                                    265 	.globl _X_T1CNTL
+                                    266 	.globl _X_RFST
+                                    267 	.globl _X_T1CC2H
+                                    268 	.globl _X_T1CC2L
+                                    269 	.globl _X_T1CC1H
+                                    270 	.globl _X_T1CC1L
+                                    271 	.globl _X_T1CC0H
+                                    272 	.globl _X_T1CC0L
+                                    273 	.globl _X_RFD
+                                    274 	.globl _X_TIMIF
+                                    275 	.globl _X_DMAREQ
+                                    276 	.globl _X_DMAARM
+                                    277 	.globl _X_DMA0CFGH
+                                    278 	.globl _X_DMA0CFGL
+                                    279 	.globl _X_DMA1CFGH
+                                    280 	.globl _X_DMA1CFGL
+                                    281 	.globl _X_DMAIRQ
+                                    282 	.globl _X_T3CC1
+                                    283 	.globl _X_T3CCTL1
+                                    284 	.globl _X_T3CC0
+                                    285 	.globl _X_T3CCTL0
+                                    286 	.globl _X_T3CTL
+                                    287 	.globl _X_T3CNT
+                                    288 	.globl _X_WDCTL
+                                    289 	.globl _X_MEMCTR
+                                    290 	.globl _X_CLKCONCMD
+                                    291 	.globl _X_U0GCR
+                                    292 	.globl _X_U0UCR
+                                    293 	.globl _X_T2MSEL
+                                    294 	.globl _X_U0BAUD
+                                    295 	.globl _X_U0DBUF
+                                    296 	.globl _X_RFERRF
+                                    297 	.globl _X_SLEEPCMD
+                                    298 	.globl _X_RNDH
+                                    299 	.globl _X_RNDL
+                                    300 	.globl _X_ADCH
+                                    301 	.globl _X_ADCL
+                                    302 	.globl _X_ADCCON3
+                                    303 	.globl _X_ADCCON2
+                                    304 	.globl _X_ADCCON1
+                                    305 	.globl _X_ENCCS
+                                    306 	.globl _X_ENCDO
+                                    307 	.globl _X_ENCDI
+                                    308 	.globl _X_T1STAT
+                                    309 	.globl _X_PMUX
+                                    310 	.globl _X_STLOAD
+                                    311 	.globl _X_P2IEN
+                                    312 	.globl _X_P0IEN
+                                    313 	.globl _X_T2IRQM
+                                    314 	.globl _X_T2MOVF2
+                                    315 	.globl _X_T2MOVF1
+                                    316 	.globl _X_T2MOVF0
+                                    317 	.globl _X_T2M1
+                                    318 	.globl _X_T2M0
+                                    319 	.globl _X_T2IRQF
+                                    320 	.globl _X_P2
+                                    321 	.globl _X_PSBANK
+                                    322 	.globl _X_FMAP
+                                    323 	.globl _X_CLKCONSTA
+                                    324 	.globl _X_SLEEPSTA
+                                    325 	.globl _X_T2EVTCFG
+                                    326 	.globl _X_ST2
+                                    327 	.globl _X_ST1
+                                    328 	.globl _X_ST0
+                                    329 	.globl _X_T2CTRL
+                                    330 	.globl _X__XPAGE
+                                    331 	.globl _X_MPAGE
+                                    332 	.globl _X_RFIRQF1
+                                    333 	.globl _X_P1
+                                    334 	.globl _X_P0INP
+                                    335 	.globl _X_P1IEN
+                                    336 	.globl _X_PICTL
+                                    337 	.globl _X_P2IFG
+                                    338 	.globl _X_P1IFG
+                                    339 	.globl _X_P0IFG
+                                    340 	.globl _X_U0CSR
+                                    341 	.globl _X_P0
+                                    342 	.globl _USBF5
+                                    343 	.globl _USBF4
+                                    344 	.globl _USBF3
+                                    345 	.globl _USBF2
+                                    346 	.globl _USBF1
+                                    347 	.globl _USBF0
+                                    348 	.globl _USBCNTH
+                                    349 	.globl _USBCNTL
+                                    350 	.globl _USBCNT0
+                                    351 	.globl _USBCSOH
+                                    352 	.globl _USBCSOL
+                                    353 	.globl _USBMAXO
+                                    354 	.globl _USBCSIH
+                                    355 	.globl _USBCSIL
+                                    356 	.globl _USBCS0
+                                    357 	.globl _USBMAXI
+                                    358 	.globl _USBCTRL
+                                    359 	.globl _USBINDEX
+                                    360 	.globl _USBFRMH
+                                    361 	.globl _USBFRML
+                                    362 	.globl _USBCIE
+                                    363 	.globl _USBOIE
+                                    364 	.globl _USBIIE
+                                    365 	.globl _USBCIF
+                                    366 	.globl _USBOIF
+                                    367 	.globl _USBIIF
+                                    368 	.globl _USBPOW
+                                    369 	.globl _USBADDR
+                                    370 	.globl _CSPT
+                                    371 	.globl _CSPZ
+                                    372 	.globl _CSPY
+                                    373 	.globl _CSPX
+                                    374 	.globl _CSPSTAT
+                                    375 	.globl _CSPCTRL
+                                    376 	.globl _CSPPROG23
+                                    377 	.globl _CSPPROG22
+                                    378 	.globl _CSPPROG21
+                                    379 	.globl _CSPPROG20
+                                    380 	.globl _CSPPROG19
+                                    381 	.globl _CSPPROG18
+                                    382 	.globl _CSPPROG17
+                                    383 	.globl _CSPPROG16
+                                    384 	.globl _CSPPROG15
+                                    385 	.globl _CSPPROG14
+                                    386 	.globl _CSPPROG13
+                                    387 	.globl _CSPPROG12
+                                    388 	.globl _CSPPROG11
+                                    389 	.globl _CSPPROG10
+                                    390 	.globl _CSPPROG9
+                                    391 	.globl _CSPPROG8
+                                    392 	.globl _CSPPROG7
+                                    393 	.globl _CSPPROG6
+                                    394 	.globl _CSPPROG5
+                                    395 	.globl _CSPPROG4
+                                    396 	.globl _CSPPROG3
+                                    397 	.globl _CSPPROG2
+                                    398 	.globl _CSPPROG1
+                                    399 	.globl _CSPPROG0
+                                    400 	.globl _RFC_OBS_CTRL2
+                                    401 	.globl _RFC_OBS_CTRL1
+                                    402 	.globl _RFC_OBS_CTRL0
+                                    403 	.globl _TXFILTCFG
+                                    404 	.globl _PTEST1
+                                    405 	.globl _PTEST0
+                                    406 	.globl _ATEST
+                                    407 	.globl _DACTEST2
+                                    408 	.globl _DACTEST1
+                                    409 	.globl _DACTEST0
+                                    410 	.globl _MDMTEST1
+                                    411 	.globl _MDMTEST0
+                                    412 	.globl _ADCTEST2
+                                    413 	.globl _ADCTEST1
+                                    414 	.globl _ADCTEST0
+                                    415 	.globl _AGCCTRL3
+                                    416 	.globl _AGCCTRL2
+                                    417 	.globl _AGCCTRL1
+                                    418 	.globl _AGCCTRL0
+                                    419 	.globl _FSCAL3
+                                    420 	.globl _FSCAL2
+                                    421 	.globl _FSCAL1
+                                    422 	.globl _FSCAL0
+                                    423 	.globl _FSCTRL
+                                    424 	.globl _RXCTRL
+                                    425 	.globl _FREQEST
+                                    426 	.globl _MDMCTRL1
+                                    427 	.globl _MDMCTRL0
+                                    428 	.globl _RFRND
+                                    429 	.globl _RFERRM
+                                    430 	.globl _RFIRQM1
+                                    431 	.globl _RFIRQM0
+                                    432 	.globl _TXLAST_PTR
+                                    433 	.globl _TXFIRST_PTR
+                                    434 	.globl _RXP1_PTR
+                                    435 	.globl _RXLAST_PTR
+                                    436 	.globl _RXFIRST_PTR
+                                    437 	.globl _TXFIFOCNT
+                                    438 	.globl _RXFIFOCNT
+                                    439 	.globl _RXFIRST
+                                    440 	.globl _RSSISTAT
+                                    441 	.globl _RSSI
+                                    442 	.globl _CCACTRL1
+                                    443 	.globl _CCACTRL0
+                                    444 	.globl _FSMCTRL
+                                    445 	.globl _FIFOPCTRL
+                                    446 	.globl _FSMSTAT1
+                                    447 	.globl _FSMSTAT0
+                                    448 	.globl _TXCTRL
+                                    449 	.globl _TXPOWER
+                                    450 	.globl _FREQCTRL
+                                    451 	.globl _FREQTUNE
+                                    452 	.globl _RXMASKCLR
+                                    453 	.globl _RXMASKSET
+                                    454 	.globl _RXENABLE
+                                    455 	.globl _FRMCTRL1
+                                    456 	.globl _FRMCTRL0
+                                    457 	.globl _SRCEXTEN2
+                                    458 	.globl _SRCEXTEN1
+                                    459 	.globl _SRCEXTEN0
+                                    460 	.globl _SRCSHORTEN2
+                                    461 	.globl _SRCSHORTEN1
+                                    462 	.globl _SRCSHORTEN0
+                                    463 	.globl _SRCMATCH
+                                    464 	.globl _FRMFILT1
+                                    465 	.globl _FRMFILT0
+                                    466 	.globl _SHORT_ADDR1
+                                    467 	.globl _SHORT_ADDR0
+                                    468 	.globl _PAN_ID1
+                                    469 	.globl _PAN_ID0
+                                    470 	.globl _EXT_ADDR7
+                                    471 	.globl _EXT_ADDR6
+                                    472 	.globl _EXT_ADDR5
+                                    473 	.globl _EXT_ADDR4
+                                    474 	.globl _EXT_ADDR3
+                                    475 	.globl _EXT_ADDR2
+                                    476 	.globl _EXT_ADDR1
+                                    477 	.globl _EXT_ADDR0
+                                    478 	.globl _SRCSHORTPENDEN2
+                                    479 	.globl _SRCSHORTPENDEN1
+                                    480 	.globl _SRCSHORTPENDEN0
+                                    481 	.globl _SRCEXTPENDEN2
+                                    482 	.globl _SRCEXTPENDEN1
+                                    483 	.globl _SRCEXTPENDEN0
+                                    484 	.globl _SRCRESINDEX
+                                    485 	.globl _SRCRESMASK2
+                                    486 	.globl _SRCRESMASK1
+                                    487 	.globl _SRCRESMASK0
+                                    488 	.globl _SRC_ADDR_TABLE
+                                    489 	.globl _TXFIFO
+                                    490 	.globl _RXFIFO
+                                    491 	.globl _RFCORE_RAM
+                                    492 	.globl _CMPCTL
+                                    493 	.globl _OPAMPS
+                                    494 	.globl _OPAMPC
+                                    495 	.globl _STCV2
+                                    496 	.globl _STCV1
+                                    497 	.globl _STCV0
+                                    498 	.globl _STCS
+                                    499 	.globl _STCC
+                                    500 	.globl _T1CC4H
+                                    501 	.globl _T1CC4L
+                                    502 	.globl _T1CC3H
+                                    503 	.globl _T1CC3L
+                                    504 	.globl _XX_T1CC2H
+                                    505 	.globl _XX_T1CC2L
+                                    506 	.globl _XX_T1CC1H
+                                    507 	.globl _XX_T1CC1L
+                                    508 	.globl _XX_T1CC0H
+                                    509 	.globl _XX_T1CC0L
+                                    510 	.globl _T1CCTL4
+                                    511 	.globl _T1CCTL3
+                                    512 	.globl _XX_T1CCTL2
+                                    513 	.globl _XX_T1CCTL1
+                                    514 	.globl _XX_T1CCTL0
+                                    515 	.globl _CLD
+                                    516 	.globl _IRCTL
+                                    517 	.globl _CHIPINFO1
+                                    518 	.globl _CHIPINFO0
+                                    519 	.globl _FWDATA
+                                    520 	.globl _FADDRH
+                                    521 	.globl _FADDRL
+                                    522 	.globl _FCTL
+                                    523 	.globl _IVCTRL
+                                    524 	.globl _BATTMON
+                                    525 	.globl _SRCRC
+                                    526 	.globl _DBGDATA
+                                    527 	.globl _TESTREG0
+                                    528 	.globl _CHIPID
+                                    529 	.globl _CHVER
+                                    530 	.globl _OBSSEL5
+                                    531 	.globl _OBSSEL4
+                                    532 	.globl _OBSSEL3
+                                    533 	.globl _OBSSEL2
+                                    534 	.globl _OBSSEL1
+                                    535 	.globl _OBSSEL0
+                                    536 	.globl _I2CIO
+                                    537 	.globl _I2CWC
+                                    538 	.globl _I2CADDR
+                                    539 	.globl _I2CDATA
+                                    540 	.globl _I2CSTAT
+                                    541 	.globl _I2CCFG
+                                    542 	.globl _OPAMPMC
+                                    543 	.globl _MONMUX
+                                    544 	.globl _packetbuf_clear
+                                    545 	.globl _packetbuf_clear_hdr
+                                    546 	.globl _packetbuf_copyfrom
+                                    547 	.globl _packetbuf_compact
+                                    548 	.globl _packetbuf_copyto_hdr
+                                    549 	.globl _packetbuf_copyto
+                                    550 	.globl _packetbuf_hdralloc
+                                    551 	.globl _packetbuf_hdr_remove
+                                    552 	.globl _packetbuf_hdrreduce
+                                    553 	.globl _packetbuf_set_datalen
+                                    554 	.globl _packetbuf_dataptr
+                                    555 	.globl _packetbuf_hdrptr
+                                    556 	.globl _packetbuf_reference
+                                    557 	.globl _packetbuf_is_reference
+                                    558 	.globl _packetbuf_reference_ptr
+                                    559 	.globl _packetbuf_datalen
+                                    560 	.globl _packetbuf_hdrlen
+                                    561 	.globl _packetbuf_totlen
+                                    562 	.globl _packetbuf_attr_clear
+                                    563 	.globl _packetbuf_attr_copyto
+                                    564 	.globl _packetbuf_attr_copyfrom
+                                    565 	.globl _packetbuf_set_attr
+                                    566 	.globl _packetbuf_attr
+                                    567 	.globl _packetbuf_set_addr
+                                    568 	.globl _packetbuf_addr
+                                    569 ;--------------------------------------------------------
+                                    570 ; special function registers
+                                    571 ;--------------------------------------------------------
+                                    572 	.area RSEG    (ABS,DATA)
+      000000                        573 	.org 0x0000
+                           000080   574 _P0	=	0x0080
+                           000081   575 _SP	=	0x0081
+                           000082   576 _DPL0	=	0x0082
+                           000083   577 _DPH0	=	0x0083
+                           000084   578 _DPL1	=	0x0084
+                           000085   579 _DPH1	=	0x0085
+                           000087   580 _PCON	=	0x0087
+                           000088   581 _TCON	=	0x0088
+                           000090   582 _P1	=	0x0090
+                           000092   583 _DPS	=	0x0092
+                           000098   584 _S0CON	=	0x0098
+                           00009A   585 _IEN2	=	0x009a
+                           00009B   586 _S1CON	=	0x009b
+                           0000A0   587 _P2	=	0x00a0
+                           0000A8   588 _IEN0	=	0x00a8
+                           0000A9   589 _IP0	=	0x00a9
+                           0000B8   590 _IEN1	=	0x00b8
+                           0000B9   591 _IP1	=	0x00b9
+                           0000C0   592 _IRCON	=	0x00c0
+                           0000D0   593 _PSW	=	0x00d0
+                           0000E0   594 _ACC	=	0x00e0
+                           0000E8   595 _IRCON2	=	0x00e8
+                           0000F0   596 _B	=	0x00f0
+                           0000B4   597 _ADCCON1	=	0x00b4
+                           0000B5   598 _ADCCON2	=	0x00b5
+                           0000B6   599 _ADCCON3	=	0x00b6
+                           0000BA   600 _ADCL	=	0x00ba
+                           0000BB   601 _ADCH	=	0x00bb
+                           0000BC   602 _RNDL	=	0x00bc
+                           0000BD   603 _RNDH	=	0x00bd
+                           0000B1   604 _ENCDI	=	0x00b1
+                           0000B2   605 _ENCDO	=	0x00b2
+                           0000B3   606 _ENCCS	=	0x00b3
+                           0000D1   607 _DMAIRQ	=	0x00d1
+                           0000D2   608 _DMA1CFGL	=	0x00d2
+                           0000D3   609 _DMA1CFGH	=	0x00d3
+                           0000D4   610 _DMA0CFGL	=	0x00d4
+                           0000D5   611 _DMA0CFGH	=	0x00d5
+                           0000D6   612 _DMAARM	=	0x00d6
+                           0000D7   613 _DMAREQ	=	0x00d7
+                           000089   614 _P0IFG	=	0x0089
+                           00008A   615 _P1IFG	=	0x008a
+                           00008B   616 _P2IFG	=	0x008b
+                           00008C   617 _PICTL	=	0x008c
+                           0000AB   618 _P0IEN	=	0x00ab
+                           00008D   619 _P1IEN	=	0x008d
+                           0000AC   620 _P2IEN	=	0x00ac
+                           00008F   621 _P0INP	=	0x008f
+                           0000F1   622 _PERCFG	=	0x00f1
+                           0000F2   623 _APCFG	=	0x00f2
+                           0000F3   624 _P0SEL	=	0x00f3
+                           0000F4   625 _P1SEL	=	0x00f4
+                           0000F5   626 _P2SEL	=	0x00f5
+                           0000F6   627 _P1INP	=	0x00f6
+                           0000F7   628 _P2INP	=	0x00f7
+                           0000FD   629 _P0DIR	=	0x00fd
+                           0000FE   630 _P1DIR	=	0x00fe
+                           0000FF   631 _P2DIR	=	0x00ff
+                           0000AE   632 _PMUX	=	0x00ae
+                           000093   633 _MPAGE	=	0x0093
+                           000093   634 __XPAGE	=	0x0093
+                           0000C7   635 _MEMCTR	=	0x00c7
+                           00009F   636 _FMAP	=	0x009f
+                           00009F   637 _PSBANK	=	0x009f
+                           000091   638 _RFIRQF1	=	0x0091
+                           0000D9   639 _RFD	=	0x00d9
+                           0000E1   640 _RFST	=	0x00e1
+                           0000E9   641 _RFIRQF0	=	0x00e9
+                           0000BF   642 _RFERRF	=	0x00bf
+                           000095   643 _ST0	=	0x0095
+                           000096   644 _ST1	=	0x0096
+                           000097   645 _ST2	=	0x0097
+                           0000AD   646 _STLOAD	=	0x00ad
+                           0000BE   647 _SLEEPCMD	=	0x00be
+                           00009D   648 _SLEEPSTA	=	0x009d
+                           0000C6   649 _CLKCONCMD	=	0x00c6
+                           00009E   650 _CLKCONSTA	=	0x009e
+                           0000DA   651 _T1CC0L	=	0x00da
+                           0000DB   652 _T1CC0H	=	0x00db
+                           0000DC   653 _T1CC1L	=	0x00dc
+                           0000DD   654 _T1CC1H	=	0x00dd
+                           0000DE   655 _T1CC2L	=	0x00de
+                           0000DF   656 _T1CC2H	=	0x00df
+                           0000E2   657 _T1CNTL	=	0x00e2
+                           0000E3   658 _T1CNTH	=	0x00e3
+                           0000E4   659 _T1CTL	=	0x00e4
+                           0000E5   660 _T1CCTL0	=	0x00e5
+                           0000E6   661 _T1CCTL1	=	0x00e6
+                           0000E7   662 _T1CCTL2	=	0x00e7
+                           0000AF   663 _T1STAT	=	0x00af
+                           000094   664 _T2CTRL	=	0x0094
+                           00009C   665 _T2EVTCFG	=	0x009c
+                           0000A1   666 _T2IRQF	=	0x00a1
+                           0000A2   667 _T2M0	=	0x00a2
+                           0000A3   668 _T2M1	=	0x00a3
+                           0000A4   669 _T2MOVF0	=	0x00a4
+                           0000A5   670 _T2MOVF1	=	0x00a5
+                           0000A6   671 _T2MOVF2	=	0x00a6
+                           0000A7   672 _T2IRQM	=	0x00a7
+                           0000C3   673 _T2MSEL	=	0x00c3
+                           0000CA   674 _T3CNT	=	0x00ca
+                           0000CB   675 _T3CTL	=	0x00cb
+                           0000CC   676 _T3CCTL0	=	0x00cc
+                           0000CD   677 _T3CC0	=	0x00cd
+                           0000CE   678 _T3CCTL1	=	0x00ce
+                           0000CF   679 _T3CC1	=	0x00cf
+                           0000EA   680 _T4CNT	=	0x00ea
+                           0000EB   681 _T4CTL	=	0x00eb
+                           0000EC   682 _T4CCTL0	=	0x00ec
+                           0000ED   683 _T4CC0	=	0x00ed
+                           0000EE   684 _T4CCTL1	=	0x00ee
+                           0000EF   685 _T4CC1	=	0x00ef
+                           0000D8   686 _TIMIF	=	0x00d8
+                           000086   687 _U0CSR	=	0x0086
+                           0000C1   688 _U0DBUF	=	0x00c1
+                           0000C2   689 _U0BAUD	=	0x00c2
+                           0000C4   690 _U0UCR	=	0x00c4
+                           0000C5   691 _U0GCR	=	0x00c5
+                           0000F8   692 _U1CSR	=	0x00f8
+                           0000F9   693 _U1DBUF	=	0x00f9
+                           0000FA   694 _U1BAUD	=	0x00fa
+                           0000FB   695 _U1UCR	=	0x00fb
+                           0000FC   696 _U1GCR	=	0x00fc
+                           0000C9   697 _WDCTL	=	0x00c9
+                                    698 ;--------------------------------------------------------
+                                    699 ; special function bits
+                                    700 ;--------------------------------------------------------
+                                    701 	.area RSEG    (ABS,DATA)
+      000000                        702 	.org 0x0000
+                           000087   703 _P0_7	=	0x0087
+                           000086   704 _P0_6	=	0x0086
+                           000085   705 _P0_5	=	0x0085
+                           000084   706 _P0_4	=	0x0084
+                           000083   707 _P0_3	=	0x0083
+                           000082   708 _P0_2	=	0x0082
+                           000081   709 _P0_1	=	0x0081
+                           000080   710 _P0_0	=	0x0080
+                           00008F   711 _URX1IF	=	0x008f
+                           00008D   712 _ADCIF	=	0x008d
+                           00008B   713 _URX0IF	=	0x008b
+                           00008A   714 _IT1	=	0x008a
+                           000089   715 _RFERRIF	=	0x0089
+                           000088   716 _IT0	=	0x0088
+                           000097   717 _P1_7	=	0x0097
+                           000096   718 _P1_6	=	0x0096
+                           000095   719 _P1_5	=	0x0095
+                           000094   720 _P1_4	=	0x0094
+                           000093   721 _P1_3	=	0x0093
+                           000092   722 _P1_2	=	0x0092
+                           000091   723 _P1_1	=	0x0091
+                           000090   724 _P1_0	=	0x0090
+                           000099   725 _ENCIF_1	=	0x0099
+                           000098   726 _ENCIF_0	=	0x0098
+                           0000A7   727 _P2_7	=	0x00a7
+                           0000A6   728 _P2_6	=	0x00a6
+                           0000A5   729 _P2_5	=	0x00a5
+                           0000A4   730 _P2_4	=	0x00a4
+                           0000A3   731 _P2_3	=	0x00a3
+                           0000A2   732 _P2_2	=	0x00a2
+                           0000A1   733 _P2_1	=	0x00a1
+                           0000A0   734 _P2_0	=	0x00a0
+                           0000AF   735 _EA	=	0x00af
+                           0000AD   736 _STIE	=	0x00ad
+                           0000AC   737 _ENCIE	=	0x00ac
+                           0000AB   738 _URX1IE	=	0x00ab
+                           0000AA   739 _URX0IE	=	0x00aa
+                           0000A9   740 _ADCIE	=	0x00a9
+                           0000A8   741 _RFERRIE	=	0x00a8
+                           0000BD   742 _P0IE	=	0x00bd
+                           0000BC   743 _T4IE	=	0x00bc
+                           0000BB   744 _T3IE	=	0x00bb
+                           0000BA   745 _T2IE	=	0x00ba
+                           0000B9   746 _T1IE	=	0x00b9
+                           0000B8   747 _DMAIE	=	0x00b8
+                           0000C7   748 _STIF	=	0x00c7
+                           0000C5   749 _P0IF	=	0x00c5
+                           0000C4   750 _T4IF	=	0x00c4
+                           0000C3   751 _T3IF	=	0x00c3
+                           0000C2   752 _T2IF	=	0x00c2
+                           0000C1   753 _T1IF	=	0x00c1
+                           0000C0   754 _DMAIF	=	0x00c0
+                           0000D7   755 _CY	=	0x00d7
+                           0000D6   756 _AC	=	0x00d6
+                           0000D5   757 _F0	=	0x00d5
+                           0000D4   758 _RS1	=	0x00d4
+                           0000D3   759 _RS0	=	0x00d3
+                           0000D2   760 _OV	=	0x00d2
+                           0000D1   761 _F1	=	0x00d1
+                           0000D0   762 _P	=	0x00d0
+                           0000E7   763 _ACC_7	=	0x00e7
+                           0000E6   764 _ACC_6	=	0x00e6
+                           0000E5   765 _ACC_5	=	0x00e5
+                           0000E4   766 _ACC_4	=	0x00e4
+                           0000E3   767 _ACC_3	=	0x00e3
+                           0000E2   768 _ACC_2	=	0x00e2
+                           0000E1   769 _ACC_1	=	0x00e1
+                           0000E0   770 _ACC_0	=	0x00e0
+                           0000EC   771 _WDTIF	=	0x00ec
+                           0000EB   772 _P1IF	=	0x00eb
+                           0000EA   773 _UTX1IF	=	0x00ea
+                           0000E9   774 _UTX0IF	=	0x00e9
+                           0000E8   775 _P2IF	=	0x00e8
+                           0000F7   776 _B_7	=	0x00f7
+                           0000F6   777 _B_6	=	0x00f6
+                           0000F5   778 _B_5	=	0x00f5
+                           0000F4   779 _B_4	=	0x00f4
+                           0000F3   780 _B_3	=	0x00f3
+                           0000F2   781 _B_2	=	0x00f2
+                           0000F1   782 _B_1	=	0x00f1
+                           0000F0   783 _B_0	=	0x00f0
+                           0000DE   784 _OVFIM	=	0x00de
+                           0000DD   785 _T4CH1IF	=	0x00dd
+                           0000DC   786 _T4CH0IF	=	0x00dc
+                           0000DB   787 _T4OVFIF	=	0x00db
+                           0000DA   788 _T3CH1IF	=	0x00da
+                           0000D9   789 _T3CH0IF	=	0x00d9
+                           0000D8   790 _T3OVFIF	=	0x00d8
+                           0000FF   791 _MODE	=	0x00ff
+                           0000FE   792 _RE	=	0x00fe
+                           0000FD   793 _SLAVE	=	0x00fd
+                           0000FC   794 _FE	=	0x00fc
+                           0000FB   795 _ERR	=	0x00fb
+                           0000FA   796 _RX_BYTE	=	0x00fa
+                           0000F9   797 _TX_BYTE	=	0x00f9
+                           0000F8   798 _ACTIVE	=	0x00f8
+                                    799 ;--------------------------------------------------------
+                                    800 ; overlayable register banks
+                                    801 ;--------------------------------------------------------
+                                    802 	.area REG_BANK_0	(REL,OVR,DATA)
+      000000                        803 	.ds 8
+                                    804 ;--------------------------------------------------------
+                                    805 ; internal ram data
+                                    806 ;--------------------------------------------------------
+                                    807 	.area DSEG    (DATA)
+                                    808 ;--------------------------------------------------------
+                                    809 ; overlayable items in internal ram 
+                                    810 ;--------------------------------------------------------
+                                    811 ;--------------------------------------------------------
+                                    812 ; indirectly addressable internal ram data
+                                    813 ;--------------------------------------------------------
+                                    814 	.area ISEG    (DATA)
+                                    815 ;--------------------------------------------------------
+                                    816 ; absolute internal ram data
+                                    817 ;--------------------------------------------------------
+                                    818 	.area IABS    (ABS,DATA)
+                                    819 	.area IABS    (ABS,DATA)
+                                    820 ;--------------------------------------------------------
+                                    821 ; bit data
+                                    822 ;--------------------------------------------------------
+                                    823 	.area BSEG    (BIT)
+                                    824 ;--------------------------------------------------------
+                                    825 ; paged external ram data
+                                    826 ;--------------------------------------------------------
+                                    827 	.area PSEG    (PAG,XDATA)
+                                    828 ;--------------------------------------------------------
+                                    829 ; external ram data
+                                    830 ;--------------------------------------------------------
+                                    831 	.area XSEG    (XDATA)
+                           0061A6   832 _MONMUX	=	0x61a6
+                           0061A6   833 _OPAMPMC	=	0x61a6
+                           006230   834 _I2CCFG	=	0x6230
+                           006231   835 _I2CSTAT	=	0x6231
+                           006232   836 _I2CDATA	=	0x6232
+                           006233   837 _I2CADDR	=	0x6233
+                           006234   838 _I2CWC	=	0x6234
+                           006235   839 _I2CIO	=	0x6235
+                           006243   840 _OBSSEL0	=	0x6243
+                           006244   841 _OBSSEL1	=	0x6244
+                           006245   842 _OBSSEL2	=	0x6245
+                           006246   843 _OBSSEL3	=	0x6246
+                           006247   844 _OBSSEL4	=	0x6247
+                           006248   845 _OBSSEL5	=	0x6248
+                           006249   846 _CHVER	=	0x6249
+                           00624A   847 _CHIPID	=	0x624a
+                           00624B   848 _TESTREG0	=	0x624b
+                           006260   849 _DBGDATA	=	0x6260
+                           006262   850 _SRCRC	=	0x6262
+                           006264   851 _BATTMON	=	0x6264
+                           006265   852 _IVCTRL	=	0x6265
+                           006270   853 _FCTL	=	0x6270
+                           006271   854 _FADDRL	=	0x6271
+                           006272   855 _FADDRH	=	0x6272
+                           006273   856 _FWDATA	=	0x6273
+                           006276   857 _CHIPINFO0	=	0x6276
+                           006277   858 _CHIPINFO1	=	0x6277
+                           006281   859 _IRCTL	=	0x6281
+                           006290   860 _CLD	=	0x6290
+                           0062A0   861 _XX_T1CCTL0	=	0x62a0
+                           0062A1   862 _XX_T1CCTL1	=	0x62a1
+                           0062A2   863 _XX_T1CCTL2	=	0x62a2
+                           0062A3   864 _T1CCTL3	=	0x62a3
+                           0062A4   865 _T1CCTL4	=	0x62a4
+                           0062A6   866 _XX_T1CC0L	=	0x62a6
+                           0062A7   867 _XX_T1CC0H	=	0x62a7
+                           0062A8   868 _XX_T1CC1L	=	0x62a8
+                           0062A9   869 _XX_T1CC1H	=	0x62a9
+                           0062AA   870 _XX_T1CC2L	=	0x62aa
+                           0062AB   871 _XX_T1CC2H	=	0x62ab
+                           0062AC   872 _T1CC3L	=	0x62ac
+                           0062AD   873 _T1CC3H	=	0x62ad
+                           0062AE   874 _T1CC4L	=	0x62ae
+                           0062AF   875 _T1CC4H	=	0x62af
+                           0062B0   876 _STCC	=	0x62b0
+                           0062B1   877 _STCS	=	0x62b1
+                           0062B2   878 _STCV0	=	0x62b2
+                           0062B3   879 _STCV1	=	0x62b3
+                           0062B4   880 _STCV2	=	0x62b4
+                           0062C0   881 _OPAMPC	=	0x62c0
+                           0062C1   882 _OPAMPS	=	0x62c1
+                           0062D0   883 _CMPCTL	=	0x62d0
+                           006000   884 _RFCORE_RAM	=	0x6000
+                           006000   885 _RXFIFO	=	0x6000
+                           006080   886 _TXFIFO	=	0x6080
+                           006100   887 _SRC_ADDR_TABLE	=	0x6100
+                           006160   888 _SRCRESMASK0	=	0x6160
+                           006161   889 _SRCRESMASK1	=	0x6161
+                           006162   890 _SRCRESMASK2	=	0x6162
+                           006163   891 _SRCRESINDEX	=	0x6163
+                           006164   892 _SRCEXTPENDEN0	=	0x6164
+                           006165   893 _SRCEXTPENDEN1	=	0x6165
+                           006166   894 _SRCEXTPENDEN2	=	0x6166
+                           006167   895 _SRCSHORTPENDEN0	=	0x6167
+                           006168   896 _SRCSHORTPENDEN1	=	0x6168
+                           006169   897 _SRCSHORTPENDEN2	=	0x6169
+                           00616A   898 _EXT_ADDR0	=	0x616a
+                           00616B   899 _EXT_ADDR1	=	0x616b
+                           00616C   900 _EXT_ADDR2	=	0x616c
+                           00616D   901 _EXT_ADDR3	=	0x616d
+                           00616E   902 _EXT_ADDR4	=	0x616e
+                           00616F   903 _EXT_ADDR5	=	0x616f
+                           006170   904 _EXT_ADDR6	=	0x6170
+                           006171   905 _EXT_ADDR7	=	0x6171
+                           006172   906 _PAN_ID0	=	0x6172
+                           006173   907 _PAN_ID1	=	0x6173
+                           006174   908 _SHORT_ADDR0	=	0x6174
+                           006175   909 _SHORT_ADDR1	=	0x6175
+                           006180   910 _FRMFILT0	=	0x6180
+                           006181   911 _FRMFILT1	=	0x6181
+                           006182   912 _SRCMATCH	=	0x6182
+                           006183   913 _SRCSHORTEN0	=	0x6183
+                           006184   914 _SRCSHORTEN1	=	0x6184
+                           006185   915 _SRCSHORTEN2	=	0x6185
+                           006186   916 _SRCEXTEN0	=	0x6186
+                           006187   917 _SRCEXTEN1	=	0x6187
+                           006188   918 _SRCEXTEN2	=	0x6188
+                           006189   919 _FRMCTRL0	=	0x6189
+                           00618A   920 _FRMCTRL1	=	0x618a
+                           00618B   921 _RXENABLE	=	0x618b
+                           00618C   922 _RXMASKSET	=	0x618c
+                           00618D   923 _RXMASKCLR	=	0x618d
+                           00618E   924 _FREQTUNE	=	0x618e
+                           00618F   925 _FREQCTRL	=	0x618f
+                           006190   926 _TXPOWER	=	0x6190
+                           006191   927 _TXCTRL	=	0x6191
+                           006192   928 _FSMSTAT0	=	0x6192
+                           006193   929 _FSMSTAT1	=	0x6193
+                           006194   930 _FIFOPCTRL	=	0x6194
+                           006195   931 _FSMCTRL	=	0x6195
+                           006196   932 _CCACTRL0	=	0x6196
+                           006197   933 _CCACTRL1	=	0x6197
+                           006198   934 _RSSI	=	0x6198
+                           006199   935 _RSSISTAT	=	0x6199
+                           00619A   936 _RXFIRST	=	0x619a
+                           00619B   937 _RXFIFOCNT	=	0x619b
+                           00619C   938 _TXFIFOCNT	=	0x619c
+                           00619D   939 _RXFIRST_PTR	=	0x619d
+                           00619E   940 _RXLAST_PTR	=	0x619e
+                           00619F   941 _RXP1_PTR	=	0x619f
+                           0061A1   942 _TXFIRST_PTR	=	0x61a1
+                           0061A2   943 _TXLAST_PTR	=	0x61a2
+                           0061A3   944 _RFIRQM0	=	0x61a3
+                           0061A4   945 _RFIRQM1	=	0x61a4
+                           0061A5   946 _RFERRM	=	0x61a5
+                           0061A7   947 _RFRND	=	0x61a7
+                           0061A8   948 _MDMCTRL0	=	0x61a8
+                           0061A9   949 _MDMCTRL1	=	0x61a9
+                           0061AA   950 _FREQEST	=	0x61aa
+                           0061AB   951 _RXCTRL	=	0x61ab
+                           0061AC   952 _FSCTRL	=	0x61ac
+                           0061AD   953 _FSCAL0	=	0x61ad
+                           0061AE   954 _FSCAL1	=	0x61ae
+                           0061AF   955 _FSCAL2	=	0x61af
+                           0061B0   956 _FSCAL3	=	0x61b0
+                           0061B1   957 _AGCCTRL0	=	0x61b1
+                           0061B2   958 _AGCCTRL1	=	0x61b2
+                           0061B3   959 _AGCCTRL2	=	0x61b3
+                           0061B4   960 _AGCCTRL3	=	0x61b4
+                           0061B5   961 _ADCTEST0	=	0x61b5
+                           0061B6   962 _ADCTEST1	=	0x61b6
+                           0061B7   963 _ADCTEST2	=	0x61b7
+                           0061B8   964 _MDMTEST0	=	0x61b8
+                           0061B9   965 _MDMTEST1	=	0x61b9
+                           0061BA   966 _DACTEST0	=	0x61ba
+                           0061BB   967 _DACTEST1	=	0x61bb
+                           0061BC   968 _DACTEST2	=	0x61bc
+                           0061BD   969 _ATEST	=	0x61bd
+                           0061BE   970 _PTEST0	=	0x61be
+                           0061BF   971 _PTEST1	=	0x61bf
+                           0061FA   972 _TXFILTCFG	=	0x61fa
+                           0061EB   973 _RFC_OBS_CTRL0	=	0x61eb
+                           0061EC   974 _RFC_OBS_CTRL1	=	0x61ec
+                           0061ED   975 _RFC_OBS_CTRL2	=	0x61ed
+                           0061C0   976 _CSPPROG0	=	0x61c0
+                           0061C1   977 _CSPPROG1	=	0x61c1
+                           0061C2   978 _CSPPROG2	=	0x61c2
+                           0061C3   979 _CSPPROG3	=	0x61c3
+                           0061C4   980 _CSPPROG4	=	0x61c4
+                           0061C5   981 _CSPPROG5	=	0x61c5
+                           0061C6   982 _CSPPROG6	=	0x61c6
+                           0061C7   983 _CSPPROG7	=	0x61c7
+                           0061C8   984 _CSPPROG8	=	0x61c8
+                           0061C9   985 _CSPPROG9	=	0x61c9
+                           0061CA   986 _CSPPROG10	=	0x61ca
+                           0061CB   987 _CSPPROG11	=	0x61cb
+                           0061CC   988 _CSPPROG12	=	0x61cc
+                           0061CD   989 _CSPPROG13	=	0x61cd
+                           0061CE   990 _CSPPROG14	=	0x61ce
+                           0061CF   991 _CSPPROG15	=	0x61cf
+                           0061D0   992 _CSPPROG16	=	0x61d0
+                           0061D1   993 _CSPPROG17	=	0x61d1
+                           0061D2   994 _CSPPROG18	=	0x61d2
+                           0061D3   995 _CSPPROG19	=	0x61d3
+                           0061D4   996 _CSPPROG20	=	0x61d4
+                           0061D5   997 _CSPPROG21	=	0x61d5
+                           0061D6   998 _CSPPROG22	=	0x61d6
+                           0061D7   999 _CSPPROG23	=	0x61d7
+                           0061E0  1000 _CSPCTRL	=	0x61e0
+                           0061E1  1001 _CSPSTAT	=	0x61e1
+                           0061E2  1002 _CSPX	=	0x61e2
+                           0061E3  1003 _CSPY	=	0x61e3
+                           0061E4  1004 _CSPZ	=	0x61e4
+                           0061E5  1005 _CSPT	=	0x61e5
+                           006200  1006 _USBADDR	=	0x6200
+                           006201  1007 _USBPOW	=	0x6201
+                           006202  1008 _USBIIF	=	0x6202
+                           006204  1009 _USBOIF	=	0x6204
+                           006206  1010 _USBCIF	=	0x6206
+                           006207  1011 _USBIIE	=	0x6207
+                           006209  1012 _USBOIE	=	0x6209
+                           00620B  1013 _USBCIE	=	0x620b
+                           00620C  1014 _USBFRML	=	0x620c
+                           00620D  1015 _USBFRMH	=	0x620d
+                           00620E  1016 _USBINDEX	=	0x620e
+                           00620F  1017 _USBCTRL	=	0x620f
+                           006210  1018 _USBMAXI	=	0x6210
+                           006211  1019 _USBCS0	=	0x6211
+                           006211  1020 _USBCSIL	=	0x6211
+                           006212  1021 _USBCSIH	=	0x6212
+                           006213  1022 _USBMAXO	=	0x6213
+                           006214  1023 _USBCSOL	=	0x6214
+                           006215  1024 _USBCSOH	=	0x6215
+                           006216  1025 _USBCNT0	=	0x6216
+                           006216  1026 _USBCNTL	=	0x6216
+                           006217  1027 _USBCNTH	=	0x6217
+                           006220  1028 _USBF0	=	0x6220
+                           006222  1029 _USBF1	=	0x6222
+                           006224  1030 _USBF2	=	0x6224
+                           006226  1031 _USBF3	=	0x6226
+                           006228  1032 _USBF4	=	0x6228
+                           00622A  1033 _USBF5	=	0x622a
+                           007080  1034 _X_P0	=	0x7080
+                           007086  1035 _X_U0CSR	=	0x7086
+                           007089  1036 _X_P0IFG	=	0x7089
+                           00708A  1037 _X_P1IFG	=	0x708a
+                           00708B  1038 _X_P2IFG	=	0x708b
+                           00708C  1039 _X_PICTL	=	0x708c
+                           00708D  1040 _X_P1IEN	=	0x708d
+                           00708F  1041 _X_P0INP	=	0x708f
+                           007090  1042 _X_P1	=	0x7090
+                           007091  1043 _X_RFIRQF1	=	0x7091
+                           007093  1044 _X_MPAGE	=	0x7093
+                           007093  1045 _X__XPAGE	=	0x7093
+                           007094  1046 _X_T2CTRL	=	0x7094
+                           007095  1047 _X_ST0	=	0x7095
+                           007096  1048 _X_ST1	=	0x7096
+                           007097  1049 _X_ST2	=	0x7097
+                           00709C  1050 _X_T2EVTCFG	=	0x709c
+                           00709D  1051 _X_SLEEPSTA	=	0x709d
+                           00709E  1052 _X_CLKCONSTA	=	0x709e
+                           00709F  1053 _X_FMAP	=	0x709f
+                           00709F  1054 _X_PSBANK	=	0x709f
+                           0070A0  1055 _X_P2	=	0x70a0
+                           0070A1  1056 _X_T2IRQF	=	0x70a1
+                           0070A2  1057 _X_T2M0	=	0x70a2
+                           0070A3  1058 _X_T2M1	=	0x70a3
+                           0070A4  1059 _X_T2MOVF0	=	0x70a4
+                           0070A5  1060 _X_T2MOVF1	=	0x70a5
+                           0070A6  1061 _X_T2MOVF2	=	0x70a6
+                           0070A7  1062 _X_T2IRQM	=	0x70a7
+                           0070AB  1063 _X_P0IEN	=	0x70ab
+                           0070AC  1064 _X_P2IEN	=	0x70ac
+                           0070AD  1065 _X_STLOAD	=	0x70ad
+                           0070AE  1066 _X_PMUX	=	0x70ae
+                           0070AF  1067 _X_T1STAT	=	0x70af
+                           0070B1  1068 _X_ENCDI	=	0x70b1
+                           0070B2  1069 _X_ENCDO	=	0x70b2
+                           0070B3  1070 _X_ENCCS	=	0x70b3
+                           0070B4  1071 _X_ADCCON1	=	0x70b4
+                           0070B5  1072 _X_ADCCON2	=	0x70b5
+                           0070B6  1073 _X_ADCCON3	=	0x70b6
+                           0070BA  1074 _X_ADCL	=	0x70ba
+                           0070BB  1075 _X_ADCH	=	0x70bb
+                           0070BC  1076 _X_RNDL	=	0x70bc
+                           0070BD  1077 _X_RNDH	=	0x70bd
+                           0070BE  1078 _X_SLEEPCMD	=	0x70be
+                           0070BF  1079 _X_RFERRF	=	0x70bf
+                           0070C1  1080 _X_U0DBUF	=	0x70c1
+                           0070C2  1081 _X_U0BAUD	=	0x70c2
+                           0070C3  1082 _X_T2MSEL	=	0x70c3
+                           0070C4  1083 _X_U0UCR	=	0x70c4
+                           0070C5  1084 _X_U0GCR	=	0x70c5
+                           0070C6  1085 _X_CLKCONCMD	=	0x70c6
+                           0070C7  1086 _X_MEMCTR	=	0x70c7
+                           0070C9  1087 _X_WDCTL	=	0x70c9
+                           0070CA  1088 _X_T3CNT	=	0x70ca
+                           0070CB  1089 _X_T3CTL	=	0x70cb
+                           0070CC  1090 _X_T3CCTL0	=	0x70cc
+                           0070CD  1091 _X_T3CC0	=	0x70cd
+                           0070CE  1092 _X_T3CCTL1	=	0x70ce
+                           0070CF  1093 _X_T3CC1	=	0x70cf
+                           0070D1  1094 _X_DMAIRQ	=	0x70d1
+                           0070D2  1095 _X_DMA1CFGL	=	0x70d2
+                           0070D3  1096 _X_DMA1CFGH	=	0x70d3
+                           0070D4  1097 _X_DMA0CFGL	=	0x70d4
+                           0070D5  1098 _X_DMA0CFGH	=	0x70d5
+                           0070D6  1099 _X_DMAARM	=	0x70d6
+                           0070D7  1100 _X_DMAREQ	=	0x70d7
+                           0070D8  1101 _X_TIMIF	=	0x70d8
+                           0070D9  1102 _X_RFD	=	0x70d9
+                           0070DA  1103 _X_T1CC0L	=	0x70da
+                           0070DB  1104 _X_T1CC0H	=	0x70db
+                           0070DC  1105 _X_T1CC1L	=	0x70dc
+                           0070DD  1106 _X_T1CC1H	=	0x70dd
+                           0070DE  1107 _X_T1CC2L	=	0x70de
+                           0070DF  1108 _X_T1CC2H	=	0x70df
+                           0070E1  1109 _X_RFST	=	0x70e1
+                           0070E2  1110 _X_T1CNTL	=	0x70e2
+                           0070E3  1111 _X_T1CNTH	=	0x70e3
+                           0070E4  1112 _X_T1CTL	=	0x70e4
+                           0070E5  1113 _X_T1CCTL0	=	0x70e5
+                           0070E6  1114 _X_T1CCTL1	=	0x70e6
+                           0070E7  1115 _X_T1CCTL2	=	0x70e7
+                           0070E9  1116 _X_RFIRQF0	=	0x70e9
+                           0070EA  1117 _X_T4CNT	=	0x70ea
+                           0070EB  1118 _X_T4CTL	=	0x70eb
+                           0070EC  1119 _X_T4CCTL0	=	0x70ec
+                           0070ED  1120 _X_T4CC0	=	0x70ed
+                           0070EE  1121 _X_T4CCTL1	=	0x70ee
+                           0070EF  1122 _X_T4CC1	=	0x70ef
+                           0070F1  1123 _X_PERCFG	=	0x70f1
+                           0070F2  1124 _X_APCFG	=	0x70f2
+                           0070F3  1125 _X_P0SEL	=	0x70f3
+                           0070F4  1126 _X_P1SEL	=	0x70f4
+                           0070F5  1127 _X_P2SEL	=	0x70f5
+                           0070F6  1128 _X_P1INP	=	0x70f6
+                           0070F7  1129 _X_P2INP	=	0x70f7
+                           0070F8  1130 _X_U1CSR	=	0x70f8
+                           0070F9  1131 _X_U1DBUF	=	0x70f9
+                           0070FA  1132 _X_U1BAUD	=	0x70fa
+                           0070FB  1133 _X_U1UCR	=	0x70fb
+                           0070FC  1134 _X_U1GCR	=	0x70fc
+                           0070FD  1135 _X_P0DIR	=	0x70fd
+                           0070FE  1136 _X_P1DIR	=	0x70fe
+                           0070FF  1137 _X_P2DIR	=	0x70ff
+                           007800  1138 _X_INFOPAGE	=	0x7800
+                           00780C  1139 _X_IEEE_ADDR	=	0x780c
+      000000                       1140 _packetbuf_attrs::
+      000000                       1141 	.ds 48
+      000030                       1142 _packetbuf_addrs::
+      000030                       1143 	.ds 32
+      000050                       1144 _buflen:
+      000050                       1145 	.ds 2
+      000052                       1146 _bufptr:
+      000052                       1147 	.ds 2
+      000054                       1148 _hdrptr:
+      000054                       1149 	.ds 1
+      000055                       1150 _packetbuf_aligned:
+      000055                       1151 	.ds 178
+      000107                       1152 _packetbufptr:
+      000107                       1153 	.ds 3
+                                   1154 ;--------------------------------------------------------
+                                   1155 ; absolute external ram data
+                                   1156 ;--------------------------------------------------------
+                                   1157 	.area XABS    (ABS,XDATA)
+                                   1158 ;--------------------------------------------------------
+                                   1159 ; external initialized ram data
+                                   1160 ;--------------------------------------------------------
+                                   1161 	.area XISEG   (XDATA)
+      000000                       1162 _packetbuf:
+      000000                       1163 	.ds 3
+                                   1164 	.area HOME    (CODE)
+                                   1165 	.area GSINIT0 (CODE)
+                                   1166 	.area GSINIT1 (CODE)
+                                   1167 	.area GSINIT2 (CODE)
+                                   1168 	.area GSINIT3 (CODE)
+                                   1169 	.area GSINIT4 (CODE)
+                                   1170 	.area GSINIT5 (CODE)
+                                   1171 	.area GSINIT  (CODE)
+                                   1172 	.area GSFINAL (CODE)
+                                   1173 	.area CSEG    (CODE)
+                                   1174 ;--------------------------------------------------------
+                                   1175 ; global & static initialisations
+                                   1176 ;--------------------------------------------------------
+                                   1177 	.area HOME    (CODE)
+                                   1178 	.area GSINIT  (CODE)
+                                   1179 	.area GSFINAL (CODE)
+                                   1180 	.area GSINIT  (CODE)
+                                   1181 ;--------------------------------------------------------
+                                   1182 ; Home
+                                   1183 ;--------------------------------------------------------
+                                   1184 	.area HOME    (CODE)
+                                   1185 	.area HOME    (CODE)
+                                   1186 ;--------------------------------------------------------
+                                   1187 ; code
+                                   1188 ;--------------------------------------------------------
+                                   1189 	.area BANK1   (CODE)
+                                   1190 ;------------------------------------------------------------
+                                   1191 ;Allocation info for local variables in function 'packetbuf_clear'
+                                   1192 ;------------------------------------------------------------
+                                   1193 ;	../../../../core/net/packetbuf.c:77: packetbuf_clear(void)
+                                   1194 ;	-----------------------------------------
+                                   1195 ;	 function packetbuf_clear
+                                   1196 ;	-----------------------------------------
+      000000                       1197 _packetbuf_clear:
+                           000007  1198 	ar7 = 0x07
+                           000006  1199 	ar6 = 0x06
+                           000005  1200 	ar5 = 0x05
+                           000004  1201 	ar4 = 0x04
+                           000003  1202 	ar3 = 0x03
+                           000002  1203 	ar2 = 0x02
+                           000001  1204 	ar1 = 0x01
+                           000000  1205 	ar0 = 0x00
+                                   1206 ;	../../../../core/net/packetbuf.c:79: buflen = bufptr = 0;
+      000000 90r00r52         [24] 1207 	mov	dptr,#_bufptr
+      000003 E4               [12] 1208 	clr	a
+      000004 F0               [24] 1209 	movx	@dptr,a
+      000005 E4               [12] 1210 	clr	a
+      000006 A3               [24] 1211 	inc	dptr
+      000007 F0               [24] 1212 	movx	@dptr,a
+      000008 90r00r50         [24] 1213 	mov	dptr,#_buflen
+      00000B E4               [12] 1214 	clr	a
+      00000C F0               [24] 1215 	movx	@dptr,a
+      00000D E4               [12] 1216 	clr	a
+      00000E A3               [24] 1217 	inc	dptr
+      00000F F0               [24] 1218 	movx	@dptr,a
+                                   1219 ;	../../../../core/net/packetbuf.c:80: hdrptr = PACKETBUF_HDR_SIZE;
+      000010 90r00r54         [24] 1220 	mov	dptr,#_hdrptr
+      000013 74 30            [12] 1221 	mov	a,#0x30
+      000015 F0               [24] 1222 	movx	@dptr,a
+                                   1223 ;	../../../../core/net/packetbuf.c:82: packetbufptr = &packetbuf[PACKETBUF_HDR_SIZE];
+      000016 90r00r00         [24] 1224 	mov	dptr,#_packetbuf
+      000019 E0               [24] 1225 	movx	a,@dptr
+      00001A FD               [12] 1226 	mov	r5,a
+      00001B A3               [24] 1227 	inc	dptr
+      00001C E0               [24] 1228 	movx	a,@dptr
+      00001D FE               [12] 1229 	mov	r6,a
+      00001E A3               [24] 1230 	inc	dptr
+      00001F E0               [24] 1231 	movx	a,@dptr
+      000020 FF               [12] 1232 	mov	r7,a
+      000021 90r01r07         [24] 1233 	mov	dptr,#_packetbufptr
+      000024 74 30            [12] 1234 	mov	a,#0x30
+      000026 2D               [12] 1235 	add	a,r5
+      000027 F0               [24] 1236 	movx	@dptr,a
+      000028 E4               [12] 1237 	clr	a
+      000029 3E               [12] 1238 	addc	a,r6
+      00002A A3               [24] 1239 	inc	dptr
+      00002B F0               [24] 1240 	movx	@dptr,a
+      00002C EF               [12] 1241 	mov	a,r7
+      00002D A3               [24] 1242 	inc	dptr
+      00002E F0               [24] 1243 	movx	@dptr,a
+                                   1244 ;	../../../../core/net/packetbuf.c:83: packetbuf_attr_clear();
+      00002F 78r7F            [12] 1245 	mov	r0,#_packetbuf_attr_clear
+      000031 79s05            [12] 1246 	mov	r1,#(_packetbuf_attr_clear >> 8)
+      000033 7As00            [12] 1247 	mov	r2,#(_packetbuf_attr_clear >> 16)
+      000035 12r00r00         [24] 1248 	lcall	__sdcc_banked_call
+      000038 02r00r00         [24] 1249 	ljmp	__sdcc_banked_ret
+                                   1250 ;------------------------------------------------------------
+                                   1251 ;Allocation info for local variables in function 'packetbuf_clear_hdr'
+                                   1252 ;------------------------------------------------------------
+                                   1253 ;	../../../../core/net/packetbuf.c:87: packetbuf_clear_hdr(void)
+                                   1254 ;	-----------------------------------------
+                                   1255 ;	 function packetbuf_clear_hdr
+                                   1256 ;	-----------------------------------------
+      00003B                       1257 _packetbuf_clear_hdr:
+                                   1258 ;	../../../../core/net/packetbuf.c:89: hdrptr = PACKETBUF_HDR_SIZE;
+      00003B 90r00r54         [24] 1259 	mov	dptr,#_hdrptr
+      00003E 74 30            [12] 1260 	mov	a,#0x30
+      000040 F0               [24] 1261 	movx	@dptr,a
+      000041 02r00r00         [24] 1262 	ljmp	__sdcc_banked_ret
+                                   1263 ;------------------------------------------------------------
+                                   1264 ;Allocation info for local variables in function 'packetbuf_copyfrom'
+                                   1265 ;------------------------------------------------------------
+                                   1266 ;len                       Allocated to stack - sp -7
+                                   1267 ;from                      Allocated to stack - sp -2
+                                   1268 ;l                         Allocated to registers r3 r4 
+                                   1269 ;------------------------------------------------------------
+                                   1270 ;	../../../../core/net/packetbuf.c:93: packetbuf_copyfrom(const void *from, uint16_t len)
+                                   1271 ;	-----------------------------------------
+                                   1272 ;	 function packetbuf_copyfrom
+                                   1273 ;	-----------------------------------------
+      000044                       1274 _packetbuf_copyfrom:
+      000044 C0 82            [24] 1275 	push	dpl
+      000046 C0 83            [24] 1276 	push	dph
+      000048 C0 F0            [24] 1277 	push	b
+                                   1278 ;	../../../../core/net/packetbuf.c:97: packetbuf_clear();
+      00004A 78r00            [12] 1279 	mov	r0,#_packetbuf_clear
+      00004C 79s00            [12] 1280 	mov	r1,#(_packetbuf_clear >> 8)
+      00004E 7As00            [12] 1281 	mov	r2,#(_packetbuf_clear >> 16)
+      000050 12r00r00         [24] 1282 	lcall	__sdcc_banked_call
+                                   1283 ;	../../../../core/net/packetbuf.c:98: l = len > PACKETBUF_SIZE? PACKETBUF_SIZE: len;
+      000053 E5 81            [12] 1284 	mov	a,sp
+      000055 24 F9            [12] 1285 	add	a,#0xf9
+      000057 F8               [12] 1286 	mov	r0,a
+      000058 C3               [12] 1287 	clr	c
+      000059 74 80            [12] 1288 	mov	a,#0x80
+      00005B 96               [12] 1289 	subb	a,@r0
+      00005C E4               [12] 1290 	clr	a
+      00005D 08               [12] 1291 	inc	r0
+      00005E 96               [12] 1292 	subb	a,@r0
+      00005F 50 06            [24] 1293 	jnc	00103$
+      000061 7B 80            [12] 1294 	mov	r3,#0x80
+      000063 7C 00            [12] 1295 	mov	r4,#0x00
+      000065 80 0A            [24] 1296 	sjmp	00104$
+      000067                       1297 00103$:
+      000067 E5 81            [12] 1298 	mov	a,sp
+      000069 24 F9            [12] 1299 	add	a,#0xf9
+      00006B F8               [12] 1300 	mov	r0,a
+      00006C 86 03            [24] 1301 	mov	ar3,@r0
+      00006E 08               [12] 1302 	inc	r0
+      00006F 86 04            [24] 1303 	mov	ar4,@r0
+      000071                       1304 00104$:
+                                   1305 ;	../../../../core/net/packetbuf.c:99: memcpy(packetbufptr, from, l);
+      000071 90r01r07         [24] 1306 	mov	dptr,#_packetbufptr
+      000074 E0               [24] 1307 	movx	a,@dptr
+      000075 FA               [12] 1308 	mov	r2,a
+      000076 A3               [24] 1309 	inc	dptr
+      000077 E0               [24] 1310 	movx	a,@dptr
+      000078 FE               [12] 1311 	mov	r6,a
+      000079 A3               [24] 1312 	inc	dptr
+      00007A E0               [24] 1313 	movx	a,@dptr
+      00007B FF               [12] 1314 	mov	r7,a
+      00007C C0 04            [24] 1315 	push	ar4
+      00007E C0 03            [24] 1316 	push	ar3
+      000080 C0 03            [24] 1317 	push	ar3
+      000082 C0 04            [24] 1318 	push	ar4
+      000084 E5 81            [12] 1319 	mov	a,sp
+      000086 24 FA            [12] 1320 	add	a,#0xfa
+      000088 F8               [12] 1321 	mov	r0,a
+      000089 E6               [12] 1322 	mov	a,@r0
+      00008A C0 E0            [24] 1323 	push	acc
+      00008C 08               [12] 1324 	inc	r0
+      00008D E6               [12] 1325 	mov	a,@r0
+      00008E C0 E0            [24] 1326 	push	acc
+      000090 08               [12] 1327 	inc	r0
+      000091 E6               [12] 1328 	mov	a,@r0
+      000092 C0 E0            [24] 1329 	push	acc
+      000094 8A 82            [24] 1330 	mov	dpl,r2
+      000096 8E 83            [24] 1331 	mov	dph,r6
+      000098 8F F0            [24] 1332 	mov	b,r7
+      00009A 78r00            [12] 1333 	mov	r0,#_memcpy
+      00009C 79s00            [12] 1334 	mov	r1,#(_memcpy >> 8)
+      00009E 7As00            [12] 1335 	mov	r2,#(_memcpy >> 16)
+      0000A0 12r00r00         [24] 1336 	lcall	__sdcc_banked_call
+      0000A3 E5 81            [12] 1337 	mov	a,sp
+      0000A5 24 FB            [12] 1338 	add	a,#0xfb
+      0000A7 F5 81            [12] 1339 	mov	sp,a
+      0000A9 D0 03            [24] 1340 	pop	ar3
+      0000AB D0 04            [24] 1341 	pop	ar4
+                                   1342 ;	../../../../core/net/packetbuf.c:100: buflen = l;
+      0000AD 90r00r50         [24] 1343 	mov	dptr,#_buflen
+      0000B0 EB               [12] 1344 	mov	a,r3
+      0000B1 F0               [24] 1345 	movx	@dptr,a
+      0000B2 EC               [12] 1346 	mov	a,r4
+      0000B3 A3               [24] 1347 	inc	dptr
+      0000B4 F0               [24] 1348 	movx	@dptr,a
+                                   1349 ;	../../../../core/net/packetbuf.c:101: return l;
+      0000B5 8B 82            [24] 1350 	mov	dpl,r3
+      0000B7 8C 83            [24] 1351 	mov	dph,r4
+      0000B9 15 81            [12] 1352 	dec	sp
+      0000BB 15 81            [12] 1353 	dec	sp
+      0000BD 15 81            [12] 1354 	dec	sp
+      0000BF 02r00r00         [24] 1355 	ljmp	__sdcc_banked_ret
+                                   1356 ;------------------------------------------------------------
+                                   1357 ;Allocation info for local variables in function 'packetbuf_compact'
+                                   1358 ;------------------------------------------------------------
+                                   1359 ;i                         Allocated to stack - sp -1
+                                   1360 ;len                       Allocated to registers r6 r7 
+                                   1361 ;sloc0                     Allocated to stack - sp -6
+                                   1362 ;sloc1                     Allocated to stack - sp -4
+                                   1363 ;------------------------------------------------------------
+                                   1364 ;	../../../../core/net/packetbuf.c:105: packetbuf_compact(void)
+                                   1365 ;	-----------------------------------------
+                                   1366 ;	 function packetbuf_compact
+                                   1367 ;	-----------------------------------------
+      0000C2                       1368 _packetbuf_compact:
+      0000C2 E5 81            [12] 1369 	mov	a,sp
+      0000C4 24 07            [12] 1370 	add	a,#0x07
+      0000C6 F5 81            [12] 1371 	mov	sp,a
+                                   1372 ;	../../../../core/net/packetbuf.c:109: if(packetbuf_is_reference()) {
+      0000C8 78rD3            [12] 1373 	mov	r0,#_packetbuf_is_reference
+      0000CA 79s04            [12] 1374 	mov	r1,#(_packetbuf_is_reference >> 8)
+      0000CC 7As00            [12] 1375 	mov	r2,#(_packetbuf_is_reference >> 16)
+      0000CE 12r00r00         [24] 1376 	lcall	__sdcc_banked_call
+      0000D1 E5 82            [12] 1377 	mov	a,dpl
+      0000D3 85 83 F0         [24] 1378 	mov	b,dph
+      0000D6 45 F0            [12] 1379 	orl	a,b
+      0000D8 60 5F            [24] 1380 	jz	00105$
+                                   1381 ;	../../../../core/net/packetbuf.c:111: packetbuf_datalen());
+      0000DA 78r32            [12] 1382 	mov	r0,#_packetbuf_datalen
+      0000DC 79s05            [12] 1383 	mov	r1,#(_packetbuf_datalen >> 8)
+      0000DE 7As00            [12] 1384 	mov	r2,#(_packetbuf_datalen >> 16)
+      0000E0 12r00r00         [24] 1385 	lcall	__sdcc_banked_call
+      0000E3 C8               [12] 1386 	xch	a,r0
+      0000E4 E5 81            [12] 1387 	mov	a,sp
+      0000E6 24 FA            [12] 1388 	add	a,#0xfa
+      0000E8 C8               [12] 1389 	xch	a,r0
+      0000E9 A6 82            [24] 1390 	mov	@r0,dpl
+      0000EB 08               [12] 1391 	inc	r0
+      0000EC A6 83            [24] 1392 	mov	@r0,dph
+                                   1393 ;	../../../../core/net/packetbuf.c:110: memcpy(&packetbuf[PACKETBUF_HDR_SIZE], packetbuf_reference_ptr(),
+      0000EE 78r1E            [12] 1394 	mov	r0,#_packetbuf_reference_ptr
+      0000F0 79s05            [12] 1395 	mov	r1,#(_packetbuf_reference_ptr >> 8)
+      0000F2 7As00            [12] 1396 	mov	r2,#(_packetbuf_reference_ptr >> 16)
+      0000F4 12r00r00         [24] 1397 	lcall	__sdcc_banked_call
+      0000F7 AB 82            [24] 1398 	mov	r3,dpl
+      0000F9 AC 83            [24] 1399 	mov	r4,dph
+      0000FB AD F0            [24] 1400 	mov	r5,b
+      0000FD 90r00r00         [24] 1401 	mov	dptr,#_packetbuf
+      000100 E0               [24] 1402 	movx	a,@dptr
+      000101 FA               [12] 1403 	mov	r2,a
+      000102 A3               [24] 1404 	inc	dptr
+      000103 E0               [24] 1405 	movx	a,@dptr
+      000104 FE               [12] 1406 	mov	r6,a
+      000105 A3               [24] 1407 	inc	dptr
+      000106 E0               [24] 1408 	movx	a,@dptr
+      000107 FF               [12] 1409 	mov	r7,a
+      000108 74 30            [12] 1410 	mov	a,#0x30
+      00010A 2A               [12] 1411 	add	a,r2
+      00010B FA               [12] 1412 	mov	r2,a
+      00010C E4               [12] 1413 	clr	a
+      00010D 3E               [12] 1414 	addc	a,r6
+      00010E FE               [12] 1415 	mov	r6,a
+      00010F E5 81            [12] 1416 	mov	a,sp
+      000111 24 FA            [12] 1417 	add	a,#0xfa
+      000113 F8               [12] 1418 	mov	r0,a
+      000114 E6               [12] 1419 	mov	a,@r0
+      000115 C0 E0            [24] 1420 	push	acc
+      000117 08               [12] 1421 	inc	r0
+      000118 E6               [12] 1422 	mov	a,@r0
+      000119 C0 E0            [24] 1423 	push	acc
+      00011B C0 03            [24] 1424 	push	ar3
+      00011D C0 04            [24] 1425 	push	ar4
+      00011F C0 05            [24] 1426 	push	ar5
+      000121 8A 82            [24] 1427 	mov	dpl,r2
+      000123 8E 83            [24] 1428 	mov	dph,r6
+      000125 8F F0            [24] 1429 	mov	b,r7
+      000127 78r00            [12] 1430 	mov	r0,#_memcpy
+      000129 79s00            [12] 1431 	mov	r1,#(_memcpy >> 8)
+      00012B 7As00            [12] 1432 	mov	r2,#(_memcpy >> 16)
+      00012D 12r00r00         [24] 1433 	lcall	__sdcc_banked_call
+      000130 E5 81            [12] 1434 	mov	a,sp
+      000132 24 FB            [12] 1435 	add	a,#0xfb
+      000134 F5 81            [12] 1436 	mov	sp,a
+      000136 02r01rF9         [24] 1437 	ljmp	00110$
+      000139                       1438 00105$:
+                                   1439 ;	../../../../core/net/packetbuf.c:112: } else if(bufptr > 0) {
+      000139 90r00r52         [24] 1440 	mov	dptr,#_bufptr
+      00013C E0               [24] 1441 	movx	a,@dptr
+      00013D FE               [12] 1442 	mov	r6,a
+      00013E A3               [24] 1443 	inc	dptr
+      00013F E0               [24] 1444 	movx	a,@dptr
+      000140 FF               [12] 1445 	mov	r7,a
+      000141 4E               [12] 1446 	orl	a,r6
+      000142 70 03            [24] 1447 	jnz	00126$
+      000144 02r01rF9         [24] 1448 	ljmp	00110$
+      000147                       1449 00126$:
+                                   1450 ;	../../../../core/net/packetbuf.c:113: len = packetbuf_datalen() + PACKETBUF_HDR_SIZE;
+      000147 78r32            [12] 1451 	mov	r0,#_packetbuf_datalen
+      000149 79s05            [12] 1452 	mov	r1,#(_packetbuf_datalen >> 8)
+      00014B 7As00            [12] 1453 	mov	r2,#(_packetbuf_datalen >> 16)
+      00014D 12r00r00         [24] 1454 	lcall	__sdcc_banked_call
+      000150 AE 82            [24] 1455 	mov	r6,dpl
+      000152 AF 83            [24] 1456 	mov	r7,dph
+      000154 74 30            [12] 1457 	mov	a,#0x30
+      000156 2E               [12] 1458 	add	a,r6
+      000157 FE               [12] 1459 	mov	r6,a
+      000158 E4               [12] 1460 	clr	a
+      000159 3F               [12] 1461 	addc	a,r7
+      00015A FF               [12] 1462 	mov	r7,a
+                                   1463 ;	../../../../core/net/packetbuf.c:114: for(i = PACKETBUF_HDR_SIZE; i < len; i++) {
+      00015B A8 81            [24] 1464 	mov	r0,sp
+      00015D 18               [12] 1465 	dec	r0
+      00015E 76 30            [12] 1466 	mov	@r0,#0x30
+      000160 08               [12] 1467 	inc	r0
+      000161 76 00            [12] 1468 	mov	@r0,#0x00
+      000163                       1469 00108$:
+      000163 A8 81            [24] 1470 	mov	r0,sp
+      000165 18               [12] 1471 	dec	r0
+      000166 C3               [12] 1472 	clr	c
+      000167 E6               [12] 1473 	mov	a,@r0
+      000168 9E               [12] 1474 	subb	a,r6
+      000169 08               [12] 1475 	inc	r0
+      00016A E6               [12] 1476 	mov	a,@r0
+      00016B 64 80            [12] 1477 	xrl	a,#0x80
+      00016D 8F F0            [24] 1478 	mov	b,r7
+      00016F 63 F0 80         [24] 1479 	xrl	b,#0x80
+      000172 95 F0            [12] 1480 	subb	a,b
+      000174 50 7B            [24] 1481 	jnc	00101$
+                                   1482 ;	../../../../core/net/packetbuf.c:115: packetbuf[i] = packetbuf[bufptr + i];
+      000176 C0 06            [24] 1483 	push	ar6
+      000178 C0 07            [24] 1484 	push	ar7
+      00017A 90r00r00         [24] 1485 	mov	dptr,#_packetbuf
+      00017D E0               [24] 1486 	movx	a,@dptr
+      00017E FA               [12] 1487 	mov	r2,a
+      00017F A3               [24] 1488 	inc	dptr
+      000180 E0               [24] 1489 	movx	a,@dptr
+      000181 FB               [12] 1490 	mov	r3,a
+      000182 A3               [24] 1491 	inc	dptr
+      000183 E0               [24] 1492 	movx	a,@dptr
+      000184 FF               [12] 1493 	mov	r7,a
+      000185 E5 81            [12] 1494 	mov	a,sp
+      000187 24 FD            [12] 1495 	add	a,#0xfd
+      000189 F8               [12] 1496 	mov	r0,a
+      00018A E5 81            [12] 1497 	mov	a,sp
+      00018C 24 FA            [12] 1498 	add	a,#0xfa
+      00018E F9               [12] 1499 	mov	r1,a
+      00018F E6               [12] 1500 	mov	a,@r0
+      000190 2A               [12] 1501 	add	a,r2
+      000191 F7               [12] 1502 	mov	@r1,a
+      000192 08               [12] 1503 	inc	r0
+      000193 E6               [12] 1504 	mov	a,@r0
+      000194 3B               [12] 1505 	addc	a,r3
+      000195 09               [12] 1506 	inc	r1
+      000196 F7               [12] 1507 	mov	@r1,a
+      000197 09               [12] 1508 	inc	r1
+      000198 A7 07            [24] 1509 	mov	@r1,ar7
+      00019A 90r00r52         [24] 1510 	mov	dptr,#_bufptr
+      00019D E5 81            [12] 1511 	mov	a,sp
+      00019F 24 F8            [12] 1512 	add	a,#0xf8
+      0001A1 F8               [12] 1513 	mov	r0,a
+      0001A2 E0               [24] 1514 	movx	a,@dptr
+      0001A3 F6               [12] 1515 	mov	@r0,a
+      0001A4 A3               [24] 1516 	inc	dptr
+      0001A5 E0               [24] 1517 	movx	a,@dptr
+      0001A6 08               [12] 1518 	inc	r0
+      0001A7 F6               [12] 1519 	mov	@r0,a
+      0001A8 E5 81            [12] 1520 	mov	a,sp
+      0001AA 24 FD            [12] 1521 	add	a,#0xfd
+      0001AC F8               [12] 1522 	mov	r0,a
+      0001AD 86 04            [24] 1523 	mov	ar4,@r0
+      0001AF 08               [12] 1524 	inc	r0
+      0001B0 86 06            [24] 1525 	mov	ar6,@r0
+      0001B2 E5 81            [12] 1526 	mov	a,sp
+      0001B4 24 F8            [12] 1527 	add	a,#0xf8
+      0001B6 F8               [12] 1528 	mov	r0,a
+      0001B7 EC               [12] 1529 	mov	a,r4
+      0001B8 26               [12] 1530 	add	a,@r0
+      0001B9 FC               [12] 1531 	mov	r4,a
+      0001BA EE               [12] 1532 	mov	a,r6
+      0001BB 08               [12] 1533 	inc	r0
+      0001BC 36               [12] 1534 	addc	a,@r0
+      0001BD FE               [12] 1535 	mov	r6,a
+      0001BE EC               [12] 1536 	mov	a,r4
+      0001BF 2A               [12] 1537 	add	a,r2
+      0001C0 FA               [12] 1538 	mov	r2,a
+      0001C1 EE               [12] 1539 	mov	a,r6
+      0001C2 3B               [12] 1540 	addc	a,r3
+      0001C3 FB               [12] 1541 	mov	r3,a
+      0001C4 8A 82            [24] 1542 	mov	dpl,r2
+      0001C6 8B 83            [24] 1543 	mov	dph,r3
+      0001C8 8F F0            [24] 1544 	mov	b,r7
+      0001CA 12r00r00         [24] 1545 	lcall	__gptrget
+      0001CD FA               [12] 1546 	mov	r2,a
+      0001CE E5 81            [12] 1547 	mov	a,sp
+      0001D0 24 FA            [12] 1548 	add	a,#0xfa
+      0001D2 F8               [12] 1549 	mov	r0,a
+      0001D3 86 82            [24] 1550 	mov	dpl,@r0
+      0001D5 08               [12] 1551 	inc	r0
+      0001D6 86 83            [24] 1552 	mov	dph,@r0
+      0001D8 08               [12] 1553 	inc	r0
+      0001D9 86 F0            [24] 1554 	mov	b,@r0
+      0001DB EA               [12] 1555 	mov	a,r2
+      0001DC 12r00r00         [24] 1556 	lcall	__gptrput
+                                   1557 ;	../../../../core/net/packetbuf.c:114: for(i = PACKETBUF_HDR_SIZE; i < len; i++) {
+      0001DF E5 81            [12] 1558 	mov	a,sp
+      0001E1 24 FD            [12] 1559 	add	a,#0xfd
+      0001E3 F8               [12] 1560 	mov	r0,a
+      0001E4 06               [12] 1561 	inc	@r0
+      0001E5 B6 00 02         [24] 1562 	cjne	@r0,#0x00,00128$
+      0001E8 08               [12] 1563 	inc	r0
+      0001E9 06               [12] 1564 	inc	@r0
+      0001EA                       1565 00128$:
+      0001EA D0 07            [24] 1566 	pop	ar7
+      0001EC D0 06            [24] 1567 	pop	ar6
+      0001EE 02r01r63         [24] 1568 	ljmp	00108$
+      0001F1                       1569 00101$:
+                                   1570 ;	../../../../core/net/packetbuf.c:118: bufptr = 0;
+      0001F1 90r00r52         [24] 1571 	mov	dptr,#_bufptr
+      0001F4 E4               [12] 1572 	clr	a
+      0001F5 F0               [24] 1573 	movx	@dptr,a
+      0001F6 E4               [12] 1574 	clr	a
+      0001F7 A3               [24] 1575 	inc	dptr
+      0001F8 F0               [24] 1576 	movx	@dptr,a
+      0001F9                       1577 00110$:
+      0001F9 E5 81            [12] 1578 	mov	a,sp
+      0001FB 24 F9            [12] 1579 	add	a,#0xF9
+      0001FD F5 81            [12] 1580 	mov	sp,a
+      0001FF 02r00r00         [24] 1581 	ljmp	__sdcc_banked_ret
+                                   1582 ;------------------------------------------------------------
+                                   1583 ;Allocation info for local variables in function 'packetbuf_copyto_hdr'
+                                   1584 ;------------------------------------------------------------
+                                   1585 ;to                        Allocated to stack - sp -4
+                                   1586 ;sloc0                     Allocated to stack - sp -1
+                                   1587 ;sloc1                     Allocated to stack - sp -1
+                                   1588 ;------------------------------------------------------------
+                                   1589 ;	../../../../core/net/packetbuf.c:123: packetbuf_copyto_hdr(uint8_t *to)
+                                   1590 ;	-----------------------------------------
+                                   1591 ;	 function packetbuf_copyto_hdr
+                                   1592 ;	-----------------------------------------
+      000202                       1593 _packetbuf_copyto_hdr:
+      000202 C0 82            [24] 1594 	push	dpl
+      000204 C0 83            [24] 1595 	push	dph
+      000206 C0 F0            [24] 1596 	push	b
+      000208 05 81            [12] 1597 	inc	sp
+      00020A 05 81            [12] 1598 	inc	sp
+                                   1599 ;	../../../../core/net/packetbuf.c:135: memcpy(to, packetbuf + hdrptr, PACKETBUF_HDR_SIZE - hdrptr);
+      00020C 90r00r54         [24] 1600 	mov	dptr,#_hdrptr
+      00020F E0               [24] 1601 	movx	a,@dptr
+      000210 FC               [12] 1602 	mov	r4,a
+      000211 FA               [12] 1603 	mov	r2,a
+      000212 7B 00            [12] 1604 	mov	r3,#0x00
+      000214 A8 81            [24] 1605 	mov	r0,sp
+      000216 18               [12] 1606 	dec	r0
+      000217 74 30            [12] 1607 	mov	a,#0x30
+      000219 C3               [12] 1608 	clr	c
+      00021A 9A               [12] 1609 	subb	a,r2
+      00021B F6               [12] 1610 	mov	@r0,a
+      00021C E4               [12] 1611 	clr	a
+      00021D 9B               [12] 1612 	subb	a,r3
+      00021E 08               [12] 1613 	inc	r0
+      00021F F6               [12] 1614 	mov	@r0,a
+      000220 90r00r00         [24] 1615 	mov	dptr,#_packetbuf
+      000223 E0               [24] 1616 	movx	a,@dptr
+      000224 FF               [12] 1617 	mov	r7,a
+      000225 A3               [24] 1618 	inc	dptr
+      000226 E0               [24] 1619 	movx	a,@dptr
+      000227 FE               [12] 1620 	mov	r6,a
+      000228 A3               [24] 1621 	inc	dptr
+      000229 E0               [24] 1622 	movx	a,@dptr
+      00022A FD               [12] 1623 	mov	r5,a
+      00022B EC               [12] 1624 	mov	a,r4
+      00022C 2F               [12] 1625 	add	a,r7
+      00022D FC               [12] 1626 	mov	r4,a
+      00022E E4               [12] 1627 	clr	a
+      00022F 3E               [12] 1628 	addc	a,r6
+      000230 FF               [12] 1629 	mov	r7,a
+      000231 E5 81            [12] 1630 	mov	a,sp
+      000233 24 FC            [12] 1631 	add	a,#0xfc
+      000235 F8               [12] 1632 	mov	r0,a
+      000236 86 02            [24] 1633 	mov	ar2,@r0
+      000238 08               [12] 1634 	inc	r0
+      000239 86 03            [24] 1635 	mov	ar3,@r0
+      00023B 08               [12] 1636 	inc	r0
+      00023C 86 06            [24] 1637 	mov	ar6,@r0
+      00023E A8 81            [24] 1638 	mov	r0,sp
+      000240 18               [12] 1639 	dec	r0
+      000241 E6               [12] 1640 	mov	a,@r0
+      000242 C0 E0            [24] 1641 	push	acc
+      000244 08               [12] 1642 	inc	r0
+      000245 E6               [12] 1643 	mov	a,@r0
+      000246 C0 E0            [24] 1644 	push	acc
+      000248 C0 04            [24] 1645 	push	ar4
+      00024A C0 07            [24] 1646 	push	ar7
+      00024C C0 05            [24] 1647 	push	ar5
+      00024E 8A 82            [24] 1648 	mov	dpl,r2
+      000250 8B 83            [24] 1649 	mov	dph,r3
+      000252 8E F0            [24] 1650 	mov	b,r6
+      000254 78r00            [12] 1651 	mov	r0,#_memcpy
+      000256 79s00            [12] 1652 	mov	r1,#(_memcpy >> 8)
+      000258 7As00            [12] 1653 	mov	r2,#(_memcpy >> 16)
+      00025A 12r00r00         [24] 1654 	lcall	__sdcc_banked_call
+      00025D E5 81            [12] 1655 	mov	a,sp
+      00025F 24 FB            [12] 1656 	add	a,#0xfb
+      000261 F5 81            [12] 1657 	mov	sp,a
+                                   1658 ;	../../../../core/net/packetbuf.c:136: return PACKETBUF_HDR_SIZE - hdrptr;
+      000263 90r00r54         [24] 1659 	mov	dptr,#_hdrptr
+      000266 E0               [24] 1660 	movx	a,@dptr
+      000267 FE               [12] 1661 	mov	r6,a
+      000268 7D 00            [12] 1662 	mov	r5,#0x00
+      00026A 74 30            [12] 1663 	mov	a,#0x30
+      00026C C3               [12] 1664 	clr	c
+      00026D 9E               [12] 1665 	subb	a,r6
+      00026E FE               [12] 1666 	mov	r6,a
+      00026F E4               [12] 1667 	clr	a
+      000270 9D               [12] 1668 	subb	a,r5
+      000271 FD               [12] 1669 	mov	r5,a
+      000272 8E 82            [24] 1670 	mov	dpl,r6
+      000274 8D 83            [24] 1671 	mov	dph,r5
+      000276 E5 81            [12] 1672 	mov	a,sp
+      000278 24 FB            [12] 1673 	add	a,#0xFB
+      00027A F5 81            [12] 1674 	mov	sp,a
+      00027C 02r00r00         [24] 1675 	ljmp	__sdcc_banked_ret
+                                   1676 ;------------------------------------------------------------
+                                   1677 ;Allocation info for local variables in function 'packetbuf_copyto'
+                                   1678 ;------------------------------------------------------------
+                                   1679 ;to                        Allocated to stack - sp -7
+                                   1680 ;sloc0                     Allocated to stack - sp -4
+                                   1681 ;sloc1                     Allocated to stack - sp -4
+                                   1682 ;sloc2                     Allocated to stack - sp -2
+                                   1683 ;------------------------------------------------------------
+                                   1684 ;	../../../../core/net/packetbuf.c:140: packetbuf_copyto(void *to)
+                                   1685 ;	-----------------------------------------
+                                   1686 ;	 function packetbuf_copyto
+                                   1687 ;	-----------------------------------------
+      00027F                       1688 _packetbuf_copyto:
+      00027F C0 82            [24] 1689 	push	dpl
+      000281 C0 83            [24] 1690 	push	dph
+      000283 C0 F0            [24] 1691 	push	b
+      000285 E5 81            [12] 1692 	mov	a,sp
+      000287 24 05            [12] 1693 	add	a,#0x05
+      000289 F5 81            [12] 1694 	mov	sp,a
+                                   1695 ;	../../../../core/net/packetbuf.c:161: if(PACKETBUF_HDR_SIZE - hdrptr + buflen > PACKETBUF_SIZE) {
+      00028B 90r00r54         [24] 1696 	mov	dptr,#_hdrptr
+      00028E E0               [24] 1697 	movx	a,@dptr
+      00028F FC               [12] 1698 	mov	r4,a
+      000290 FA               [12] 1699 	mov	r2,a
+      000291 7B 00            [12] 1700 	mov	r3,#0x00
+      000293 74 30            [12] 1701 	mov	a,#0x30
+      000295 C3               [12] 1702 	clr	c
+      000296 9A               [12] 1703 	subb	a,r2
+      000297 FE               [12] 1704 	mov	r6,a
+      000298 E4               [12] 1705 	clr	a
+      000299 9B               [12] 1706 	subb	a,r3
+      00029A FF               [12] 1707 	mov	r7,a
+      00029B 90r00r50         [24] 1708 	mov	dptr,#_buflen
+      00029E E5 81            [12] 1709 	mov	a,sp
+      0002A0 24 FC            [12] 1710 	add	a,#0xfc
+      0002A2 F8               [12] 1711 	mov	r0,a
+      0002A3 E0               [24] 1712 	movx	a,@dptr
+      0002A4 F6               [12] 1713 	mov	@r0,a
+      0002A5 A3               [24] 1714 	inc	dptr
+      0002A6 E0               [24] 1715 	movx	a,@dptr
+      0002A7 08               [12] 1716 	inc	r0
+      0002A8 F6               [12] 1717 	mov	@r0,a
+      0002A9 8E 05            [24] 1718 	mov	ar5,r6
+      0002AB E5 81            [12] 1719 	mov	a,sp
+      0002AD 24 FC            [12] 1720 	add	a,#0xfc
+      0002AF F8               [12] 1721 	mov	r0,a
+      0002B0 E6               [12] 1722 	mov	a,@r0
+      0002B1 2D               [12] 1723 	add	a,r5
+      0002B2 FD               [12] 1724 	mov	r5,a
+      0002B3 08               [12] 1725 	inc	r0
+      0002B4 E6               [12] 1726 	mov	a,@r0
+      0002B5 3F               [12] 1727 	addc	a,r7
+      0002B6 FF               [12] 1728 	mov	r7,a
+      0002B7 C3               [12] 1729 	clr	c
+      0002B8 74 80            [12] 1730 	mov	a,#0x80
+      0002BA 9D               [12] 1731 	subb	a,r5
+      0002BB E4               [12] 1732 	clr	a
+      0002BC 9F               [12] 1733 	subb	a,r7
+      0002BD 50 06            [24] 1734 	jnc	00102$
+                                   1735 ;	../../../../core/net/packetbuf.c:163: return 0;
+      0002BF 90 00 00         [24] 1736 	mov	dptr,#0x0000
+      0002C2 02r03r97         [24] 1737 	ljmp	00103$
+      0002C5                       1738 00102$:
+                                   1739 ;	../../../../core/net/packetbuf.c:165: memcpy(to, packetbuf + hdrptr, PACKETBUF_HDR_SIZE - hdrptr);
+      0002C5 74 30            [12] 1740 	mov	a,#0x30
+      0002C7 C3               [12] 1741 	clr	c
+      0002C8 9A               [12] 1742 	subb	a,r2
+      0002C9 FA               [12] 1743 	mov	r2,a
+      0002CA E4               [12] 1744 	clr	a
+      0002CB 9B               [12] 1745 	subb	a,r3
+      0002CC FB               [12] 1746 	mov	r3,a
+      0002CD 90r00r00         [24] 1747 	mov	dptr,#_packetbuf
+      0002D0 E0               [24] 1748 	movx	a,@dptr
+      0002D1 FD               [12] 1749 	mov	r5,a
+      0002D2 A3               [24] 1750 	inc	dptr
+      0002D3 E0               [24] 1751 	movx	a,@dptr
+      0002D4 FE               [12] 1752 	mov	r6,a
+      0002D5 A3               [24] 1753 	inc	dptr
+      0002D6 E0               [24] 1754 	movx	a,@dptr
+      0002D7 FF               [12] 1755 	mov	r7,a
+      0002D8 EC               [12] 1756 	mov	a,r4
+      0002D9 2D               [12] 1757 	add	a,r5
+      0002DA FD               [12] 1758 	mov	r5,a
+      0002DB E4               [12] 1759 	clr	a
+      0002DC 3E               [12] 1760 	addc	a,r6
+      0002DD FE               [12] 1761 	mov	r6,a
+      0002DE C0 02            [24] 1762 	push	ar2
+      0002E0 C0 03            [24] 1763 	push	ar3
+      0002E2 C0 05            [24] 1764 	push	ar5
+      0002E4 C0 06            [24] 1765 	push	ar6
+      0002E6 C0 07            [24] 1766 	push	ar7
+      0002E8 E5 81            [12] 1767 	mov	a,sp
+      0002EA 24 F4            [12] 1768 	add	a,#0xf4
+      0002EC F8               [12] 1769 	mov	r0,a
+      0002ED 86 82            [24] 1770 	mov	dpl,@r0
+      0002EF 08               [12] 1771 	inc	r0
+      0002F0 86 83            [24] 1772 	mov	dph,@r0
+      0002F2 08               [12] 1773 	inc	r0
+      0002F3 86 F0            [24] 1774 	mov	b,@r0
+      0002F5 78r00            [12] 1775 	mov	r0,#_memcpy
+      0002F7 79s00            [12] 1776 	mov	r1,#(_memcpy >> 8)
+      0002F9 7As00            [12] 1777 	mov	r2,#(_memcpy >> 16)
+      0002FB 12r00r00         [24] 1778 	lcall	__sdcc_banked_call
+      0002FE E5 81            [12] 1779 	mov	a,sp
+      000300 24 FB            [12] 1780 	add	a,#0xfb
+      000302 F5 81            [12] 1781 	mov	sp,a
+                                   1782 ;	../../../../core/net/packetbuf.c:166: memcpy((uint8_t *)to + PACKETBUF_HDR_SIZE - hdrptr, packetbufptr + bufptr,
+      000304 90r00r52         [24] 1783 	mov	dptr,#_bufptr
+      000307 E0               [24] 1784 	movx	a,@dptr
+      000308 FE               [12] 1785 	mov	r6,a
+      000309 A3               [24] 1786 	inc	dptr
+      00030A E0               [24] 1787 	movx	a,@dptr
+      00030B FF               [12] 1788 	mov	r7,a
+      00030C 90r01r07         [24] 1789 	mov	dptr,#_packetbufptr
+      00030F E0               [24] 1790 	movx	a,@dptr
+      000310 FB               [12] 1791 	mov	r3,a
+      000311 A3               [24] 1792 	inc	dptr
+      000312 E0               [24] 1793 	movx	a,@dptr
+      000313 FC               [12] 1794 	mov	r4,a
+      000314 A3               [24] 1795 	inc	dptr
+      000315 E0               [24] 1796 	movx	a,@dptr
+      000316 FD               [12] 1797 	mov	r5,a
+      000317 EE               [12] 1798 	mov	a,r6
+      000318 2B               [12] 1799 	add	a,r3
+      000319 FE               [12] 1800 	mov	r6,a
+      00031A EF               [12] 1801 	mov	a,r7
+      00031B 3C               [12] 1802 	addc	a,r4
+      00031C FF               [12] 1803 	mov	r7,a
+      00031D 8D 02            [24] 1804 	mov	ar2,r5
+      00031F E5 81            [12] 1805 	mov	a,sp
+      000321 24 F9            [12] 1806 	add	a,#0xf9
+      000323 F8               [12] 1807 	mov	r0,a
+      000324 86 03            [24] 1808 	mov	ar3,@r0
+      000326 08               [12] 1809 	inc	r0
+      000327 86 04            [24] 1810 	mov	ar4,@r0
+      000329 08               [12] 1811 	inc	r0
+      00032A 86 05            [24] 1812 	mov	ar5,@r0
+      00032C A8 81            [24] 1813 	mov	r0,sp
+      00032E 18               [12] 1814 	dec	r0
+      00032F 18               [12] 1815 	dec	r0
+      000330 74 30            [12] 1816 	mov	a,#0x30
+      000332 2B               [12] 1817 	add	a,r3
+      000333 F6               [12] 1818 	mov	@r0,a
+      000334 E4               [12] 1819 	clr	a
+      000335 3C               [12] 1820 	addc	a,r4
+      000336 08               [12] 1821 	inc	r0
+      000337 F6               [12] 1822 	mov	@r0,a
+      000338 08               [12] 1823 	inc	r0
+      000339 A6 05            [24] 1824 	mov	@r0,ar5
+      00033B 90r00r54         [24] 1825 	mov	dptr,#_hdrptr
+      00033E E0               [24] 1826 	movx	a,@dptr
+      00033F FD               [12] 1827 	mov	r5,a
+      000340 7C 00            [12] 1828 	mov	r4,#0x00
+      000342 A8 81            [24] 1829 	mov	r0,sp
+      000344 18               [12] 1830 	dec	r0
+      000345 18               [12] 1831 	dec	r0
+      000346 E6               [12] 1832 	mov	a,@r0
+      000347 C3               [12] 1833 	clr	c
+      000348 9D               [12] 1834 	subb	a,r5
+      000349 FD               [12] 1835 	mov	r5,a
+      00034A 08               [12] 1836 	inc	r0
+      00034B E6               [12] 1837 	mov	a,@r0
+      00034C 9C               [12] 1838 	subb	a,r4
+      00034D FC               [12] 1839 	mov	r4,a
+      00034E 08               [12] 1840 	inc	r0
+      00034F 86 03            [24] 1841 	mov	ar3,@r0
+      000351 90r00r50         [24] 1842 	mov	dptr,#_buflen
+      000354 E0               [24] 1843 	movx	a,@dptr
+      000355 C0 E0            [24] 1844 	push	acc
+      000357 A3               [24] 1845 	inc	dptr
+      000358 E0               [24] 1846 	movx	a,@dptr
+      000359 C0 E0            [24] 1847 	push	acc
+      00035B C0 06            [24] 1848 	push	ar6
+      00035D C0 07            [24] 1849 	push	ar7
+      00035F C0 02            [24] 1850 	push	ar2
+      000361 8D 82            [24] 1851 	mov	dpl,r5
+      000363 8C 83            [24] 1852 	mov	dph,r4
+      000365 8B F0            [24] 1853 	mov	b,r3
+      000367 78r00            [12] 1854 	mov	r0,#_memcpy
+      000369 79s00            [12] 1855 	mov	r1,#(_memcpy >> 8)
+      00036B 7As00            [12] 1856 	mov	r2,#(_memcpy >> 16)
+      00036D 12r00r00         [24] 1857 	lcall	__sdcc_banked_call
+      000370 E5 81            [12] 1858 	mov	a,sp
+      000372 24 FB            [12] 1859 	add	a,#0xfb
+      000374 F5 81            [12] 1860 	mov	sp,a
+                                   1861 ;	../../../../core/net/packetbuf.c:168: return PACKETBUF_HDR_SIZE - hdrptr + buflen;
+      000376 90r00r54         [24] 1862 	mov	dptr,#_hdrptr
+      000379 E0               [24] 1863 	movx	a,@dptr
+      00037A FF               [12] 1864 	mov	r7,a
+      00037B 7E 00            [12] 1865 	mov	r6,#0x00
+      00037D 74 30            [12] 1866 	mov	a,#0x30
+      00037F C3               [12] 1867 	clr	c
+      000380 9F               [12] 1868 	subb	a,r7
+      000381 FF               [12] 1869 	mov	r7,a
+      000382 E4               [12] 1870 	clr	a
+      000383 9E               [12] 1871 	subb	a,r6
+      000384 FE               [12] 1872 	mov	r6,a
+      000385 90r00r50         [24] 1873 	mov	dptr,#_buflen
+      000388 E0               [24] 1874 	movx	a,@dptr
+      000389 FC               [12] 1875 	mov	r4,a
+      00038A A3               [24] 1876 	inc	dptr
+      00038B E0               [24] 1877 	movx	a,@dptr
+      00038C FD               [12] 1878 	mov	r5,a
+      00038D EC               [12] 1879 	mov	a,r4
+      00038E 2F               [12] 1880 	add	a,r7
+      00038F FC               [12] 1881 	mov	r4,a
+      000390 ED               [12] 1882 	mov	a,r5
+      000391 3E               [12] 1883 	addc	a,r6
+      000392 FD               [12] 1884 	mov	r5,a
+      000393 8C 82            [24] 1885 	mov	dpl,r4
+      000395 8D 83            [24] 1886 	mov	dph,r5
+      000397                       1887 00103$:
+      000397 E5 81            [12] 1888 	mov	a,sp
+      000399 24 F8            [12] 1889 	add	a,#0xF8
+      00039B F5 81            [12] 1890 	mov	sp,a
+      00039D 02r00r00         [24] 1891 	ljmp	__sdcc_banked_ret
+                                   1892 ;------------------------------------------------------------
+                                   1893 ;Allocation info for local variables in function 'packetbuf_hdralloc'
+                                   1894 ;------------------------------------------------------------
+                                   1895 ;size                      Allocated to registers r6 r7 
+                                   1896 ;------------------------------------------------------------
+                                   1897 ;	../../../../core/net/packetbuf.c:172: packetbuf_hdralloc(int size)
+                                   1898 ;	-----------------------------------------
+                                   1899 ;	 function packetbuf_hdralloc
+                                   1900 ;	-----------------------------------------
+      0003A0                       1901 _packetbuf_hdralloc:
+      0003A0 AE 82            [24] 1902 	mov	r6,dpl
+      0003A2 AF 83            [24] 1903 	mov	r7,dph
+                                   1904 ;	../../../../core/net/packetbuf.c:174: if(hdrptr >= size && packetbuf_totlen() + size <= PACKETBUF_SIZE) {
+      0003A4 90r00r54         [24] 1905 	mov	dptr,#_hdrptr
+      0003A7 E0               [24] 1906 	movx	a,@dptr
+      0003A8 FD               [12] 1907 	mov	r5,a
+      0003A9 7C 00            [12] 1908 	mov	r4,#0x00
+      0003AB C3               [12] 1909 	clr	c
+      0003AC ED               [12] 1910 	mov	a,r5
+      0003AD 9E               [12] 1911 	subb	a,r6
+      0003AE EC               [12] 1912 	mov	a,r4
+      0003AF 64 80            [12] 1913 	xrl	a,#0x80
+      0003B1 8F F0            [24] 1914 	mov	b,r7
+      0003B3 63 F0 80         [24] 1915 	xrl	b,#0x80
+      0003B6 95 F0            [12] 1916 	subb	a,b
+      0003B8 40 37            [24] 1917 	jc	00102$
+      0003BA C0 07            [24] 1918 	push	ar7
+      0003BC C0 06            [24] 1919 	push	ar6
+      0003BE 78r50            [12] 1920 	mov	r0,#_packetbuf_totlen
+      0003C0 79s05            [12] 1921 	mov	r1,#(_packetbuf_totlen >> 8)
+      0003C2 7As00            [12] 1922 	mov	r2,#(_packetbuf_totlen >> 16)
+      0003C4 12r00r00         [24] 1923 	lcall	__sdcc_banked_call
+      0003C7 AC 82            [24] 1924 	mov	r4,dpl
+      0003C9 AD 83            [24] 1925 	mov	r5,dph
+      0003CB D0 06            [24] 1926 	pop	ar6
+      0003CD D0 07            [24] 1927 	pop	ar7
+      0003CF 8E 02            [24] 1928 	mov	ar2,r6
+      0003D1 8F 03            [24] 1929 	mov	ar3,r7
+      0003D3 EA               [12] 1930 	mov	a,r2
+      0003D4 2C               [12] 1931 	add	a,r4
+      0003D5 FC               [12] 1932 	mov	r4,a
+      0003D6 EB               [12] 1933 	mov	a,r3
+      0003D7 3D               [12] 1934 	addc	a,r5
+      0003D8 FD               [12] 1935 	mov	r5,a
+      0003D9 C3               [12] 1936 	clr	c
+      0003DA 74 80            [12] 1937 	mov	a,#0x80
+      0003DC 9C               [12] 1938 	subb	a,r4
+      0003DD E4               [12] 1939 	clr	a
+      0003DE 9D               [12] 1940 	subb	a,r5
+      0003DF 40 10            [24] 1941 	jc	00102$
+                                   1942 ;	../../../../core/net/packetbuf.c:175: hdrptr -= size;
+      0003E1 90r00r54         [24] 1943 	mov	dptr,#_hdrptr
+      0003E4 E0               [24] 1944 	movx	a,@dptr
+      0003E5 FF               [12] 1945 	mov	r7,a
+      0003E6 90r00r54         [24] 1946 	mov	dptr,#_hdrptr
+      0003E9 C3               [12] 1947 	clr	c
+      0003EA 9E               [12] 1948 	subb	a,r6
+      0003EB F0               [24] 1949 	movx	@dptr,a
+                                   1950 ;	../../../../core/net/packetbuf.c:176: return 1;
+      0003EC 90 00 01         [24] 1951 	mov	dptr,#0x0001
+      0003EF 80 03            [24] 1952 	sjmp	00104$
+      0003F1                       1953 00102$:
+                                   1954 ;	../../../../core/net/packetbuf.c:178: return 0;
+      0003F1 90 00 00         [24] 1955 	mov	dptr,#0x0000
+      0003F4                       1956 00104$:
+      0003F4 02r00r00         [24] 1957 	ljmp	__sdcc_banked_ret
+                                   1958 ;------------------------------------------------------------
+                                   1959 ;Allocation info for local variables in function 'packetbuf_hdr_remove'
+                                   1960 ;------------------------------------------------------------
+                                   1961 ;size                      Allocated to registers r6 r7 
+                                   1962 ;------------------------------------------------------------
+                                   1963 ;	../../../../core/net/packetbuf.c:182: packetbuf_hdr_remove(int size)
+                                   1964 ;	-----------------------------------------
+                                   1965 ;	 function packetbuf_hdr_remove
+                                   1966 ;	-----------------------------------------
+      0003F7                       1967 _packetbuf_hdr_remove:
+      0003F7 AE 82            [24] 1968 	mov	r6,dpl
+                                   1969 ;	../../../../core/net/packetbuf.c:184: hdrptr += size;
+      0003F9 90r00r54         [24] 1970 	mov	dptr,#_hdrptr
+      0003FC E0               [24] 1971 	movx	a,@dptr
+      0003FD FF               [12] 1972 	mov	r7,a
+      0003FE 90r00r54         [24] 1973 	mov	dptr,#_hdrptr
+      000401 EE               [12] 1974 	mov	a,r6
+      000402 2F               [12] 1975 	add	a,r7
+      000403 F0               [24] 1976 	movx	@dptr,a
+      000404 02r00r00         [24] 1977 	ljmp	__sdcc_banked_ret
+                                   1978 ;------------------------------------------------------------
+                                   1979 ;Allocation info for local variables in function 'packetbuf_hdrreduce'
+                                   1980 ;------------------------------------------------------------
+                                   1981 ;size                      Allocated to registers r6 r7 
+                                   1982 ;------------------------------------------------------------
+                                   1983 ;	../../../../core/net/packetbuf.c:188: packetbuf_hdrreduce(int size)
+                                   1984 ;	-----------------------------------------
+                                   1985 ;	 function packetbuf_hdrreduce
+                                   1986 ;	-----------------------------------------
+      000407                       1987 _packetbuf_hdrreduce:
+      000407 AE 82            [24] 1988 	mov	r6,dpl
+      000409 AF 83            [24] 1989 	mov	r7,dph
+                                   1990 ;	../../../../core/net/packetbuf.c:190: if(buflen < size) {
+      00040B 90r00r50         [24] 1991 	mov	dptr,#_buflen
+      00040E E0               [24] 1992 	movx	a,@dptr
+      00040F FC               [12] 1993 	mov	r4,a
+      000410 A3               [24] 1994 	inc	dptr
+      000411 E0               [24] 1995 	movx	a,@dptr
+      000412 FD               [12] 1996 	mov	r5,a
+      000413 C3               [12] 1997 	clr	c
+      000414 EC               [12] 1998 	mov	a,r4
+      000415 9E               [12] 1999 	subb	a,r6
+      000416 ED               [12] 2000 	mov	a,r5
+      000417 9F               [12] 2001 	subb	a,r7
+      000418 50 05            [24] 2002 	jnc	00102$
+                                   2003 ;	../../../../core/net/packetbuf.c:191: return 0;
+      00041A 90 00 00         [24] 2004 	mov	dptr,#0x0000
+      00041D 80 20            [24] 2005 	sjmp	00103$
+      00041F                       2006 00102$:
+                                   2007 ;	../../../../core/net/packetbuf.c:194: bufptr += size;
+      00041F 90r00r52         [24] 2008 	mov	dptr,#_bufptr
+      000422 E0               [24] 2009 	movx	a,@dptr
+      000423 FA               [12] 2010 	mov	r2,a
+      000424 A3               [24] 2011 	inc	dptr
+      000425 E0               [24] 2012 	movx	a,@dptr
+      000426 FB               [12] 2013 	mov	r3,a
+      000427 90r00r52         [24] 2014 	mov	dptr,#_bufptr
+      00042A EE               [12] 2015 	mov	a,r6
+      00042B 2A               [12] 2016 	add	a,r2
+      00042C F0               [24] 2017 	movx	@dptr,a
+      00042D EF               [12] 2018 	mov	a,r7
+      00042E 3B               [12] 2019 	addc	a,r3
+      00042F A3               [24] 2020 	inc	dptr
+      000430 F0               [24] 2021 	movx	@dptr,a
+                                   2022 ;	../../../../core/net/packetbuf.c:195: buflen -= size;
+      000431 90r00r50         [24] 2023 	mov	dptr,#_buflen
+      000434 EC               [12] 2024 	mov	a,r4
+      000435 C3               [12] 2025 	clr	c
+      000436 9E               [12] 2026 	subb	a,r6
+      000437 F0               [24] 2027 	movx	@dptr,a
+      000438 ED               [12] 2028 	mov	a,r5
+      000439 9F               [12] 2029 	subb	a,r7
+      00043A A3               [24] 2030 	inc	dptr
+      00043B F0               [24] 2031 	movx	@dptr,a
+                                   2032 ;	../../../../core/net/packetbuf.c:196: return 1;
+      00043C 90 00 01         [24] 2033 	mov	dptr,#0x0001
+      00043F                       2034 00103$:
+      00043F 02r00r00         [24] 2035 	ljmp	__sdcc_banked_ret
+                                   2036 ;------------------------------------------------------------
+                                   2037 ;Allocation info for local variables in function 'packetbuf_set_datalen'
+                                   2038 ;------------------------------------------------------------
+                                   2039 ;len                       Allocated to registers 
+                                   2040 ;------------------------------------------------------------
+                                   2041 ;	../../../../core/net/packetbuf.c:200: packetbuf_set_datalen(uint16_t len)
+                                   2042 ;	-----------------------------------------
+                                   2043 ;	 function packetbuf_set_datalen
+                                   2044 ;	-----------------------------------------
+      000442                       2045 _packetbuf_set_datalen:
+      000442 AF 83            [24] 2046 	mov	r7,dph
+      000444 E5 82            [12] 2047 	mov	a,dpl
+      000446 90r00r50         [24] 2048 	mov	dptr,#_buflen
+      000449 F0               [24] 2049 	movx	@dptr,a
+      00044A EF               [12] 2050 	mov	a,r7
+      00044B A3               [24] 2051 	inc	dptr
+      00044C F0               [24] 2052 	movx	@dptr,a
+                                   2053 ;	../../../../core/net/packetbuf.c:203: buflen = len;
+      00044D 02r00r00         [24] 2054 	ljmp	__sdcc_banked_ret
+                                   2055 ;------------------------------------------------------------
+                                   2056 ;Allocation info for local variables in function 'packetbuf_dataptr'
+                                   2057 ;------------------------------------------------------------
+                                   2058 ;	../../../../core/net/packetbuf.c:207: packetbuf_dataptr(void)
+                                   2059 ;	-----------------------------------------
+                                   2060 ;	 function packetbuf_dataptr
+                                   2061 ;	-----------------------------------------
+      000450                       2062 _packetbuf_dataptr:
+                                   2063 ;	../../../../core/net/packetbuf.c:209: return (void *)(&packetbuf[bufptr + PACKETBUF_HDR_SIZE]);
+      000450 90r00r52         [24] 2064 	mov	dptr,#_bufptr
+      000453 E0               [24] 2065 	movx	a,@dptr
+      000454 FE               [12] 2066 	mov	r6,a
+      000455 A3               [24] 2067 	inc	dptr
+      000456 E0               [24] 2068 	movx	a,@dptr
+      000457 FF               [12] 2069 	mov	r7,a
+      000458 74 30            [12] 2070 	mov	a,#0x30
+      00045A 2E               [12] 2071 	add	a,r6
+      00045B FE               [12] 2072 	mov	r6,a
+      00045C E4               [12] 2073 	clr	a
+      00045D 3F               [12] 2074 	addc	a,r7
+      00045E FF               [12] 2075 	mov	r7,a
+      00045F 90r00r00         [24] 2076 	mov	dptr,#_packetbuf
+      000462 E0               [24] 2077 	movx	a,@dptr
+      000463 FB               [12] 2078 	mov	r3,a
+      000464 A3               [24] 2079 	inc	dptr
+      000465 E0               [24] 2080 	movx	a,@dptr
+      000466 FC               [12] 2081 	mov	r4,a
+      000467 A3               [24] 2082 	inc	dptr
+      000468 E0               [24] 2083 	movx	a,@dptr
+      000469 FD               [12] 2084 	mov	r5,a
+      00046A EE               [12] 2085 	mov	a,r6
+      00046B 2B               [12] 2086 	add	a,r3
+      00046C FE               [12] 2087 	mov	r6,a
+      00046D EF               [12] 2088 	mov	a,r7
+      00046E 3C               [12] 2089 	addc	a,r4
+      00046F FF               [12] 2090 	mov	r7,a
+      000470 8D 02            [24] 2091 	mov	ar2,r5
+      000472 7D 00            [12] 2092 	mov	r5,#0x00
+      000474 8E 82            [24] 2093 	mov	dpl,r6
+      000476 8F 83            [24] 2094 	mov	dph,r7
+      000478 8D F0            [24] 2095 	mov	b,r5
+      00047A 02r00r00         [24] 2096 	ljmp	__sdcc_banked_ret
+                                   2097 ;------------------------------------------------------------
+                                   2098 ;Allocation info for local variables in function 'packetbuf_hdrptr'
+                                   2099 ;------------------------------------------------------------
+                                   2100 ;	../../../../core/net/packetbuf.c:213: packetbuf_hdrptr(void)
+                                   2101 ;	-----------------------------------------
+                                   2102 ;	 function packetbuf_hdrptr
+                                   2103 ;	-----------------------------------------
+      00047D                       2104 _packetbuf_hdrptr:
+                                   2105 ;	../../../../core/net/packetbuf.c:215: return (void *)(&packetbuf[hdrptr]);
+      00047D 90r00r00         [24] 2106 	mov	dptr,#_packetbuf
+      000480 E0               [24] 2107 	movx	a,@dptr
+      000481 FD               [12] 2108 	mov	r5,a
+      000482 A3               [24] 2109 	inc	dptr
+      000483 E0               [24] 2110 	movx	a,@dptr
+      000484 FE               [12] 2111 	mov	r6,a
+      000485 A3               [24] 2112 	inc	dptr
+      000486 E0               [24] 2113 	movx	a,@dptr
+      000487 90r00r54         [24] 2114 	mov	dptr,#_hdrptr
+      00048A E0               [24] 2115 	movx	a,@dptr
+      00048B FC               [12] 2116 	mov	r4,a
+      00048C 2D               [12] 2117 	add	a,r5
+      00048D FD               [12] 2118 	mov	r5,a
+      00048E E4               [12] 2119 	clr	a
+      00048F 3E               [12] 2120 	addc	a,r6
+      000490 FE               [12] 2121 	mov	r6,a
+      000491 7F 00            [12] 2122 	mov	r7,#0x00
+      000493 8D 82            [24] 2123 	mov	dpl,r5
+      000495 8E 83            [24] 2124 	mov	dph,r6
+      000497 8F F0            [24] 2125 	mov	b,r7
+      000499 02r00r00         [24] 2126 	ljmp	__sdcc_banked_ret
+                                   2127 ;------------------------------------------------------------
+                                   2128 ;Allocation info for local variables in function 'packetbuf_reference'
+                                   2129 ;------------------------------------------------------------
+                                   2130 ;len                       Allocated to stack - sp -4
+                                   2131 ;ptr                       Allocated to registers r5 r6 r7 
+                                   2132 ;------------------------------------------------------------
+                                   2133 ;	../../../../core/net/packetbuf.c:219: packetbuf_reference(void *ptr, uint16_t len)
+                                   2134 ;	-----------------------------------------
+                                   2135 ;	 function packetbuf_reference
+                                   2136 ;	-----------------------------------------
+      00049C                       2137 _packetbuf_reference:
+      00049C AD 82            [24] 2138 	mov	r5,dpl
+      00049E AE 83            [24] 2139 	mov	r6,dph
+      0004A0 AF F0            [24] 2140 	mov	r7,b
+                                   2141 ;	../../../../core/net/packetbuf.c:221: packetbuf_clear();
+      0004A2 C0 07            [24] 2142 	push	ar7
+      0004A4 C0 06            [24] 2143 	push	ar6
+      0004A6 C0 05            [24] 2144 	push	ar5
+      0004A8 78r00            [12] 2145 	mov	r0,#_packetbuf_clear
+      0004AA 79s00            [12] 2146 	mov	r1,#(_packetbuf_clear >> 8)
+      0004AC 7As00            [12] 2147 	mov	r2,#(_packetbuf_clear >> 16)
+      0004AE 12r00r00         [24] 2148 	lcall	__sdcc_banked_call
+      0004B1 D0 05            [24] 2149 	pop	ar5
+      0004B3 D0 06            [24] 2150 	pop	ar6
+      0004B5 D0 07            [24] 2151 	pop	ar7
+                                   2152 ;	../../../../core/net/packetbuf.c:222: packetbufptr = ptr;
+      0004B7 90r01r07         [24] 2153 	mov	dptr,#_packetbufptr
+      0004BA ED               [12] 2154 	mov	a,r5
+      0004BB F0               [24] 2155 	movx	@dptr,a
+      0004BC EE               [12] 2156 	mov	a,r6
+      0004BD A3               [24] 2157 	inc	dptr
+      0004BE F0               [24] 2158 	movx	@dptr,a
+      0004BF EF               [12] 2159 	mov	a,r7
+      0004C0 A3               [24] 2160 	inc	dptr
+      0004C1 F0               [24] 2161 	movx	@dptr,a
+                                   2162 ;	../../../../core/net/packetbuf.c:223: buflen = len;
+      0004C2 E5 81            [12] 2163 	mov	a,sp
+      0004C4 24 FC            [12] 2164 	add	a,#0xfc
+      0004C6 F8               [12] 2165 	mov	r0,a
+      0004C7 90r00r50         [24] 2166 	mov	dptr,#_buflen
+      0004CA E6               [12] 2167 	mov	a,@r0
+      0004CB F0               [24] 2168 	movx	@dptr,a
+      0004CC 08               [12] 2169 	inc	r0
+      0004CD E6               [12] 2170 	mov	a,@r0
+      0004CE A3               [24] 2171 	inc	dptr
+      0004CF F0               [24] 2172 	movx	@dptr,a
+      0004D0 02r00r00         [24] 2173 	ljmp	__sdcc_banked_ret
+                                   2174 ;------------------------------------------------------------
+                                   2175 ;Allocation info for local variables in function 'packetbuf_is_reference'
+                                   2176 ;------------------------------------------------------------
+                                   2177 ;	../../../../core/net/packetbuf.c:227: packetbuf_is_reference(void)
+                                   2178 ;	-----------------------------------------
+                                   2179 ;	 function packetbuf_is_reference
+                                   2180 ;	-----------------------------------------
+      0004D3                       2181 _packetbuf_is_reference:
+                                   2182 ;	../../../../core/net/packetbuf.c:229: return packetbufptr != &packetbuf[PACKETBUF_HDR_SIZE];
+      0004D3 90r00r00         [24] 2183 	mov	dptr,#_packetbuf
+      0004D6 E0               [24] 2184 	movx	a,@dptr
+      0004D7 FD               [12] 2185 	mov	r5,a
+      0004D8 A3               [24] 2186 	inc	dptr
+      0004D9 E0               [24] 2187 	movx	a,@dptr
+      0004DA FE               [12] 2188 	mov	r6,a
+      0004DB A3               [24] 2189 	inc	dptr
+      0004DC E0               [24] 2190 	movx	a,@dptr
+      0004DD FF               [12] 2191 	mov	r7,a
+      0004DE 74 30            [12] 2192 	mov	a,#0x30
+      0004E0 2D               [12] 2193 	add	a,r5
+      0004E1 FD               [12] 2194 	mov	r5,a
+      0004E2 E4               [12] 2195 	clr	a
+      0004E3 3E               [12] 2196 	addc	a,r6
+      0004E4 FE               [12] 2197 	mov	r6,a
+      0004E5 90r01r07         [24] 2198 	mov	dptr,#_packetbufptr
+      0004E8 E0               [24] 2199 	movx	a,@dptr
+      0004E9 FA               [12] 2200 	mov	r2,a
+      0004EA A3               [24] 2201 	inc	dptr
+      0004EB E0               [24] 2202 	movx	a,@dptr
+      0004EC FB               [12] 2203 	mov	r3,a
+      0004ED A3               [24] 2204 	inc	dptr
+      0004EE E0               [24] 2205 	movx	a,@dptr
+      0004EF FC               [12] 2206 	mov	r4,a
+      0004F0 C0 05            [24] 2207 	push	ar5
+      0004F2 C0 06            [24] 2208 	push	ar6
+      0004F4 C0 07            [24] 2209 	push	ar7
+      0004F6 8A 82            [24] 2210 	mov	dpl,r2
+      0004F8 8B 83            [24] 2211 	mov	dph,r3
+      0004FA 8C F0            [24] 2212 	mov	b,r4
+      0004FC 12r00r00         [24] 2213 	lcall	___gptr_cmp
+      0004FF 15 81            [12] 2214 	dec	sp
+      000501 15 81            [12] 2215 	dec	sp
+      000503 15 81            [12] 2216 	dec	sp
+      000505 70 04            [24] 2217 	jnz	00103$
+      000507 74 01            [12] 2218 	mov	a,#0x01
+      000509 80 01            [24] 2219 	sjmp	00104$
+      00050B                       2220 00103$:
+      00050B E4               [12] 2221 	clr	a
+      00050C                       2222 00104$:
+      00050C FD               [12] 2223 	mov	r5,a
+      00050D B4 01 00         [24] 2224 	cjne	a,#0x01,00105$
+      000510                       2225 00105$:
+      000510 E4               [12] 2226 	clr	a
+      000511 33               [12] 2227 	rlc	a
+      000512 FD               [12] 2228 	mov	r5,a
+      000513 33               [12] 2229 	rlc	a
+      000514 95 E0            [12] 2230 	subb	a,acc
+      000516 FF               [12] 2231 	mov	r7,a
+      000517 8D 82            [24] 2232 	mov	dpl,r5
+      000519 8F 83            [24] 2233 	mov	dph,r7
+      00051B 02r00r00         [24] 2234 	ljmp	__sdcc_banked_ret
+                                   2235 ;------------------------------------------------------------
+                                   2236 ;Allocation info for local variables in function 'packetbuf_reference_ptr'
+                                   2237 ;------------------------------------------------------------
+                                   2238 ;	../../../../core/net/packetbuf.c:233: packetbuf_reference_ptr(void)
+                                   2239 ;	-----------------------------------------
+                                   2240 ;	 function packetbuf_reference_ptr
+                                   2241 ;	-----------------------------------------
+      00051E                       2242 _packetbuf_reference_ptr:
+                                   2243 ;	../../../../core/net/packetbuf.c:235: return packetbufptr;
+      00051E 90r01r07         [24] 2244 	mov	dptr,#_packetbufptr
+      000521 E0               [24] 2245 	movx	a,@dptr
+      000522 FD               [12] 2246 	mov	r5,a
+      000523 A3               [24] 2247 	inc	dptr
+      000524 E0               [24] 2248 	movx	a,@dptr
+      000525 FE               [12] 2249 	mov	r6,a
+      000526 A3               [24] 2250 	inc	dptr
+      000527 E0               [24] 2251 	movx	a,@dptr
+      000528 FF               [12] 2252 	mov	r7,a
+      000529 8D 82            [24] 2253 	mov	dpl,r5
+      00052B 8E 83            [24] 2254 	mov	dph,r6
+      00052D 8F F0            [24] 2255 	mov	b,r7
+      00052F 02r00r00         [24] 2256 	ljmp	__sdcc_banked_ret
+                                   2257 ;------------------------------------------------------------
+                                   2258 ;Allocation info for local variables in function 'packetbuf_datalen'
+                                   2259 ;------------------------------------------------------------
+                                   2260 ;	../../../../core/net/packetbuf.c:239: packetbuf_datalen(void)
+                                   2261 ;	-----------------------------------------
+                                   2262 ;	 function packetbuf_datalen
+                                   2263 ;	-----------------------------------------
+      000532                       2264 _packetbuf_datalen:
+                                   2265 ;	../../../../core/net/packetbuf.c:241: return buflen;
+      000532 90r00r50         [24] 2266 	mov	dptr,#_buflen
+      000535 E0               [24] 2267 	movx	a,@dptr
+      000536 FE               [12] 2268 	mov	r6,a
+      000537 A3               [24] 2269 	inc	dptr
+      000538 E0               [24] 2270 	movx	a,@dptr
+      000539 FF               [12] 2271 	mov	r7,a
+      00053A 8E 82            [24] 2272 	mov	dpl,r6
+      00053C 8F 83            [24] 2273 	mov	dph,r7
+      00053E 02r00r00         [24] 2274 	ljmp	__sdcc_banked_ret
+                                   2275 ;------------------------------------------------------------
+                                   2276 ;Allocation info for local variables in function 'packetbuf_hdrlen'
+                                   2277 ;------------------------------------------------------------
+                                   2278 ;	../../../../core/net/packetbuf.c:245: packetbuf_hdrlen(void)
+                                   2279 ;	-----------------------------------------
+                                   2280 ;	 function packetbuf_hdrlen
+                                   2281 ;	-----------------------------------------
+      000541                       2282 _packetbuf_hdrlen:
+                                   2283 ;	../../../../core/net/packetbuf.c:247: return PACKETBUF_HDR_SIZE - hdrptr;
+      000541 90r00r54         [24] 2284 	mov	dptr,#_hdrptr
+      000544 E0               [24] 2285 	movx	a,@dptr
+      000545 FF               [12] 2286 	mov	r7,a
+      000546 74 30            [12] 2287 	mov	a,#0x30
+      000548 C3               [12] 2288 	clr	c
+      000549 9F               [12] 2289 	subb	a,r7
+      00054A FF               [12] 2290 	mov	r7,a
+      00054B F5 82            [12] 2291 	mov	dpl,a
+      00054D 02r00r00         [24] 2292 	ljmp	__sdcc_banked_ret
+                                   2293 ;------------------------------------------------------------
+                                   2294 ;Allocation info for local variables in function 'packetbuf_totlen'
+                                   2295 ;------------------------------------------------------------
+                                   2296 ;	../../../../core/net/packetbuf.c:251: packetbuf_totlen(void)
+                                   2297 ;	-----------------------------------------
+                                   2298 ;	 function packetbuf_totlen
+                                   2299 ;	-----------------------------------------
+      000550                       2300 _packetbuf_totlen:
+                                   2301 ;	../../../../core/net/packetbuf.c:253: return packetbuf_hdrlen() + packetbuf_datalen();
+      000550 78r41            [12] 2302 	mov	r0,#_packetbuf_hdrlen
+      000552 79s05            [12] 2303 	mov	r1,#(_packetbuf_hdrlen >> 8)
+      000554 7As00            [12] 2304 	mov	r2,#(_packetbuf_hdrlen >> 16)
+      000556 12r00r00         [24] 2305 	lcall	__sdcc_banked_call
+      000559 AF 82            [24] 2306 	mov	r7,dpl
+      00055B 7E 00            [12] 2307 	mov	r6,#0x00
+      00055D C0 07            [24] 2308 	push	ar7
+      00055F C0 06            [24] 2309 	push	ar6
+      000561 78r32            [12] 2310 	mov	r0,#_packetbuf_datalen
+      000563 79s05            [12] 2311 	mov	r1,#(_packetbuf_datalen >> 8)
+      000565 7As00            [12] 2312 	mov	r2,#(_packetbuf_datalen >> 16)
+      000567 12r00r00         [24] 2313 	lcall	__sdcc_banked_call
+      00056A AC 82            [24] 2314 	mov	r4,dpl
+      00056C AD 83            [24] 2315 	mov	r5,dph
+      00056E D0 06            [24] 2316 	pop	ar6
+      000570 D0 07            [24] 2317 	pop	ar7
+      000572 EC               [12] 2318 	mov	a,r4
+      000573 2F               [12] 2319 	add	a,r7
+      000574 FC               [12] 2320 	mov	r4,a
+      000575 ED               [12] 2321 	mov	a,r5
+      000576 3E               [12] 2322 	addc	a,r6
+      000577 FD               [12] 2323 	mov	r5,a
+      000578 8C 82            [24] 2324 	mov	dpl,r4
+      00057A 8D 83            [24] 2325 	mov	dph,r5
+      00057C 02r00r00         [24] 2326 	ljmp	__sdcc_banked_ret
+                                   2327 ;------------------------------------------------------------
+                                   2328 ;Allocation info for local variables in function 'packetbuf_attr_clear'
+                                   2329 ;------------------------------------------------------------
+                                   2330 ;i                         Allocated to registers r6 r7 
+                                   2331 ;------------------------------------------------------------
+                                   2332 ;	../../../../core/net/packetbuf.c:257: packetbuf_attr_clear(void)
+                                   2333 ;	-----------------------------------------
+                                   2334 ;	 function packetbuf_attr_clear
+                                   2335 ;	-----------------------------------------
+      00057F                       2336 _packetbuf_attr_clear:
+                                   2337 ;	../../../../core/net/packetbuf.c:260: for(i = 0; i < PACKETBUF_NUM_ATTRS; ++i) {
+      00057F 7E 00            [12] 2338 	mov	r6,#0x00
+      000581 7F 00            [12] 2339 	mov	r7,#0x00
+      000583                       2340 00103$:
+                                   2341 ;	../../../../core/net/packetbuf.c:261: packetbuf_attrs[i].val = 0;
+      000583 8E 04            [24] 2342 	mov	ar4,r6
+      000585 EF               [12] 2343 	mov	a,r7
+      000586 CC               [12] 2344 	xch	a,r4
+      000587 25 E0            [12] 2345 	add	a,acc
+      000589 CC               [12] 2346 	xch	a,r4
+      00058A 33               [12] 2347 	rlc	a
+      00058B FD               [12] 2348 	mov	r5,a
+      00058C EC               [12] 2349 	mov	a,r4
+      00058D 24r00            [12] 2350 	add	a,#_packetbuf_attrs
+      00058F F5 82            [12] 2351 	mov	dpl,a
+      000591 ED               [12] 2352 	mov	a,r5
+      000592 34s00            [12] 2353 	addc	a,#(_packetbuf_attrs >> 8)
+      000594 F5 83            [12] 2354 	mov	dph,a
+      000596 E4               [12] 2355 	clr	a
+      000597 F0               [24] 2356 	movx	@dptr,a
+      000598 E4               [12] 2357 	clr	a
+      000599 A3               [24] 2358 	inc	dptr
+      00059A F0               [24] 2359 	movx	@dptr,a
+                                   2360 ;	../../../../core/net/packetbuf.c:260: for(i = 0; i < PACKETBUF_NUM_ATTRS; ++i) {
+      00059B 0E               [12] 2361 	inc	r6
+      00059C BE 00 01         [24] 2362 	cjne	r6,#0x00,00120$
+      00059F 0F               [12] 2363 	inc	r7
+      0005A0                       2364 00120$:
+      0005A0 C3               [12] 2365 	clr	c
+      0005A1 EE               [12] 2366 	mov	a,r6
+      0005A2 94 18            [12] 2367 	subb	a,#0x18
+      0005A4 EF               [12] 2368 	mov	a,r7
+      0005A5 64 80            [12] 2369 	xrl	a,#0x80
+      0005A7 94 80            [12] 2370 	subb	a,#0x80
+      0005A9 40 D8            [24] 2371 	jc	00103$
+                                   2372 ;	../../../../core/net/packetbuf.c:263: for(i = 0; i < PACKETBUF_NUM_ADDRS; ++i) {
+      0005AB 7E 00            [12] 2373 	mov	r6,#0x00
+      0005AD 7F 00            [12] 2374 	mov	r7,#0x00
+      0005AF                       2375 00105$:
+                                   2376 ;	../../../../core/net/packetbuf.c:264: rimeaddr_copy(&packetbuf_addrs[i].addr, &rimeaddr_null);
+      0005AF 8E 04            [24] 2377 	mov	ar4,r6
+      0005B1 EF               [12] 2378 	mov	a,r7
+      0005B2 C4               [12] 2379 	swap	a
+      0005B3 03               [12] 2380 	rr	a
+      0005B4 54 F8            [12] 2381 	anl	a,#0xF8
+      0005B6 CC               [12] 2382 	xch	a,r4
+      0005B7 C4               [12] 2383 	swap	a
+      0005B8 03               [12] 2384 	rr	a
+      0005B9 CC               [12] 2385 	xch	a,r4
+      0005BA 6C               [12] 2386 	xrl	a,r4
+      0005BB CC               [12] 2387 	xch	a,r4
+      0005BC 54 F8            [12] 2388 	anl	a,#0xF8
+      0005BE CC               [12] 2389 	xch	a,r4
+      0005BF 6C               [12] 2390 	xrl	a,r4
+      0005C0 FD               [12] 2391 	mov	r5,a
+      0005C1 EC               [12] 2392 	mov	a,r4
+      0005C2 24r30            [12] 2393 	add	a,#_packetbuf_addrs
+      0005C4 FC               [12] 2394 	mov	r4,a
+      0005C5 ED               [12] 2395 	mov	a,r5
+      0005C6 34s00            [12] 2396 	addc	a,#(_packetbuf_addrs >> 8)
+      0005C8 FD               [12] 2397 	mov	r5,a
+      0005C9 7B 00            [12] 2398 	mov	r3,#0x00
+      0005CB C0 07            [24] 2399 	push	ar7
+      0005CD C0 06            [24] 2400 	push	ar6
+      0005CF 74r00            [12] 2401 	mov	a,#_rimeaddr_null
+      0005D1 C0 E0            [24] 2402 	push	acc
+      0005D3 74s00            [12] 2403 	mov	a,#(_rimeaddr_null >> 8)
+      0005D5 C0 E0            [24] 2404 	push	acc
+      0005D7 74 80            [12] 2405 	mov	a,#0x80
+      0005D9 C0 E0            [24] 2406 	push	acc
+      0005DB 8C 82            [24] 2407 	mov	dpl,r4
+      0005DD 8D 83            [24] 2408 	mov	dph,r5
+      0005DF 8B F0            [24] 2409 	mov	b,r3
+      0005E1 78r00            [12] 2410 	mov	r0,#_rimeaddr_copy
+      0005E3 79s00            [12] 2411 	mov	r1,#(_rimeaddr_copy >> 8)
+      0005E5 7As00            [12] 2412 	mov	r2,#(_rimeaddr_copy >> 16)
+      0005E7 12r00r00         [24] 2413 	lcall	__sdcc_banked_call
+      0005EA 15 81            [12] 2414 	dec	sp
+      0005EC 15 81            [12] 2415 	dec	sp
+      0005EE 15 81            [12] 2416 	dec	sp
+      0005F0 D0 06            [24] 2417 	pop	ar6
+      0005F2 D0 07            [24] 2418 	pop	ar7
+                                   2419 ;	../../../../core/net/packetbuf.c:263: for(i = 0; i < PACKETBUF_NUM_ADDRS; ++i) {
+      0005F4 0E               [12] 2420 	inc	r6
+      0005F5 BE 00 01         [24] 2421 	cjne	r6,#0x00,00122$
+      0005F8 0F               [12] 2422 	inc	r7
+      0005F9                       2423 00122$:
+      0005F9 C3               [12] 2424 	clr	c
+      0005FA EE               [12] 2425 	mov	a,r6
+      0005FB 94 04            [12] 2426 	subb	a,#0x04
+      0005FD EF               [12] 2427 	mov	a,r7
+      0005FE 64 80            [12] 2428 	xrl	a,#0x80
+      000600 94 80            [12] 2429 	subb	a,#0x80
+      000602 40 AB            [24] 2430 	jc	00105$
+      000604 02r00r00         [24] 2431 	ljmp	__sdcc_banked_ret
+                                   2432 ;------------------------------------------------------------
+                                   2433 ;Allocation info for local variables in function 'packetbuf_attr_copyto'
+                                   2434 ;------------------------------------------------------------
+                                   2435 ;addrs                     Allocated to stack - sp -5
+                                   2436 ;attrs                     Allocated to registers r5 r6 r7 
+                                   2437 ;------------------------------------------------------------
+                                   2438 ;	../../../../core/net/packetbuf.c:269: packetbuf_attr_copyto(struct packetbuf_attr *attrs,
+                                   2439 ;	-----------------------------------------
+                                   2440 ;	 function packetbuf_attr_copyto
+                                   2441 ;	-----------------------------------------
+      000607                       2442 _packetbuf_attr_copyto:
+      000607 AD 82            [24] 2443 	mov	r5,dpl
+      000609 AE 83            [24] 2444 	mov	r6,dph
+      00060B AF F0            [24] 2445 	mov	r7,b
+                                   2446 ;	../../../../core/net/packetbuf.c:272: memcpy(attrs, packetbuf_attrs, sizeof(packetbuf_attrs));
+      00060D 74 30            [12] 2447 	mov	a,#0x30
+      00060F C0 E0            [24] 2448 	push	acc
+      000611 E4               [12] 2449 	clr	a
+      000612 C0 E0            [24] 2450 	push	acc
+      000614 74r00            [12] 2451 	mov	a,#_packetbuf_attrs
+      000616 C0 E0            [24] 2452 	push	acc
+      000618 74s00            [12] 2453 	mov	a,#(_packetbuf_attrs >> 8)
+      00061A C0 E0            [24] 2454 	push	acc
+      00061C E4               [12] 2455 	clr	a
+      00061D C0 E0            [24] 2456 	push	acc
+      00061F 8D 82            [24] 2457 	mov	dpl,r5
+      000621 8E 83            [24] 2458 	mov	dph,r6
+      000623 8F F0            [24] 2459 	mov	b,r7
+      000625 78r00            [12] 2460 	mov	r0,#_memcpy
+      000627 79s00            [12] 2461 	mov	r1,#(_memcpy >> 8)
+      000629 7As00            [12] 2462 	mov	r2,#(_memcpy >> 16)
+      00062B 12r00r00         [24] 2463 	lcall	__sdcc_banked_call
+      00062E E5 81            [12] 2464 	mov	a,sp
+      000630 24 FB            [12] 2465 	add	a,#0xfb
+                                   2466 ;	../../../../core/net/packetbuf.c:273: memcpy(addrs, packetbuf_addrs, sizeof(packetbuf_addrs));
+      000632 F5 81            [12] 2467 	mov	sp,a
+      000634 24 FB            [12] 2468 	add	a,#0xfb
+      000636 F8               [12] 2469 	mov	r0,a
+      000637 86 05            [24] 2470 	mov	ar5,@r0
+      000639 08               [12] 2471 	inc	r0
+      00063A 86 06            [24] 2472 	mov	ar6,@r0
+      00063C 08               [12] 2473 	inc	r0
+      00063D 86 07            [24] 2474 	mov	ar7,@r0
+      00063F 74 20            [12] 2475 	mov	a,#0x20
+      000641 C0 E0            [24] 2476 	push	acc
+      000643 E4               [12] 2477 	clr	a
+      000644 C0 E0            [24] 2478 	push	acc
+      000646 74r30            [12] 2479 	mov	a,#_packetbuf_addrs
+      000648 C0 E0            [24] 2480 	push	acc
+      00064A 74s00            [12] 2481 	mov	a,#(_packetbuf_addrs >> 8)
+      00064C C0 E0            [24] 2482 	push	acc
+      00064E E4               [12] 2483 	clr	a
+      00064F C0 E0            [24] 2484 	push	acc
+      000651 8D 82            [24] 2485 	mov	dpl,r5
+      000653 8E 83            [24] 2486 	mov	dph,r6
+      000655 8F F0            [24] 2487 	mov	b,r7
+      000657 78r00            [12] 2488 	mov	r0,#_memcpy
+      000659 79s00            [12] 2489 	mov	r1,#(_memcpy >> 8)
+      00065B 7As00            [12] 2490 	mov	r2,#(_memcpy >> 16)
+      00065D 12r00r00         [24] 2491 	lcall	__sdcc_banked_call
+      000660 E5 81            [12] 2492 	mov	a,sp
+      000662 24 FB            [12] 2493 	add	a,#0xfb
+      000664 F5 81            [12] 2494 	mov	sp,a
+      000666 02r00r00         [24] 2495 	ljmp	__sdcc_banked_ret
+                                   2496 ;------------------------------------------------------------
+                                   2497 ;Allocation info for local variables in function 'packetbuf_attr_copyfrom'
+                                   2498 ;------------------------------------------------------------
+                                   2499 ;addrs                     Allocated to stack - sp -5
+                                   2500 ;attrs                     Allocated to registers r5 r6 r7 
+                                   2501 ;------------------------------------------------------------
+                                   2502 ;	../../../../core/net/packetbuf.c:277: packetbuf_attr_copyfrom(struct packetbuf_attr *attrs,
+                                   2503 ;	-----------------------------------------
+                                   2504 ;	 function packetbuf_attr_copyfrom
+                                   2505 ;	-----------------------------------------
+      000669                       2506 _packetbuf_attr_copyfrom:
+      000669 AD 82            [24] 2507 	mov	r5,dpl
+      00066B AE 83            [24] 2508 	mov	r6,dph
+      00066D AF F0            [24] 2509 	mov	r7,b
+                                   2510 ;	../../../../core/net/packetbuf.c:280: memcpy(packetbuf_attrs, attrs, sizeof(packetbuf_attrs));
+      00066F 74 30            [12] 2511 	mov	a,#0x30
+      000671 C0 E0            [24] 2512 	push	acc
+      000673 E4               [12] 2513 	clr	a
+      000674 C0 E0            [24] 2514 	push	acc
+      000676 C0 05            [24] 2515 	push	ar5
+      000678 C0 06            [24] 2516 	push	ar6
+      00067A C0 07            [24] 2517 	push	ar7
+      00067C 90r00r00         [24] 2518 	mov	dptr,#_packetbuf_attrs
+      00067F 75 F0 00         [24] 2519 	mov	b,#0x00
+      000682 78r00            [12] 2520 	mov	r0,#_memcpy
+      000684 79s00            [12] 2521 	mov	r1,#(_memcpy >> 8)
+      000686 7As00            [12] 2522 	mov	r2,#(_memcpy >> 16)
+      000688 12r00r00         [24] 2523 	lcall	__sdcc_banked_call
+      00068B E5 81            [12] 2524 	mov	a,sp
+      00068D 24 FB            [12] 2525 	add	a,#0xfb
+                                   2526 ;	../../../../core/net/packetbuf.c:281: memcpy(packetbuf_addrs, addrs, sizeof(packetbuf_addrs));
+      00068F F5 81            [12] 2527 	mov	sp,a
+      000691 24 FB            [12] 2528 	add	a,#0xfb
+      000693 F8               [12] 2529 	mov	r0,a
+      000694 86 05            [24] 2530 	mov	ar5,@r0
+      000696 08               [12] 2531 	inc	r0
+      000697 86 06            [24] 2532 	mov	ar6,@r0
+      000699 08               [12] 2533 	inc	r0
+      00069A 86 07            [24] 2534 	mov	ar7,@r0
+      00069C 74 20            [12] 2535 	mov	a,#0x20
+      00069E C0 E0            [24] 2536 	push	acc
+      0006A0 E4               [12] 2537 	clr	a
+      0006A1 C0 E0            [24] 2538 	push	acc
+      0006A3 C0 05            [24] 2539 	push	ar5
+      0006A5 C0 06            [24] 2540 	push	ar6
+      0006A7 C0 07            [24] 2541 	push	ar7
+      0006A9 90r00r30         [24] 2542 	mov	dptr,#_packetbuf_addrs
+      0006AC 75 F0 00         [24] 2543 	mov	b,#0x00
+      0006AF 78r00            [12] 2544 	mov	r0,#_memcpy
+      0006B1 79s00            [12] 2545 	mov	r1,#(_memcpy >> 8)
+      0006B3 7As00            [12] 2546 	mov	r2,#(_memcpy >> 16)
+      0006B5 12r00r00         [24] 2547 	lcall	__sdcc_banked_call
+      0006B8 E5 81            [12] 2548 	mov	a,sp
+      0006BA 24 FB            [12] 2549 	add	a,#0xfb
+      0006BC F5 81            [12] 2550 	mov	sp,a
+      0006BE 02r00r00         [24] 2551 	ljmp	__sdcc_banked_ret
+                                   2552 ;------------------------------------------------------------
+                                   2553 ;Allocation info for local variables in function 'packetbuf_set_attr'
+                                   2554 ;------------------------------------------------------------
+                                   2555 ;val                       Allocated to stack - sp -4
+                                   2556 ;type                      Allocated to registers r7 
+                                   2557 ;------------------------------------------------------------
+                                   2558 ;	../../../../core/net/packetbuf.c:286: packetbuf_set_attr(uint8_t type, const packetbuf_attr_t val)
+                                   2559 ;	-----------------------------------------
+                                   2560 ;	 function packetbuf_set_attr
+                                   2561 ;	-----------------------------------------
+      0006C1                       2562 _packetbuf_set_attr:
+                                   2563 ;	../../../../core/net/packetbuf.c:289: packetbuf_attrs[type].val = val;
+      0006C1 E5 82            [12] 2564 	mov	a,dpl
+      0006C3 FF               [12] 2565 	mov	r7,a
+      0006C4 75 F0 02         [24] 2566 	mov	b,#0x02
+      0006C7 A4               [48] 2567 	mul	ab
+      0006C8 24r00            [12] 2568 	add	a,#_packetbuf_attrs
+      0006CA F5 82            [12] 2569 	mov	dpl,a
+      0006CC 74s00            [12] 2570 	mov	a,#(_packetbuf_attrs >> 8)
+      0006CE 35 F0            [12] 2571 	addc	a,b
+      0006D0 F5 83            [12] 2572 	mov	dph,a
+      0006D2 E5 81            [12] 2573 	mov	a,sp
+      0006D4 24 FC            [12] 2574 	add	a,#0xfc
+      0006D6 F8               [12] 2575 	mov	r0,a
+      0006D7 E6               [12] 2576 	mov	a,@r0
+      0006D8 F0               [24] 2577 	movx	@dptr,a
+      0006D9 08               [12] 2578 	inc	r0
+      0006DA E6               [12] 2579 	mov	a,@r0
+      0006DB A3               [24] 2580 	inc	dptr
+      0006DC F0               [24] 2581 	movx	@dptr,a
+                                   2582 ;	../../../../core/net/packetbuf.c:290: return 1;
+      0006DD 90 00 01         [24] 2583 	mov	dptr,#0x0001
+      0006E0 02r00r00         [24] 2584 	ljmp	__sdcc_banked_ret
+                                   2585 ;------------------------------------------------------------
+                                   2586 ;Allocation info for local variables in function 'packetbuf_attr'
+                                   2587 ;------------------------------------------------------------
+                                   2588 ;type                      Allocated to registers r7 
+                                   2589 ;------------------------------------------------------------
+                                   2590 ;	../../../../core/net/packetbuf.c:294: packetbuf_attr(uint8_t type)
+                                   2591 ;	-----------------------------------------
+                                   2592 ;	 function packetbuf_attr
+                                   2593 ;	-----------------------------------------
+      0006E3                       2594 _packetbuf_attr:
+                                   2595 ;	../../../../core/net/packetbuf.c:296: return packetbuf_attrs[type].val;
+      0006E3 E5 82            [12] 2596 	mov	a,dpl
+      0006E5 75 F0 02         [24] 2597 	mov	b,#0x02
+      0006E8 A4               [48] 2598 	mul	ab
+      0006E9 24r00            [12] 2599 	add	a,#_packetbuf_attrs
+      0006EB F5 82            [12] 2600 	mov	dpl,a
+      0006ED 74s00            [12] 2601 	mov	a,#(_packetbuf_attrs >> 8)
+      0006EF 35 F0            [12] 2602 	addc	a,b
+      0006F1 F5 83            [12] 2603 	mov	dph,a
+      0006F3 E0               [24] 2604 	movx	a,@dptr
+      0006F4 FE               [12] 2605 	mov	r6,a
+      0006F5 A3               [24] 2606 	inc	dptr
+      0006F6 E0               [24] 2607 	movx	a,@dptr
+      0006F7 FF               [12] 2608 	mov	r7,a
+      0006F8 8E 82            [24] 2609 	mov	dpl,r6
+      0006FA 8F 83            [24] 2610 	mov	dph,r7
+      0006FC 02r00r00         [24] 2611 	ljmp	__sdcc_banked_ret
+                                   2612 ;------------------------------------------------------------
+                                   2613 ;Allocation info for local variables in function 'packetbuf_set_addr'
+                                   2614 ;------------------------------------------------------------
+                                   2615 ;addr                      Allocated to stack - sp -5
+                                   2616 ;type                      Allocated to registers r7 
+                                   2617 ;------------------------------------------------------------
+                                   2618 ;	../../../../core/net/packetbuf.c:300: packetbuf_set_addr(uint8_t type, const rimeaddr_t *addr)
+                                   2619 ;	-----------------------------------------
+                                   2620 ;	 function packetbuf_set_addr
+                                   2621 ;	-----------------------------------------
+      0006FF                       2622 _packetbuf_set_addr:
+                                   2623 ;	../../../../core/net/packetbuf.c:303: rimeaddr_copy(&packetbuf_addrs[type - PACKETBUF_ADDR_FIRST].addr, addr);
+      0006FF E5 82            [12] 2624 	mov	a,dpl
+      000701 24 E8            [12] 2625 	add	a,#0xE8
+      000703 75 F0 08         [24] 2626 	mov	b,#0x08
+      000706 A4               [48] 2627 	mul	ab
+      000707 24r30            [12] 2628 	add	a,#_packetbuf_addrs
+      000709 FE               [12] 2629 	mov	r6,a
+      00070A 74s00            [12] 2630 	mov	a,#(_packetbuf_addrs >> 8)
+      00070C 35 F0            [12] 2631 	addc	a,b
+      00070E FF               [12] 2632 	mov	r7,a
+      00070F 7D 00            [12] 2633 	mov	r5,#0x00
+      000711 E5 81            [12] 2634 	mov	a,sp
+      000713 24 FB            [12] 2635 	add	a,#0xfb
+      000715 F8               [12] 2636 	mov	r0,a
+      000716 E6               [12] 2637 	mov	a,@r0
+      000717 C0 E0            [24] 2638 	push	acc
+      000719 08               [12] 2639 	inc	r0
+      00071A E6               [12] 2640 	mov	a,@r0
+      00071B C0 E0            [24] 2641 	push	acc
+      00071D 08               [12] 2642 	inc	r0
+      00071E E6               [12] 2643 	mov	a,@r0
+      00071F C0 E0            [24] 2644 	push	acc
+      000721 8E 82            [24] 2645 	mov	dpl,r6
+      000723 8F 83            [24] 2646 	mov	dph,r7
+      000725 8D F0            [24] 2647 	mov	b,r5
+      000727 78r00            [12] 2648 	mov	r0,#_rimeaddr_copy
+      000729 79s00            [12] 2649 	mov	r1,#(_rimeaddr_copy >> 8)
+      00072B 7As00            [12] 2650 	mov	r2,#(_rimeaddr_copy >> 16)
+      00072D 12r00r00         [24] 2651 	lcall	__sdcc_banked_call
+      000730 15 81            [12] 2652 	dec	sp
+      000732 15 81            [12] 2653 	dec	sp
+      000734 15 81            [12] 2654 	dec	sp
+                                   2655 ;	../../../../core/net/packetbuf.c:304: return 1;
+      000736 90 00 01         [24] 2656 	mov	dptr,#0x0001
+      000739 02r00r00         [24] 2657 	ljmp	__sdcc_banked_ret
+                                   2658 ;------------------------------------------------------------
+                                   2659 ;Allocation info for local variables in function 'packetbuf_addr'
+                                   2660 ;------------------------------------------------------------
+                                   2661 ;type                      Allocated to registers r7 
+                                   2662 ;------------------------------------------------------------
+                                   2663 ;	../../../../core/net/packetbuf.c:308: packetbuf_addr(uint8_t type)
+                                   2664 ;	-----------------------------------------
+                                   2665 ;	 function packetbuf_addr
+                                   2666 ;	-----------------------------------------
+      00073C                       2667 _packetbuf_addr:
+                                   2668 ;	../../../../core/net/packetbuf.c:310: return &packetbuf_addrs[type - PACKETBUF_ADDR_FIRST].addr;
+      00073C E5 82            [12] 2669 	mov	a,dpl
+      00073E 24 E8            [12] 2670 	add	a,#0xE8
+      000740 75 F0 08         [24] 2671 	mov	b,#0x08
+      000743 A4               [48] 2672 	mul	ab
+      000744 24r30            [12] 2673 	add	a,#_packetbuf_addrs
+      000746 FE               [12] 2674 	mov	r6,a
+      000747 74s00            [12] 2675 	mov	a,#(_packetbuf_addrs >> 8)
+      000749 35 F0            [12] 2676 	addc	a,b
+      00074B FF               [12] 2677 	mov	r7,a
+      00074C 7D 00            [12] 2678 	mov	r5,#0x00
+      00074E 8E 82            [24] 2679 	mov	dpl,r6
+      000750 8F 83            [24] 2680 	mov	dph,r7
+      000752 8D F0            [24] 2681 	mov	b,r5
+      000754 02r00r00         [24] 2682 	ljmp	__sdcc_banked_ret
+                                   2683 	.area CSEG    (CODE)
+                                   2684 	.area CONST   (CODE)
+                                   2685 	.area XINIT   (CODE)
+      000000                       2686 __xinit__packetbuf:
+      000000r55s00 00              2687 	.byte _packetbuf_aligned,(_packetbuf_aligned >> 8),#0x00
+                                   2688 	.area CABS    (ABS,CODE)

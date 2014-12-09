@@ -1,0 +1,2419 @@
+                                      1 ;--------------------------------------------------------
+                                      2 ; File Created by SDCC : free open source ANSI-C Compiler
+                                      3 ; Version 3.3.1 #8804 (Aug  6 2013) (Linux)
+                                      4 ; This file was generated Mon Aug 25 04:16:57 2014
+                                      5 ;--------------------------------------------------------
+                                      6 	.module usb_core
+                                      7 	.optsdcc -mmcs51 --model-huge
+                                      8 	
+                                      9 ;--------------------------------------------------------
+                                     10 ; Public variables in this module
+                                     11 ;--------------------------------------------------------
+                                     12 	.globl _usb_class_get_string_descriptor
+                                     13 	.globl _usb_arch_send_pending
+                                     14 	.globl _usb_arch_get_global_events
+                                     15 	.globl _usb_arch_set_global_event_process
+                                     16 	.globl _usb_arch_set_address
+                                     17 	.globl _usb_arch_get_ep_status
+                                     18 	.globl _usb_arch_set_configuration
+                                     19 	.globl _usb_arch_halt_endpoint
+                                     20 	.globl _usb_arch_control_stall
+                                     21 	.globl _usb_arch_discard_all_buffers
+                                     22 	.globl _usb_arch_disable_endpoint
+                                     23 	.globl _usb_arch_setup_interrupt_endpoint
+                                     24 	.globl _usb_arch_setup_bulk_endpoint
+                                     25 	.globl _usb_arch_setup
+                                     26 	.globl _usb_get_ep_events
+                                     27 	.globl _usb_set_ep_event_process
+                                     28 	.globl _usb_submit_xmit_buffer
+                                     29 	.globl _usb_submit_recv_buffer
+                                     30 	.globl _process_poll
+                                     31 	.globl _process_start
+                                     32 	.globl _usb_process
+                                     33 	.globl _usb_setup_buffer
+                                     34 	.globl _usb_set_global_event_process
+                                     35 	.globl _usb_get_global_events
+                                     36 	.globl _usb_send_ctrl_response
+                                     37 	.globl _usb_error_stall
+                                     38 	.globl _usb_send_ctrl_status
+                                     39 	.globl _usb_get_ctrl_data
+                                     40 	.globl _usb_setup
+                                     41 	.globl _usb_register_request_handler
+                                     42 	.globl _usb_prepend_request_handler
+                                     43 	.globl _usb_get_current_configuration
+                                     44 	.globl _usb_setup_bulk_endpoint
+                                     45 	.globl _usb_setup_interrupt_endpoint
+                                     46 	.globl _usb_disable_endpoint
+                                     47 	.globl _usb_discard_all_buffers
+                                     48 	.globl _usb_halt_endpoint
+                                     49 	.globl _usb_send_pending
+                                     50 ;--------------------------------------------------------
+                                     51 ; special function registers
+                                     52 ;--------------------------------------------------------
+                                     53 	.area RSEG    (ABS,DATA)
+      000000                         54 	.org 0x0000
+                                     55 ;--------------------------------------------------------
+                                     56 ; special function bits
+                                     57 ;--------------------------------------------------------
+                                     58 	.area RSEG    (ABS,DATA)
+      000000                         59 	.org 0x0000
+                                     60 ;--------------------------------------------------------
+                                     61 ; overlayable register banks
+                                     62 ;--------------------------------------------------------
+                                     63 	.area REG_BANK_0	(REL,OVR,DATA)
+      000000                         64 	.ds 8
+                                     65 ;--------------------------------------------------------
+                                     66 ; internal ram data
+                                     67 ;--------------------------------------------------------
+                                     68 	.area DSEG    (DATA)
+                                     69 ;--------------------------------------------------------
+                                     70 ; overlayable items in internal ram 
+                                     71 ;--------------------------------------------------------
+                                     72 ;--------------------------------------------------------
+                                     73 ; indirectly addressable internal ram data
+                                     74 ;--------------------------------------------------------
+                                     75 	.area ISEG    (DATA)
+                                     76 ;--------------------------------------------------------
+                                     77 ; absolute internal ram data
+                                     78 ;--------------------------------------------------------
+                                     79 	.area IABS    (ABS,DATA)
+                                     80 	.area IABS    (ABS,DATA)
+                                     81 ;--------------------------------------------------------
+                                     82 ; bit data
+                                     83 ;--------------------------------------------------------
+                                     84 	.area BSEG    (BIT)
+                                     85 ;--------------------------------------------------------
+                                     86 ; paged external ram data
+                                     87 ;--------------------------------------------------------
+                                     88 	.area PSEG    (PAG,XDATA)
+                                     89 ;--------------------------------------------------------
+                                     90 ; external ram data
+                                     91 ;--------------------------------------------------------
+                                     92 	.area XSEG    (XDATA)
+      000000                         93 _usb_setup_buffer::
+      000000                         94 	.ds 8
+      000008                         95 _ctrl_buffer:
+      000008                         96 	.ds 14
+      000016                         97 _usb_device_status:
+      000016                         98 	.ds 2
+      000018                         99 _usb_configuration_value:
+      000018                        100 	.ds 1
+      000019                        101 _get_endpoint_status_status_1_106:
+      000019                        102 	.ds 2
+                                    103 ;--------------------------------------------------------
+                                    104 ; absolute external ram data
+                                    105 ;--------------------------------------------------------
+                                    106 	.area XABS    (ABS,XDATA)
+                                    107 ;--------------------------------------------------------
+                                    108 ; external initialized ram data
+                                    109 ;--------------------------------------------------------
+                                    110 	.area XISEG   (XDATA)
+      000000                        111 _usb_request_handler_hooks:
+      000000                        112 	.ds 3
+      000003                        113 _usb_flags:
+      000003                        114 	.ds 1
+      000004                        115 _global_user_event_pocess:
+      000004                        116 	.ds 3
+      000007                        117 _global_user_events:
+      000007                        118 	.ds 2
+      000009                        119 _error_stall:
+      000009                        120 	.ds 1
+      00000A                        121 _data_callback:
+      00000A                        122 	.ds 3
+      00000D                        123 _ctrl_data:
+      00000D                        124 	.ds 3
+      000010                        125 _ctrl_data_len:
+      000010                        126 	.ds 2
+      000012                        127 _standard_request_hook:
+      000012                        128 	.ds 6
+      000018                        129 _usb_process::
+      000018                        130 	.ds 10
+                                    131 	.area HOME    (CODE)
+                                    132 	.area GSINIT0 (CODE)
+                                    133 	.area GSINIT1 (CODE)
+                                    134 	.area GSINIT2 (CODE)
+                                    135 	.area GSINIT3 (CODE)
+                                    136 	.area GSINIT4 (CODE)
+                                    137 	.area GSINIT5 (CODE)
+                                    138 	.area GSINIT  (CODE)
+                                    139 	.area GSFINAL (CODE)
+                                    140 	.area CSEG    (CODE)
+                                    141 ;--------------------------------------------------------
+                                    142 ; global & static initialisations
+                                    143 ;--------------------------------------------------------
+                                    144 	.area HOME    (CODE)
+                                    145 	.area GSINIT  (CODE)
+                                    146 	.area GSFINAL (CODE)
+                                    147 	.area GSINIT  (CODE)
+                                    148 ;--------------------------------------------------------
+                                    149 ; Home
+                                    150 ;--------------------------------------------------------
+                                    151 	.area HOME    (CODE)
+                                    152 	.area HOME    (CODE)
+                                    153 ;--------------------------------------------------------
+                                    154 ; code
+                                    155 ;--------------------------------------------------------
+                                    156 	.area BANK1   (CODE)
+                                    157 ;------------------------------------------------------------
+                                    158 ;Allocation info for local variables in function 'usb_set_global_event_process'
+                                    159 ;------------------------------------------------------------
+                                    160 ;p                         Allocated to registers 
+                                    161 ;------------------------------------------------------------
+                                    162 ;	../../../../cpu/cc253x/usb/common/usb-core.c:42: usb_set_global_event_process(struct process *p)
+                                    163 ;	-----------------------------------------
+                                    164 ;	 function usb_set_global_event_process
+                                    165 ;	-----------------------------------------
+      000000                        166 _usb_set_global_event_process:
+                           000007   167 	ar7 = 0x07
+                           000006   168 	ar6 = 0x06
+                           000005   169 	ar5 = 0x05
+                           000004   170 	ar4 = 0x04
+                           000003   171 	ar3 = 0x03
+                           000002   172 	ar2 = 0x02
+                           000001   173 	ar1 = 0x01
+                           000000   174 	ar0 = 0x00
+      000000 AF F0            [24]  175 	mov	r7,b
+      000002 AE 83            [24]  176 	mov	r6,dph
+      000004 E5 82            [12]  177 	mov	a,dpl
+      000006 90r00r04         [24]  178 	mov	dptr,#_global_user_event_pocess
+      000009 F0               [24]  179 	movx	@dptr,a
+      00000A EE               [12]  180 	mov	a,r6
+      00000B A3               [24]  181 	inc	dptr
+      00000C F0               [24]  182 	movx	@dptr,a
+      00000D EF               [12]  183 	mov	a,r7
+      00000E A3               [24]  184 	inc	dptr
+      00000F F0               [24]  185 	movx	@dptr,a
+                                    186 ;	../../../../cpu/cc253x/usb/common/usb-core.c:44: global_user_event_pocess = p;
+      000010 02r00r00         [24]  187 	ljmp	__sdcc_banked_ret
+                                    188 ;------------------------------------------------------------
+                                    189 ;Allocation info for local variables in function 'usb_get_global_events'
+                                    190 ;------------------------------------------------------------
+                                    191 ;e                         Allocated to registers r6 r7 
+                                    192 ;------------------------------------------------------------
+                                    193 ;	../../../../cpu/cc253x/usb/common/usb-core.c:47: usb_get_global_events(void)
+                                    194 ;	-----------------------------------------
+                                    195 ;	 function usb_get_global_events
+                                    196 ;	-----------------------------------------
+      000013                        197 _usb_get_global_events:
+                                    198 ;	../../../../cpu/cc253x/usb/common/usb-core.c:49: unsigned int e = global_user_events;
+      000013 90r00r07         [24]  199 	mov	dptr,#_global_user_events
+      000016 E0               [24]  200 	movx	a,@dptr
+      000017 FE               [12]  201 	mov	r6,a
+      000018 A3               [24]  202 	inc	dptr
+      000019 E0               [24]  203 	movx	a,@dptr
+      00001A FF               [12]  204 	mov	r7,a
+                                    205 ;	../../../../cpu/cc253x/usb/common/usb-core.c:50: global_user_events = 0;
+      00001B 90r00r07         [24]  206 	mov	dptr,#_global_user_events
+      00001E E4               [12]  207 	clr	a
+      00001F F0               [24]  208 	movx	@dptr,a
+      000020 E4               [12]  209 	clr	a
+      000021 A3               [24]  210 	inc	dptr
+      000022 F0               [24]  211 	movx	@dptr,a
+                                    212 ;	../../../../cpu/cc253x/usb/common/usb-core.c:51: return e;
+      000023 8E 82            [24]  213 	mov	dpl,r6
+      000025 8F 83            [24]  214 	mov	dph,r7
+      000027 02r00r00         [24]  215 	ljmp	__sdcc_banked_ret
+                                    216 ;------------------------------------------------------------
+                                    217 ;Allocation info for local variables in function 'notify_user'
+                                    218 ;------------------------------------------------------------
+                                    219 ;e                         Allocated to registers r6 r7 
+                                    220 ;------------------------------------------------------------
+                                    221 ;	../../../../cpu/cc253x/usb/common/usb-core.c:55: notify_user(unsigned int e)
+                                    222 ;	-----------------------------------------
+                                    223 ;	 function notify_user
+                                    224 ;	-----------------------------------------
+      00002A                        225 _notify_user:
+      00002A AE 82            [24]  226 	mov	r6,dpl
+      00002C AF 83            [24]  227 	mov	r7,dph
+                                    228 ;	../../../../cpu/cc253x/usb/common/usb-core.c:57: global_user_events |= e;
+      00002E 90r00r07         [24]  229 	mov	dptr,#_global_user_events
+      000031 E0               [24]  230 	movx	a,@dptr
+      000032 FC               [12]  231 	mov	r4,a
+      000033 A3               [24]  232 	inc	dptr
+      000034 E0               [24]  233 	movx	a,@dptr
+      000035 FD               [12]  234 	mov	r5,a
+      000036 90r00r07         [24]  235 	mov	dptr,#_global_user_events
+      000039 EE               [12]  236 	mov	a,r6
+      00003A 4C               [12]  237 	orl	a,r4
+      00003B F0               [24]  238 	movx	@dptr,a
+      00003C EF               [12]  239 	mov	a,r7
+      00003D 4D               [12]  240 	orl	a,r5
+      00003E A3               [24]  241 	inc	dptr
+      00003F F0               [24]  242 	movx	@dptr,a
+                                    243 ;	../../../../cpu/cc253x/usb/common/usb-core.c:58: if(global_user_event_pocess) {
+      000040 90r00r04         [24]  244 	mov	dptr,#_global_user_event_pocess
+      000043 E0               [24]  245 	movx	a,@dptr
+      000044 FD               [12]  246 	mov	r5,a
+      000045 A3               [24]  247 	inc	dptr
+      000046 E0               [24]  248 	movx	a,@dptr
+      000047 FE               [12]  249 	mov	r6,a
+      000048 A3               [24]  250 	inc	dptr
+      000049 E0               [24]  251 	movx	a,@dptr
+      00004A FF               [12]  252 	mov	r7,a
+      00004B ED               [12]  253 	mov	a,r5
+      00004C 4E               [12]  254 	orl	a,r6
+      00004D 60 0F            [24]  255 	jz	00103$
+                                    256 ;	../../../../cpu/cc253x/usb/common/usb-core.c:59: process_poll(global_user_event_pocess);
+      00004F 8D 82            [24]  257 	mov	dpl,r5
+      000051 8E 83            [24]  258 	mov	dph,r6
+      000053 8F F0            [24]  259 	mov	b,r7
+      000055 78r00            [12]  260 	mov	r0,#_process_poll
+      000057 79s00            [12]  261 	mov	r1,#(_process_poll >> 8)
+      000059 7As00            [12]  262 	mov	r2,#(_process_poll >> 16)
+      00005B 12r00r00         [24]  263 	lcall	__sdcc_banked_call
+      00005E                        264 00103$:
+      00005E 02r00r00         [24]  265 	ljmp	__sdcc_banked_ret
+                                    266 ;------------------------------------------------------------
+                                    267 ;Allocation info for local variables in function 'usb_send_ctrl_response'
+                                    268 ;------------------------------------------------------------
+                                    269 ;len                       Allocated to stack - sp -4
+                                    270 ;data                      Allocated to registers r5 r6 r7 
+                                    271 ;------------------------------------------------------------
+                                    272 ;	../../../../cpu/cc253x/usb/common/usb-core.c:64: usb_send_ctrl_response(const uint8_t * data, unsigned int len)
+                                    273 ;	-----------------------------------------
+                                    274 ;	 function usb_send_ctrl_response
+                                    275 ;	-----------------------------------------
+      000061                        276 _usb_send_ctrl_response:
+      000061 AD 82            [24]  277 	mov	r5,dpl
+      000063 AE 83            [24]  278 	mov	r6,dph
+      000065 AF F0            [24]  279 	mov	r7,b
+                                    280 ;	../../../../cpu/cc253x/usb/common/usb-core.c:66: if(ctrl_buffer.flags & USB_BUFFER_SUBMITTED)
+      000067 90r00r10         [24]  281 	mov	dptr,#(_ctrl_buffer + 0x0008)
+      00006A E0               [24]  282 	movx	a,@dptr
+      00006B FB               [12]  283 	mov	r3,a
+      00006C A3               [24]  284 	inc	dptr
+      00006D E0               [24]  285 	movx	a,@dptr
+      00006E FC               [12]  286 	mov	r4,a
+      00006F EB               [12]  287 	mov	a,r3
+      000070 30 E0 03         [24]  288 	jnb	acc.0,00102$
+                                    289 ;	../../../../cpu/cc253x/usb/common/usb-core.c:67: return;
+      000073 02r01r16         [24]  290 	ljmp	00107$
+      000076                        291 00102$:
+                                    292 ;	../../../../cpu/cc253x/usb/common/usb-core.c:68: if(len >= usb_setup_buffer.wLength) {
+      000076 90r00r06         [24]  293 	mov	dptr,#(_usb_setup_buffer + 0x0006)
+      000079 E0               [24]  294 	movx	a,@dptr
+      00007A FB               [12]  295 	mov	r3,a
+      00007B A3               [24]  296 	inc	dptr
+      00007C E0               [24]  297 	movx	a,@dptr
+      00007D FC               [12]  298 	mov	r4,a
+      00007E E5 81            [12]  299 	mov	a,sp
+      000080 24 FC            [12]  300 	add	a,#0xfc
+      000082 F8               [12]  301 	mov	r0,a
+      000083 C3               [12]  302 	clr	c
+      000084 E6               [12]  303 	mov	a,@r0
+      000085 9B               [12]  304 	subb	a,r3
+      000086 08               [12]  305 	inc	r0
+      000087 E6               [12]  306 	mov	a,@r0
+      000088 9C               [12]  307 	subb	a,r4
+      000089 40 0A            [24]  308 	jc	00104$
+                                    309 ;	../../../../cpu/cc253x/usb/common/usb-core.c:69: len = usb_setup_buffer.wLength;     /* Truncate if too long */
+      00008B E5 81            [12]  310 	mov	a,sp
+      00008D 24 FC            [12]  311 	add	a,#0xfc
+      00008F F8               [12]  312 	mov	r0,a
+      000090 A6 03            [24]  313 	mov	@r0,ar3
+      000092 08               [12]  314 	inc	r0
+      000093 A6 04            [24]  315 	mov	@r0,ar4
+      000095                        316 00104$:
+                                    317 ;	../../../../cpu/cc253x/usb/common/usb-core.c:71: ctrl_buffer.flags = USB_BUFFER_NOTIFY | USB_BUFFER_IN;
+      000095 90r00r10         [24]  318 	mov	dptr,#(_ctrl_buffer + 0x0008)
+      000098 74 48            [12]  319 	mov	a,#0x48
+      00009A F0               [24]  320 	movx	@dptr,a
+      00009B E4               [12]  321 	clr	a
+      00009C A3               [24]  322 	inc	dptr
+      00009D F0               [24]  323 	movx	@dptr,a
+                                    324 ;	../../../../cpu/cc253x/usb/common/usb-core.c:72: if(len < usb_setup_buffer.wLength) {
+      00009E 90r00r06         [24]  325 	mov	dptr,#(_usb_setup_buffer + 0x0006)
+      0000A1 E0               [24]  326 	movx	a,@dptr
+      0000A2 FB               [12]  327 	mov	r3,a
+      0000A3 A3               [24]  328 	inc	dptr
+      0000A4 E0               [24]  329 	movx	a,@dptr
+      0000A5 FC               [12]  330 	mov	r4,a
+      0000A6 E5 81            [12]  331 	mov	a,sp
+      0000A8 24 FC            [12]  332 	add	a,#0xfc
+      0000AA F8               [12]  333 	mov	r0,a
+      0000AB C3               [12]  334 	clr	c
+      0000AC E6               [12]  335 	mov	a,@r0
+      0000AD 9B               [12]  336 	subb	a,r3
+      0000AE 08               [12]  337 	inc	r0
+      0000AF E6               [12]  338 	mov	a,@r0
+      0000B0 9C               [12]  339 	subb	a,r4
+      0000B1 50 13            [24]  340 	jnc	00106$
+                                    341 ;	../../../../cpu/cc253x/usb/common/usb-core.c:73: ctrl_buffer.flags |= USB_BUFFER_SHORT_END;
+      0000B3 90r00r10         [24]  342 	mov	dptr,#(_ctrl_buffer + 0x0008)
+      0000B6 E0               [24]  343 	movx	a,@dptr
+      0000B7 FB               [12]  344 	mov	r3,a
+      0000B8 A3               [24]  345 	inc	dptr
+      0000B9 E0               [24]  346 	movx	a,@dptr
+      0000BA FC               [12]  347 	mov	r4,a
+      0000BB 43 03 02         [24]  348 	orl	ar3,#0x02
+      0000BE 90r00r10         [24]  349 	mov	dptr,#(_ctrl_buffer + 0x0008)
+      0000C1 EB               [12]  350 	mov	a,r3
+      0000C2 F0               [24]  351 	movx	@dptr,a
+      0000C3 EC               [12]  352 	mov	a,r4
+      0000C4 A3               [24]  353 	inc	dptr
+      0000C5 F0               [24]  354 	movx	@dptr,a
+      0000C6                        355 00106$:
+                                    356 ;	../../../../cpu/cc253x/usb/common/usb-core.c:75: ctrl_buffer.next = NULL;
+      0000C6 90r00r08         [24]  357 	mov	dptr,#_ctrl_buffer
+      0000C9 E4               [12]  358 	clr	a
+      0000CA F0               [24]  359 	movx	@dptr,a
+      0000CB E4               [12]  360 	clr	a
+      0000CC A3               [24]  361 	inc	dptr
+      0000CD F0               [24]  362 	movx	@dptr,a
+      0000CE E4               [12]  363 	clr	a
+      0000CF A3               [24]  364 	inc	dptr
+      0000D0 F0               [24]  365 	movx	@dptr,a
+                                    366 ;	../../../../cpu/cc253x/usb/common/usb-core.c:76: ctrl_buffer.data = (uint8_t *) data;
+      0000D1 90r00r0B         [24]  367 	mov	dptr,#(_ctrl_buffer + 0x0003)
+      0000D4 ED               [12]  368 	mov	a,r5
+      0000D5 F0               [24]  369 	movx	@dptr,a
+      0000D6 EE               [12]  370 	mov	a,r6
+      0000D7 A3               [24]  371 	inc	dptr
+      0000D8 F0               [24]  372 	movx	@dptr,a
+      0000D9 EF               [12]  373 	mov	a,r7
+      0000DA A3               [24]  374 	inc	dptr
+      0000DB F0               [24]  375 	movx	@dptr,a
+                                    376 ;	../../../../cpu/cc253x/usb/common/usb-core.c:77: ctrl_buffer.left = len;
+      0000DC 90r00r0E         [24]  377 	mov	dptr,#(_ctrl_buffer + 0x0006)
+      0000DF E5 81            [12]  378 	mov	a,sp
+      0000E1 24 FC            [12]  379 	add	a,#0xfc
+      0000E3 F8               [12]  380 	mov	r0,a
+      0000E4 E6               [12]  381 	mov	a,@r0
+      0000E5 F0               [24]  382 	movx	@dptr,a
+      0000E6 08               [12]  383 	inc	r0
+      0000E7 E6               [12]  384 	mov	a,@r0
+      0000E8 A3               [24]  385 	inc	dptr
+      0000E9 F0               [24]  386 	movx	@dptr,a
+                                    387 ;	../../../../cpu/cc253x/usb/common/usb-core.c:78: ctrl_buffer.id = IN_ID;
+      0000EA 90r00r12         [24]  388 	mov	dptr,#(_ctrl_buffer + 0x000a)
+      0000ED 74 03            [12]  389 	mov	a,#0x03
+      0000EF F0               [24]  390 	movx	@dptr,a
+      0000F0 E4               [12]  391 	clr	a
+      0000F1 A3               [24]  392 	inc	dptr
+      0000F2 F0               [24]  393 	movx	@dptr,a
+      0000F3 E4               [12]  394 	clr	a
+      0000F4 A3               [24]  395 	inc	dptr
+      0000F5 F0               [24]  396 	movx	@dptr,a
+      0000F6 E4               [12]  397 	clr	a
+      0000F7 A3               [24]  398 	inc	dptr
+      0000F8 F0               [24]  399 	movx	@dptr,a
+                                    400 ;	../../../../cpu/cc253x/usb/common/usb-core.c:79: usb_submit_xmit_buffer(0, &ctrl_buffer);
+      0000F9 74r08            [12]  401 	mov	a,#_ctrl_buffer
+      0000FB C0 E0            [24]  402 	push	acc
+      0000FD 74s00            [12]  403 	mov	a,#(_ctrl_buffer >> 8)
+      0000FF C0 E0            [24]  404 	push	acc
+      000101 E4               [12]  405 	clr	a
+      000102 C0 E0            [24]  406 	push	acc
+      000104 75 82 00         [24]  407 	mov	dpl,#0x00
+      000107 78r00            [12]  408 	mov	r0,#_usb_submit_xmit_buffer
+      000109 79s00            [12]  409 	mov	r1,#(_usb_submit_xmit_buffer >> 8)
+      00010B 7As00            [12]  410 	mov	r2,#(_usb_submit_xmit_buffer >> 16)
+      00010D 12r00r00         [24]  411 	lcall	__sdcc_banked_call
+      000110 15 81            [12]  412 	dec	sp
+      000112 15 81            [12]  413 	dec	sp
+      000114 15 81            [12]  414 	dec	sp
+      000116                        415 00107$:
+      000116 02r00r00         [24]  416 	ljmp	__sdcc_banked_ret
+                                    417 ;------------------------------------------------------------
+                                    418 ;Allocation info for local variables in function 'usb_error_stall'
+                                    419 ;------------------------------------------------------------
+                                    420 ;	../../../../cpu/cc253x/usb/common/usb-core.c:85: usb_error_stall()
+                                    421 ;	-----------------------------------------
+                                    422 ;	 function usb_error_stall
+                                    423 ;	-----------------------------------------
+      000119                        424 _usb_error_stall:
+                                    425 ;	../../../../cpu/cc253x/usb/common/usb-core.c:87: error_stall = 1;
+      000119 90r00r09         [24]  426 	mov	dptr,#_error_stall
+      00011C 74 01            [12]  427 	mov	a,#0x01
+      00011E F0               [24]  428 	movx	@dptr,a
+                                    429 ;	../../../../cpu/cc253x/usb/common/usb-core.c:88: usb_arch_control_stall(0);
+      00011F 75 82 00         [24]  430 	mov	dpl,#0x00
+      000122 78r00            [12]  431 	mov	r0,#_usb_arch_control_stall
+      000124 79s00            [12]  432 	mov	r1,#(_usb_arch_control_stall >> 8)
+      000126 7As00            [12]  433 	mov	r2,#(_usb_arch_control_stall >> 16)
+      000128 12r00r00         [24]  434 	lcall	__sdcc_banked_call
+      00012B 02r00r00         [24]  435 	ljmp	__sdcc_banked_ret
+                                    436 ;------------------------------------------------------------
+                                    437 ;Allocation info for local variables in function 'usb_send_ctrl_status'
+                                    438 ;------------------------------------------------------------
+                                    439 ;	../../../../cpu/cc253x/usb/common/usb-core.c:92: usb_send_ctrl_status()
+                                    440 ;	-----------------------------------------
+                                    441 ;	 function usb_send_ctrl_status
+                                    442 ;	-----------------------------------------
+      00012E                        443 _usb_send_ctrl_status:
+                                    444 ;	../../../../cpu/cc253x/usb/common/usb-core.c:94: if(ctrl_buffer.flags & USB_BUFFER_SUBMITTED)
+      00012E 90r00r10         [24]  445 	mov	dptr,#(_ctrl_buffer + 0x0008)
+      000131 E0               [24]  446 	movx	a,@dptr
+      000132 FE               [12]  447 	mov	r6,a
+      000133 A3               [24]  448 	inc	dptr
+      000134 E0               [24]  449 	movx	a,@dptr
+      000135 FF               [12]  450 	mov	r7,a
+      000136 EE               [12]  451 	mov	a,r6
+      000137 30 E0 02         [24]  452 	jnb	acc.0,00102$
+                                    453 ;	../../../../cpu/cc253x/usb/common/usb-core.c:95: return;
+      00013A 80 53            [24]  454 	sjmp	00103$
+      00013C                        455 00102$:
+                                    456 ;	../../../../cpu/cc253x/usb/common/usb-core.c:96: ctrl_buffer.flags = USB_BUFFER_NOTIFY | USB_BUFFER_IN;
+      00013C 90r00r10         [24]  457 	mov	dptr,#(_ctrl_buffer + 0x0008)
+      00013F 74 48            [12]  458 	mov	a,#0x48
+      000141 F0               [24]  459 	movx	@dptr,a
+      000142 E4               [12]  460 	clr	a
+      000143 A3               [24]  461 	inc	dptr
+      000144 F0               [24]  462 	movx	@dptr,a
+                                    463 ;	../../../../cpu/cc253x/usb/common/usb-core.c:97: ctrl_buffer.next = NULL;
+      000145 90r00r08         [24]  464 	mov	dptr,#_ctrl_buffer
+      000148 E4               [12]  465 	clr	a
+      000149 F0               [24]  466 	movx	@dptr,a
+      00014A E4               [12]  467 	clr	a
+      00014B A3               [24]  468 	inc	dptr
+      00014C F0               [24]  469 	movx	@dptr,a
+      00014D E4               [12]  470 	clr	a
+      00014E A3               [24]  471 	inc	dptr
+      00014F F0               [24]  472 	movx	@dptr,a
+                                    473 ;	../../../../cpu/cc253x/usb/common/usb-core.c:98: ctrl_buffer.data = NULL;
+      000150 90r00r0B         [24]  474 	mov	dptr,#(_ctrl_buffer + 0x0003)
+      000153 E4               [12]  475 	clr	a
+      000154 F0               [24]  476 	movx	@dptr,a
+      000155 E4               [12]  477 	clr	a
+      000156 A3               [24]  478 	inc	dptr
+      000157 F0               [24]  479 	movx	@dptr,a
+      000158 E4               [12]  480 	clr	a
+      000159 A3               [24]  481 	inc	dptr
+      00015A F0               [24]  482 	movx	@dptr,a
+                                    483 ;	../../../../cpu/cc253x/usb/common/usb-core.c:99: ctrl_buffer.left = 0;
+      00015B 90r00r0E         [24]  484 	mov	dptr,#(_ctrl_buffer + 0x0006)
+      00015E E4               [12]  485 	clr	a
+      00015F F0               [24]  486 	movx	@dptr,a
+      000160 E4               [12]  487 	clr	a
+      000161 A3               [24]  488 	inc	dptr
+      000162 F0               [24]  489 	movx	@dptr,a
+                                    490 ;	../../../../cpu/cc253x/usb/common/usb-core.c:100: ctrl_buffer.id = STATUS_IN_ID;
+      000163 90r00r12         [24]  491 	mov	dptr,#(_ctrl_buffer + 0x000a)
+      000166 74 05            [12]  492 	mov	a,#0x05
+      000168 F0               [24]  493 	movx	@dptr,a
+      000169 E4               [12]  494 	clr	a
+      00016A A3               [24]  495 	inc	dptr
+      00016B F0               [24]  496 	movx	@dptr,a
+      00016C E4               [12]  497 	clr	a
+      00016D A3               [24]  498 	inc	dptr
+      00016E F0               [24]  499 	movx	@dptr,a
+      00016F E4               [12]  500 	clr	a
+      000170 A3               [24]  501 	inc	dptr
+      000171 F0               [24]  502 	movx	@dptr,a
+                                    503 ;	../../../../cpu/cc253x/usb/common/usb-core.c:101: usb_submit_xmit_buffer(0, &ctrl_buffer);
+      000172 74r08            [12]  504 	mov	a,#_ctrl_buffer
+      000174 C0 E0            [24]  505 	push	acc
+      000176 74s00            [12]  506 	mov	a,#(_ctrl_buffer >> 8)
+      000178 C0 E0            [24]  507 	push	acc
+      00017A E4               [12]  508 	clr	a
+      00017B C0 E0            [24]  509 	push	acc
+      00017D 75 82 00         [24]  510 	mov	dpl,#0x00
+      000180 78r00            [12]  511 	mov	r0,#_usb_submit_xmit_buffer
+      000182 79s00            [12]  512 	mov	r1,#(_usb_submit_xmit_buffer >> 8)
+      000184 7As00            [12]  513 	mov	r2,#(_usb_submit_xmit_buffer >> 16)
+      000186 12r00r00         [24]  514 	lcall	__sdcc_banked_call
+      000189 15 81            [12]  515 	dec	sp
+      00018B 15 81            [12]  516 	dec	sp
+      00018D 15 81            [12]  517 	dec	sp
+      00018F                        518 00103$:
+      00018F 02r00r00         [24]  519 	ljmp	__sdcc_banked_ret
+                                    520 ;------------------------------------------------------------
+                                    521 ;Allocation info for local variables in function 'usb_get_ctrl_data'
+                                    522 ;------------------------------------------------------------
+                                    523 ;length                    Allocated to stack - sp -4
+                                    524 ;cb                        Allocated to stack - sp -7
+                                    525 ;data                      Allocated to registers r5 r6 r7 
+                                    526 ;------------------------------------------------------------
+                                    527 ;	../../../../cpu/cc253x/usb/common/usb-core.c:111: usb_get_ctrl_data(uint8_t * data, unsigned int length,
+                                    528 ;	-----------------------------------------
+                                    529 ;	 function usb_get_ctrl_data
+                                    530 ;	-----------------------------------------
+      000192                        531 _usb_get_ctrl_data:
+      000192 AD 82            [24]  532 	mov	r5,dpl
+      000194 AE 83            [24]  533 	mov	r6,dph
+      000196 AF F0            [24]  534 	mov	r7,b
+                                    535 ;	../../../../cpu/cc253x/usb/common/usb-core.c:114: if(ctrl_buffer.flags & USB_BUFFER_SUBMITTED)
+      000198 90r00r10         [24]  536 	mov	dptr,#(_ctrl_buffer + 0x0008)
+      00019B E0               [24]  537 	movx	a,@dptr
+      00019C FB               [12]  538 	mov	r3,a
+      00019D A3               [24]  539 	inc	dptr
+      00019E E0               [24]  540 	movx	a,@dptr
+      00019F FC               [12]  541 	mov	r4,a
+      0001A0 EB               [12]  542 	mov	a,r3
+      0001A1 30 E0 03         [24]  543 	jnb	acc.0,00102$
+                                    544 ;	../../../../cpu/cc253x/usb/common/usb-core.c:115: return;
+      0001A4 02r02r29         [24]  545 	ljmp	00103$
+      0001A7                        546 00102$:
+                                    547 ;	../../../../cpu/cc253x/usb/common/usb-core.c:117: data_callback = cb;
+      0001A7 E5 81            [12]  548 	mov	a,sp
+      0001A9 24 F9            [12]  549 	add	a,#0xf9
+      0001AB F8               [12]  550 	mov	r0,a
+      0001AC 90r00r0A         [24]  551 	mov	dptr,#_data_callback
+      0001AF E6               [12]  552 	mov	a,@r0
+      0001B0 F0               [24]  553 	movx	@dptr,a
+      0001B1 08               [12]  554 	inc	r0
+      0001B2 E6               [12]  555 	mov	a,@r0
+      0001B3 A3               [24]  556 	inc	dptr
+      0001B4 F0               [24]  557 	movx	@dptr,a
+      0001B5 08               [12]  558 	inc	r0
+      0001B6 E6               [12]  559 	mov	a,@r0
+      0001B7 A3               [24]  560 	inc	dptr
+      0001B8 F0               [24]  561 	movx	@dptr,a
+                                    562 ;	../../../../cpu/cc253x/usb/common/usb-core.c:118: ctrl_data = data;
+      0001B9 90r00r0D         [24]  563 	mov	dptr,#_ctrl_data
+      0001BC ED               [12]  564 	mov	a,r5
+      0001BD F0               [24]  565 	movx	@dptr,a
+      0001BE EE               [12]  566 	mov	a,r6
+      0001BF A3               [24]  567 	inc	dptr
+      0001C0 F0               [24]  568 	movx	@dptr,a
+      0001C1 EF               [12]  569 	mov	a,r7
+      0001C2 A3               [24]  570 	inc	dptr
+      0001C3 F0               [24]  571 	movx	@dptr,a
+                                    572 ;	../../../../cpu/cc253x/usb/common/usb-core.c:119: ctrl_data_len = length;
+      0001C4 E5 81            [12]  573 	mov	a,sp
+      0001C6 24 FC            [12]  574 	add	a,#0xfc
+      0001C8 F8               [12]  575 	mov	r0,a
+      0001C9 86 03            [24]  576 	mov	ar3,@r0
+      0001CB 08               [12]  577 	inc	r0
+      0001CC 86 04            [24]  578 	mov	ar4,@r0
+      0001CE 90r00r10         [24]  579 	mov	dptr,#_ctrl_data_len
+      0001D1 EB               [12]  580 	mov	a,r3
+      0001D2 F0               [24]  581 	movx	@dptr,a
+      0001D3 EC               [12]  582 	mov	a,r4
+      0001D4 A3               [24]  583 	inc	dptr
+      0001D5 F0               [24]  584 	movx	@dptr,a
+                                    585 ;	../../../../cpu/cc253x/usb/common/usb-core.c:120: ctrl_buffer.flags = USB_BUFFER_NOTIFY;
+      0001D6 90r00r10         [24]  586 	mov	dptr,#(_ctrl_buffer + 0x0008)
+      0001D9 74 08            [12]  587 	mov	a,#0x08
+      0001DB F0               [24]  588 	movx	@dptr,a
+      0001DC E4               [12]  589 	clr	a
+      0001DD A3               [24]  590 	inc	dptr
+      0001DE F0               [24]  591 	movx	@dptr,a
+                                    592 ;	../../../../cpu/cc253x/usb/common/usb-core.c:121: ctrl_buffer.next = NULL;
+      0001DF 90r00r08         [24]  593 	mov	dptr,#_ctrl_buffer
+      0001E2 E4               [12]  594 	clr	a
+      0001E3 F0               [24]  595 	movx	@dptr,a
+      0001E4 E4               [12]  596 	clr	a
+      0001E5 A3               [24]  597 	inc	dptr
+      0001E6 F0               [24]  598 	movx	@dptr,a
+      0001E7 E4               [12]  599 	clr	a
+      0001E8 A3               [24]  600 	inc	dptr
+      0001E9 F0               [24]  601 	movx	@dptr,a
+                                    602 ;	../../../../cpu/cc253x/usb/common/usb-core.c:122: ctrl_buffer.data = data;
+      0001EA 90r00r0B         [24]  603 	mov	dptr,#(_ctrl_buffer + 0x0003)
+      0001ED ED               [12]  604 	mov	a,r5
+      0001EE F0               [24]  605 	movx	@dptr,a
+      0001EF EE               [12]  606 	mov	a,r6
+      0001F0 A3               [24]  607 	inc	dptr
+      0001F1 F0               [24]  608 	movx	@dptr,a
+      0001F2 EF               [12]  609 	mov	a,r7
+      0001F3 A3               [24]  610 	inc	dptr
+      0001F4 F0               [24]  611 	movx	@dptr,a
+                                    612 ;	../../../../cpu/cc253x/usb/common/usb-core.c:123: ctrl_buffer.left = length;
+      0001F5 90r00r0E         [24]  613 	mov	dptr,#(_ctrl_buffer + 0x0006)
+      0001F8 EB               [12]  614 	mov	a,r3
+      0001F9 F0               [24]  615 	movx	@dptr,a
+      0001FA EC               [12]  616 	mov	a,r4
+      0001FB A3               [24]  617 	inc	dptr
+      0001FC F0               [24]  618 	movx	@dptr,a
+                                    619 ;	../../../../cpu/cc253x/usb/common/usb-core.c:124: ctrl_buffer.id = OUT_ID;
+      0001FD 90r00r12         [24]  620 	mov	dptr,#(_ctrl_buffer + 0x000a)
+      000200 74 02            [12]  621 	mov	a,#0x02
+      000202 F0               [24]  622 	movx	@dptr,a
+      000203 E4               [12]  623 	clr	a
+      000204 A3               [24]  624 	inc	dptr
+      000205 F0               [24]  625 	movx	@dptr,a
+      000206 E4               [12]  626 	clr	a
+      000207 A3               [24]  627 	inc	dptr
+      000208 F0               [24]  628 	movx	@dptr,a
+      000209 E4               [12]  629 	clr	a
+      00020A A3               [24]  630 	inc	dptr
+      00020B F0               [24]  631 	movx	@dptr,a
+                                    632 ;	../../../../cpu/cc253x/usb/common/usb-core.c:125: usb_submit_recv_buffer(0, &ctrl_buffer);
+      00020C 74r08            [12]  633 	mov	a,#_ctrl_buffer
+      00020E C0 E0            [24]  634 	push	acc
+      000210 74s00            [12]  635 	mov	a,#(_ctrl_buffer >> 8)
+      000212 C0 E0            [24]  636 	push	acc
+      000214 E4               [12]  637 	clr	a
+      000215 C0 E0            [24]  638 	push	acc
+      000217 75 82 00         [24]  639 	mov	dpl,#0x00
+      00021A 78r00            [12]  640 	mov	r0,#_usb_submit_recv_buffer
+      00021C 79s00            [12]  641 	mov	r1,#(_usb_submit_recv_buffer >> 8)
+      00021E 7As00            [12]  642 	mov	r2,#(_usb_submit_recv_buffer >> 16)
+      000220 12r00r00         [24]  643 	lcall	__sdcc_banked_call
+      000223 15 81            [12]  644 	dec	sp
+      000225 15 81            [12]  645 	dec	sp
+      000227 15 81            [12]  646 	dec	sp
+      000229                        647 00103$:
+      000229 02r00r00         [24]  648 	ljmp	__sdcc_banked_ret
+                                    649 ;------------------------------------------------------------
+                                    650 ;Allocation info for local variables in function 'get_device_descriptor'
+                                    651 ;------------------------------------------------------------
+                                    652 ;	../../../../cpu/cc253x/usb/common/usb-core.c:138: get_device_descriptor()
+                                    653 ;	-----------------------------------------
+                                    654 ;	 function get_device_descriptor
+                                    655 ;	-----------------------------------------
+      00022C                        656 _get_device_descriptor:
+                                    657 ;	../../../../cpu/cc253x/usb/common/usb-core.c:140: usb_send_ctrl_response((unsigned char *)&device_descriptor,
+      00022C 7Er00            [12]  658 	mov	r6,#_device_descriptor
+      00022E 7Fs00            [12]  659 	mov	r7,#(_device_descriptor >> 8)
+      000230 7D 80            [12]  660 	mov	r5,#0x80
+      000232 74 12            [12]  661 	mov	a,#0x12
+      000234 C0 E0            [24]  662 	push	acc
+      000236 E4               [12]  663 	clr	a
+      000237 C0 E0            [24]  664 	push	acc
+      000239 8E 82            [24]  665 	mov	dpl,r6
+      00023B 8F 83            [24]  666 	mov	dph,r7
+      00023D 8D F0            [24]  667 	mov	b,r5
+      00023F 78r61            [12]  668 	mov	r0,#_usb_send_ctrl_response
+      000241 79s00            [12]  669 	mov	r1,#(_usb_send_ctrl_response >> 8)
+      000243 7As00            [12]  670 	mov	r2,#(_usb_send_ctrl_response >> 16)
+      000245 12r00r00         [24]  671 	lcall	__sdcc_banked_call
+      000248 15 81            [12]  672 	dec	sp
+      00024A 15 81            [12]  673 	dec	sp
+      00024C 02r00r00         [24]  674 	ljmp	__sdcc_banked_ret
+                                    675 ;------------------------------------------------------------
+                                    676 ;Allocation info for local variables in function 'get_string_descriptor'
+                                    677 ;------------------------------------------------------------
+                                    678 ;descriptor                Allocated to registers r5 r6 r7 
+                                    679 ;------------------------------------------------------------
+                                    680 ;	../../../../cpu/cc253x/usb/common/usb-core.c:145: get_string_descriptor()
+                                    681 ;	-----------------------------------------
+                                    682 ;	 function get_string_descriptor
+                                    683 ;	-----------------------------------------
+      00024F                        684 _get_string_descriptor:
+                                    685 ;	../../../../cpu/cc253x/usb/common/usb-core.c:186: LOW_BYTE(usb_setup_buffer.wValue));
+      00024F 90r00r02         [24]  686 	mov	dptr,#(_usb_setup_buffer + 0x0002)
+      000252 E0               [24]  687 	movx	a,@dptr
+      000253 FE               [12]  688 	mov	r6,a
+      000254 A3               [24]  689 	inc	dptr
+      000255 E0               [24]  690 	movx	a,@dptr
+                                    691 ;	../../../../cpu/cc253x/usb/common/usb-core.c:185: usb_class_get_string_descriptor(usb_setup_buffer.wIndex,
+      000256 90r00r04         [24]  692 	mov	dptr,#(_usb_setup_buffer + 0x0004)
+      000259 E0               [24]  693 	movx	a,@dptr
+      00025A FD               [12]  694 	mov	r5,a
+      00025B A3               [24]  695 	inc	dptr
+      00025C E0               [24]  696 	movx	a,@dptr
+      00025D FF               [12]  697 	mov	r7,a
+      00025E C0 06            [24]  698 	push	ar6
+      000260 8D 82            [24]  699 	mov	dpl,r5
+      000262 8F 83            [24]  700 	mov	dph,r7
+      000264 78r00            [12]  701 	mov	r0,#_usb_class_get_string_descriptor
+      000266 79s00            [12]  702 	mov	r1,#(_usb_class_get_string_descriptor >> 8)
+      000268 7As00            [12]  703 	mov	r2,#(_usb_class_get_string_descriptor >> 16)
+      00026A 12r00r00         [24]  704 	lcall	__sdcc_banked_call
+      00026D AD 82            [24]  705 	mov	r5,dpl
+      00026F AE 83            [24]  706 	mov	r6,dph
+      000271 AF F0            [24]  707 	mov	r7,b
+      000273 15 81            [12]  708 	dec	sp
+                                    709 ;	../../../../cpu/cc253x/usb/common/usb-core.c:187: if(!descriptor) {
+      000275 ED               [12]  710 	mov	a,r5
+      000276 4E               [12]  711 	orl	a,r6
+      000277 70 0B            [24]  712 	jnz	00102$
+                                    713 ;	../../../../cpu/cc253x/usb/common/usb-core.c:188: usb_error_stall();
+      000279 78r19            [12]  714 	mov	r0,#_usb_error_stall
+      00027B 79s01            [12]  715 	mov	r1,#(_usb_error_stall >> 8)
+      00027D 7As00            [12]  716 	mov	r2,#(_usb_error_stall >> 16)
+      00027F 12r00r00         [24]  717 	lcall	__sdcc_banked_call
+                                    718 ;	../../../../cpu/cc253x/usb/common/usb-core.c:189: return;
+      000282 80 23            [24]  719 	sjmp	00103$
+      000284                        720 00102$:
+                                    721 ;	../../../../cpu/cc253x/usb/common/usb-core.c:192: descriptor->bLength);
+      000284 8D 82            [24]  722 	mov	dpl,r5
+      000286 8E 83            [24]  723 	mov	dph,r6
+      000288 8F F0            [24]  724 	mov	b,r7
+      00028A 12r00r00         [24]  725 	lcall	__gptrget
+      00028D FC               [12]  726 	mov	r4,a
+      00028E 7B 00            [12]  727 	mov	r3,#0x00
+                                    728 ;	../../../../cpu/cc253x/usb/common/usb-core.c:191: usb_send_ctrl_response((const unsigned char *)descriptor,
+      000290 C0 04            [24]  729 	push	ar4
+      000292 C0 03            [24]  730 	push	ar3
+      000294 8D 82            [24]  731 	mov	dpl,r5
+      000296 8E 83            [24]  732 	mov	dph,r6
+      000298 8F F0            [24]  733 	mov	b,r7
+      00029A 78r61            [12]  734 	mov	r0,#_usb_send_ctrl_response
+      00029C 79s00            [12]  735 	mov	r1,#(_usb_send_ctrl_response >> 8)
+      00029E 7As00            [12]  736 	mov	r2,#(_usb_send_ctrl_response >> 16)
+      0002A0 12r00r00         [24]  737 	lcall	__sdcc_banked_call
+      0002A3 15 81            [12]  738 	dec	sp
+      0002A5 15 81            [12]  739 	dec	sp
+      0002A7                        740 00103$:
+      0002A7 02r00r00         [24]  741 	ljmp	__sdcc_banked_ret
+                                    742 ;------------------------------------------------------------
+                                    743 ;Allocation info for local variables in function 'get_configuration_descriptor'
+                                    744 ;------------------------------------------------------------
+                                    745 ;	../../../../cpu/cc253x/usb/common/usb-core.c:197: get_configuration_descriptor()
+                                    746 ;	-----------------------------------------
+                                    747 ;	 function get_configuration_descriptor
+                                    748 ;	-----------------------------------------
+      0002AA                        749 _get_configuration_descriptor:
+                                    750 ;	../../../../cpu/cc253x/usb/common/usb-core.c:200: configuration_head->wTotalLength);
+      0002AA 90r00r00         [24]  751 	mov	dptr,#_configuration_head
+      0002AD E0               [24]  752 	movx	a,@dptr
+      0002AE FD               [12]  753 	mov	r5,a
+      0002AF A3               [24]  754 	inc	dptr
+      0002B0 E0               [24]  755 	movx	a,@dptr
+      0002B1 FE               [12]  756 	mov	r6,a
+      0002B2 A3               [24]  757 	inc	dptr
+      0002B3 E0               [24]  758 	movx	a,@dptr
+      0002B4 FF               [12]  759 	mov	r7,a
+      0002B5 74 02            [12]  760 	mov	a,#0x02
+      0002B7 2D               [12]  761 	add	a,r5
+      0002B8 FA               [12]  762 	mov	r2,a
+      0002B9 E4               [12]  763 	clr	a
+      0002BA 3E               [12]  764 	addc	a,r6
+      0002BB FB               [12]  765 	mov	r3,a
+      0002BC 8F 04            [24]  766 	mov	ar4,r7
+      0002BE 8A 82            [24]  767 	mov	dpl,r2
+      0002C0 8B 83            [24]  768 	mov	dph,r3
+      0002C2 8C F0            [24]  769 	mov	b,r4
+      0002C4 12r00r00         [24]  770 	lcall	__gptrget
+      0002C7 FA               [12]  771 	mov	r2,a
+      0002C8 A3               [24]  772 	inc	dptr
+      0002C9 12r00r00         [24]  773 	lcall	__gptrget
+      0002CC FB               [12]  774 	mov	r3,a
+                                    775 ;	../../../../cpu/cc253x/usb/common/usb-core.c:199: usb_send_ctrl_response((unsigned char *)configuration_head,
+      0002CD C0 02            [24]  776 	push	ar2
+      0002CF C0 03            [24]  777 	push	ar3
+      0002D1 8D 82            [24]  778 	mov	dpl,r5
+      0002D3 8E 83            [24]  779 	mov	dph,r6
+      0002D5 8F F0            [24]  780 	mov	b,r7
+      0002D7 78r61            [12]  781 	mov	r0,#_usb_send_ctrl_response
+      0002D9 79s00            [12]  782 	mov	r1,#(_usb_send_ctrl_response >> 8)
+      0002DB 7As00            [12]  783 	mov	r2,#(_usb_send_ctrl_response >> 16)
+      0002DD 12r00r00         [24]  784 	lcall	__sdcc_banked_call
+      0002E0 15 81            [12]  785 	dec	sp
+      0002E2 15 81            [12]  786 	dec	sp
+      0002E4 02r00r00         [24]  787 	ljmp	__sdcc_banked_ret
+                                    788 ;------------------------------------------------------------
+                                    789 ;Allocation info for local variables in function 'get_configuration'
+                                    790 ;------------------------------------------------------------
+                                    791 ;	../../../../cpu/cc253x/usb/common/usb-core.c:204: get_configuration()
+                                    792 ;	-----------------------------------------
+                                    793 ;	 function get_configuration
+                                    794 ;	-----------------------------------------
+      0002E7                        795 _get_configuration:
+                                    796 ;	../../../../cpu/cc253x/usb/common/usb-core.c:206: usb_send_ctrl_response((unsigned char *)&usb_configuration_value,
+      0002E7 74 01            [12]  797 	mov	a,#0x01
+      0002E9 C0 E0            [24]  798 	push	acc
+      0002EB E4               [12]  799 	clr	a
+      0002EC C0 E0            [24]  800 	push	acc
+      0002EE 90r00r18         [24]  801 	mov	dptr,#_usb_configuration_value
+      0002F1 75 F0 00         [24]  802 	mov	b,#0x00
+      0002F4 78r61            [12]  803 	mov	r0,#_usb_send_ctrl_response
+      0002F6 79s00            [12]  804 	mov	r1,#(_usb_send_ctrl_response >> 8)
+      0002F8 7As00            [12]  805 	mov	r2,#(_usb_send_ctrl_response >> 16)
+      0002FA 12r00r00         [24]  806 	lcall	__sdcc_banked_call
+      0002FD 15 81            [12]  807 	dec	sp
+      0002FF 15 81            [12]  808 	dec	sp
+      000301 02r00r00         [24]  809 	ljmp	__sdcc_banked_ret
+                                    810 ;------------------------------------------------------------
+                                    811 ;Allocation info for local variables in function 'set_configuration'
+                                    812 ;------------------------------------------------------------
+                                    813 ;	../../../../cpu/cc253x/usb/common/usb-core.c:212: set_configuration()
+                                    814 ;	-----------------------------------------
+                                    815 ;	 function set_configuration
+                                    816 ;	-----------------------------------------
+      000304                        817 _set_configuration:
+                                    818 ;	../../../../cpu/cc253x/usb/common/usb-core.c:214: notify_user(USB_EVENT_CONFIG);
+      000304 90 00 01         [24]  819 	mov	dptr,#0x0001
+      000307 78r2A            [12]  820 	mov	r0,#_notify_user
+      000309 79s00            [12]  821 	mov	r1,#(_notify_user >> 8)
+      00030B 7As00            [12]  822 	mov	r2,#(_notify_user >> 16)
+      00030D 12r00r00         [24]  823 	lcall	__sdcc_banked_call
+                                    824 ;	../../../../cpu/cc253x/usb/common/usb-core.c:215: if(usb_configuration_value != LOW_BYTE(usb_setup_buffer.wValue)) {
+      000310 90r00r02         [24]  825 	mov	dptr,#(_usb_setup_buffer + 0x0002)
+      000313 E0               [24]  826 	movx	a,@dptr
+      000314 FE               [12]  827 	mov	r6,a
+      000315 A3               [24]  828 	inc	dptr
+      000316 E0               [24]  829 	movx	a,@dptr
+      000317 90r00r18         [24]  830 	mov	dptr,#_usb_configuration_value
+      00031A E0               [24]  831 	movx	a,@dptr
+      00031B FF               [12]  832 	mov	r7,a
+      00031C B5 06 02         [24]  833 	cjne	a,ar6,00109$
+      00031F 80 1E            [24]  834 	sjmp	00102$
+      000321                        835 00109$:
+                                    836 ;	../../../../cpu/cc253x/usb/common/usb-core.c:216: usb_configuration_value = LOW_BYTE(usb_setup_buffer.wValue);
+      000321 90r00r18         [24]  837 	mov	dptr,#_usb_configuration_value
+      000324 EE               [12]  838 	mov	a,r6
+      000325 F0               [24]  839 	movx	@dptr,a
+                                    840 ;	../../../../cpu/cc253x/usb/common/usb-core.c:217: usb_arch_set_configuration(usb_configuration_value);
+      000326 8E 82            [24]  841 	mov	dpl,r6
+      000328 78r00            [12]  842 	mov	r0,#_usb_arch_set_configuration
+      00032A 79s00            [12]  843 	mov	r1,#(_usb_arch_set_configuration >> 8)
+      00032C 7As00            [12]  844 	mov	r2,#(_usb_arch_set_configuration >> 16)
+      00032E 12r00r00         [24]  845 	lcall	__sdcc_banked_call
+                                    846 ;	../../../../cpu/cc253x/usb/common/usb-core.c:218: usb_send_ctrl_status();
+      000331 78r2E            [12]  847 	mov	r0,#_usb_send_ctrl_status
+      000333 79s01            [12]  848 	mov	r1,#(_usb_send_ctrl_status >> 8)
+      000335 7As00            [12]  849 	mov	r2,#(_usb_send_ctrl_status >> 16)
+      000337 12r00r00         [24]  850 	lcall	__sdcc_banked_call
+                                    851 ;	../../../../cpu/cc253x/usb/common/usb-core.c:219: return 1;
+      00033A 90 00 01         [24]  852 	mov	dptr,#0x0001
+      00033D 80 0C            [24]  853 	sjmp	00104$
+      00033F                        854 00102$:
+                                    855 ;	../../../../cpu/cc253x/usb/common/usb-core.c:221: usb_send_ctrl_status();
+      00033F 78r2E            [12]  856 	mov	r0,#_usb_send_ctrl_status
+      000341 79s01            [12]  857 	mov	r1,#(_usb_send_ctrl_status >> 8)
+      000343 7As00            [12]  858 	mov	r2,#(_usb_send_ctrl_status >> 16)
+      000345 12r00r00         [24]  859 	lcall	__sdcc_banked_call
+                                    860 ;	../../../../cpu/cc253x/usb/common/usb-core.c:222: return 0;
+      000348 90 00 00         [24]  861 	mov	dptr,#0x0000
+      00034B                        862 00104$:
+      00034B 02r00r00         [24]  863 	ljmp	__sdcc_banked_ret
+                                    864 ;------------------------------------------------------------
+                                    865 ;Allocation info for local variables in function 'get_device_status'
+                                    866 ;------------------------------------------------------------
+                                    867 ;	../../../../cpu/cc253x/usb/common/usb-core.c:227: get_device_status()
+                                    868 ;	-----------------------------------------
+                                    869 ;	 function get_device_status
+                                    870 ;	-----------------------------------------
+      00034E                        871 _get_device_status:
+                                    872 ;	../../../../cpu/cc253x/usb/common/usb-core.c:230: usb_send_ctrl_response((const unsigned char *)&usb_device_status,
+      00034E 7Er16            [12]  873 	mov	r6,#_usb_device_status
+      000350 7Fs00            [12]  874 	mov	r7,#(_usb_device_status >> 8)
+      000352 7D 00            [12]  875 	mov	r5,#0x00
+      000354 74 02            [12]  876 	mov	a,#0x02
+      000356 C0 E0            [24]  877 	push	acc
+      000358 E4               [12]  878 	clr	a
+      000359 C0 E0            [24]  879 	push	acc
+      00035B 8E 82            [24]  880 	mov	dpl,r6
+      00035D 8F 83            [24]  881 	mov	dph,r7
+      00035F 8D F0            [24]  882 	mov	b,r5
+      000361 78r61            [12]  883 	mov	r0,#_usb_send_ctrl_response
+      000363 79s00            [12]  884 	mov	r1,#(_usb_send_ctrl_response >> 8)
+      000365 7As00            [12]  885 	mov	r2,#(_usb_send_ctrl_response >> 16)
+      000367 12r00r00         [24]  886 	lcall	__sdcc_banked_call
+      00036A 15 81            [12]  887 	dec	sp
+      00036C 15 81            [12]  888 	dec	sp
+      00036E 02r00r00         [24]  889 	ljmp	__sdcc_banked_ret
+                                    890 ;------------------------------------------------------------
+                                    891 ;Allocation info for local variables in function 'get_endpoint_status'
+                                    892 ;------------------------------------------------------------
+                                    893 ;status                    Allocated with name '_get_endpoint_status_status_1_106'
+                                    894 ;------------------------------------------------------------
+                                    895 ;	../../../../cpu/cc253x/usb/common/usb-core.c:235: get_endpoint_status()
+                                    896 ;	-----------------------------------------
+                                    897 ;	 function get_endpoint_status
+                                    898 ;	-----------------------------------------
+      000371                        899 _get_endpoint_status:
+                                    900 ;	../../../../cpu/cc253x/usb/common/usb-core.c:240: if((usb_setup_buffer.wIndex & 0x7f) == 0) {
+      000371 90r00r04         [24]  901 	mov	dptr,#(_usb_setup_buffer + 0x0004)
+      000374 E0               [24]  902 	movx	a,@dptr
+      000375 FE               [12]  903 	mov	r6,a
+      000376 A3               [24]  904 	inc	dptr
+      000377 E0               [24]  905 	movx	a,@dptr
+      000378 FF               [12]  906 	mov	r7,a
+      000379 EE               [12]  907 	mov	a,r6
+      00037A 54 7F            [12]  908 	anl	a,#0x7F
+      00037C 60 02            [24]  909 	jz	00110$
+      00037E 80 22            [24]  910 	sjmp	00102$
+      000380                        911 00110$:
+                                    912 ;	../../../../cpu/cc253x/usb/common/usb-core.c:241: usb_send_ctrl_response((const unsigned char *)&zero_word,
+      000380 7Cr01            [12]  913 	mov	r4,#_zero_word
+      000382 7Ds00            [12]  914 	mov	r5,#(_zero_word >> 8)
+      000384 7B 80            [12]  915 	mov	r3,#0x80
+      000386 74 02            [12]  916 	mov	a,#0x02
+      000388 C0 E0            [24]  917 	push	acc
+      00038A E4               [12]  918 	clr	a
+      00038B C0 E0            [24]  919 	push	acc
+      00038D 8C 82            [24]  920 	mov	dpl,r4
+      00038F 8D 83            [24]  921 	mov	dph,r5
+      000391 8B F0            [24]  922 	mov	b,r3
+      000393 78r61            [12]  923 	mov	r0,#_usb_send_ctrl_response
+      000395 79s00            [12]  924 	mov	r1,#(_usb_send_ctrl_response >> 8)
+      000397 7As00            [12]  925 	mov	r2,#(_usb_send_ctrl_response >> 16)
+      000399 12r00r00         [24]  926 	lcall	__sdcc_banked_call
+      00039C 15 81            [12]  927 	dec	sp
+      00039E 15 81            [12]  928 	dec	sp
+      0003A0 80 38            [24]  929 	sjmp	00104$
+      0003A2                        930 00102$:
+                                    931 ;	../../../../cpu/cc253x/usb/common/usb-core.c:244: status = usb_arch_get_ep_status(usb_setup_buffer.wIndex);
+      0003A2 8E 82            [24]  932 	mov	dpl,r6
+      0003A4 78r00            [12]  933 	mov	r0,#_usb_arch_get_ep_status
+      0003A6 79s00            [12]  934 	mov	r1,#(_usb_arch_get_ep_status >> 8)
+      0003A8 7As00            [12]  935 	mov	r2,#(_usb_arch_get_ep_status >> 16)
+      0003AA 12r00r00         [24]  936 	lcall	__sdcc_banked_call
+      0003AD E5 82            [12]  937 	mov	a,dpl
+      0003AF 85 83 F0         [24]  938 	mov	b,dph
+      0003B2 90r00r19         [24]  939 	mov	dptr,#_get_endpoint_status_status_1_106
+      0003B5 F0               [24]  940 	movx	@dptr,a
+      0003B6 E5 F0            [12]  941 	mov	a,b
+      0003B8 A3               [24]  942 	inc	dptr
+      0003B9 F0               [24]  943 	movx	@dptr,a
+                                    944 ;	../../../../cpu/cc253x/usb/common/usb-core.c:245: usb_send_ctrl_response((uint8_t *) & status, sizeof(status));
+      0003BA 7Er19            [12]  945 	mov	r6,#_get_endpoint_status_status_1_106
+      0003BC 7Fs00            [12]  946 	mov	r7,#(_get_endpoint_status_status_1_106 >> 8)
+      0003BE 7D 00            [12]  947 	mov	r5,#0x00
+      0003C0 74 02            [12]  948 	mov	a,#0x02
+      0003C2 C0 E0            [24]  949 	push	acc
+      0003C4 E4               [12]  950 	clr	a
+      0003C5 C0 E0            [24]  951 	push	acc
+      0003C7 8E 82            [24]  952 	mov	dpl,r6
+      0003C9 8F 83            [24]  953 	mov	dph,r7
+      0003CB 8D F0            [24]  954 	mov	b,r5
+      0003CD 78r61            [12]  955 	mov	r0,#_usb_send_ctrl_response
+      0003CF 79s00            [12]  956 	mov	r1,#(_usb_send_ctrl_response >> 8)
+      0003D1 7As00            [12]  957 	mov	r2,#(_usb_send_ctrl_response >> 16)
+      0003D3 12r00r00         [24]  958 	lcall	__sdcc_banked_call
+      0003D6 15 81            [12]  959 	dec	sp
+      0003D8 15 81            [12]  960 	dec	sp
+      0003DA                        961 00104$:
+      0003DA 02r00r00         [24]  962 	ljmp	__sdcc_banked_ret
+                                    963 ;------------------------------------------------------------
+                                    964 ;Allocation info for local variables in function 'get_interface_status'
+                                    965 ;------------------------------------------------------------
+                                    966 ;	../../../../cpu/cc253x/usb/common/usb-core.c:250: get_interface_status()
+                                    967 ;	-----------------------------------------
+                                    968 ;	 function get_interface_status
+                                    969 ;	-----------------------------------------
+      0003DD                        970 _get_interface_status:
+                                    971 ;	../../../../cpu/cc253x/usb/common/usb-core.c:253: usb_send_ctrl_response((const unsigned char *)&zero_word,
+      0003DD 7Er01            [12]  972 	mov	r6,#_zero_word
+      0003DF 7Fs00            [12]  973 	mov	r7,#(_zero_word >> 8)
+      0003E1 7D 80            [12]  974 	mov	r5,#0x80
+      0003E3 74 02            [12]  975 	mov	a,#0x02
+      0003E5 C0 E0            [24]  976 	push	acc
+      0003E7 E4               [12]  977 	clr	a
+      0003E8 C0 E0            [24]  978 	push	acc
+      0003EA 8E 82            [24]  979 	mov	dpl,r6
+      0003EC 8F 83            [24]  980 	mov	dph,r7
+      0003EE 8D F0            [24]  981 	mov	b,r5
+      0003F0 78r61            [12]  982 	mov	r0,#_usb_send_ctrl_response
+      0003F2 79s00            [12]  983 	mov	r1,#(_usb_send_ctrl_response >> 8)
+      0003F4 7As00            [12]  984 	mov	r2,#(_usb_send_ctrl_response >> 16)
+      0003F6 12r00r00         [24]  985 	lcall	__sdcc_banked_call
+      0003F9 15 81            [12]  986 	dec	sp
+      0003FB 15 81            [12]  987 	dec	sp
+      0003FD 02r00r00         [24]  988 	ljmp	__sdcc_banked_ret
+                                    989 ;------------------------------------------------------------
+                                    990 ;Allocation info for local variables in function 'get_interface'
+                                    991 ;------------------------------------------------------------
+                                    992 ;	../../../../cpu/cc253x/usb/common/usb-core.c:258: get_interface()
+                                    993 ;	-----------------------------------------
+                                    994 ;	 function get_interface
+                                    995 ;	-----------------------------------------
+      000400                        996 _get_interface:
+                                    997 ;	../../../../cpu/cc253x/usb/common/usb-core.c:261: if(usb_configuration_value == 0)
+      000400 90r00r18         [24]  998 	mov	dptr,#_usb_configuration_value
+      000403 E0               [24]  999 	movx	a,@dptr
+      000404 FF               [12] 1000 	mov	r7,a
+      000405 70 0B            [24] 1001 	jnz	00102$
+                                   1002 ;	../../../../cpu/cc253x/usb/common/usb-core.c:262: usb_error_stall();
+      000407 78r19            [12] 1003 	mov	r0,#_usb_error_stall
+      000409 79s01            [12] 1004 	mov	r1,#(_usb_error_stall >> 8)
+      00040B 7As00            [12] 1005 	mov	r2,#(_usb_error_stall >> 16)
+      00040D 12r00r00         [24] 1006 	lcall	__sdcc_banked_call
+      000410 80 1A            [24] 1007 	sjmp	00104$
+      000412                       1008 00102$:
+                                   1009 ;	../../../../cpu/cc253x/usb/common/usb-core.c:264: usb_send_ctrl_response(&zero_byte, sizeof(zero_byte));
+      000412 74 01            [12] 1010 	mov	a,#0x01
+      000414 C0 E0            [24] 1011 	push	acc
+      000416 E4               [12] 1012 	clr	a
+      000417 C0 E0            [24] 1013 	push	acc
+      000419 90r00r00         [24] 1014 	mov	dptr,#_zero_byte
+      00041C 75 F0 80         [24] 1015 	mov	b,#0x80
+      00041F 78r61            [12] 1016 	mov	r0,#_usb_send_ctrl_response
+      000421 79s00            [12] 1017 	mov	r1,#(_usb_send_ctrl_response >> 8)
+      000423 7As00            [12] 1018 	mov	r2,#(_usb_send_ctrl_response >> 16)
+      000425 12r00r00         [24] 1019 	lcall	__sdcc_banked_call
+      000428 15 81            [12] 1020 	dec	sp
+      00042A 15 81            [12] 1021 	dec	sp
+      00042C                       1022 00104$:
+      00042C 02r00r00         [24] 1023 	ljmp	__sdcc_banked_ret
+                                   1024 ;------------------------------------------------------------
+                                   1025 ;Allocation info for local variables in function 'handle_standard_requests'
+                                   1026 ;------------------------------------------------------------
+                                   1027 ;	../../../../cpu/cc253x/usb/common/usb-core.c:270: handle_standard_requests()
+                                   1028 ;	-----------------------------------------
+                                   1029 ;	 function handle_standard_requests
+                                   1030 ;	-----------------------------------------
+      00042F                       1031 _handle_standard_requests:
+                                   1032 ;	../../../../cpu/cc253x/usb/common/usb-core.c:272: switch (usb_setup_buffer.bmRequestType) {
+      00042F 90r00r00         [24] 1033 	mov	dptr,#_usb_setup_buffer
+      000432 E0               [24] 1034 	movx	a,@dptr
+      000433 FF               [12] 1035 	mov	r7,a
+      000434 BF 00 03         [24] 1036 	cjne	r7,#0x00,00204$
+      000437 02r05r11         [24] 1037 	ljmp	00121$
+      00043A                       1038 00204$:
+      00043A BF 01 03         [24] 1039 	cjne	r7,#0x01,00205$
+      00043D 02r05r45         [24] 1040 	ljmp	00128$
+      000440                       1041 00205$:
+      000440 BF 02 03         [24] 1042 	cjne	r7,#0x02,00206$
+      000443 02r05r5D         [24] 1043 	ljmp	00132$
+      000446                       1044 00206$:
+      000446 BF 80 02         [24] 1045 	cjne	r7,#0x80,00207$
+      000449 80 0F            [24] 1046 	sjmp	00101$
+      00044B                       1047 00207$:
+      00044B BF 81 03         [24] 1048 	cjne	r7,#0x81,00208$
+      00044E 02r04rDB         [24] 1049 	ljmp	00113$
+      000451                       1050 00208$:
+      000451 BF 82 03         [24] 1051 	cjne	r7,#0x82,00209$
+      000454 02r04rF6         [24] 1052 	ljmp	00117$
+      000457                       1053 00209$:
+      000457 02r05rB3         [24] 1054 	ljmp	00140$
+                                   1055 ;	../../../../cpu/cc253x/usb/common/usb-core.c:273: case 0x80:                   /* standard device IN requests */
+      00045A                       1056 00101$:
+                                   1057 ;	../../../../cpu/cc253x/usb/common/usb-core.c:274: switch (usb_setup_buffer.bRequest) {
+      00045A 90r00r01         [24] 1058 	mov	dptr,#(_usb_setup_buffer + 0x0001)
+      00045D E0               [24] 1059 	movx	a,@dptr
+      00045E FF               [12] 1060 	mov	r7,a
+      00045F 60 5C            [24] 1061 	jz	00109$
+      000461 BF 06 02         [24] 1062 	cjne	r7,#0x06,00211$
+      000464 80 0A            [24] 1063 	sjmp	00102$
+      000466                       1064 00211$:
+      000466 BF 08 02         [24] 1065 	cjne	r7,#0x08,00212$
+      000469 80 46            [24] 1066 	sjmp	00108$
+      00046B                       1067 00212$:
+                                   1068 ;	../../../../cpu/cc253x/usb/common/usb-core.c:275: case GET_DESCRIPTOR:
+      00046B BF 0A 67         [24] 1069 	cjne	r7,#0x0A,00111$
+      00046E 80 59            [24] 1070 	sjmp	00110$
+      000470                       1071 00102$:
+                                   1072 ;	../../../../cpu/cc253x/usb/common/usb-core.c:276: switch (HIGH_BYTE(usb_setup_buffer.wValue)) {
+      000470 90r00r02         [24] 1073 	mov	dptr,#(_usb_setup_buffer + 0x0002)
+      000473 E0               [24] 1074 	movx	a,@dptr
+      000474 FE               [12] 1075 	mov	r6,a
+      000475 A3               [24] 1076 	inc	dptr
+      000476 E0               [24] 1077 	movx	a,@dptr
+      000477 FF               [12] 1078 	mov	r7,a
+      000478 BF 01 02         [24] 1079 	cjne	r7,#0x01,00214$
+      00047B 80 0A            [24] 1080 	sjmp	00103$
+      00047D                       1081 00214$:
+      00047D BF 02 02         [24] 1082 	cjne	r7,#0x02,00215$
+      000480 80 11            [24] 1083 	sjmp	00104$
+      000482                       1084 00215$:
+                                   1085 ;	../../../../cpu/cc253x/usb/common/usb-core.c:277: case DEVICE:
+      000482 BF 03 26         [24] 1086 	cjne	r7,#0x03,00106$
+      000485 80 18            [24] 1087 	sjmp	00105$
+      000487                       1088 00103$:
+                                   1089 ;	../../../../cpu/cc253x/usb/common/usb-core.c:278: get_device_descriptor();
+      000487 78r2C            [12] 1090 	mov	r0,#_get_device_descriptor
+      000489 79s02            [12] 1091 	mov	r1,#(_get_device_descriptor >> 8)
+      00048B 7As00            [12] 1092 	mov	r2,#(_get_device_descriptor >> 16)
+      00048D 12r00r00         [24] 1093 	lcall	__sdcc_banked_call
+                                   1094 ;	../../../../cpu/cc253x/usb/common/usb-core.c:279: break;
+      000490 02r05rB8         [24] 1095 	ljmp	00141$
+                                   1096 ;	../../../../cpu/cc253x/usb/common/usb-core.c:280: case CONFIGURATION:
+      000493                       1097 00104$:
+                                   1098 ;	../../../../cpu/cc253x/usb/common/usb-core.c:281: get_configuration_descriptor();
+      000493 78rAA            [12] 1099 	mov	r0,#_get_configuration_descriptor
+      000495 79s02            [12] 1100 	mov	r1,#(_get_configuration_descriptor >> 8)
+      000497 7As00            [12] 1101 	mov	r2,#(_get_configuration_descriptor >> 16)
+      000499 12r00r00         [24] 1102 	lcall	__sdcc_banked_call
+                                   1103 ;	../../../../cpu/cc253x/usb/common/usb-core.c:282: break;
+      00049C 02r05rB8         [24] 1104 	ljmp	00141$
+                                   1105 ;	../../../../cpu/cc253x/usb/common/usb-core.c:283: case STRING:
+      00049F                       1106 00105$:
+                                   1107 ;	../../../../cpu/cc253x/usb/common/usb-core.c:284: get_string_descriptor();
+      00049F 78r4F            [12] 1108 	mov	r0,#_get_string_descriptor
+      0004A1 79s02            [12] 1109 	mov	r1,#(_get_string_descriptor >> 8)
+      0004A3 7As00            [12] 1110 	mov	r2,#(_get_string_descriptor >> 16)
+      0004A5 12r00r00         [24] 1111 	lcall	__sdcc_banked_call
+                                   1112 ;	../../../../cpu/cc253x/usb/common/usb-core.c:285: break;
+      0004A8 02r05rB8         [24] 1113 	ljmp	00141$
+                                   1114 ;	../../../../cpu/cc253x/usb/common/usb-core.c:286: default:
+      0004AB                       1115 00106$:
+                                   1116 ;	../../../../cpu/cc253x/usb/common/usb-core.c:288: return 0;
+      0004AB 90 00 00         [24] 1117 	mov	dptr,#0x0000
+      0004AE 02r05rBB         [24] 1118 	ljmp	00142$
+                                   1119 ;	../../../../cpu/cc253x/usb/common/usb-core.c:291: case GET_CONFIGURATION:
+      0004B1                       1120 00108$:
+                                   1121 ;	../../../../cpu/cc253x/usb/common/usb-core.c:292: get_configuration();
+      0004B1 78rE7            [12] 1122 	mov	r0,#_get_configuration
+      0004B3 79s02            [12] 1123 	mov	r1,#(_get_configuration >> 8)
+      0004B5 7As00            [12] 1124 	mov	r2,#(_get_configuration >> 16)
+      0004B7 12r00r00         [24] 1125 	lcall	__sdcc_banked_call
+                                   1126 ;	../../../../cpu/cc253x/usb/common/usb-core.c:293: break;
+      0004BA 02r05rB8         [24] 1127 	ljmp	00141$
+                                   1128 ;	../../../../cpu/cc253x/usb/common/usb-core.c:294: case GET_STATUS:
+      0004BD                       1129 00109$:
+                                   1130 ;	../../../../cpu/cc253x/usb/common/usb-core.c:295: get_device_status();
+      0004BD 78r4E            [12] 1131 	mov	r0,#_get_device_status
+      0004BF 79s03            [12] 1132 	mov	r1,#(_get_device_status >> 8)
+      0004C1 7As00            [12] 1133 	mov	r2,#(_get_device_status >> 16)
+      0004C3 12r00r00         [24] 1134 	lcall	__sdcc_banked_call
+                                   1135 ;	../../../../cpu/cc253x/usb/common/usb-core.c:296: break;
+      0004C6 02r05rB8         [24] 1136 	ljmp	00141$
+                                   1137 ;	../../../../cpu/cc253x/usb/common/usb-core.c:297: case GET_INTERFACE:
+      0004C9                       1138 00110$:
+                                   1139 ;	../../../../cpu/cc253x/usb/common/usb-core.c:298: get_interface();
+      0004C9 78r00            [12] 1140 	mov	r0,#_get_interface
+      0004CB 79s04            [12] 1141 	mov	r1,#(_get_interface >> 8)
+      0004CD 7As00            [12] 1142 	mov	r2,#(_get_interface >> 16)
+      0004CF 12r00r00         [24] 1143 	lcall	__sdcc_banked_call
+                                   1144 ;	../../../../cpu/cc253x/usb/common/usb-core.c:299: break;
+      0004D2 02r05rB8         [24] 1145 	ljmp	00141$
+                                   1146 ;	../../../../cpu/cc253x/usb/common/usb-core.c:300: default:
+      0004D5                       1147 00111$:
+                                   1148 ;	../../../../cpu/cc253x/usb/common/usb-core.c:301: return 0;
+      0004D5 90 00 00         [24] 1149 	mov	dptr,#0x0000
+      0004D8 02r05rBB         [24] 1150 	ljmp	00142$
+                                   1151 ;	../../../../cpu/cc253x/usb/common/usb-core.c:304: case 0x81:                   /* standard interface IN requests */
+      0004DB                       1152 00113$:
+                                   1153 ;	../../../../cpu/cc253x/usb/common/usb-core.c:305: switch (usb_setup_buffer.bRequest) {
+      0004DB 90r00r01         [24] 1154 	mov	dptr,#(_usb_setup_buffer + 0x0001)
+      0004DE E0               [24] 1155 	movx	a,@dptr
+      0004DF FF               [12] 1156 	mov	r7,a
+      0004E0 60 02            [24] 1157 	jz	00218$
+      0004E2 80 0C            [24] 1158 	sjmp	00115$
+      0004E4                       1159 00218$:
+                                   1160 ;	../../../../cpu/cc253x/usb/common/usb-core.c:307: get_interface_status();
+      0004E4 78rDD            [12] 1161 	mov	r0,#_get_interface_status
+      0004E6 79s03            [12] 1162 	mov	r1,#(_get_interface_status >> 8)
+      0004E8 7As00            [12] 1163 	mov	r2,#(_get_interface_status >> 16)
+      0004EA 12r00r00         [24] 1164 	lcall	__sdcc_banked_call
+                                   1165 ;	../../../../cpu/cc253x/usb/common/usb-core.c:308: break;
+      0004ED 02r05rB8         [24] 1166 	ljmp	00141$
+                                   1167 ;	../../../../cpu/cc253x/usb/common/usb-core.c:318: default:
+      0004F0                       1168 00115$:
+                                   1169 ;	../../../../cpu/cc253x/usb/common/usb-core.c:319: return 0;
+      0004F0 90 00 00         [24] 1170 	mov	dptr,#0x0000
+      0004F3 02r05rBB         [24] 1171 	ljmp	00142$
+                                   1172 ;	../../../../cpu/cc253x/usb/common/usb-core.c:322: case 0x82:                   /* standard endpoint IN requests */
+      0004F6                       1173 00117$:
+                                   1174 ;	../../../../cpu/cc253x/usb/common/usb-core.c:323: switch (usb_setup_buffer.bRequest) {
+      0004F6 90r00r01         [24] 1175 	mov	dptr,#(_usb_setup_buffer + 0x0001)
+      0004F9 E0               [24] 1176 	movx	a,@dptr
+      0004FA FF               [12] 1177 	mov	r7,a
+      0004FB 60 02            [24] 1178 	jz	00220$
+      0004FD 80 0C            [24] 1179 	sjmp	00119$
+      0004FF                       1180 00220$:
+                                   1181 ;	../../../../cpu/cc253x/usb/common/usb-core.c:325: get_endpoint_status();
+      0004FF 78r71            [12] 1182 	mov	r0,#_get_endpoint_status
+      000501 79s03            [12] 1183 	mov	r1,#(_get_endpoint_status >> 8)
+      000503 7As00            [12] 1184 	mov	r2,#(_get_endpoint_status >> 16)
+      000505 12r00r00         [24] 1185 	lcall	__sdcc_banked_call
+                                   1186 ;	../../../../cpu/cc253x/usb/common/usb-core.c:326: break;
+      000508 02r05rB8         [24] 1187 	ljmp	00141$
+                                   1188 ;	../../../../cpu/cc253x/usb/common/usb-core.c:327: default:
+      00050B                       1189 00119$:
+                                   1190 ;	../../../../cpu/cc253x/usb/common/usb-core.c:328: return 0;
+      00050B 90 00 00         [24] 1191 	mov	dptr,#0x0000
+      00050E 02r05rBB         [24] 1192 	ljmp	00142$
+                                   1193 ;	../../../../cpu/cc253x/usb/common/usb-core.c:331: case 0x00:                   /* standard device OUT requests */
+      000511                       1194 00121$:
+                                   1195 ;	../../../../cpu/cc253x/usb/common/usb-core.c:332: switch (usb_setup_buffer.bRequest) {
+      000511 90r00r01         [24] 1196 	mov	dptr,#(_usb_setup_buffer + 0x0001)
+      000514 E0               [24] 1197 	movx	a,@dptr
+      000515 FF               [12] 1198 	mov	r7,a
+      000516 BF 05 02         [24] 1199 	cjne	r7,#0x05,00221$
+      000519 80 05            [24] 1200 	sjmp	00122$
+      00051B                       1201 00221$:
+                                   1202 ;	../../../../cpu/cc253x/usb/common/usb-core.c:333: case SET_ADDRESS:
+      00051B BF 09 21         [24] 1203 	cjne	r7,#0x09,00126$
+      00051E 80 13            [24] 1204 	sjmp	00123$
+      000520                       1205 00122$:
+                                   1206 ;	../../../../cpu/cc253x/usb/common/usb-core.c:335: usb_flags |= USB_FLAG_ADDRESS_PENDING;
+      000520 90r00r03         [24] 1207 	mov	dptr,#_usb_flags
+      000523 E0               [24] 1208 	movx	a,@dptr
+      000524 44 01            [12] 1209 	orl	a,#0x01
+      000526 F0               [24] 1210 	movx	@dptr,a
+                                   1211 ;	../../../../cpu/cc253x/usb/common/usb-core.c:338: usb_send_ctrl_status();
+      000527 78r2E            [12] 1212 	mov	r0,#_usb_send_ctrl_status
+      000529 79s01            [12] 1213 	mov	r1,#(_usb_send_ctrl_status >> 8)
+      00052B 7As00            [12] 1214 	mov	r2,#(_usb_send_ctrl_status >> 16)
+      00052D 12r00r00         [24] 1215 	lcall	__sdcc_banked_call
+                                   1216 ;	../../../../cpu/cc253x/usb/common/usb-core.c:339: break;
+      000530 02r05rB8         [24] 1217 	ljmp	00141$
+                                   1218 ;	../../../../cpu/cc253x/usb/common/usb-core.c:349: case SET_CONFIGURATION:
+      000533                       1219 00123$:
+                                   1220 ;	../../../../cpu/cc253x/usb/common/usb-core.c:350: if(set_configuration()) {
+      000533 78r04            [12] 1221 	mov	r0,#_set_configuration
+      000535 79s03            [12] 1222 	mov	r1,#(_set_configuration >> 8)
+      000537 7As00            [12] 1223 	mov	r2,#(_set_configuration >> 16)
+      000539 12r00r00         [24] 1224 	lcall	__sdcc_banked_call
+                                   1225 ;	../../../../cpu/cc253x/usb/common/usb-core.c:356: break;
+      00053C 02r05rB8         [24] 1226 	ljmp	00141$
+                                   1227 ;	../../../../cpu/cc253x/usb/common/usb-core.c:357: default:
+      00053F                       1228 00126$:
+                                   1229 ;	../../../../cpu/cc253x/usb/common/usb-core.c:358: return 0;
+      00053F 90 00 00         [24] 1230 	mov	dptr,#0x0000
+      000542 02r05rBB         [24] 1231 	ljmp	00142$
+                                   1232 ;	../../../../cpu/cc253x/usb/common/usb-core.c:361: case 0x01:                   /* standard interface OUT requests */
+      000545                       1233 00128$:
+                                   1234 ;	../../../../cpu/cc253x/usb/common/usb-core.c:362: switch (usb_setup_buffer.bRequest) {
+      000545 90r00r01         [24] 1235 	mov	dptr,#(_usb_setup_buffer + 0x0001)
+      000548 E0               [24] 1236 	movx	a,@dptr
+      000549 FF               [12] 1237 	mov	r7,a
+      00054A BF 0B 0B         [24] 1238 	cjne	r7,#0x0B,00130$
+                                   1239 ;	../../../../cpu/cc253x/usb/common/usb-core.c:365: usb_send_ctrl_status();
+      00054D 78r2E            [12] 1240 	mov	r0,#_usb_send_ctrl_status
+      00054F 79s01            [12] 1241 	mov	r1,#(_usb_send_ctrl_status >> 8)
+      000551 7As00            [12] 1242 	mov	r2,#(_usb_send_ctrl_status >> 16)
+      000553 12r00r00         [24] 1243 	lcall	__sdcc_banked_call
+                                   1244 ;	../../../../cpu/cc253x/usb/common/usb-core.c:366: break;
+                                   1245 ;	../../../../cpu/cc253x/usb/common/usb-core.c:367: default:
+      000556 80 60            [24] 1246 	sjmp	00141$
+      000558                       1247 00130$:
+                                   1248 ;	../../../../cpu/cc253x/usb/common/usb-core.c:368: return 0;
+      000558 90 00 00         [24] 1249 	mov	dptr,#0x0000
+                                   1250 ;	../../../../cpu/cc253x/usb/common/usb-core.c:371: case 0x02:                   /* standard endpoint OUT requests */
+      00055B 80 5E            [24] 1251 	sjmp	00142$
+      00055D                       1252 00132$:
+                                   1253 ;	../../../../cpu/cc253x/usb/common/usb-core.c:372: switch (usb_setup_buffer.bRequest) {
+      00055D 90r00r01         [24] 1254 	mov	dptr,#(_usb_setup_buffer + 0x0001)
+      000560 E0               [24] 1255 	movx	a,@dptr
+      000561 FF               [12] 1256 	mov	r7,a
+      000562 BF 01 02         [24] 1257 	cjne	r7,#0x01,00225$
+      000565 80 03            [24] 1258 	sjmp	00134$
+      000567                       1259 00225$:
+      000567 BF 03 44         [24] 1260 	cjne	r7,#0x03,00138$
+                                   1261 ;	../../../../cpu/cc253x/usb/common/usb-core.c:374: case CLEAR_FEATURE:
+      00056A                       1262 00134$:
+                                   1263 ;	../../../../cpu/cc253x/usb/common/usb-core.c:375: if(usb_setup_buffer.wValue == ENDPOINT_HALT_FEATURE) {
+      00056A 90r00r02         [24] 1264 	mov	dptr,#(_usb_setup_buffer + 0x0002)
+      00056D E0               [24] 1265 	movx	a,@dptr
+      00056E FD               [12] 1266 	mov	r5,a
+      00056F A3               [24] 1267 	inc	dptr
+      000570 E0               [24] 1268 	movx	a,@dptr
+      000571 FE               [12] 1269 	mov	r6,a
+      000572 4D               [12] 1270 	orl	a,r5
+                                   1271 ;	../../../../cpu/cc253x/usb/common/usb-core.c:377: usb_setup_buffer.bRequest == SET_FEATURE);
+      000573 70 2E            [24] 1272 	jnz	00136$
+      000575 BF 03 01         [24] 1273 	cjne	r7,#0x03,00229$
+      000578 04               [12] 1274 	inc	a
+      000579                       1275 00229$:
+      000579 FF               [12] 1276 	mov	r7,a
+      00057A 33               [12] 1277 	rlc	a
+      00057B 95 E0            [12] 1278 	subb	a,acc
+      00057D FE               [12] 1279 	mov	r6,a
+                                   1280 ;	../../../../cpu/cc253x/usb/common/usb-core.c:376: usb_arch_halt_endpoint(usb_setup_buffer.wIndex,
+      00057E 90r00r04         [24] 1281 	mov	dptr,#(_usb_setup_buffer + 0x0004)
+      000581 E0               [24] 1282 	movx	a,@dptr
+      000582 FC               [12] 1283 	mov	r4,a
+      000583 A3               [24] 1284 	inc	dptr
+      000584 E0               [24] 1285 	movx	a,@dptr
+      000585 C0 07            [24] 1286 	push	ar7
+      000587 C0 06            [24] 1287 	push	ar6
+      000589 8C 82            [24] 1288 	mov	dpl,r4
+      00058B 78r00            [12] 1289 	mov	r0,#_usb_arch_halt_endpoint
+      00058D 79s00            [12] 1290 	mov	r1,#(_usb_arch_halt_endpoint >> 8)
+      00058F 7As00            [12] 1291 	mov	r2,#(_usb_arch_halt_endpoint >> 16)
+      000591 12r00r00         [24] 1292 	lcall	__sdcc_banked_call
+      000594 15 81            [12] 1293 	dec	sp
+      000596 15 81            [12] 1294 	dec	sp
+                                   1295 ;	../../../../cpu/cc253x/usb/common/usb-core.c:378: usb_send_ctrl_status();
+      000598 78r2E            [12] 1296 	mov	r0,#_usb_send_ctrl_status
+      00059A 79s01            [12] 1297 	mov	r1,#(_usb_send_ctrl_status >> 8)
+      00059C 7As00            [12] 1298 	mov	r2,#(_usb_send_ctrl_status >> 16)
+      00059E 12r00r00         [24] 1299 	lcall	__sdcc_banked_call
+      0005A1 80 15            [24] 1300 	sjmp	00141$
+      0005A3                       1301 00136$:
+                                   1302 ;	../../../../cpu/cc253x/usb/common/usb-core.c:380: usb_error_stall();
+      0005A3 78r19            [12] 1303 	mov	r0,#_usb_error_stall
+      0005A5 79s01            [12] 1304 	mov	r1,#(_usb_error_stall >> 8)
+      0005A7 7As00            [12] 1305 	mov	r2,#(_usb_error_stall >> 16)
+      0005A9 12r00r00         [24] 1306 	lcall	__sdcc_banked_call
+                                   1307 ;	../../../../cpu/cc253x/usb/common/usb-core.c:382: break;
+                                   1308 ;	../../../../cpu/cc253x/usb/common/usb-core.c:383: default:
+      0005AC 80 0A            [24] 1309 	sjmp	00141$
+      0005AE                       1310 00138$:
+                                   1311 ;	../../../../cpu/cc253x/usb/common/usb-core.c:384: return 0;
+      0005AE 90 00 00         [24] 1312 	mov	dptr,#0x0000
+                                   1313 ;	../../../../cpu/cc253x/usb/common/usb-core.c:413: default:
+      0005B1 80 08            [24] 1314 	sjmp	00142$
+      0005B3                       1315 00140$:
+                                   1316 ;	../../../../cpu/cc253x/usb/common/usb-core.c:414: return 0;
+      0005B3 90 00 00         [24] 1317 	mov	dptr,#0x0000
+                                   1318 ;	../../../../cpu/cc253x/usb/common/usb-core.c:415: }
+      0005B6 80 03            [24] 1319 	sjmp	00142$
+      0005B8                       1320 00141$:
+                                   1321 ;	../../../../cpu/cc253x/usb/common/usb-core.c:416: return 1;
+      0005B8 90 00 01         [24] 1322 	mov	dptr,#0x0001
+      0005BB                       1323 00142$:
+      0005BB 02r00r00         [24] 1324 	ljmp	__sdcc_banked_ret
+                                   1325 ;------------------------------------------------------------
+                                   1326 ;Allocation info for local variables in function 'submit_setup'
+                                   1327 ;------------------------------------------------------------
+                                   1328 ;	../../../../cpu/cc253x/usb/common/usb-core.c:433: submit_setup(void)
+                                   1329 ;	-----------------------------------------
+                                   1330 ;	 function submit_setup
+                                   1331 ;	-----------------------------------------
+      0005BE                       1332 _submit_setup:
+                                   1333 ;	../../../../cpu/cc253x/usb/common/usb-core.c:435: ctrl_buffer.next = NULL;
+      0005BE 90r00r08         [24] 1334 	mov	dptr,#_ctrl_buffer
+      0005C1 E4               [12] 1335 	clr	a
+      0005C2 F0               [24] 1336 	movx	@dptr,a
+      0005C3 E4               [12] 1337 	clr	a
+      0005C4 A3               [24] 1338 	inc	dptr
+      0005C5 F0               [24] 1339 	movx	@dptr,a
+      0005C6 E4               [12] 1340 	clr	a
+      0005C7 A3               [24] 1341 	inc	dptr
+      0005C8 F0               [24] 1342 	movx	@dptr,a
+                                   1343 ;	../../../../cpu/cc253x/usb/common/usb-core.c:436: ctrl_buffer.data = (uint8_t *) & usb_setup_buffer;
+      0005C9 90r00r0B         [24] 1344 	mov	dptr,#(_ctrl_buffer + 0x0003)
+      0005CC 74r00            [12] 1345 	mov	a,#_usb_setup_buffer
+      0005CE F0               [24] 1346 	movx	@dptr,a
+      0005CF 74s00            [12] 1347 	mov	a,#(_usb_setup_buffer >> 8)
+      0005D1 A3               [24] 1348 	inc	dptr
+      0005D2 F0               [24] 1349 	movx	@dptr,a
+      0005D3 E4               [12] 1350 	clr	a
+      0005D4 A3               [24] 1351 	inc	dptr
+      0005D5 F0               [24] 1352 	movx	@dptr,a
+                                   1353 ;	../../../../cpu/cc253x/usb/common/usb-core.c:437: ctrl_buffer.left = sizeof(usb_setup_buffer);
+      0005D6 90r00r0E         [24] 1354 	mov	dptr,#(_ctrl_buffer + 0x0006)
+      0005D9 74 08            [12] 1355 	mov	a,#0x08
+      0005DB F0               [24] 1356 	movx	@dptr,a
+      0005DC E4               [12] 1357 	clr	a
+      0005DD A3               [24] 1358 	inc	dptr
+      0005DE F0               [24] 1359 	movx	@dptr,a
+                                   1360 ;	../../../../cpu/cc253x/usb/common/usb-core.c:438: ctrl_buffer.flags = (USB_BUFFER_PACKET_END | USB_BUFFER_SETUP
+      0005DF 90r00r10         [24] 1361 	mov	dptr,#(_ctrl_buffer + 0x0008)
+      0005E2 74 2C            [12] 1362 	mov	a,#0x2C
+      0005E4 F0               [24] 1363 	movx	@dptr,a
+      0005E5 E4               [12] 1364 	clr	a
+      0005E6 A3               [24] 1365 	inc	dptr
+      0005E7 F0               [24] 1366 	movx	@dptr,a
+                                   1367 ;	../../../../cpu/cc253x/usb/common/usb-core.c:440: ctrl_buffer.id = SETUP_ID;
+      0005E8 90r00r12         [24] 1368 	mov	dptr,#(_ctrl_buffer + 0x000a)
+      0005EB 74 01            [12] 1369 	mov	a,#0x01
+      0005ED F0               [24] 1370 	movx	@dptr,a
+      0005EE E4               [12] 1371 	clr	a
+      0005EF A3               [24] 1372 	inc	dptr
+      0005F0 F0               [24] 1373 	movx	@dptr,a
+      0005F1 E4               [12] 1374 	clr	a
+      0005F2 A3               [24] 1375 	inc	dptr
+      0005F3 F0               [24] 1376 	movx	@dptr,a
+      0005F4 E4               [12] 1377 	clr	a
+      0005F5 A3               [24] 1378 	inc	dptr
+      0005F6 F0               [24] 1379 	movx	@dptr,a
+                                   1380 ;	../../../../cpu/cc253x/usb/common/usb-core.c:441: usb_submit_recv_buffer(0, &ctrl_buffer);
+      0005F7 74r08            [12] 1381 	mov	a,#_ctrl_buffer
+      0005F9 C0 E0            [24] 1382 	push	acc
+      0005FB 74s00            [12] 1383 	mov	a,#(_ctrl_buffer >> 8)
+      0005FD C0 E0            [24] 1384 	push	acc
+      0005FF E4               [12] 1385 	clr	a
+      000600 C0 E0            [24] 1386 	push	acc
+      000602 75 82 00         [24] 1387 	mov	dpl,#0x00
+      000605 78r00            [12] 1388 	mov	r0,#_usb_submit_recv_buffer
+      000607 79s00            [12] 1389 	mov	r1,#(_usb_submit_recv_buffer >> 8)
+      000609 7As00            [12] 1390 	mov	r2,#(_usb_submit_recv_buffer >> 16)
+      00060B 12r00r00         [24] 1391 	lcall	__sdcc_banked_call
+      00060E 15 81            [12] 1392 	dec	sp
+      000610 15 81            [12] 1393 	dec	sp
+      000612 15 81            [12] 1394 	dec	sp
+      000614 02r00r00         [24] 1395 	ljmp	__sdcc_banked_ret
+                                   1396 ;------------------------------------------------------------
+                                   1397 ;Allocation info for local variables in function 'process_thread_usb_process'
+                                   1398 ;------------------------------------------------------------
+                                   1399 ;ev                        Allocated to stack - sp -9
+                                   1400 ;data                      Allocated to stack - sp -12
+                                   1401 ;process_pt                Allocated to stack - sp -5
+                                   1402 ;PT_YIELD_FLAG             Allocated to registers r4 
+                                   1403 ;events                    Allocated to registers r3 r4 
+                                   1404 ;hook                      Allocated to registers r2 r3 r4 
+                                   1405 ;i                         Allocated to registers r6 r7 
+                                   1406 ;handler                   Allocated to stack - sp -2
+                                   1407 ;------------------------------------------------------------
+                                   1408 ;	../../../../cpu/cc253x/usb/common/usb-core.c:446: PROCESS_THREAD(usb_process, ev, data)
+                                   1409 ;	-----------------------------------------
+                                   1410 ;	 function process_thread_usb_process
+                                   1411 ;	-----------------------------------------
+      000617                       1412 _process_thread_usb_process:
+      000617 C0 82            [24] 1413 	push	dpl
+      000619 C0 83            [24] 1414 	push	dph
+      00061B C0 F0            [24] 1415 	push	b
+      00061D 05 81            [12] 1416 	inc	sp
+      00061F 05 81            [12] 1417 	inc	sp
+      000621 05 81            [12] 1418 	inc	sp
+                                   1419 ;	../../../../cpu/cc253x/usb/common/usb-core.c:448: PROCESS_BEGIN();
+      000623 7C 01            [12] 1420 	mov	r4,#0x01
+      000625 E5 81            [12] 1421 	mov	a,sp
+      000627 24 FB            [12] 1422 	add	a,#0xfb
+      000629 F8               [12] 1423 	mov	r0,a
+      00062A 86 82            [24] 1424 	mov	dpl,@r0
+      00062C 08               [12] 1425 	inc	r0
+      00062D 86 83            [24] 1426 	mov	dph,@r0
+      00062F 08               [12] 1427 	inc	r0
+      000630 86 F0            [24] 1428 	mov	b,@r0
+      000632 12r00r00         [24] 1429 	lcall	__gptrget
+      000635 FA               [12] 1430 	mov	r2,a
+      000636 A3               [24] 1431 	inc	dptr
+      000637 12r00r00         [24] 1432 	lcall	__gptrget
+      00063A FB               [12] 1433 	mov	r3,a
+      00063B BA 00 05         [24] 1434 	cjne	r2,#0x00,00263$
+      00063E BB 00 02         [24] 1435 	cjne	r3,#0x00,00263$
+      000641 80 0B            [24] 1436 	sjmp	00164$
+      000643                       1437 00263$:
+      000643 BA C3 05         [24] 1438 	cjne	r2,#0xC3,00264$
+      000646 BB 01 02         [24] 1439 	cjne	r3,#0x01,00264$
+      000649 80 1D            [24] 1440 	sjmp	00102$
+      00064B                       1441 00264$:
+      00064B 02r09rDB         [24] 1442 	ljmp	00166$
+                                   1443 ;	../../../../cpu/cc253x/usb/common/usb-core.c:450: while(1) {
+      00064E                       1444 00164$:
+                                   1445 ;	../../../../cpu/cc253x/usb/common/usb-core.c:451: PROCESS_WAIT_EVENT();
+      00064E 7C 00            [12] 1446 	mov	r4,#0x00
+      000650 E5 81            [12] 1447 	mov	a,sp
+      000652 24 FB            [12] 1448 	add	a,#0xfb
+      000654 F8               [12] 1449 	mov	r0,a
+      000655 86 82            [24] 1450 	mov	dpl,@r0
+      000657 08               [12] 1451 	inc	r0
+      000658 86 83            [24] 1452 	mov	dph,@r0
+      00065A 08               [12] 1453 	inc	r0
+      00065B 86 F0            [24] 1454 	mov	b,@r0
+      00065D 74 C3            [12] 1455 	mov	a,#0xC3
+      00065F 12r00r00         [24] 1456 	lcall	__gptrput
+      000662 A3               [24] 1457 	inc	dptr
+      000663 74 01            [12] 1458 	mov	a,#0x01
+      000665 12r00r00         [24] 1459 	lcall	__gptrput
+      000668                       1460 00102$:
+      000668 EC               [12] 1461 	mov	a,r4
+      000669 70 06            [24] 1462 	jnz	00106$
+      00066B 75 82 01         [24] 1463 	mov	dpl,#0x01
+      00066E 02r09rF4         [24] 1464 	ljmp	00170$
+      000671                       1465 00106$:
+                                   1466 ;	../../../../cpu/cc253x/usb/common/usb-core.c:452: if(ev == PROCESS_EVENT_EXIT)
+      000671 E5 81            [12] 1467 	mov	a,sp
+      000673 24 F7            [12] 1468 	add	a,#0xf7
+      000675 F8               [12] 1469 	mov	r0,a
+      000676 B6 83 03         [24] 1470 	cjne	@r0,#0x83,00266$
+      000679 02r09rDB         [24] 1471 	ljmp	00166$
+      00067C                       1472 00266$:
+                                   1473 ;	../../../../cpu/cc253x/usb/common/usb-core.c:454: if(ev == PROCESS_EVENT_POLL) {
+      00067C E5 81            [12] 1474 	mov	a,sp
+      00067E 24 F7            [12] 1475 	add	a,#0xf7
+      000680 F8               [12] 1476 	mov	r0,a
+      000681 B6 82 CA         [24] 1477 	cjne	@r0,#0x82,00164$
+                                   1478 ;	../../../../cpu/cc253x/usb/common/usb-core.c:455: unsigned int events = usb_arch_get_global_events();
+      000684 78r00            [12] 1479 	mov	r0,#_usb_arch_get_global_events
+      000686 79s00            [12] 1480 	mov	r1,#(_usb_arch_get_global_events >> 8)
+      000688 7As00            [12] 1481 	mov	r2,#(_usb_arch_get_global_events >> 16)
+      00068A 12r00r00         [24] 1482 	lcall	__sdcc_banked_call
+      00068D AB 82            [24] 1483 	mov	r3,dpl
+      00068F AC 83            [24] 1484 	mov	r4,dph
+                                   1485 ;	../../../../cpu/cc253x/usb/common/usb-core.c:457: if(events) {
+      000691 EB               [12] 1486 	mov	a,r3
+      000692 4C               [12] 1487 	orl	a,r4
+      000693 60 4E            [24] 1488 	jz	00117$
+                                   1489 ;	../../../../cpu/cc253x/usb/common/usb-core.c:458: if(events & USB_EVENT_RESET) {
+      000695 EB               [12] 1490 	mov	a,r3
+      000696 30 E3 22         [24] 1491 	jnb	acc.3,00111$
+                                   1492 ;	../../../../cpu/cc253x/usb/common/usb-core.c:459: submit_setup();
+      000699 C0 04            [24] 1493 	push	ar4
+      00069B C0 03            [24] 1494 	push	ar3
+      00069D 78rBE            [12] 1495 	mov	r0,#_submit_setup
+      00069F 79s05            [12] 1496 	mov	r1,#(_submit_setup >> 8)
+      0006A1 7As00            [12] 1497 	mov	r2,#(_submit_setup >> 16)
+      0006A3 12r00r00         [24] 1498 	lcall	__sdcc_banked_call
+                                   1499 ;	../../../../cpu/cc253x/usb/common/usb-core.c:460: usb_configuration_value = 0;
+      0006A6 90r00r18         [24] 1500 	mov	dptr,#_usb_configuration_value
+      0006A9 E4               [12] 1501 	clr	a
+      0006AA F0               [24] 1502 	movx	@dptr,a
+                                   1503 ;	../../../../cpu/cc253x/usb/common/usb-core.c:461: notify_user(USB_EVENT_RESET);
+      0006AB 90 00 08         [24] 1504 	mov	dptr,#0x0008
+      0006AE 78r2A            [12] 1505 	mov	r0,#_notify_user
+      0006B0 79s00            [12] 1506 	mov	r1,#(_notify_user >> 8)
+      0006B2 7As00            [12] 1507 	mov	r2,#(_notify_user >> 16)
+      0006B4 12r00r00         [24] 1508 	lcall	__sdcc_banked_call
+      0006B7 D0 03            [24] 1509 	pop	ar3
+      0006B9 D0 04            [24] 1510 	pop	ar4
+      0006BB                       1511 00111$:
+                                   1512 ;	../../../../cpu/cc253x/usb/common/usb-core.c:463: if(events & USB_EVENT_SUSPEND) {
+      0006BB EB               [12] 1513 	mov	a,r3
+      0006BC 30 E1 14         [24] 1514 	jnb	acc.1,00113$
+                                   1515 ;	../../../../cpu/cc253x/usb/common/usb-core.c:464: notify_user(USB_EVENT_SUSPEND);
+      0006BF 90 00 02         [24] 1516 	mov	dptr,#0x0002
+      0006C2 C0 04            [24] 1517 	push	ar4
+      0006C4 C0 03            [24] 1518 	push	ar3
+      0006C6 78r2A            [12] 1519 	mov	r0,#_notify_user
+      0006C8 79s00            [12] 1520 	mov	r1,#(_notify_user >> 8)
+      0006CA 7As00            [12] 1521 	mov	r2,#(_notify_user >> 16)
+      0006CC 12r00r00         [24] 1522 	lcall	__sdcc_banked_call
+      0006CF D0 03            [24] 1523 	pop	ar3
+      0006D1 D0 04            [24] 1524 	pop	ar4
+      0006D3                       1525 00113$:
+                                   1526 ;	../../../../cpu/cc253x/usb/common/usb-core.c:466: if(events & USB_EVENT_RESUME) {
+      0006D3 EB               [12] 1527 	mov	a,r3
+      0006D4 30 E2 0C         [24] 1528 	jnb	acc.2,00117$
+                                   1529 ;	../../../../cpu/cc253x/usb/common/usb-core.c:467: notify_user(USB_EVENT_RESUME);
+      0006D7 90 00 04         [24] 1530 	mov	dptr,#0x0004
+      0006DA 78r2A            [12] 1531 	mov	r0,#_notify_user
+      0006DC 79s00            [12] 1532 	mov	r1,#(_notify_user >> 8)
+      0006DE 7As00            [12] 1533 	mov	r2,#(_notify_user >> 16)
+      0006E0 12r00r00         [24] 1534 	lcall	__sdcc_banked_call
+      0006E3                       1535 00117$:
+                                   1536 ;	../../../../cpu/cc253x/usb/common/usb-core.c:471: events = usb_get_ep_events(0);
+      0006E3 75 82 00         [24] 1537 	mov	dpl,#0x00
+      0006E6 78r00            [12] 1538 	mov	r0,#_usb_get_ep_events
+      0006E8 79s00            [12] 1539 	mov	r1,#(_usb_get_ep_events >> 8)
+      0006EA 7As00            [12] 1540 	mov	r2,#(_usb_get_ep_events >> 16)
+      0006EC 12r00r00         [24] 1541 	lcall	__sdcc_banked_call
+      0006EF AA 82            [24] 1542 	mov	r2,dpl
+      0006F1 AF 83            [24] 1543 	mov	r7,dph
+      0006F3 8A 03            [24] 1544 	mov	ar3,r2
+      0006F5 8F 04            [24] 1545 	mov	ar4,r7
+                                   1546 ;	../../../../cpu/cc253x/usb/common/usb-core.c:472: if(events) {
+      0006F7 EB               [12] 1547 	mov	a,r3
+      0006F8 4C               [12] 1548 	orl	a,r4
+      0006F9 70 03            [24] 1549 	jnz	00273$
+      0006FB 02r06r4E         [24] 1550 	ljmp	00164$
+      0006FE                       1551 00273$:
+                                   1552 ;	../../../../cpu/cc253x/usb/common/usb-core.c:473: if((events & USB_EP_EVENT_NOTIFICATION)
+      0006FE EB               [12] 1553 	mov	a,r3
+      0006FF 20 E0 03         [24] 1554 	jb	acc.0,00274$
+      000702 02r06r4E         [24] 1555 	ljmp	00164$
+      000705                       1556 00274$:
+                                   1557 ;	../../../../cpu/cc253x/usb/common/usb-core.c:474: && !(ctrl_buffer.flags & USB_BUFFER_SUBMITTED)) {
+      000705 90r00r10         [24] 1558 	mov	dptr,#(_ctrl_buffer + 0x0008)
+      000708 E0               [24] 1559 	movx	a,@dptr
+      000709 FB               [12] 1560 	mov	r3,a
+      00070A A3               [24] 1561 	inc	dptr
+      00070B E0               [24] 1562 	movx	a,@dptr
+      00070C FC               [12] 1563 	mov	r4,a
+      00070D EB               [12] 1564 	mov	a,r3
+      00070E 30 E0 03         [24] 1565 	jnb	acc.0,00275$
+      000711 02r06r4E         [24] 1566 	ljmp	00164$
+      000714                       1567 00275$:
+                                   1568 ;	../../../../cpu/cc253x/usb/common/usb-core.c:476: if(ctrl_buffer.flags & USB_BUFFER_FAILED) {
+      000714 EB               [12] 1569 	mov	a,r3
+      000715 30 E7 0C         [24] 1570 	jnb	acc.7,00154$
+                                   1571 ;	../../../../cpu/cc253x/usb/common/usb-core.c:480: submit_setup();
+      000718 78rBE            [12] 1572 	mov	r0,#_submit_setup
+      00071A 79s05            [12] 1573 	mov	r1,#(_submit_setup >> 8)
+      00071C 7As00            [12] 1574 	mov	r2,#(_submit_setup >> 16)
+      00071E 12r00r00         [24] 1575 	lcall	__sdcc_banked_call
+      000721 02r06r4E         [24] 1576 	ljmp	00164$
+      000724                       1577 00154$:
+                                   1578 ;	../../../../cpu/cc253x/usb/common/usb-core.c:481: } else if(ctrl_buffer.flags & USB_BUFFER_SETUP) {
+      000724 EB               [12] 1579 	mov	a,r3
+      000725 20 E5 03         [24] 1580 	jb	acc.5,00277$
+      000728 02r08r80         [24] 1581 	ljmp	00151$
+      00072B                       1582 00277$:
+                                   1583 ;	../../../../cpu/cc253x/usb/common/usb-core.c:482: struct USBRequestHandlerHook *hook = usb_request_handler_hooks;
+      00072B 90r00r00         [24] 1584 	mov	dptr,#_usb_request_handler_hooks
+      00072E E0               [24] 1585 	movx	a,@dptr
+      00072F FA               [12] 1586 	mov	r2,a
+      000730 A3               [24] 1587 	inc	dptr
+      000731 E0               [24] 1588 	movx	a,@dptr
+      000732 FB               [12] 1589 	mov	r3,a
+      000733 A3               [24] 1590 	inc	dptr
+      000734 E0               [24] 1591 	movx	a,@dptr
+      000735 FC               [12] 1592 	mov	r4,a
+                                   1593 ;	../../../../cpu/cc253x/usb/common/usb-core.c:488: for(i = 0; i < 8; i++)
+      000736 7E 08            [12] 1594 	mov	r6,#0x08
+      000738 7F 00            [12] 1595 	mov	r7,#0x00
+      00073A                       1596 00169$:
+      00073A 1E               [12] 1597 	dec	r6
+      00073B BE FF 01         [24] 1598 	cjne	r6,#0xFF,00278$
+      00073E 1F               [12] 1599 	dec	r7
+      00073F                       1600 00278$:
+      00073F EE               [12] 1601 	mov	a,r6
+      000740 4F               [12] 1602 	orl	a,r7
+      000741 70 F7            [24] 1603 	jnz	00169$
+                                   1604 ;	../../../../cpu/cc253x/usb/common/usb-core.c:493: while(hook) {
+      000743                       1605 00124$:
+      000743 EA               [12] 1606 	mov	a,r2
+      000744 4B               [12] 1607 	orl	a,r3
+      000745 70 03            [24] 1608 	jnz	00280$
+      000747 02r08r58         [24] 1609 	ljmp	00126$
+      00074A                       1610 00280$:
+                                   1611 ;	../../../../cpu/cc253x/usb/common/usb-core.c:494: const struct USBRequestHandler *handler = hook->handler;
+      00074A 74 03            [12] 1612 	mov	a,#0x03
+      00074C 2A               [12] 1613 	add	a,r2
+      00074D FD               [12] 1614 	mov	r5,a
+      00074E E4               [12] 1615 	clr	a
+      00074F 3B               [12] 1616 	addc	a,r3
+      000750 FE               [12] 1617 	mov	r6,a
+      000751 8C 07            [24] 1618 	mov	ar7,r4
+      000753 8D 82            [24] 1619 	mov	dpl,r5
+      000755 8E 83            [24] 1620 	mov	dph,r6
+      000757 8F F0            [24] 1621 	mov	b,r7
+      000759 A8 81            [24] 1622 	mov	r0,sp
+      00075B 18               [12] 1623 	dec	r0
+      00075C 18               [12] 1624 	dec	r0
+      00075D 12r00r00         [24] 1625 	lcall	__gptrget
+      000760 F6               [12] 1626 	mov	@r0,a
+      000761 A3               [24] 1627 	inc	dptr
+      000762 12r00r00         [24] 1628 	lcall	__gptrget
+      000765 08               [12] 1629 	inc	r0
+      000766 F6               [12] 1630 	mov	@r0,a
+      000767 A3               [24] 1631 	inc	dptr
+      000768 12r00r00         [24] 1632 	lcall	__gptrget
+      00076B 08               [12] 1633 	inc	r0
+      00076C F6               [12] 1634 	mov	@r0,a
+                                   1635 ;	../../../../cpu/cc253x/usb/common/usb-core.c:497: if(((handler->request_type ^ usb_setup_buffer.bmRequestType)
+      00076D C0 02            [24] 1636 	push	ar2
+      00076F C0 03            [24] 1637 	push	ar3
+      000771 C0 04            [24] 1638 	push	ar4
+      000773 E5 81            [12] 1639 	mov	a,sp
+      000775 24 FB            [12] 1640 	add	a,#0xfb
+      000777 F8               [12] 1641 	mov	r0,a
+      000778 86 82            [24] 1642 	mov	dpl,@r0
+      00077A 08               [12] 1643 	inc	r0
+      00077B 86 83            [24] 1644 	mov	dph,@r0
+      00077D 08               [12] 1645 	inc	r0
+      00077E 86 F0            [24] 1646 	mov	b,@r0
+      000780 12r00r00         [24] 1647 	lcall	__gptrget
+      000783 FC               [12] 1648 	mov	r4,a
+      000784 90r00r00         [24] 1649 	mov	dptr,#_usb_setup_buffer
+      000787 E0               [24] 1650 	movx	a,@dptr
+      000788 62 04            [12] 1651 	xrl	ar4,a
+                                   1652 ;	../../../../cpu/cc253x/usb/common/usb-core.c:498: & handler->request_type_mask) == 0
+      00078A E5 81            [12] 1653 	mov	a,sp
+      00078C 24 FB            [12] 1654 	add	a,#0xfb
+      00078E F8               [12] 1655 	mov	r0,a
+      00078F 74 01            [12] 1656 	mov	a,#0x01
+      000791 26               [12] 1657 	add	a,@r0
+      000792 FA               [12] 1658 	mov	r2,a
+      000793 E4               [12] 1659 	clr	a
+      000794 08               [12] 1660 	inc	r0
+      000795 36               [12] 1661 	addc	a,@r0
+      000796 FB               [12] 1662 	mov	r3,a
+      000797 08               [12] 1663 	inc	r0
+      000798 86 07            [24] 1664 	mov	ar7,@r0
+      00079A 8A 82            [24] 1665 	mov	dpl,r2
+      00079C 8B 83            [24] 1666 	mov	dph,r3
+      00079E 8F F0            [24] 1667 	mov	b,r7
+      0007A0 12r00r00         [24] 1668 	lcall	__gptrget
+      0007A3 5C               [12] 1669 	anl	a,r4
+      0007A4 D0 04            [24] 1670 	pop	ar4
+      0007A6 D0 03            [24] 1671 	pop	ar3
+      0007A8 D0 02            [24] 1672 	pop	ar2
+      0007AA 60 03            [24] 1673 	jz	00281$
+      0007AC 02r08r41         [24] 1674 	ljmp	00122$
+      0007AF                       1675 00281$:
+                                   1676 ;	../../../../cpu/cc253x/usb/common/usb-core.c:499: && ((handler->request ^ usb_setup_buffer.bRequest)
+      0007AF C0 02            [24] 1677 	push	ar2
+      0007B1 C0 03            [24] 1678 	push	ar3
+      0007B3 C0 04            [24] 1679 	push	ar4
+      0007B5 E5 81            [12] 1680 	mov	a,sp
+      0007B7 24 FB            [12] 1681 	add	a,#0xfb
+      0007B9 F8               [12] 1682 	mov	r0,a
+      0007BA 74 02            [12] 1683 	mov	a,#0x02
+      0007BC 26               [12] 1684 	add	a,@r0
+      0007BD FD               [12] 1685 	mov	r5,a
+      0007BE E4               [12] 1686 	clr	a
+      0007BF 08               [12] 1687 	inc	r0
+      0007C0 36               [12] 1688 	addc	a,@r0
+      0007C1 FE               [12] 1689 	mov	r6,a
+      0007C2 08               [12] 1690 	inc	r0
+      0007C3 86 07            [24] 1691 	mov	ar7,@r0
+      0007C5 8D 82            [24] 1692 	mov	dpl,r5
+      0007C7 8E 83            [24] 1693 	mov	dph,r6
+      0007C9 8F F0            [24] 1694 	mov	b,r7
+      0007CB 12r00r00         [24] 1695 	lcall	__gptrget
+      0007CE FD               [12] 1696 	mov	r5,a
+      0007CF 90r00r01         [24] 1697 	mov	dptr,#(_usb_setup_buffer + 0x0001)
+      0007D2 E0               [24] 1698 	movx	a,@dptr
+      0007D3 62 05            [12] 1699 	xrl	ar5,a
+                                   1700 ;	../../../../cpu/cc253x/usb/common/usb-core.c:500: & handler->request_mask) == 0) {
+      0007D5 E5 81            [12] 1701 	mov	a,sp
+      0007D7 24 FB            [12] 1702 	add	a,#0xfb
+      0007D9 F8               [12] 1703 	mov	r0,a
+      0007DA 74 03            [12] 1704 	mov	a,#0x03
+      0007DC 26               [12] 1705 	add	a,@r0
+      0007DD FC               [12] 1706 	mov	r4,a
+      0007DE E4               [12] 1707 	clr	a
+      0007DF 08               [12] 1708 	inc	r0
+      0007E0 36               [12] 1709 	addc	a,@r0
+      0007E1 FE               [12] 1710 	mov	r6,a
+      0007E2 08               [12] 1711 	inc	r0
+      0007E3 86 07            [24] 1712 	mov	ar7,@r0
+      0007E5 8C 82            [24] 1713 	mov	dpl,r4
+      0007E7 8E 83            [24] 1714 	mov	dph,r6
+      0007E9 8F F0            [24] 1715 	mov	b,r7
+      0007EB 12r00r00         [24] 1716 	lcall	__gptrget
+      0007EE 5D               [12] 1717 	anl	a,r5
+      0007EF D0 04            [24] 1718 	pop	ar4
+      0007F1 D0 03            [24] 1719 	pop	ar3
+      0007F3 D0 02            [24] 1720 	pop	ar2
+      0007F5 70 4A            [24] 1721 	jnz	00122$
+                                   1722 ;	../../../../cpu/cc253x/usb/common/usb-core.c:501: if(handler->handler_func())
+      0007F7 A8 81            [24] 1723 	mov	r0,sp
+      0007F9 18               [12] 1724 	dec	r0
+      0007FA 18               [12] 1725 	dec	r0
+      0007FB 74 04            [12] 1726 	mov	a,#0x04
+      0007FD 26               [12] 1727 	add	a,@r0
+      0007FE FD               [12] 1728 	mov	r5,a
+      0007FF E4               [12] 1729 	clr	a
+      000800 08               [12] 1730 	inc	r0
+      000801 36               [12] 1731 	addc	a,@r0
+      000802 FE               [12] 1732 	mov	r6,a
+      000803 08               [12] 1733 	inc	r0
+      000804 86 07            [24] 1734 	mov	ar7,@r0
+      000806 8D 82            [24] 1735 	mov	dpl,r5
+      000808 8E 83            [24] 1736 	mov	dph,r6
+      00080A 8F F0            [24] 1737 	mov	b,r7
+      00080C 12r00r00         [24] 1738 	lcall	__gptrget
+      00080F FD               [12] 1739 	mov	r5,a
+      000810 A3               [24] 1740 	inc	dptr
+      000811 12r00r00         [24] 1741 	lcall	__gptrget
+      000814 FE               [12] 1742 	mov	r6,a
+      000815 A3               [24] 1743 	inc	dptr
+      000816 12r00r00         [24] 1744 	lcall	__gptrget
+      000819 FF               [12] 1745 	mov	r7,a
+      00081A C0 07            [24] 1746 	push	ar7
+      00081C C0 04            [24] 1747 	push	ar4
+      00081E C0 03            [24] 1748 	push	ar3
+      000820 C0 02            [24] 1749 	push	ar2
+      000822 C0 05            [24] 1750 	push	ar5
+      000824 C0 06            [24] 1751 	push	ar6
+      000826 C0 07            [24] 1752 	push	ar7
+      000828 D0 02            [24] 1753 	pop	ar2
+      00082A D0 01            [24] 1754 	pop	ar1
+      00082C D0 00            [24] 1755 	pop	ar0
+      00082E 12r00r00         [24] 1756 	lcall	__sdcc_banked_call
+      000831 AD 82            [24] 1757 	mov	r5,dpl
+      000833 AE 83            [24] 1758 	mov	r6,dph
+      000835 D0 02            [24] 1759 	pop	ar2
+      000837 D0 03            [24] 1760 	pop	ar3
+      000839 D0 04            [24] 1761 	pop	ar4
+      00083B D0 07            [24] 1762 	pop	ar7
+      00083D ED               [12] 1763 	mov	a,r5
+      00083E 4E               [12] 1764 	orl	a,r6
+      00083F 70 17            [24] 1765 	jnz	00126$
+                                   1766 ;	../../../../cpu/cc253x/usb/common/usb-core.c:502: break;
+      000841                       1767 00122$:
+                                   1768 ;	../../../../cpu/cc253x/usb/common/usb-core.c:504: hook = hook->next;
+      000841 8A 82            [24] 1769 	mov	dpl,r2
+      000843 8B 83            [24] 1770 	mov	dph,r3
+      000845 8C F0            [24] 1771 	mov	b,r4
+      000847 12r00r00         [24] 1772 	lcall	__gptrget
+      00084A FA               [12] 1773 	mov	r2,a
+      00084B A3               [24] 1774 	inc	dptr
+      00084C 12r00r00         [24] 1775 	lcall	__gptrget
+      00084F FB               [12] 1776 	mov	r3,a
+      000850 A3               [24] 1777 	inc	dptr
+      000851 12r00r00         [24] 1778 	lcall	__gptrget
+      000854 FC               [12] 1779 	mov	r4,a
+      000855 02r07r43         [24] 1780 	ljmp	00124$
+      000858                       1781 00126$:
+                                   1782 ;	../../../../cpu/cc253x/usb/common/usb-core.c:506: if(!hook) {
+      000858 EA               [12] 1783 	mov	a,r2
+      000859 4B               [12] 1784 	orl	a,r3
+      00085A 70 09            [24] 1785 	jnz	00128$
+                                   1786 ;	../../../../cpu/cc253x/usb/common/usb-core.c:508: usb_error_stall();
+      00085C 78r19            [12] 1787 	mov	r0,#_usb_error_stall
+      00085E 79s01            [12] 1788 	mov	r1,#(_usb_error_stall >> 8)
+      000860 7As00            [12] 1789 	mov	r2,#(_usb_error_stall >> 16)
+      000862 12r00r00         [24] 1790 	lcall	__sdcc_banked_call
+      000865                       1791 00128$:
+                                   1792 ;	../../../../cpu/cc253x/usb/common/usb-core.c:516: if(error_stall) {
+      000865 90r00r09         [24] 1793 	mov	dptr,#_error_stall
+      000868 E0               [24] 1794 	movx	a,@dptr
+      000869 FF               [12] 1795 	mov	r7,a
+      00086A 70 03            [24] 1796 	jnz	00285$
+      00086C 02r06r4E         [24] 1797 	ljmp	00164$
+      00086F                       1798 00285$:
+                                   1799 ;	../../../../cpu/cc253x/usb/common/usb-core.c:517: error_stall = 0;
+      00086F 90r00r09         [24] 1800 	mov	dptr,#_error_stall
+      000872 E4               [12] 1801 	clr	a
+      000873 F0               [24] 1802 	movx	@dptr,a
+                                   1803 ;	../../../../cpu/cc253x/usb/common/usb-core.c:518: submit_setup();
+      000874 78rBE            [12] 1804 	mov	r0,#_submit_setup
+      000876 79s05            [12] 1805 	mov	r1,#(_submit_setup >> 8)
+      000878 7As00            [12] 1806 	mov	r2,#(_submit_setup >> 16)
+      00087A 12r00r00         [24] 1807 	lcall	__sdcc_banked_call
+      00087D 02r06r4E         [24] 1808 	ljmp	00164$
+      000880                       1809 00151$:
+                                   1810 ;	../../../../cpu/cc253x/usb/common/usb-core.c:521: if(ctrl_buffer.id == IN_ID) {
+      000880 90r00r12         [24] 1811 	mov	dptr,#(_ctrl_buffer + 0x000a)
+      000883 E0               [24] 1812 	movx	a,@dptr
+      000884 FC               [12] 1813 	mov	r4,a
+      000885 A3               [24] 1814 	inc	dptr
+      000886 E0               [24] 1815 	movx	a,@dptr
+      000887 FD               [12] 1816 	mov	r5,a
+      000888 A3               [24] 1817 	inc	dptr
+      000889 E0               [24] 1818 	movx	a,@dptr
+      00088A FE               [12] 1819 	mov	r6,a
+      00088B A3               [24] 1820 	inc	dptr
+      00088C E0               [24] 1821 	movx	a,@dptr
+      00088D FF               [12] 1822 	mov	r7,a
+      00088E BC 03 5F         [24] 1823 	cjne	r4,#0x03,00148$
+      000891 BD 00 5C         [24] 1824 	cjne	r5,#0x00,00148$
+      000894 BE 00 59         [24] 1825 	cjne	r6,#0x00,00148$
+      000897 BF 00 56         [24] 1826 	cjne	r7,#0x00,00148$
+                                   1827 ;	../../../../cpu/cc253x/usb/common/usb-core.c:524: ctrl_buffer.flags = USB_BUFFER_NOTIFY;
+      00089A 90r00r10         [24] 1828 	mov	dptr,#(_ctrl_buffer + 0x0008)
+      00089D 74 08            [12] 1829 	mov	a,#0x08
+      00089F F0               [24] 1830 	movx	@dptr,a
+      0008A0 E4               [12] 1831 	clr	a
+      0008A1 A3               [24] 1832 	inc	dptr
+      0008A2 F0               [24] 1833 	movx	@dptr,a
+                                   1834 ;	../../../../cpu/cc253x/usb/common/usb-core.c:525: ctrl_buffer.next = NULL;
+      0008A3 90r00r08         [24] 1835 	mov	dptr,#_ctrl_buffer
+      0008A6 E4               [12] 1836 	clr	a
+      0008A7 F0               [24] 1837 	movx	@dptr,a
+      0008A8 E4               [12] 1838 	clr	a
+      0008A9 A3               [24] 1839 	inc	dptr
+      0008AA F0               [24] 1840 	movx	@dptr,a
+      0008AB E4               [12] 1841 	clr	a
+      0008AC A3               [24] 1842 	inc	dptr
+      0008AD F0               [24] 1843 	movx	@dptr,a
+                                   1844 ;	../../../../cpu/cc253x/usb/common/usb-core.c:526: ctrl_buffer.data = NULL;
+      0008AE 90r00r0B         [24] 1845 	mov	dptr,#(_ctrl_buffer + 0x0003)
+      0008B1 E4               [12] 1846 	clr	a
+      0008B2 F0               [24] 1847 	movx	@dptr,a
+      0008B3 E4               [12] 1848 	clr	a
+      0008B4 A3               [24] 1849 	inc	dptr
+      0008B5 F0               [24] 1850 	movx	@dptr,a
+      0008B6 E4               [12] 1851 	clr	a
+      0008B7 A3               [24] 1852 	inc	dptr
+      0008B8 F0               [24] 1853 	movx	@dptr,a
+                                   1854 ;	../../../../cpu/cc253x/usb/common/usb-core.c:527: ctrl_buffer.left = 0;
+      0008B9 90r00r0E         [24] 1855 	mov	dptr,#(_ctrl_buffer + 0x0006)
+      0008BC E4               [12] 1856 	clr	a
+      0008BD F0               [24] 1857 	movx	@dptr,a
+      0008BE E4               [12] 1858 	clr	a
+      0008BF A3               [24] 1859 	inc	dptr
+      0008C0 F0               [24] 1860 	movx	@dptr,a
+                                   1861 ;	../../../../cpu/cc253x/usb/common/usb-core.c:528: ctrl_buffer.id = STATUS_OUT_ID;
+      0008C1 90r00r12         [24] 1862 	mov	dptr,#(_ctrl_buffer + 0x000a)
+      0008C4 74 04            [12] 1863 	mov	a,#0x04
+      0008C6 F0               [24] 1864 	movx	@dptr,a
+      0008C7 E4               [12] 1865 	clr	a
+      0008C8 A3               [24] 1866 	inc	dptr
+      0008C9 F0               [24] 1867 	movx	@dptr,a
+      0008CA E4               [12] 1868 	clr	a
+      0008CB A3               [24] 1869 	inc	dptr
+      0008CC F0               [24] 1870 	movx	@dptr,a
+      0008CD E4               [12] 1871 	clr	a
+      0008CE A3               [24] 1872 	inc	dptr
+      0008CF F0               [24] 1873 	movx	@dptr,a
+                                   1874 ;	../../../../cpu/cc253x/usb/common/usb-core.c:529: usb_submit_recv_buffer(0, &ctrl_buffer);
+      0008D0 74r08            [12] 1875 	mov	a,#_ctrl_buffer
+      0008D2 C0 E0            [24] 1876 	push	acc
+      0008D4 74s00            [12] 1877 	mov	a,#(_ctrl_buffer >> 8)
+      0008D6 C0 E0            [24] 1878 	push	acc
+      0008D8 E4               [12] 1879 	clr	a
+      0008D9 C0 E0            [24] 1880 	push	acc
+      0008DB 75 82 00         [24] 1881 	mov	dpl,#0x00
+      0008DE 78r00            [12] 1882 	mov	r0,#_usb_submit_recv_buffer
+      0008E0 79s00            [12] 1883 	mov	r1,#(_usb_submit_recv_buffer >> 8)
+      0008E2 7As00            [12] 1884 	mov	r2,#(_usb_submit_recv_buffer >> 16)
+      0008E4 12r00r00         [24] 1885 	lcall	__sdcc_banked_call
+      0008E7 15 81            [12] 1886 	dec	sp
+      0008E9 15 81            [12] 1887 	dec	sp
+      0008EB 15 81            [12] 1888 	dec	sp
+      0008ED 02r06r4E         [24] 1889 	ljmp	00164$
+      0008F0                       1890 00148$:
+                                   1891 ;	../../../../cpu/cc253x/usb/common/usb-core.c:530: } else if(ctrl_buffer.id == STATUS_OUT_ID) {
+      0008F0 90r00r12         [24] 1892 	mov	dptr,#(_ctrl_buffer + 0x000a)
+      0008F3 E0               [24] 1893 	movx	a,@dptr
+      0008F4 FC               [12] 1894 	mov	r4,a
+      0008F5 A3               [24] 1895 	inc	dptr
+      0008F6 E0               [24] 1896 	movx	a,@dptr
+      0008F7 FD               [12] 1897 	mov	r5,a
+      0008F8 A3               [24] 1898 	inc	dptr
+      0008F9 E0               [24] 1899 	movx	a,@dptr
+      0008FA FE               [12] 1900 	mov	r6,a
+      0008FB A3               [24] 1901 	inc	dptr
+      0008FC E0               [24] 1902 	movx	a,@dptr
+      0008FD FF               [12] 1903 	mov	r7,a
+      0008FE BC 04 15         [24] 1904 	cjne	r4,#0x04,00145$
+      000901 BD 00 12         [24] 1905 	cjne	r5,#0x00,00145$
+      000904 BE 00 0F         [24] 1906 	cjne	r6,#0x00,00145$
+      000907 BF 00 0C         [24] 1907 	cjne	r7,#0x00,00145$
+                                   1908 ;	../../../../cpu/cc253x/usb/common/usb-core.c:532: submit_setup();
+      00090A 78rBE            [12] 1909 	mov	r0,#_submit_setup
+      00090C 79s05            [12] 1910 	mov	r1,#(_submit_setup >> 8)
+      00090E 7As00            [12] 1911 	mov	r2,#(_submit_setup >> 16)
+      000910 12r00r00         [24] 1912 	lcall	__sdcc_banked_call
+      000913 02r06r4E         [24] 1913 	ljmp	00164$
+      000916                       1914 00145$:
+                                   1915 ;	../../../../cpu/cc253x/usb/common/usb-core.c:533: } else if(ctrl_buffer.id == STATUS_IN_ID) {
+      000916 BC 05 4C         [24] 1916 	cjne	r4,#0x05,00142$
+      000919 BD 00 49         [24] 1917 	cjne	r5,#0x00,00142$
+      00091C BE 00 46         [24] 1918 	cjne	r6,#0x00,00142$
+      00091F BF 00 43         [24] 1919 	cjne	r7,#0x00,00142$
+                                   1920 ;	../../../../cpu/cc253x/usb/common/usb-core.c:535: if(usb_flags & USB_FLAG_ADDRESS_PENDING) {
+      000922 90r00r03         [24] 1921 	mov	dptr,#_usb_flags
+      000925 E0               [24] 1922 	movx	a,@dptr
+      000926 FB               [12] 1923 	mov	r3,a
+      000927 30 E0 2F         [24] 1924 	jnb	acc.0,00135$
+                                   1925 ;	../../../../cpu/cc253x/usb/common/usb-core.c:536: while(usb_send_pending(0));
+      00092A                       1926 00131$:
+      00092A 75 82 00         [24] 1927 	mov	dpl,#0x00
+      00092D 78r6B            [12] 1928 	mov	r0,#_usb_send_pending
+      00092F 79s0B            [12] 1929 	mov	r1,#(_usb_send_pending >> 8)
+      000931 7As00            [12] 1930 	mov	r2,#(_usb_send_pending >> 16)
+      000933 12r00r00         [24] 1931 	lcall	__sdcc_banked_call
+      000936 E5 82            [12] 1932 	mov	a,dpl
+      000938 85 83 F0         [24] 1933 	mov	b,dph
+      00093B 45 F0            [12] 1934 	orl	a,b
+      00093D 70 EB            [24] 1935 	jnz	00131$
+                                   1936 ;	../../../../cpu/cc253x/usb/common/usb-core.c:537: usb_arch_set_address(LOW_BYTE(usb_setup_buffer.wValue));
+      00093F 90r00r02         [24] 1937 	mov	dptr,#(_usb_setup_buffer + 0x0002)
+      000942 E0               [24] 1938 	movx	a,@dptr
+      000943 FA               [12] 1939 	mov	r2,a
+      000944 A3               [24] 1940 	inc	dptr
+      000945 E0               [24] 1941 	movx	a,@dptr
+      000946 8A 82            [24] 1942 	mov	dpl,r2
+      000948 78r00            [12] 1943 	mov	r0,#_usb_arch_set_address
+      00094A 79s00            [12] 1944 	mov	r1,#(_usb_arch_set_address >> 8)
+      00094C 7As00            [12] 1945 	mov	r2,#(_usb_arch_set_address >> 16)
+      00094E 12r00r00         [24] 1946 	lcall	__sdcc_banked_call
+                                   1947 ;	../../../../cpu/cc253x/usb/common/usb-core.c:538: usb_flags &= ~USB_FLAG_ADDRESS_PENDING;
+      000951 90r00r03         [24] 1948 	mov	dptr,#_usb_flags
+      000954 E0               [24] 1949 	movx	a,@dptr
+      000955 FB               [12] 1950 	mov	r3,a
+      000956 54 FE            [12] 1951 	anl	a,#0xFE
+      000958 F0               [24] 1952 	movx	@dptr,a
+      000959                       1953 00135$:
+                                   1954 ;	../../../../cpu/cc253x/usb/common/usb-core.c:540: submit_setup();
+      000959 78rBE            [12] 1955 	mov	r0,#_submit_setup
+      00095B 79s05            [12] 1956 	mov	r1,#(_submit_setup >> 8)
+      00095D 7As00            [12] 1957 	mov	r2,#(_submit_setup >> 16)
+      00095F 12r00r00         [24] 1958 	lcall	__sdcc_banked_call
+      000962 02r06r4E         [24] 1959 	ljmp	00164$
+      000965                       1960 00142$:
+                                   1961 ;	../../../../cpu/cc253x/usb/common/usb-core.c:541: } else if(ctrl_buffer.id == OUT_ID) {
+      000965 BC 02 0B         [24] 1962 	cjne	r4,#0x02,00294$
+      000968 BD 00 08         [24] 1963 	cjne	r5,#0x00,00294$
+      00096B BE 00 05         [24] 1964 	cjne	r6,#0x00,00294$
+      00096E BF 00 02         [24] 1965 	cjne	r7,#0x00,00294$
+      000971 80 03            [24] 1966 	sjmp	00295$
+      000973                       1967 00294$:
+      000973 02r06r4E         [24] 1968 	ljmp	00164$
+      000976                       1969 00295$:
+                                   1970 ;	../../../../cpu/cc253x/usb/common/usb-core.c:543: if(data_callback) {
+      000976 90r00r0A         [24] 1971 	mov	dptr,#_data_callback
+      000979 E0               [24] 1972 	movx	a,@dptr
+      00097A FD               [12] 1973 	mov	r5,a
+      00097B A3               [24] 1974 	inc	dptr
+      00097C E0               [24] 1975 	movx	a,@dptr
+      00097D FE               [12] 1976 	mov	r6,a
+      00097E A3               [24] 1977 	inc	dptr
+      00097F E0               [24] 1978 	movx	a,@dptr
+      000980 FF               [12] 1979 	mov	r7,a
+      000981 ED               [12] 1980 	mov	a,r5
+      000982 4E               [12] 1981 	orl	a,r6
+      000983 60 4A            [24] 1982 	jz	00137$
+                                   1983 ;	../../../../cpu/cc253x/usb/common/usb-core.c:544: data_callback(ctrl_data, ctrl_data_len - ctrl_buffer.left);
+      000985 90r00r0E         [24] 1984 	mov	dptr,#(_ctrl_buffer + 0x0006)
+      000988 E0               [24] 1985 	movx	a,@dptr
+      000989 FE               [12] 1986 	mov	r6,a
+      00098A A3               [24] 1987 	inc	dptr
+      00098B E0               [24] 1988 	movx	a,@dptr
+      00098C FF               [12] 1989 	mov	r7,a
+      00098D 90r00r10         [24] 1990 	mov	dptr,#_ctrl_data_len
+      000990 E0               [24] 1991 	movx	a,@dptr
+      000991 FC               [12] 1992 	mov	r4,a
+      000992 A3               [24] 1993 	inc	dptr
+      000993 E0               [24] 1994 	movx	a,@dptr
+      000994 FD               [12] 1995 	mov	r5,a
+      000995 EC               [12] 1996 	mov	a,r4
+      000996 C3               [12] 1997 	clr	c
+      000997 9E               [12] 1998 	subb	a,r6
+      000998 FE               [12] 1999 	mov	r6,a
+      000999 ED               [12] 2000 	mov	a,r5
+      00099A 9F               [12] 2001 	subb	a,r7
+      00099B FF               [12] 2002 	mov	r7,a
+      00099C 90r00r0D         [24] 2003 	mov	dptr,#_ctrl_data
+      00099F E0               [24] 2004 	movx	a,@dptr
+      0009A0 FB               [12] 2005 	mov	r3,a
+      0009A1 A3               [24] 2006 	inc	dptr
+      0009A2 E0               [24] 2007 	movx	a,@dptr
+      0009A3 FC               [12] 2008 	mov	r4,a
+      0009A4 A3               [24] 2009 	inc	dptr
+      0009A5 E0               [24] 2010 	movx	a,@dptr
+      0009A6 FD               [12] 2011 	mov	r5,a
+      0009A7 C0 06            [24] 2012 	push	ar6
+      0009A9 C0 07            [24] 2013 	push	ar7
+      0009AB 90r00r0A         [24] 2014 	mov	dptr,#_data_callback
+      0009AE E0               [24] 2015 	movx	a,@dptr
+      0009AF C0 E0            [24] 2016 	push	acc
+      0009B1 A3               [24] 2017 	inc	dptr
+      0009B2 E0               [24] 2018 	movx	a,@dptr
+      0009B3 C0 E0            [24] 2019 	push	acc
+      0009B5 A3               [24] 2020 	inc	dptr
+      0009B6 E0               [24] 2021 	movx	a,@dptr
+      0009B7 C0 E0            [24] 2022 	push	acc
+      0009B9 8B 82            [24] 2023 	mov	dpl,r3
+      0009BB 8C 83            [24] 2024 	mov	dph,r4
+      0009BD 8D F0            [24] 2025 	mov	b,r5
+      0009BF D0 02            [24] 2026 	pop	ar2
+      0009C1 D0 01            [24] 2027 	pop	ar1
+      0009C3 D0 00            [24] 2028 	pop	ar0
+      0009C5 12r00r00         [24] 2029 	lcall	__sdcc_banked_call
+      0009C8 15 81            [12] 2030 	dec	sp
+      0009CA 15 81            [12] 2031 	dec	sp
+      0009CC 02r06r4E         [24] 2032 	ljmp	00164$
+      0009CF                       2033 00137$:
+                                   2034 ;	../../../../cpu/cc253x/usb/common/usb-core.c:546: usb_send_ctrl_status();
+      0009CF 78r2E            [12] 2035 	mov	r0,#_usb_send_ctrl_status
+      0009D1 79s01            [12] 2036 	mov	r1,#(_usb_send_ctrl_status >> 8)
+      0009D3 7As00            [12] 2037 	mov	r2,#(_usb_send_ctrl_status >> 16)
+      0009D5 12r00r00         [24] 2038 	lcall	__sdcc_banked_call
+      0009D8 02r06r4E         [24] 2039 	ljmp	00164$
+                                   2040 ;	../../../../cpu/cc253x/usb/common/usb-core.c:554: PROCESS_END();
+      0009DB                       2041 00166$:
+      0009DB E5 81            [12] 2042 	mov	a,sp
+      0009DD 24 FB            [12] 2043 	add	a,#0xfb
+      0009DF F8               [12] 2044 	mov	r0,a
+      0009E0 86 82            [24] 2045 	mov	dpl,@r0
+      0009E2 08               [12] 2046 	inc	r0
+      0009E3 86 83            [24] 2047 	mov	dph,@r0
+      0009E5 08               [12] 2048 	inc	r0
+      0009E6 86 F0            [24] 2049 	mov	b,@r0
+      0009E8 E4               [12] 2050 	clr	a
+      0009E9 12r00r00         [24] 2051 	lcall	__gptrput
+      0009EC A3               [24] 2052 	inc	dptr
+      0009ED E4               [12] 2053 	clr	a
+      0009EE 12r00r00         [24] 2054 	lcall	__gptrput
+      0009F1 75 82 03         [24] 2055 	mov	dpl,#0x03
+      0009F4                       2056 00170$:
+      0009F4 E5 81            [12] 2057 	mov	a,sp
+      0009F6 24 FA            [12] 2058 	add	a,#0xFA
+      0009F8 F5 81            [12] 2059 	mov	sp,a
+      0009FA 02r00r00         [24] 2060 	ljmp	__sdcc_banked_ret
+                                   2061 ;------------------------------------------------------------
+                                   2062 ;Allocation info for local variables in function 'usb_setup'
+                                   2063 ;------------------------------------------------------------
+                                   2064 ;	../../../../cpu/cc253x/usb/common/usb-core.c:559: usb_setup(void)
+                                   2065 ;	-----------------------------------------
+                                   2066 ;	 function usb_setup
+                                   2067 ;	-----------------------------------------
+      0009FD                       2068 _usb_setup:
+                                   2069 ;	../../../../cpu/cc253x/usb/common/usb-core.c:561: usb_arch_setup();
+      0009FD 78r00            [12] 2070 	mov	r0,#_usb_arch_setup
+      0009FF 79s00            [12] 2071 	mov	r1,#(_usb_arch_setup >> 8)
+      000A01 7As00            [12] 2072 	mov	r2,#(_usb_arch_setup >> 16)
+      000A03 12r00r00         [24] 2073 	lcall	__sdcc_banked_call
+                                   2074 ;	../../../../cpu/cc253x/usb/common/usb-core.c:562: process_start(&usb_process, NULL);
+      000A06 E4               [12] 2075 	clr	a
+      000A07 C0 E0            [24] 2076 	push	acc
+      000A09 C0 E0            [24] 2077 	push	acc
+      000A0B C0 E0            [24] 2078 	push	acc
+      000A0D 90r00r18         [24] 2079 	mov	dptr,#_usb_process
+      000A10 75 F0 00         [24] 2080 	mov	b,#0x00
+      000A13 78r00            [12] 2081 	mov	r0,#_process_start
+      000A15 79s00            [12] 2082 	mov	r1,#(_process_start >> 8)
+      000A17 7As00            [12] 2083 	mov	r2,#(_process_start >> 16)
+      000A19 12r00r00         [24] 2084 	lcall	__sdcc_banked_call
+      000A1C 15 81            [12] 2085 	dec	sp
+      000A1E 15 81            [12] 2086 	dec	sp
+      000A20 15 81            [12] 2087 	dec	sp
+                                   2088 ;	../../../../cpu/cc253x/usb/common/usb-core.c:563: usb_arch_set_global_event_process(&usb_process);
+      000A22 90r00r18         [24] 2089 	mov	dptr,#_usb_process
+      000A25 75 F0 00         [24] 2090 	mov	b,#0x00
+      000A28 78r00            [12] 2091 	mov	r0,#_usb_arch_set_global_event_process
+      000A2A 79s00            [12] 2092 	mov	r1,#(_usb_arch_set_global_event_process >> 8)
+      000A2C 7As00            [12] 2093 	mov	r2,#(_usb_arch_set_global_event_process >> 16)
+      000A2E 12r00r00         [24] 2094 	lcall	__sdcc_banked_call
+                                   2095 ;	../../../../cpu/cc253x/usb/common/usb-core.c:564: usb_set_ep_event_process(0, &usb_process);
+      000A31 74r18            [12] 2096 	mov	a,#_usb_process
+      000A33 C0 E0            [24] 2097 	push	acc
+      000A35 74s00            [12] 2098 	mov	a,#(_usb_process >> 8)
+      000A37 C0 E0            [24] 2099 	push	acc
+      000A39 E4               [12] 2100 	clr	a
+      000A3A C0 E0            [24] 2101 	push	acc
+      000A3C 75 82 00         [24] 2102 	mov	dpl,#0x00
+      000A3F 78r00            [12] 2103 	mov	r0,#_usb_set_ep_event_process
+      000A41 79s00            [12] 2104 	mov	r1,#(_usb_set_ep_event_process >> 8)
+      000A43 7As00            [12] 2105 	mov	r2,#(_usb_set_ep_event_process >> 16)
+      000A45 12r00r00         [24] 2106 	lcall	__sdcc_banked_call
+      000A48 15 81            [12] 2107 	dec	sp
+      000A4A 15 81            [12] 2108 	dec	sp
+      000A4C 15 81            [12] 2109 	dec	sp
+                                   2110 ;	../../../../cpu/cc253x/usb/common/usb-core.c:566: usb_register_request_handler(&standard_request_hook);
+      000A4E 90r00r12         [24] 2111 	mov	dptr,#_standard_request_hook
+      000A51 75 F0 00         [24] 2112 	mov	b,#0x00
+      000A54 78r60            [12] 2113 	mov	r0,#_usb_register_request_handler
+      000A56 79s0A            [12] 2114 	mov	r1,#(_usb_register_request_handler >> 8)
+      000A58 7As00            [12] 2115 	mov	r2,#(_usb_register_request_handler >> 16)
+      000A5A 12r00r00         [24] 2116 	lcall	__sdcc_banked_call
+      000A5D 02r00r00         [24] 2117 	ljmp	__sdcc_banked_ret
+                                   2118 ;------------------------------------------------------------
+                                   2119 ;Allocation info for local variables in function 'usb_register_request_handler'
+                                   2120 ;------------------------------------------------------------
+                                   2121 ;hook                      Allocated to stack - sp -2
+                                   2122 ;prevp                     Allocated to registers r2 r3 r4 
+                                   2123 ;------------------------------------------------------------
+                                   2124 ;	../../../../cpu/cc253x/usb/common/usb-core.c:570: usb_register_request_handler(struct USBRequestHandlerHook *hook)
+                                   2125 ;	-----------------------------------------
+                                   2126 ;	 function usb_register_request_handler
+                                   2127 ;	-----------------------------------------
+      000A60                       2128 _usb_register_request_handler:
+      000A60 C0 82            [24] 2129 	push	dpl
+      000A62 C0 83            [24] 2130 	push	dph
+      000A64 C0 F0            [24] 2131 	push	b
+                                   2132 ;	../../../../cpu/cc253x/usb/common/usb-core.c:572: struct USBRequestHandlerHook **prevp = &usb_request_handler_hooks;
+      000A66 7Ar00            [12] 2133 	mov	r2,#_usb_request_handler_hooks
+      000A68 7Bs00            [12] 2134 	mov	r3,#(_usb_request_handler_hooks >> 8)
+      000A6A 7C 00            [12] 2135 	mov	r4,#0x00
+                                   2136 ;	../../../../cpu/cc253x/usb/common/usb-core.c:574: while(*prevp) {
+      000A6C                       2137 00101$:
+      000A6C 8A 82            [24] 2138 	mov	dpl,r2
+      000A6E 8B 83            [24] 2139 	mov	dph,r3
+      000A70 8C F0            [24] 2140 	mov	b,r4
+      000A72 12r00r00         [24] 2141 	lcall	__gptrget
+      000A75 FD               [12] 2142 	mov	r5,a
+      000A76 A3               [24] 2143 	inc	dptr
+      000A77 12r00r00         [24] 2144 	lcall	__gptrget
+      000A7A FE               [12] 2145 	mov	r6,a
+      000A7B A3               [24] 2146 	inc	dptr
+      000A7C 12r00r00         [24] 2147 	lcall	__gptrget
+      000A7F FF               [12] 2148 	mov	r7,a
+      000A80 ED               [12] 2149 	mov	a,r5
+      000A81 4E               [12] 2150 	orl	a,r6
+      000A82 60 08            [24] 2151 	jz	00103$
+                                   2152 ;	../../../../cpu/cc253x/usb/common/usb-core.c:575: prevp = &(*prevp)->next;
+      000A84 8D 02            [24] 2153 	mov	ar2,r5
+      000A86 8E 03            [24] 2154 	mov	ar3,r6
+      000A88 8F 04            [24] 2155 	mov	ar4,r7
+      000A8A 80 E0            [24] 2156 	sjmp	00101$
+      000A8C                       2157 00103$:
+                                   2158 ;	../../../../cpu/cc253x/usb/common/usb-core.c:578: *prevp = hook;
+      000A8C 8A 82            [24] 2159 	mov	dpl,r2
+      000A8E 8B 83            [24] 2160 	mov	dph,r3
+      000A90 8C F0            [24] 2161 	mov	b,r4
+      000A92 A8 81            [24] 2162 	mov	r0,sp
+      000A94 18               [12] 2163 	dec	r0
+      000A95 18               [12] 2164 	dec	r0
+      000A96 E6               [12] 2165 	mov	a,@r0
+      000A97 12r00r00         [24] 2166 	lcall	__gptrput
+      000A9A A3               [24] 2167 	inc	dptr
+      000A9B 08               [12] 2168 	inc	r0
+      000A9C E6               [12] 2169 	mov	a,@r0
+      000A9D 12r00r00         [24] 2170 	lcall	__gptrput
+      000AA0 A3               [24] 2171 	inc	dptr
+      000AA1 08               [12] 2172 	inc	r0
+      000AA2 E6               [12] 2173 	mov	a,@r0
+      000AA3 12r00r00         [24] 2174 	lcall	__gptrput
+                                   2175 ;	../../../../cpu/cc253x/usb/common/usb-core.c:579: hook->next = NULL;
+      000AA6 A8 81            [24] 2176 	mov	r0,sp
+      000AA8 18               [12] 2177 	dec	r0
+      000AA9 18               [12] 2178 	dec	r0
+      000AAA 86 82            [24] 2179 	mov	dpl,@r0
+      000AAC 08               [12] 2180 	inc	r0
+      000AAD 86 83            [24] 2181 	mov	dph,@r0
+      000AAF 08               [12] 2182 	inc	r0
+      000AB0 86 F0            [24] 2183 	mov	b,@r0
+      000AB2 E4               [12] 2184 	clr	a
+      000AB3 12r00r00         [24] 2185 	lcall	__gptrput
+      000AB6 A3               [24] 2186 	inc	dptr
+      000AB7 E4               [12] 2187 	clr	a
+      000AB8 12r00r00         [24] 2188 	lcall	__gptrput
+      000ABB A3               [24] 2189 	inc	dptr
+      000ABC E4               [12] 2190 	clr	a
+      000ABD 12r00r00         [24] 2191 	lcall	__gptrput
+      000AC0 15 81            [12] 2192 	dec	sp
+      000AC2 15 81            [12] 2193 	dec	sp
+      000AC4 15 81            [12] 2194 	dec	sp
+      000AC6 02r00r00         [24] 2195 	ljmp	__sdcc_banked_ret
+                                   2196 ;------------------------------------------------------------
+                                   2197 ;Allocation info for local variables in function 'usb_prepend_request_handler'
+                                   2198 ;------------------------------------------------------------
+                                   2199 ;hook                      Allocated to registers r5 r6 r7 
+                                   2200 ;------------------------------------------------------------
+                                   2201 ;	../../../../cpu/cc253x/usb/common/usb-core.c:583: usb_prepend_request_handler(struct USBRequestHandlerHook *hook)
+                                   2202 ;	-----------------------------------------
+                                   2203 ;	 function usb_prepend_request_handler
+                                   2204 ;	-----------------------------------------
+      000AC9                       2205 _usb_prepend_request_handler:
+      000AC9 AD 82            [24] 2206 	mov	r5,dpl
+      000ACB AE 83            [24] 2207 	mov	r6,dph
+      000ACD AF F0            [24] 2208 	mov	r7,b
+                                   2209 ;	../../../../cpu/cc253x/usb/common/usb-core.c:585: hook->next = usb_request_handler_hooks;
+      000ACF 90r00r00         [24] 2210 	mov	dptr,#_usb_request_handler_hooks
+      000AD2 E0               [24] 2211 	movx	a,@dptr
+      000AD3 FA               [12] 2212 	mov	r2,a
+      000AD4 A3               [24] 2213 	inc	dptr
+      000AD5 E0               [24] 2214 	movx	a,@dptr
+      000AD6 FB               [12] 2215 	mov	r3,a
+      000AD7 A3               [24] 2216 	inc	dptr
+      000AD8 E0               [24] 2217 	movx	a,@dptr
+      000AD9 FC               [12] 2218 	mov	r4,a
+      000ADA 8D 82            [24] 2219 	mov	dpl,r5
+      000ADC 8E 83            [24] 2220 	mov	dph,r6
+      000ADE 8F F0            [24] 2221 	mov	b,r7
+      000AE0 EA               [12] 2222 	mov	a,r2
+      000AE1 12r00r00         [24] 2223 	lcall	__gptrput
+      000AE4 A3               [24] 2224 	inc	dptr
+      000AE5 EB               [12] 2225 	mov	a,r3
+      000AE6 12r00r00         [24] 2226 	lcall	__gptrput
+      000AE9 A3               [24] 2227 	inc	dptr
+      000AEA EC               [12] 2228 	mov	a,r4
+      000AEB 12r00r00         [24] 2229 	lcall	__gptrput
+                                   2230 ;	../../../../cpu/cc253x/usb/common/usb-core.c:586: usb_request_handler_hooks = hook;
+      000AEE 90r00r00         [24] 2231 	mov	dptr,#_usb_request_handler_hooks
+      000AF1 ED               [12] 2232 	mov	a,r5
+      000AF2 F0               [24] 2233 	movx	@dptr,a
+      000AF3 EE               [12] 2234 	mov	a,r6
+      000AF4 A3               [24] 2235 	inc	dptr
+      000AF5 F0               [24] 2236 	movx	@dptr,a
+      000AF6 EF               [12] 2237 	mov	a,r7
+      000AF7 A3               [24] 2238 	inc	dptr
+      000AF8 F0               [24] 2239 	movx	@dptr,a
+      000AF9 02r00r00         [24] 2240 	ljmp	__sdcc_banked_ret
+                                   2241 ;------------------------------------------------------------
+                                   2242 ;Allocation info for local variables in function 'usb_get_current_configuration'
+                                   2243 ;------------------------------------------------------------
+                                   2244 ;	../../../../cpu/cc253x/usb/common/usb-core.c:591: usb_get_current_configuration(void)
+                                   2245 ;	-----------------------------------------
+                                   2246 ;	 function usb_get_current_configuration
+                                   2247 ;	-----------------------------------------
+      000AFC                       2248 _usb_get_current_configuration:
+                                   2249 ;	../../../../cpu/cc253x/usb/common/usb-core.c:593: return usb_configuration_value;
+      000AFC 90r00r18         [24] 2250 	mov	dptr,#_usb_configuration_value
+      000AFF E0               [24] 2251 	movx	a,@dptr
+      000B00 FF               [12] 2252 	mov	r7,a
+      000B01 7E 00            [12] 2253 	mov	r6,#0x00
+      000B03 8F 82            [24] 2254 	mov	dpl,r7
+      000B05 8E 83            [24] 2255 	mov	dph,r6
+      000B07 02r00r00         [24] 2256 	ljmp	__sdcc_banked_ret
+                                   2257 ;------------------------------------------------------------
+                                   2258 ;Allocation info for local variables in function 'usb_setup_bulk_endpoint'
+                                   2259 ;------------------------------------------------------------
+                                   2260 ;addr                      Allocated to registers r7 
+                                   2261 ;------------------------------------------------------------
+                                   2262 ;	../../../../cpu/cc253x/usb/common/usb-core.c:597: usb_setup_bulk_endpoint(unsigned char addr)
+                                   2263 ;	-----------------------------------------
+                                   2264 ;	 function usb_setup_bulk_endpoint
+                                   2265 ;	-----------------------------------------
+      000B0A                       2266 _usb_setup_bulk_endpoint:
+                                   2267 ;	../../../../cpu/cc253x/usb/common/usb-core.c:599: usb_arch_setup_bulk_endpoint(addr);
+      000B0A 78r00            [12] 2268 	mov	r0,#_usb_arch_setup_bulk_endpoint
+      000B0C 79s00            [12] 2269 	mov	r1,#(_usb_arch_setup_bulk_endpoint >> 8)
+      000B0E 7As00            [12] 2270 	mov	r2,#(_usb_arch_setup_bulk_endpoint >> 16)
+      000B10 12r00r00         [24] 2271 	lcall	__sdcc_banked_call
+      000B13 02r00r00         [24] 2272 	ljmp	__sdcc_banked_ret
+                                   2273 ;------------------------------------------------------------
+                                   2274 ;Allocation info for local variables in function 'usb_setup_interrupt_endpoint'
+                                   2275 ;------------------------------------------------------------
+                                   2276 ;addr                      Allocated to registers r7 
+                                   2277 ;------------------------------------------------------------
+                                   2278 ;	../../../../cpu/cc253x/usb/common/usb-core.c:603: usb_setup_interrupt_endpoint(unsigned char addr)
+                                   2279 ;	-----------------------------------------
+                                   2280 ;	 function usb_setup_interrupt_endpoint
+                                   2281 ;	-----------------------------------------
+      000B16                       2282 _usb_setup_interrupt_endpoint:
+                                   2283 ;	../../../../cpu/cc253x/usb/common/usb-core.c:605: usb_arch_setup_interrupt_endpoint(addr);
+      000B16 78r00            [12] 2284 	mov	r0,#_usb_arch_setup_interrupt_endpoint
+      000B18 79s00            [12] 2285 	mov	r1,#(_usb_arch_setup_interrupt_endpoint >> 8)
+      000B1A 7As00            [12] 2286 	mov	r2,#(_usb_arch_setup_interrupt_endpoint >> 16)
+      000B1C 12r00r00         [24] 2287 	lcall	__sdcc_banked_call
+      000B1F 02r00r00         [24] 2288 	ljmp	__sdcc_banked_ret
+                                   2289 ;------------------------------------------------------------
+                                   2290 ;Allocation info for local variables in function 'usb_disable_endpoint'
+                                   2291 ;------------------------------------------------------------
+                                   2292 ;addr                      Allocated to registers r7 
+                                   2293 ;------------------------------------------------------------
+                                   2294 ;	../../../../cpu/cc253x/usb/common/usb-core.c:609: usb_disable_endpoint(uint8_t addr)
+                                   2295 ;	-----------------------------------------
+                                   2296 ;	 function usb_disable_endpoint
+                                   2297 ;	-----------------------------------------
+      000B22                       2298 _usb_disable_endpoint:
+                                   2299 ;	../../../../cpu/cc253x/usb/common/usb-core.c:611: usb_arch_discard_all_buffers(addr);
+      000B22 AF 82            [24] 2300 	mov  r7,dpl
+      000B24 C0 07            [24] 2301 	push	ar7
+      000B26 78r00            [12] 2302 	mov	r0,#_usb_arch_discard_all_buffers
+      000B28 79s00            [12] 2303 	mov	r1,#(_usb_arch_discard_all_buffers >> 8)
+      000B2A 7As00            [12] 2304 	mov	r2,#(_usb_arch_discard_all_buffers >> 16)
+      000B2C 12r00r00         [24] 2305 	lcall	__sdcc_banked_call
+      000B2F D0 07            [24] 2306 	pop	ar7
+                                   2307 ;	../../../../cpu/cc253x/usb/common/usb-core.c:612: usb_arch_disable_endpoint(addr);
+      000B31 8F 82            [24] 2308 	mov	dpl,r7
+      000B33 78r00            [12] 2309 	mov	r0,#_usb_arch_disable_endpoint
+      000B35 79s00            [12] 2310 	mov	r1,#(_usb_arch_disable_endpoint >> 8)
+      000B37 7As00            [12] 2311 	mov	r2,#(_usb_arch_disable_endpoint >> 16)
+      000B39 12r00r00         [24] 2312 	lcall	__sdcc_banked_call
+      000B3C 02r00r00         [24] 2313 	ljmp	__sdcc_banked_ret
+                                   2314 ;------------------------------------------------------------
+                                   2315 ;Allocation info for local variables in function 'usb_discard_all_buffers'
+                                   2316 ;------------------------------------------------------------
+                                   2317 ;addr                      Allocated to registers r7 
+                                   2318 ;------------------------------------------------------------
+                                   2319 ;	../../../../cpu/cc253x/usb/common/usb-core.c:616: usb_discard_all_buffers(uint8_t addr)
+                                   2320 ;	-----------------------------------------
+                                   2321 ;	 function usb_discard_all_buffers
+                                   2322 ;	-----------------------------------------
+      000B3F                       2323 _usb_discard_all_buffers:
+                                   2324 ;	../../../../cpu/cc253x/usb/common/usb-core.c:618: usb_arch_discard_all_buffers(addr);
+      000B3F 78r00            [12] 2325 	mov	r0,#_usb_arch_discard_all_buffers
+      000B41 79s00            [12] 2326 	mov	r1,#(_usb_arch_discard_all_buffers >> 8)
+      000B43 7As00            [12] 2327 	mov	r2,#(_usb_arch_discard_all_buffers >> 16)
+      000B45 12r00r00         [24] 2328 	lcall	__sdcc_banked_call
+      000B48 02r00r00         [24] 2329 	ljmp	__sdcc_banked_ret
+                                   2330 ;------------------------------------------------------------
+                                   2331 ;Allocation info for local variables in function 'usb_halt_endpoint'
+                                   2332 ;------------------------------------------------------------
+                                   2333 ;halt                      Allocated to stack - sp -4
+                                   2334 ;addr                      Allocated to registers r7 
+                                   2335 ;------------------------------------------------------------
+                                   2336 ;	../../../../cpu/cc253x/usb/common/usb-core.c:622: usb_halt_endpoint(uint8_t addr, int halt)
+                                   2337 ;	-----------------------------------------
+                                   2338 ;	 function usb_halt_endpoint
+                                   2339 ;	-----------------------------------------
+      000B4B                       2340 _usb_halt_endpoint:
+      000B4B AF 82            [24] 2341 	mov	r7,dpl
+                                   2342 ;	../../../../cpu/cc253x/usb/common/usb-core.c:624: usb_arch_halt_endpoint(addr, halt);
+      000B4D E5 81            [12] 2343 	mov	a,sp
+      000B4F 24 FC            [12] 2344 	add	a,#0xfc
+      000B51 F8               [12] 2345 	mov	r0,a
+      000B52 E6               [12] 2346 	mov	a,@r0
+      000B53 C0 E0            [24] 2347 	push	acc
+      000B55 08               [12] 2348 	inc	r0
+      000B56 E6               [12] 2349 	mov	a,@r0
+      000B57 C0 E0            [24] 2350 	push	acc
+      000B59 8F 82            [24] 2351 	mov	dpl,r7
+      000B5B 78r00            [12] 2352 	mov	r0,#_usb_arch_halt_endpoint
+      000B5D 79s00            [12] 2353 	mov	r1,#(_usb_arch_halt_endpoint >> 8)
+      000B5F 7As00            [12] 2354 	mov	r2,#(_usb_arch_halt_endpoint >> 16)
+      000B61 12r00r00         [24] 2355 	lcall	__sdcc_banked_call
+      000B64 15 81            [12] 2356 	dec	sp
+      000B66 15 81            [12] 2357 	dec	sp
+      000B68 02r00r00         [24] 2358 	ljmp	__sdcc_banked_ret
+                                   2359 ;------------------------------------------------------------
+                                   2360 ;Allocation info for local variables in function 'usb_send_pending'
+                                   2361 ;------------------------------------------------------------
+                                   2362 ;addr                      Allocated to registers r7 
+                                   2363 ;------------------------------------------------------------
+                                   2364 ;	../../../../cpu/cc253x/usb/common/usb-core.c:628: usb_send_pending(uint8_t addr)
+                                   2365 ;	-----------------------------------------
+                                   2366 ;	 function usb_send_pending
+                                   2367 ;	-----------------------------------------
+      000B6B                       2368 _usb_send_pending:
+                                   2369 ;	../../../../cpu/cc253x/usb/common/usb-core.c:630: return usb_arch_send_pending(addr);
+      000B6B 78r00            [12] 2370 	mov	r0,#_usb_arch_send_pending
+      000B6D 79s00            [12] 2371 	mov	r1,#(_usb_arch_send_pending >> 8)
+      000B6F 7As00            [12] 2372 	mov	r2,#(_usb_arch_send_pending >> 16)
+      000B71 12r00r00         [24] 2373 	lcall	__sdcc_banked_call
+      000B74 AE 82            [24] 2374 	mov	r6,dpl
+      000B76 AF 83            [24] 2375 	mov  r7,dph
+      000B78 02r00r00         [24] 2376 	ljmp	__sdcc_banked_ret
+                                   2377 	.area CSEG    (CODE)
+                                   2378 	.area CONST   (CODE)
+      000000                       2379 _zero_byte:
+      000000 00                    2380 	.db #0x00	; 0
+      000001                       2381 _zero_word:
+      000001 00 00                 2382 	.byte #0x00,#0x00	; 0
+      000003                       2383 _standard_request_handler:
+      000003 00                    2384 	.db #0x00	; 0
+      000004 60                    2385 	.db #0x60	; 96
+      000005 00                    2386 	.db #0x00	; 0
+      000006 00                    2387 	.db #0x00	; 0
+      000007r2Fs04s00              2388 	.byte _handle_standard_requests,(_handle_standard_requests >> 8),(_handle_standard_requests >> 16)
+                                   2389 	.area XINIT   (CODE)
+      000000                       2390 __xinit__usb_request_handler_hooks:
+                                   2391 ; generic printIvalPtr
+      000000 00 00 00              2392 	.byte #0x00,#0x00,#0x00
+      000003                       2393 __xinit__usb_flags:
+      000003 00                    2394 	.db #0x00	; 0
+      000004                       2395 __xinit__global_user_event_pocess:
+                                   2396 ; generic printIvalPtr
+      000004 00 00 00              2397 	.byte #0x00,#0x00,#0x00
+      000007                       2398 __xinit__global_user_events:
+      000007 00 00                 2399 	.byte #0x00,#0x00	; 0
+      000009                       2400 __xinit__error_stall:
+      000009 00                    2401 	.db #0x00	; 0
+      00000A                       2402 __xinit__data_callback:
+      00000A 00 00 00              2403 	.byte #0x00,#0x00,#0x00
+      00000D                       2404 __xinit__ctrl_data:
+      00000D 00 00 00              2405 	.byte #0x00,#0x00,#0x00
+      000010                       2406 __xinit__ctrl_data_len:
+      000010 00 00                 2407 	.byte #0x00,#0x00	; 0
+      000012                       2408 __xinit__standard_request_hook:
+                                   2409 ; generic printIvalPtr
+      000012 00 00 00              2410 	.byte #0x00,#0x00,#0x00
+      000015r03s00 80              2411 	.byte _standard_request_handler,(_standard_request_handler >> 8),#0x80
+      000018                       2412 __xinit__usb_process:
+                                   2413 ; generic printIvalPtr
+      000018 00 00 00              2414 	.byte #0x00,#0x00,#0x00
+      00001Br17s06s00              2415 	.byte _process_thread_usb_process,(_process_thread_usb_process >> 8),(_process_thread_usb_process >> 16)
+      00001E 00 00                 2416 	.byte #0x00,#0x00	; 0
+      000020 00                    2417 	.db #0x00	; 0
+      000021 00                    2418 	.db #0x00	; 0
+                                   2419 	.area CABS    (ABS,CODE)

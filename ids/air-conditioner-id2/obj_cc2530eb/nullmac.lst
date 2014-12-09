@@ -1,0 +1,302 @@
+                                      1 ;--------------------------------------------------------
+                                      2 ; File Created by SDCC : free open source ANSI-C Compiler
+                                      3 ; Version 3.3.1 #8804 (Aug  6 2013) (Linux)
+                                      4 ; This file was generated Mon Aug 25 04:16:19 2014
+                                      5 ;--------------------------------------------------------
+                                      6 	.module nullmac
+                                      7 	.optsdcc -mmcs51 --model-huge
+                                      8 	
+                                      9 ;--------------------------------------------------------
+                                     10 ; Public variables in this module
+                                     11 ;--------------------------------------------------------
+                                     12 	.globl _nullmac_driver
+                                     13 ;--------------------------------------------------------
+                                     14 ; special function registers
+                                     15 ;--------------------------------------------------------
+                                     16 	.area RSEG    (ABS,DATA)
+      000000                         17 	.org 0x0000
+                                     18 ;--------------------------------------------------------
+                                     19 ; special function bits
+                                     20 ;--------------------------------------------------------
+                                     21 	.area RSEG    (ABS,DATA)
+      000000                         22 	.org 0x0000
+                                     23 ;--------------------------------------------------------
+                                     24 ; overlayable register banks
+                                     25 ;--------------------------------------------------------
+                                     26 	.area REG_BANK_0	(REL,OVR,DATA)
+      000000                         27 	.ds 8
+                                     28 ;--------------------------------------------------------
+                                     29 ; internal ram data
+                                     30 ;--------------------------------------------------------
+                                     31 	.area DSEG    (DATA)
+                                     32 ;--------------------------------------------------------
+                                     33 ; overlayable items in internal ram 
+                                     34 ;--------------------------------------------------------
+                                     35 ;--------------------------------------------------------
+                                     36 ; indirectly addressable internal ram data
+                                     37 ;--------------------------------------------------------
+                                     38 	.area ISEG    (DATA)
+                                     39 ;--------------------------------------------------------
+                                     40 ; absolute internal ram data
+                                     41 ;--------------------------------------------------------
+                                     42 	.area IABS    (ABS,DATA)
+                                     43 	.area IABS    (ABS,DATA)
+                                     44 ;--------------------------------------------------------
+                                     45 ; bit data
+                                     46 ;--------------------------------------------------------
+                                     47 	.area BSEG    (BIT)
+                                     48 ;--------------------------------------------------------
+                                     49 ; paged external ram data
+                                     50 ;--------------------------------------------------------
+                                     51 	.area PSEG    (PAG,XDATA)
+                                     52 ;--------------------------------------------------------
+                                     53 ; external ram data
+                                     54 ;--------------------------------------------------------
+                                     55 	.area XSEG    (XDATA)
+                                     56 ;--------------------------------------------------------
+                                     57 ; absolute external ram data
+                                     58 ;--------------------------------------------------------
+                                     59 	.area XABS    (ABS,XDATA)
+                                     60 ;--------------------------------------------------------
+                                     61 ; external initialized ram data
+                                     62 ;--------------------------------------------------------
+                                     63 	.area XISEG   (XDATA)
+                                     64 	.area HOME    (CODE)
+                                     65 	.area GSINIT0 (CODE)
+                                     66 	.area GSINIT1 (CODE)
+                                     67 	.area GSINIT2 (CODE)
+                                     68 	.area GSINIT3 (CODE)
+                                     69 	.area GSINIT4 (CODE)
+                                     70 	.area GSINIT5 (CODE)
+                                     71 	.area GSINIT  (CODE)
+                                     72 	.area GSFINAL (CODE)
+                                     73 	.area CSEG    (CODE)
+                                     74 ;--------------------------------------------------------
+                                     75 ; global & static initialisations
+                                     76 ;--------------------------------------------------------
+                                     77 	.area HOME    (CODE)
+                                     78 	.area GSINIT  (CODE)
+                                     79 	.area GSFINAL (CODE)
+                                     80 	.area GSINIT  (CODE)
+                                     81 ;--------------------------------------------------------
+                                     82 ; Home
+                                     83 ;--------------------------------------------------------
+                                     84 	.area HOME    (CODE)
+                                     85 	.area HOME    (CODE)
+                                     86 ;--------------------------------------------------------
+                                     87 ; code
+                                     88 ;--------------------------------------------------------
+                                     89 	.area BANK1   (CODE)
+                                     90 ;------------------------------------------------------------
+                                     91 ;Allocation info for local variables in function 'send_packet'
+                                     92 ;------------------------------------------------------------
+                                     93 ;ptr                       Allocated to stack - sp -5
+                                     94 ;sent                      Allocated to registers r5 r6 r7 
+                                     95 ;------------------------------------------------------------
+                                     96 ;	../../../../core/net/mac/nullmac.c:46: send_packet(mac_callback_t sent, void *ptr)
+                                     97 ;	-----------------------------------------
+                                     98 ;	 function send_packet
+                                     99 ;	-----------------------------------------
+      000000                        100 _send_packet:
+                           000007   101 	ar7 = 0x07
+                           000006   102 	ar6 = 0x06
+                           000005   103 	ar5 = 0x05
+                           000004   104 	ar4 = 0x04
+                           000003   105 	ar3 = 0x03
+                           000002   106 	ar2 = 0x02
+                           000001   107 	ar1 = 0x01
+                           000000   108 	ar0 = 0x00
+      000000 AD 82            [24]  109 	mov	r5,dpl
+      000002 AE 83            [24]  110 	mov	r6,dph
+      000004 AF F0            [24]  111 	mov	r7,b
+                                    112 ;	../../../../core/net/mac/nullmac.c:48: NETSTACK_RDC.send(sent, ptr);
+      000006 90r00r06         [24]  113 	mov	dptr,#(_nullrdc_driver + 0x0006)
+      000009 E4               [12]  114 	clr	a
+      00000A 93               [24]  115 	movc	a,@a+dptr
+      00000B FA               [12]  116 	mov	r2,a
+      00000C A3               [24]  117 	inc	dptr
+      00000D E4               [12]  118 	clr	a
+      00000E 93               [24]  119 	movc	a,@a+dptr
+      00000F FB               [12]  120 	mov	r3,a
+      000010 A3               [24]  121 	inc	dptr
+      000011 E4               [12]  122 	clr	a
+      000012 93               [24]  123 	movc	a,@a+dptr
+      000013 FC               [12]  124 	mov	r4,a
+      000014 C0 04            [24]  125 	push	ar4
+      000016 C0 03            [24]  126 	push	ar3
+      000018 C0 02            [24]  127 	push	ar2
+      00001A E5 81            [12]  128 	mov	a,sp
+      00001C 24 F8            [12]  129 	add	a,#0xf8
+      00001E F8               [12]  130 	mov	r0,a
+      00001F E6               [12]  131 	mov	a,@r0
+      000020 C0 E0            [24]  132 	push	acc
+      000022 08               [12]  133 	inc	r0
+      000023 E6               [12]  134 	mov	a,@r0
+      000024 C0 E0            [24]  135 	push	acc
+      000026 08               [12]  136 	inc	r0
+      000027 E6               [12]  137 	mov	a,@r0
+      000028 C0 E0            [24]  138 	push	acc
+      00002A C0 02            [24]  139 	push	ar2
+      00002C C0 03            [24]  140 	push	ar3
+      00002E C0 04            [24]  141 	push	ar4
+      000030 8D 82            [24]  142 	mov	dpl,r5
+      000032 8E 83            [24]  143 	mov	dph,r6
+      000034 8F F0            [24]  144 	mov	b,r7
+      000036 D0 02            [24]  145 	pop	ar2
+      000038 D0 01            [24]  146 	pop	ar1
+      00003A D0 00            [24]  147 	pop	ar0
+      00003C 12r00r00         [24]  148 	lcall	__sdcc_banked_call
+      00003F 15 81            [12]  149 	dec	sp
+      000041 15 81            [12]  150 	dec	sp
+      000043 15 81            [12]  151 	dec	sp
+      000045 D0 02            [24]  152 	pop	ar2
+      000047 D0 03            [24]  153 	pop	ar3
+      000049 D0 04            [24]  154 	pop	ar4
+      00004B 02r00r00         [24]  155 	ljmp	__sdcc_banked_ret
+                                    156 ;------------------------------------------------------------
+                                    157 ;Allocation info for local variables in function 'packet_input'
+                                    158 ;------------------------------------------------------------
+                                    159 ;	../../../../core/net/mac/nullmac.c:52: packet_input(void)
+                                    160 ;	-----------------------------------------
+                                    161 ;	 function packet_input
+                                    162 ;	-----------------------------------------
+      00004E                        163 _packet_input:
+                                    164 ;	../../../../core/net/mac/nullmac.c:54: NETSTACK_NETWORK.input();
+      00004E 90r00r06         [24]  165 	mov	dptr,#(_sicslowpan_driver + 0x0006)
+      000051 E4               [12]  166 	clr	a
+      000052 93               [24]  167 	movc	a,@a+dptr
+      000053 FD               [12]  168 	mov	r5,a
+      000054 A3               [24]  169 	inc	dptr
+      000055 E4               [12]  170 	clr	a
+      000056 93               [24]  171 	movc	a,@a+dptr
+      000057 FE               [12]  172 	mov	r6,a
+      000058 A3               [24]  173 	inc	dptr
+      000059 E4               [12]  174 	clr	a
+      00005A 93               [24]  175 	movc	a,@a+dptr
+      00005B FF               [12]  176 	mov	r7,a
+      00005C C0 07            [24]  177 	push	ar7
+      00005E C0 06            [24]  178 	push	ar6
+      000060 C0 05            [24]  179 	push	ar5
+      000062 C0 05            [24]  180 	push	ar5
+      000064 C0 06            [24]  181 	push	ar6
+      000066 C0 07            [24]  182 	push	ar7
+      000068 D0 02            [24]  183 	pop	ar2
+      00006A D0 01            [24]  184 	pop	ar1
+      00006C D0 00            [24]  185 	pop	ar0
+      00006E 12r00r00         [24]  186 	lcall	__sdcc_banked_call
+      000071 D0 05            [24]  187 	pop	ar5
+      000073 D0 06            [24]  188 	pop	ar6
+      000075 D0 07            [24]  189 	pop	ar7
+      000077 02r00r00         [24]  190 	ljmp	__sdcc_banked_ret
+                                    191 ;------------------------------------------------------------
+                                    192 ;Allocation info for local variables in function 'on'
+                                    193 ;------------------------------------------------------------
+                                    194 ;	../../../../core/net/mac/nullmac.c:58: on(void)
+                                    195 ;	-----------------------------------------
+                                    196 ;	 function on
+                                    197 ;	-----------------------------------------
+      00007A                        198 _on:
+                                    199 ;	../../../../core/net/mac/nullmac.c:60: return NETSTACK_RDC.on();
+      00007A 90r00r0F         [24]  200 	mov	dptr,#(_nullrdc_driver + 0x000f)
+      00007D E4               [12]  201 	clr	a
+      00007E 93               [24]  202 	movc	a,@a+dptr
+      00007F FD               [12]  203 	mov	r5,a
+      000080 A3               [24]  204 	inc	dptr
+      000081 E4               [12]  205 	clr	a
+      000082 93               [24]  206 	movc	a,@a+dptr
+      000083 FE               [12]  207 	mov	r6,a
+      000084 A3               [24]  208 	inc	dptr
+      000085 E4               [12]  209 	clr	a
+      000086 93               [24]  210 	movc	a,@a+dptr
+      000087 FF               [12]  211 	mov	r7,a
+      000088 C0 07            [24]  212 	push	ar7
+      00008A C0 05            [24]  213 	push	ar5
+      00008C C0 06            [24]  214 	push	ar6
+      00008E C0 07            [24]  215 	push	ar7
+      000090 D0 02            [24]  216 	pop	ar2
+      000092 D0 01            [24]  217 	pop	ar1
+      000094 D0 00            [24]  218 	pop	ar0
+      000096 12r00r00         [24]  219 	lcall	__sdcc_banked_call
+      000099 AD 82            [24]  220 	mov	r5,dpl
+      00009B AE 83            [24]  221 	mov	r6,dph
+      00009D D0 07            [24]  222 	pop	ar7
+      00009F 8D 82            [24]  223 	mov	dpl,r5
+      0000A1 8E 83            [24]  224 	mov	dph,r6
+      0000A3 02r00r00         [24]  225 	ljmp	__sdcc_banked_ret
+                                    226 ;------------------------------------------------------------
+                                    227 ;Allocation info for local variables in function 'off'
+                                    228 ;------------------------------------------------------------
+                                    229 ;keep_radio_on             Allocated to registers r6 r7 
+                                    230 ;------------------------------------------------------------
+                                    231 ;	../../../../core/net/mac/nullmac.c:64: off(int keep_radio_on)
+                                    232 ;	-----------------------------------------
+                                    233 ;	 function off
+                                    234 ;	-----------------------------------------
+      0000A6                        235 _off:
+      0000A6 AE 82            [24]  236 	mov	r6,dpl
+      0000A8 AF 83            [24]  237 	mov	r7,dph
+                                    238 ;	../../../../core/net/mac/nullmac.c:66: return NETSTACK_RDC.off(keep_radio_on);
+      0000AA 90r00r12         [24]  239 	mov	dptr,#(_nullrdc_driver + 0x0012)
+      0000AD E4               [12]  240 	clr	a
+      0000AE 93               [24]  241 	movc	a,@a+dptr
+      0000AF FB               [12]  242 	mov	r3,a
+      0000B0 A3               [24]  243 	inc	dptr
+      0000B1 E4               [12]  244 	clr	a
+      0000B2 93               [24]  245 	movc	a,@a+dptr
+      0000B3 FC               [12]  246 	mov	r4,a
+      0000B4 A3               [24]  247 	inc	dptr
+      0000B5 E4               [12]  248 	clr	a
+      0000B6 93               [24]  249 	movc	a,@a+dptr
+      0000B7 FD               [12]  250 	mov	r5,a
+      0000B8 C0 05            [24]  251 	push	ar5
+      0000BA C0 03            [24]  252 	push	ar3
+      0000BC C0 04            [24]  253 	push	ar4
+      0000BE C0 05            [24]  254 	push	ar5
+      0000C0 8E 82            [24]  255 	mov	dpl,r6
+      0000C2 8F 83            [24]  256 	mov	dph,r7
+      0000C4 D0 02            [24]  257 	pop	ar2
+      0000C6 D0 01            [24]  258 	pop	ar1
+      0000C8 D0 00            [24]  259 	pop	ar0
+      0000CA 12r00r00         [24]  260 	lcall	__sdcc_banked_call
+      0000CD AB 82            [24]  261 	mov	r3,dpl
+      0000CF AC 83            [24]  262 	mov	r4,dph
+      0000D1 D0 05            [24]  263 	pop	ar5
+      0000D3 8B 82            [24]  264 	mov	dpl,r3
+      0000D5 8C 83            [24]  265 	mov	dph,r4
+      0000D7 02r00r00         [24]  266 	ljmp	__sdcc_banked_ret
+                                    267 ;------------------------------------------------------------
+                                    268 ;Allocation info for local variables in function 'channel_check_interval'
+                                    269 ;------------------------------------------------------------
+                                    270 ;	../../../../core/net/mac/nullmac.c:70: channel_check_interval(void)
+                                    271 ;	-----------------------------------------
+                                    272 ;	 function channel_check_interval
+                                    273 ;	-----------------------------------------
+      0000DA                        274 _channel_check_interval:
+                                    275 ;	../../../../core/net/mac/nullmac.c:72: return 0;
+      0000DA 90 00 00         [24]  276 	mov	dptr,#0x0000
+      0000DD 02r00r00         [24]  277 	ljmp	__sdcc_banked_ret
+                                    278 ;------------------------------------------------------------
+                                    279 ;Allocation info for local variables in function 'init'
+                                    280 ;------------------------------------------------------------
+                                    281 ;	../../../../core/net/mac/nullmac.c:76: init(void)
+                                    282 ;	-----------------------------------------
+                                    283 ;	 function init
+                                    284 ;	-----------------------------------------
+      0000E0                        285 _init:
+                                    286 ;	../../../../core/net/mac/nullmac.c:78: }
+      0000E0 02r00r00         [24]  287 	ljmp	__sdcc_banked_ret
+                                    288 	.area CSEG    (CODE)
+                                    289 	.area CONST   (CODE)
+      000000                        290 _nullmac_driver:
+      000000r15s00 80               291 	.byte _str_0,(_str_0 >> 8),#0x80
+      000003rE0s00s00               292 	.byte _init,(_init >> 8),(_init >> 16)
+      000006r00s00s00               293 	.byte _send_packet,(_send_packet >> 8),(_send_packet >> 16)
+      000009r4Es00s00               294 	.byte _packet_input,(_packet_input >> 8),(_packet_input >> 16)
+      00000Cr7As00s00               295 	.byte _on,(_on >> 8),(_on >> 16)
+      00000FrA6s00s00               296 	.byte _off,(_off >> 8),(_off >> 16)
+      000012rDAs00s00               297 	.byte _channel_check_interval,(_channel_check_interval >> 8),(_channel_check_interval >> 16)
+      000015                        298 _str_0:
+      000015 6E 75 6C 6C 6D 61 63   299 	.ascii "nullmac"
+      00001C 00                     300 	.db 0x00
+                                    301 	.area XINIT   (CODE)
+                                    302 	.area CABS    (ABS,CODE)

@@ -1,0 +1,3373 @@
+                                      1 ;--------------------------------------------------------
+                                      2 ; File Created by SDCC : free open source ANSI-C Compiler
+                                      3 ; Version 3.3.1 #8804 (Aug  6 2013) (Linux)
+                                      4 ; This file was generated Mon Aug 25 04:16:54 2014
+                                      5 ;--------------------------------------------------------
+                                      6 	.module bmp085
+                                      7 	.optsdcc -mmcs51 --model-huge
+                                      8 	
+                                      9 ;--------------------------------------------------------
+                                     10 ; Public variables in this module
+                                     11 ;--------------------------------------------------------
+                                     12 	.globl _BMP085_Read_Pressure
+                                     13 	.globl _BMP085_Read_TEMP
+                                     14 	.globl _BMP085_Read_3B
+                                     15 	.globl _BMP085_Read_2B
+                                     16 	.globl _clock_delay_usec
+                                     17 	.globl _I2C_Write
+                                     18 	.globl _I2C_Read_Byte
+                                     19 	.globl _I2C_Write_Byte
+                                     20 	.globl _Sendack
+                                     21 	.globl _I2C_Stop
+                                     22 	.globl _I2C_Start
+                                     23 	.globl _ACTIVE
+                                     24 	.globl _TX_BYTE
+                                     25 	.globl _RX_BYTE
+                                     26 	.globl _ERR
+                                     27 	.globl _FE
+                                     28 	.globl _SLAVE
+                                     29 	.globl _RE
+                                     30 	.globl _MODE
+                                     31 	.globl _T3OVFIF
+                                     32 	.globl _T3CH0IF
+                                     33 	.globl _T3CH1IF
+                                     34 	.globl _T4OVFIF
+                                     35 	.globl _T4CH0IF
+                                     36 	.globl _T4CH1IF
+                                     37 	.globl _OVFIM
+                                     38 	.globl _B_0
+                                     39 	.globl _B_1
+                                     40 	.globl _B_2
+                                     41 	.globl _B_3
+                                     42 	.globl _B_4
+                                     43 	.globl _B_5
+                                     44 	.globl _B_6
+                                     45 	.globl _B_7
+                                     46 	.globl _P2IF
+                                     47 	.globl _UTX0IF
+                                     48 	.globl _UTX1IF
+                                     49 	.globl _P1IF
+                                     50 	.globl _WDTIF
+                                     51 	.globl _ACC_0
+                                     52 	.globl _ACC_1
+                                     53 	.globl _ACC_2
+                                     54 	.globl _ACC_3
+                                     55 	.globl _ACC_4
+                                     56 	.globl _ACC_5
+                                     57 	.globl _ACC_6
+                                     58 	.globl _ACC_7
+                                     59 	.globl _P
+                                     60 	.globl _F1
+                                     61 	.globl _OV
+                                     62 	.globl _RS0
+                                     63 	.globl _RS1
+                                     64 	.globl _F0
+                                     65 	.globl _AC
+                                     66 	.globl _CY
+                                     67 	.globl _DMAIF
+                                     68 	.globl _T1IF
+                                     69 	.globl _T2IF
+                                     70 	.globl _T3IF
+                                     71 	.globl _T4IF
+                                     72 	.globl _P0IF
+                                     73 	.globl _STIF
+                                     74 	.globl _DMAIE
+                                     75 	.globl _T1IE
+                                     76 	.globl _T2IE
+                                     77 	.globl _T3IE
+                                     78 	.globl _T4IE
+                                     79 	.globl _P0IE
+                                     80 	.globl _RFERRIE
+                                     81 	.globl _ADCIE
+                                     82 	.globl _URX0IE
+                                     83 	.globl _URX1IE
+                                     84 	.globl _ENCIE
+                                     85 	.globl _STIE
+                                     86 	.globl _EA
+                                     87 	.globl _P2_0
+                                     88 	.globl _P2_1
+                                     89 	.globl _P2_2
+                                     90 	.globl _P2_3
+                                     91 	.globl _P2_4
+                                     92 	.globl _P2_5
+                                     93 	.globl _P2_6
+                                     94 	.globl _P2_7
+                                     95 	.globl _ENCIF_0
+                                     96 	.globl _ENCIF_1
+                                     97 	.globl _P1_0
+                                     98 	.globl _P1_1
+                                     99 	.globl _P1_2
+                                    100 	.globl _P1_3
+                                    101 	.globl _P1_4
+                                    102 	.globl _P1_5
+                                    103 	.globl _P1_6
+                                    104 	.globl _P1_7
+                                    105 	.globl _IT0
+                                    106 	.globl _RFERRIF
+                                    107 	.globl _IT1
+                                    108 	.globl _URX0IF
+                                    109 	.globl _ADCIF
+                                    110 	.globl _URX1IF
+                                    111 	.globl _P0_0
+                                    112 	.globl _P0_1
+                                    113 	.globl _P0_2
+                                    114 	.globl _P0_3
+                                    115 	.globl _P0_4
+                                    116 	.globl _P0_5
+                                    117 	.globl _P0_6
+                                    118 	.globl _P0_7
+                                    119 	.globl _WDCTL
+                                    120 	.globl _U1GCR
+                                    121 	.globl _U1UCR
+                                    122 	.globl _U1BAUD
+                                    123 	.globl _U1DBUF
+                                    124 	.globl _U1CSR
+                                    125 	.globl _U0GCR
+                                    126 	.globl _U0UCR
+                                    127 	.globl _U0BAUD
+                                    128 	.globl _U0DBUF
+                                    129 	.globl _U0CSR
+                                    130 	.globl _TIMIF
+                                    131 	.globl _T4CC1
+                                    132 	.globl _T4CCTL1
+                                    133 	.globl _T4CC0
+                                    134 	.globl _T4CCTL0
+                                    135 	.globl _T4CTL
+                                    136 	.globl _T4CNT
+                                    137 	.globl _T3CC1
+                                    138 	.globl _T3CCTL1
+                                    139 	.globl _T3CC0
+                                    140 	.globl _T3CCTL0
+                                    141 	.globl _T3CTL
+                                    142 	.globl _T3CNT
+                                    143 	.globl _T2MSEL
+                                    144 	.globl _T2IRQM
+                                    145 	.globl _T2MOVF2
+                                    146 	.globl _T2MOVF1
+                                    147 	.globl _T2MOVF0
+                                    148 	.globl _T2M1
+                                    149 	.globl _T2M0
+                                    150 	.globl _T2IRQF
+                                    151 	.globl _T2EVTCFG
+                                    152 	.globl _T2CTRL
+                                    153 	.globl _T1STAT
+                                    154 	.globl _T1CCTL2
+                                    155 	.globl _T1CCTL1
+                                    156 	.globl _T1CCTL0
+                                    157 	.globl _T1CTL
+                                    158 	.globl _T1CNTH
+                                    159 	.globl _T1CNTL
+                                    160 	.globl _T1CC2H
+                                    161 	.globl _T1CC2L
+                                    162 	.globl _T1CC1H
+                                    163 	.globl _T1CC1L
+                                    164 	.globl _T1CC0H
+                                    165 	.globl _T1CC0L
+                                    166 	.globl _CLKCONSTA
+                                    167 	.globl _CLKCONCMD
+                                    168 	.globl _SLEEPSTA
+                                    169 	.globl _SLEEPCMD
+                                    170 	.globl _STLOAD
+                                    171 	.globl _ST2
+                                    172 	.globl _ST1
+                                    173 	.globl _ST0
+                                    174 	.globl _RFERRF
+                                    175 	.globl _RFIRQF0
+                                    176 	.globl _RFST
+                                    177 	.globl _RFD
+                                    178 	.globl _RFIRQF1
+                                    179 	.globl _PSBANK
+                                    180 	.globl _FMAP
+                                    181 	.globl _MEMCTR
+                                    182 	.globl __XPAGE
+                                    183 	.globl _MPAGE
+                                    184 	.globl _PMUX
+                                    185 	.globl _P2DIR
+                                    186 	.globl _P1DIR
+                                    187 	.globl _P0DIR
+                                    188 	.globl _P2INP
+                                    189 	.globl _P1INP
+                                    190 	.globl _P2SEL
+                                    191 	.globl _P1SEL
+                                    192 	.globl _P0SEL
+                                    193 	.globl _APCFG
+                                    194 	.globl _PERCFG
+                                    195 	.globl _P0INP
+                                    196 	.globl _P2IEN
+                                    197 	.globl _P1IEN
+                                    198 	.globl _P0IEN
+                                    199 	.globl _PICTL
+                                    200 	.globl _P2IFG
+                                    201 	.globl _P1IFG
+                                    202 	.globl _P0IFG
+                                    203 	.globl _DMAREQ
+                                    204 	.globl _DMAARM
+                                    205 	.globl _DMA0CFGH
+                                    206 	.globl _DMA0CFGL
+                                    207 	.globl _DMA1CFGH
+                                    208 	.globl _DMA1CFGL
+                                    209 	.globl _DMAIRQ
+                                    210 	.globl _ENCCS
+                                    211 	.globl _ENCDO
+                                    212 	.globl _ENCDI
+                                    213 	.globl _RNDH
+                                    214 	.globl _RNDL
+                                    215 	.globl _ADCH
+                                    216 	.globl _ADCL
+                                    217 	.globl _ADCCON3
+                                    218 	.globl _ADCCON2
+                                    219 	.globl _ADCCON1
+                                    220 	.globl _B
+                                    221 	.globl _IRCON2
+                                    222 	.globl _ACC
+                                    223 	.globl _PSW
+                                    224 	.globl _IRCON
+                                    225 	.globl _IP1
+                                    226 	.globl _IEN1
+                                    227 	.globl _IP0
+                                    228 	.globl _IEN0
+                                    229 	.globl _P2
+                                    230 	.globl _S1CON
+                                    231 	.globl _IEN2
+                                    232 	.globl _S0CON
+                                    233 	.globl _DPS
+                                    234 	.globl _P1
+                                    235 	.globl _TCON
+                                    236 	.globl _PCON
+                                    237 	.globl _DPH1
+                                    238 	.globl _DPL1
+                                    239 	.globl _DPH0
+                                    240 	.globl _DPL0
+                                    241 	.globl _SP
+                                    242 	.globl _P0
+                                    243 	.globl _md
+                                    244 	.globl _mc
+                                    245 	.globl _mb
+                                    246 	.globl _b2
+                                    247 	.globl _b1
+                                    248 	.globl _ac6
+                                    249 	.globl _ac5
+                                    250 	.globl _ac4
+                                    251 	.globl _ac3
+                                    252 	.globl _ac2
+                                    253 	.globl _ac1
+                                    254 	.globl _X_IEEE_ADDR
+                                    255 	.globl _X_INFOPAGE
+                                    256 	.globl _X_P2DIR
+                                    257 	.globl _X_P1DIR
+                                    258 	.globl _X_P0DIR
+                                    259 	.globl _X_U1GCR
+                                    260 	.globl _X_U1UCR
+                                    261 	.globl _X_U1BAUD
+                                    262 	.globl _X_U1DBUF
+                                    263 	.globl _X_U1CSR
+                                    264 	.globl _X_P2INP
+                                    265 	.globl _X_P1INP
+                                    266 	.globl _X_P2SEL
+                                    267 	.globl _X_P1SEL
+                                    268 	.globl _X_P0SEL
+                                    269 	.globl _X_APCFG
+                                    270 	.globl _X_PERCFG
+                                    271 	.globl _X_T4CC1
+                                    272 	.globl _X_T4CCTL1
+                                    273 	.globl _X_T4CC0
+                                    274 	.globl _X_T4CCTL0
+                                    275 	.globl _X_T4CTL
+                                    276 	.globl _X_T4CNT
+                                    277 	.globl _X_RFIRQF0
+                                    278 	.globl _X_T1CCTL2
+                                    279 	.globl _X_T1CCTL1
+                                    280 	.globl _X_T1CCTL0
+                                    281 	.globl _X_T1CTL
+                                    282 	.globl _X_T1CNTH
+                                    283 	.globl _X_T1CNTL
+                                    284 	.globl _X_RFST
+                                    285 	.globl _X_T1CC2H
+                                    286 	.globl _X_T1CC2L
+                                    287 	.globl _X_T1CC1H
+                                    288 	.globl _X_T1CC1L
+                                    289 	.globl _X_T1CC0H
+                                    290 	.globl _X_T1CC0L
+                                    291 	.globl _X_RFD
+                                    292 	.globl _X_TIMIF
+                                    293 	.globl _X_DMAREQ
+                                    294 	.globl _X_DMAARM
+                                    295 	.globl _X_DMA0CFGH
+                                    296 	.globl _X_DMA0CFGL
+                                    297 	.globl _X_DMA1CFGH
+                                    298 	.globl _X_DMA1CFGL
+                                    299 	.globl _X_DMAIRQ
+                                    300 	.globl _X_T3CC1
+                                    301 	.globl _X_T3CCTL1
+                                    302 	.globl _X_T3CC0
+                                    303 	.globl _X_T3CCTL0
+                                    304 	.globl _X_T3CTL
+                                    305 	.globl _X_T3CNT
+                                    306 	.globl _X_WDCTL
+                                    307 	.globl _X_MEMCTR
+                                    308 	.globl _X_CLKCONCMD
+                                    309 	.globl _X_U0GCR
+                                    310 	.globl _X_U0UCR
+                                    311 	.globl _X_T2MSEL
+                                    312 	.globl _X_U0BAUD
+                                    313 	.globl _X_U0DBUF
+                                    314 	.globl _X_RFERRF
+                                    315 	.globl _X_SLEEPCMD
+                                    316 	.globl _X_RNDH
+                                    317 	.globl _X_RNDL
+                                    318 	.globl _X_ADCH
+                                    319 	.globl _X_ADCL
+                                    320 	.globl _X_ADCCON3
+                                    321 	.globl _X_ADCCON2
+                                    322 	.globl _X_ADCCON1
+                                    323 	.globl _X_ENCCS
+                                    324 	.globl _X_ENCDO
+                                    325 	.globl _X_ENCDI
+                                    326 	.globl _X_T1STAT
+                                    327 	.globl _X_PMUX
+                                    328 	.globl _X_STLOAD
+                                    329 	.globl _X_P2IEN
+                                    330 	.globl _X_P0IEN
+                                    331 	.globl _X_T2IRQM
+                                    332 	.globl _X_T2MOVF2
+                                    333 	.globl _X_T2MOVF1
+                                    334 	.globl _X_T2MOVF0
+                                    335 	.globl _X_T2M1
+                                    336 	.globl _X_T2M0
+                                    337 	.globl _X_T2IRQF
+                                    338 	.globl _X_P2
+                                    339 	.globl _X_PSBANK
+                                    340 	.globl _X_FMAP
+                                    341 	.globl _X_CLKCONSTA
+                                    342 	.globl _X_SLEEPSTA
+                                    343 	.globl _X_T2EVTCFG
+                                    344 	.globl _X_ST2
+                                    345 	.globl _X_ST1
+                                    346 	.globl _X_ST0
+                                    347 	.globl _X_T2CTRL
+                                    348 	.globl _X__XPAGE
+                                    349 	.globl _X_MPAGE
+                                    350 	.globl _X_RFIRQF1
+                                    351 	.globl _X_P1
+                                    352 	.globl _X_P0INP
+                                    353 	.globl _X_P1IEN
+                                    354 	.globl _X_PICTL
+                                    355 	.globl _X_P2IFG
+                                    356 	.globl _X_P1IFG
+                                    357 	.globl _X_P0IFG
+                                    358 	.globl _X_U0CSR
+                                    359 	.globl _X_P0
+                                    360 	.globl _USBF5
+                                    361 	.globl _USBF4
+                                    362 	.globl _USBF3
+                                    363 	.globl _USBF2
+                                    364 	.globl _USBF1
+                                    365 	.globl _USBF0
+                                    366 	.globl _USBCNTH
+                                    367 	.globl _USBCNTL
+                                    368 	.globl _USBCNT0
+                                    369 	.globl _USBCSOH
+                                    370 	.globl _USBCSOL
+                                    371 	.globl _USBMAXO
+                                    372 	.globl _USBCSIH
+                                    373 	.globl _USBCSIL
+                                    374 	.globl _USBCS0
+                                    375 	.globl _USBMAXI
+                                    376 	.globl _USBCTRL
+                                    377 	.globl _USBINDEX
+                                    378 	.globl _USBFRMH
+                                    379 	.globl _USBFRML
+                                    380 	.globl _USBCIE
+                                    381 	.globl _USBOIE
+                                    382 	.globl _USBIIE
+                                    383 	.globl _USBCIF
+                                    384 	.globl _USBOIF
+                                    385 	.globl _USBIIF
+                                    386 	.globl _USBPOW
+                                    387 	.globl _USBADDR
+                                    388 	.globl _CSPT
+                                    389 	.globl _CSPZ
+                                    390 	.globl _CSPY
+                                    391 	.globl _CSPX
+                                    392 	.globl _CSPSTAT
+                                    393 	.globl _CSPCTRL
+                                    394 	.globl _CSPPROG23
+                                    395 	.globl _CSPPROG22
+                                    396 	.globl _CSPPROG21
+                                    397 	.globl _CSPPROG20
+                                    398 	.globl _CSPPROG19
+                                    399 	.globl _CSPPROG18
+                                    400 	.globl _CSPPROG17
+                                    401 	.globl _CSPPROG16
+                                    402 	.globl _CSPPROG15
+                                    403 	.globl _CSPPROG14
+                                    404 	.globl _CSPPROG13
+                                    405 	.globl _CSPPROG12
+                                    406 	.globl _CSPPROG11
+                                    407 	.globl _CSPPROG10
+                                    408 	.globl _CSPPROG9
+                                    409 	.globl _CSPPROG8
+                                    410 	.globl _CSPPROG7
+                                    411 	.globl _CSPPROG6
+                                    412 	.globl _CSPPROG5
+                                    413 	.globl _CSPPROG4
+                                    414 	.globl _CSPPROG3
+                                    415 	.globl _CSPPROG2
+                                    416 	.globl _CSPPROG1
+                                    417 	.globl _CSPPROG0
+                                    418 	.globl _RFC_OBS_CTRL2
+                                    419 	.globl _RFC_OBS_CTRL1
+                                    420 	.globl _RFC_OBS_CTRL0
+                                    421 	.globl _TXFILTCFG
+                                    422 	.globl _PTEST1
+                                    423 	.globl _PTEST0
+                                    424 	.globl _ATEST
+                                    425 	.globl _DACTEST2
+                                    426 	.globl _DACTEST1
+                                    427 	.globl _DACTEST0
+                                    428 	.globl _MDMTEST1
+                                    429 	.globl _MDMTEST0
+                                    430 	.globl _ADCTEST2
+                                    431 	.globl _ADCTEST1
+                                    432 	.globl _ADCTEST0
+                                    433 	.globl _AGCCTRL3
+                                    434 	.globl _AGCCTRL2
+                                    435 	.globl _AGCCTRL1
+                                    436 	.globl _AGCCTRL0
+                                    437 	.globl _FSCAL3
+                                    438 	.globl _FSCAL2
+                                    439 	.globl _FSCAL1
+                                    440 	.globl _FSCAL0
+                                    441 	.globl _FSCTRL
+                                    442 	.globl _RXCTRL
+                                    443 	.globl _FREQEST
+                                    444 	.globl _MDMCTRL1
+                                    445 	.globl _MDMCTRL0
+                                    446 	.globl _RFRND
+                                    447 	.globl _RFERRM
+                                    448 	.globl _RFIRQM1
+                                    449 	.globl _RFIRQM0
+                                    450 	.globl _TXLAST_PTR
+                                    451 	.globl _TXFIRST_PTR
+                                    452 	.globl _RXP1_PTR
+                                    453 	.globl _RXLAST_PTR
+                                    454 	.globl _RXFIRST_PTR
+                                    455 	.globl _TXFIFOCNT
+                                    456 	.globl _RXFIFOCNT
+                                    457 	.globl _RXFIRST
+                                    458 	.globl _RSSISTAT
+                                    459 	.globl _RSSI
+                                    460 	.globl _CCACTRL1
+                                    461 	.globl _CCACTRL0
+                                    462 	.globl _FSMCTRL
+                                    463 	.globl _FIFOPCTRL
+                                    464 	.globl _FSMSTAT1
+                                    465 	.globl _FSMSTAT0
+                                    466 	.globl _TXCTRL
+                                    467 	.globl _TXPOWER
+                                    468 	.globl _FREQCTRL
+                                    469 	.globl _FREQTUNE
+                                    470 	.globl _RXMASKCLR
+                                    471 	.globl _RXMASKSET
+                                    472 	.globl _RXENABLE
+                                    473 	.globl _FRMCTRL1
+                                    474 	.globl _FRMCTRL0
+                                    475 	.globl _SRCEXTEN2
+                                    476 	.globl _SRCEXTEN1
+                                    477 	.globl _SRCEXTEN0
+                                    478 	.globl _SRCSHORTEN2
+                                    479 	.globl _SRCSHORTEN1
+                                    480 	.globl _SRCSHORTEN0
+                                    481 	.globl _SRCMATCH
+                                    482 	.globl _FRMFILT1
+                                    483 	.globl _FRMFILT0
+                                    484 	.globl _SHORT_ADDR1
+                                    485 	.globl _SHORT_ADDR0
+                                    486 	.globl _PAN_ID1
+                                    487 	.globl _PAN_ID0
+                                    488 	.globl _EXT_ADDR7
+                                    489 	.globl _EXT_ADDR6
+                                    490 	.globl _EXT_ADDR5
+                                    491 	.globl _EXT_ADDR4
+                                    492 	.globl _EXT_ADDR3
+                                    493 	.globl _EXT_ADDR2
+                                    494 	.globl _EXT_ADDR1
+                                    495 	.globl _EXT_ADDR0
+                                    496 	.globl _SRCSHORTPENDEN2
+                                    497 	.globl _SRCSHORTPENDEN1
+                                    498 	.globl _SRCSHORTPENDEN0
+                                    499 	.globl _SRCEXTPENDEN2
+                                    500 	.globl _SRCEXTPENDEN1
+                                    501 	.globl _SRCEXTPENDEN0
+                                    502 	.globl _SRCRESINDEX
+                                    503 	.globl _SRCRESMASK2
+                                    504 	.globl _SRCRESMASK1
+                                    505 	.globl _SRCRESMASK0
+                                    506 	.globl _SRC_ADDR_TABLE
+                                    507 	.globl _TXFIFO
+                                    508 	.globl _RXFIFO
+                                    509 	.globl _RFCORE_RAM
+                                    510 	.globl _CMPCTL
+                                    511 	.globl _OPAMPS
+                                    512 	.globl _OPAMPC
+                                    513 	.globl _STCV2
+                                    514 	.globl _STCV1
+                                    515 	.globl _STCV0
+                                    516 	.globl _STCS
+                                    517 	.globl _STCC
+                                    518 	.globl _T1CC4H
+                                    519 	.globl _T1CC4L
+                                    520 	.globl _T1CC3H
+                                    521 	.globl _T1CC3L
+                                    522 	.globl _XX_T1CC2H
+                                    523 	.globl _XX_T1CC2L
+                                    524 	.globl _XX_T1CC1H
+                                    525 	.globl _XX_T1CC1L
+                                    526 	.globl _XX_T1CC0H
+                                    527 	.globl _XX_T1CC0L
+                                    528 	.globl _T1CCTL4
+                                    529 	.globl _T1CCTL3
+                                    530 	.globl _XX_T1CCTL2
+                                    531 	.globl _XX_T1CCTL1
+                                    532 	.globl _XX_T1CCTL0
+                                    533 	.globl _CLD
+                                    534 	.globl _IRCTL
+                                    535 	.globl _CHIPINFO1
+                                    536 	.globl _CHIPINFO0
+                                    537 	.globl _FWDATA
+                                    538 	.globl _FADDRH
+                                    539 	.globl _FADDRL
+                                    540 	.globl _FCTL
+                                    541 	.globl _IVCTRL
+                                    542 	.globl _BATTMON
+                                    543 	.globl _SRCRC
+                                    544 	.globl _DBGDATA
+                                    545 	.globl _TESTREG0
+                                    546 	.globl _CHIPID
+                                    547 	.globl _CHVER
+                                    548 	.globl _OBSSEL5
+                                    549 	.globl _OBSSEL4
+                                    550 	.globl _OBSSEL3
+                                    551 	.globl _OBSSEL2
+                                    552 	.globl _OBSSEL1
+                                    553 	.globl _OBSSEL0
+                                    554 	.globl _I2CIO
+                                    555 	.globl _I2CWC
+                                    556 	.globl _I2CADDR
+                                    557 	.globl _I2CDATA
+                                    558 	.globl _I2CSTAT
+                                    559 	.globl _I2CCFG
+                                    560 	.globl _OPAMPMC
+                                    561 	.globl _MONMUX
+                                    562 	.globl _Init_BMP085
+                                    563 	.globl _Multiple_Read_BMP085
+                                    564 ;--------------------------------------------------------
+                                    565 ; special function registers
+                                    566 ;--------------------------------------------------------
+                                    567 	.area RSEG    (ABS,DATA)
+      000000                        568 	.org 0x0000
+                           000080   569 _P0	=	0x0080
+                           000081   570 _SP	=	0x0081
+                           000082   571 _DPL0	=	0x0082
+                           000083   572 _DPH0	=	0x0083
+                           000084   573 _DPL1	=	0x0084
+                           000085   574 _DPH1	=	0x0085
+                           000087   575 _PCON	=	0x0087
+                           000088   576 _TCON	=	0x0088
+                           000090   577 _P1	=	0x0090
+                           000092   578 _DPS	=	0x0092
+                           000098   579 _S0CON	=	0x0098
+                           00009A   580 _IEN2	=	0x009a
+                           00009B   581 _S1CON	=	0x009b
+                           0000A0   582 _P2	=	0x00a0
+                           0000A8   583 _IEN0	=	0x00a8
+                           0000A9   584 _IP0	=	0x00a9
+                           0000B8   585 _IEN1	=	0x00b8
+                           0000B9   586 _IP1	=	0x00b9
+                           0000C0   587 _IRCON	=	0x00c0
+                           0000D0   588 _PSW	=	0x00d0
+                           0000E0   589 _ACC	=	0x00e0
+                           0000E8   590 _IRCON2	=	0x00e8
+                           0000F0   591 _B	=	0x00f0
+                           0000B4   592 _ADCCON1	=	0x00b4
+                           0000B5   593 _ADCCON2	=	0x00b5
+                           0000B6   594 _ADCCON3	=	0x00b6
+                           0000BA   595 _ADCL	=	0x00ba
+                           0000BB   596 _ADCH	=	0x00bb
+                           0000BC   597 _RNDL	=	0x00bc
+                           0000BD   598 _RNDH	=	0x00bd
+                           0000B1   599 _ENCDI	=	0x00b1
+                           0000B2   600 _ENCDO	=	0x00b2
+                           0000B3   601 _ENCCS	=	0x00b3
+                           0000D1   602 _DMAIRQ	=	0x00d1
+                           0000D2   603 _DMA1CFGL	=	0x00d2
+                           0000D3   604 _DMA1CFGH	=	0x00d3
+                           0000D4   605 _DMA0CFGL	=	0x00d4
+                           0000D5   606 _DMA0CFGH	=	0x00d5
+                           0000D6   607 _DMAARM	=	0x00d6
+                           0000D7   608 _DMAREQ	=	0x00d7
+                           000089   609 _P0IFG	=	0x0089
+                           00008A   610 _P1IFG	=	0x008a
+                           00008B   611 _P2IFG	=	0x008b
+                           00008C   612 _PICTL	=	0x008c
+                           0000AB   613 _P0IEN	=	0x00ab
+                           00008D   614 _P1IEN	=	0x008d
+                           0000AC   615 _P2IEN	=	0x00ac
+                           00008F   616 _P0INP	=	0x008f
+                           0000F1   617 _PERCFG	=	0x00f1
+                           0000F2   618 _APCFG	=	0x00f2
+                           0000F3   619 _P0SEL	=	0x00f3
+                           0000F4   620 _P1SEL	=	0x00f4
+                           0000F5   621 _P2SEL	=	0x00f5
+                           0000F6   622 _P1INP	=	0x00f6
+                           0000F7   623 _P2INP	=	0x00f7
+                           0000FD   624 _P0DIR	=	0x00fd
+                           0000FE   625 _P1DIR	=	0x00fe
+                           0000FF   626 _P2DIR	=	0x00ff
+                           0000AE   627 _PMUX	=	0x00ae
+                           000093   628 _MPAGE	=	0x0093
+                           000093   629 __XPAGE	=	0x0093
+                           0000C7   630 _MEMCTR	=	0x00c7
+                           00009F   631 _FMAP	=	0x009f
+                           00009F   632 _PSBANK	=	0x009f
+                           000091   633 _RFIRQF1	=	0x0091
+                           0000D9   634 _RFD	=	0x00d9
+                           0000E1   635 _RFST	=	0x00e1
+                           0000E9   636 _RFIRQF0	=	0x00e9
+                           0000BF   637 _RFERRF	=	0x00bf
+                           000095   638 _ST0	=	0x0095
+                           000096   639 _ST1	=	0x0096
+                           000097   640 _ST2	=	0x0097
+                           0000AD   641 _STLOAD	=	0x00ad
+                           0000BE   642 _SLEEPCMD	=	0x00be
+                           00009D   643 _SLEEPSTA	=	0x009d
+                           0000C6   644 _CLKCONCMD	=	0x00c6
+                           00009E   645 _CLKCONSTA	=	0x009e
+                           0000DA   646 _T1CC0L	=	0x00da
+                           0000DB   647 _T1CC0H	=	0x00db
+                           0000DC   648 _T1CC1L	=	0x00dc
+                           0000DD   649 _T1CC1H	=	0x00dd
+                           0000DE   650 _T1CC2L	=	0x00de
+                           0000DF   651 _T1CC2H	=	0x00df
+                           0000E2   652 _T1CNTL	=	0x00e2
+                           0000E3   653 _T1CNTH	=	0x00e3
+                           0000E4   654 _T1CTL	=	0x00e4
+                           0000E5   655 _T1CCTL0	=	0x00e5
+                           0000E6   656 _T1CCTL1	=	0x00e6
+                           0000E7   657 _T1CCTL2	=	0x00e7
+                           0000AF   658 _T1STAT	=	0x00af
+                           000094   659 _T2CTRL	=	0x0094
+                           00009C   660 _T2EVTCFG	=	0x009c
+                           0000A1   661 _T2IRQF	=	0x00a1
+                           0000A2   662 _T2M0	=	0x00a2
+                           0000A3   663 _T2M1	=	0x00a3
+                           0000A4   664 _T2MOVF0	=	0x00a4
+                           0000A5   665 _T2MOVF1	=	0x00a5
+                           0000A6   666 _T2MOVF2	=	0x00a6
+                           0000A7   667 _T2IRQM	=	0x00a7
+                           0000C3   668 _T2MSEL	=	0x00c3
+                           0000CA   669 _T3CNT	=	0x00ca
+                           0000CB   670 _T3CTL	=	0x00cb
+                           0000CC   671 _T3CCTL0	=	0x00cc
+                           0000CD   672 _T3CC0	=	0x00cd
+                           0000CE   673 _T3CCTL1	=	0x00ce
+                           0000CF   674 _T3CC1	=	0x00cf
+                           0000EA   675 _T4CNT	=	0x00ea
+                           0000EB   676 _T4CTL	=	0x00eb
+                           0000EC   677 _T4CCTL0	=	0x00ec
+                           0000ED   678 _T4CC0	=	0x00ed
+                           0000EE   679 _T4CCTL1	=	0x00ee
+                           0000EF   680 _T4CC1	=	0x00ef
+                           0000D8   681 _TIMIF	=	0x00d8
+                           000086   682 _U0CSR	=	0x0086
+                           0000C1   683 _U0DBUF	=	0x00c1
+                           0000C2   684 _U0BAUD	=	0x00c2
+                           0000C4   685 _U0UCR	=	0x00c4
+                           0000C5   686 _U0GCR	=	0x00c5
+                           0000F8   687 _U1CSR	=	0x00f8
+                           0000F9   688 _U1DBUF	=	0x00f9
+                           0000FA   689 _U1BAUD	=	0x00fa
+                           0000FB   690 _U1UCR	=	0x00fb
+                           0000FC   691 _U1GCR	=	0x00fc
+                           0000C9   692 _WDCTL	=	0x00c9
+                                    693 ;--------------------------------------------------------
+                                    694 ; special function bits
+                                    695 ;--------------------------------------------------------
+                                    696 	.area RSEG    (ABS,DATA)
+      000000                        697 	.org 0x0000
+                           000087   698 _P0_7	=	0x0087
+                           000086   699 _P0_6	=	0x0086
+                           000085   700 _P0_5	=	0x0085
+                           000084   701 _P0_4	=	0x0084
+                           000083   702 _P0_3	=	0x0083
+                           000082   703 _P0_2	=	0x0082
+                           000081   704 _P0_1	=	0x0081
+                           000080   705 _P0_0	=	0x0080
+                           00008F   706 _URX1IF	=	0x008f
+                           00008D   707 _ADCIF	=	0x008d
+                           00008B   708 _URX0IF	=	0x008b
+                           00008A   709 _IT1	=	0x008a
+                           000089   710 _RFERRIF	=	0x0089
+                           000088   711 _IT0	=	0x0088
+                           000097   712 _P1_7	=	0x0097
+                           000096   713 _P1_6	=	0x0096
+                           000095   714 _P1_5	=	0x0095
+                           000094   715 _P1_4	=	0x0094
+                           000093   716 _P1_3	=	0x0093
+                           000092   717 _P1_2	=	0x0092
+                           000091   718 _P1_1	=	0x0091
+                           000090   719 _P1_0	=	0x0090
+                           000099   720 _ENCIF_1	=	0x0099
+                           000098   721 _ENCIF_0	=	0x0098
+                           0000A7   722 _P2_7	=	0x00a7
+                           0000A6   723 _P2_6	=	0x00a6
+                           0000A5   724 _P2_5	=	0x00a5
+                           0000A4   725 _P2_4	=	0x00a4
+                           0000A3   726 _P2_3	=	0x00a3
+                           0000A2   727 _P2_2	=	0x00a2
+                           0000A1   728 _P2_1	=	0x00a1
+                           0000A0   729 _P2_0	=	0x00a0
+                           0000AF   730 _EA	=	0x00af
+                           0000AD   731 _STIE	=	0x00ad
+                           0000AC   732 _ENCIE	=	0x00ac
+                           0000AB   733 _URX1IE	=	0x00ab
+                           0000AA   734 _URX0IE	=	0x00aa
+                           0000A9   735 _ADCIE	=	0x00a9
+                           0000A8   736 _RFERRIE	=	0x00a8
+                           0000BD   737 _P0IE	=	0x00bd
+                           0000BC   738 _T4IE	=	0x00bc
+                           0000BB   739 _T3IE	=	0x00bb
+                           0000BA   740 _T2IE	=	0x00ba
+                           0000B9   741 _T1IE	=	0x00b9
+                           0000B8   742 _DMAIE	=	0x00b8
+                           0000C7   743 _STIF	=	0x00c7
+                           0000C5   744 _P0IF	=	0x00c5
+                           0000C4   745 _T4IF	=	0x00c4
+                           0000C3   746 _T3IF	=	0x00c3
+                           0000C2   747 _T2IF	=	0x00c2
+                           0000C1   748 _T1IF	=	0x00c1
+                           0000C0   749 _DMAIF	=	0x00c0
+                           0000D7   750 _CY	=	0x00d7
+                           0000D6   751 _AC	=	0x00d6
+                           0000D5   752 _F0	=	0x00d5
+                           0000D4   753 _RS1	=	0x00d4
+                           0000D3   754 _RS0	=	0x00d3
+                           0000D2   755 _OV	=	0x00d2
+                           0000D1   756 _F1	=	0x00d1
+                           0000D0   757 _P	=	0x00d0
+                           0000E7   758 _ACC_7	=	0x00e7
+                           0000E6   759 _ACC_6	=	0x00e6
+                           0000E5   760 _ACC_5	=	0x00e5
+                           0000E4   761 _ACC_4	=	0x00e4
+                           0000E3   762 _ACC_3	=	0x00e3
+                           0000E2   763 _ACC_2	=	0x00e2
+                           0000E1   764 _ACC_1	=	0x00e1
+                           0000E0   765 _ACC_0	=	0x00e0
+                           0000EC   766 _WDTIF	=	0x00ec
+                           0000EB   767 _P1IF	=	0x00eb
+                           0000EA   768 _UTX1IF	=	0x00ea
+                           0000E9   769 _UTX0IF	=	0x00e9
+                           0000E8   770 _P2IF	=	0x00e8
+                           0000F7   771 _B_7	=	0x00f7
+                           0000F6   772 _B_6	=	0x00f6
+                           0000F5   773 _B_5	=	0x00f5
+                           0000F4   774 _B_4	=	0x00f4
+                           0000F3   775 _B_3	=	0x00f3
+                           0000F2   776 _B_2	=	0x00f2
+                           0000F1   777 _B_1	=	0x00f1
+                           0000F0   778 _B_0	=	0x00f0
+                           0000DE   779 _OVFIM	=	0x00de
+                           0000DD   780 _T4CH1IF	=	0x00dd
+                           0000DC   781 _T4CH0IF	=	0x00dc
+                           0000DB   782 _T4OVFIF	=	0x00db
+                           0000DA   783 _T3CH1IF	=	0x00da
+                           0000D9   784 _T3CH0IF	=	0x00d9
+                           0000D8   785 _T3OVFIF	=	0x00d8
+                           0000FF   786 _MODE	=	0x00ff
+                           0000FE   787 _RE	=	0x00fe
+                           0000FD   788 _SLAVE	=	0x00fd
+                           0000FC   789 _FE	=	0x00fc
+                           0000FB   790 _ERR	=	0x00fb
+                           0000FA   791 _RX_BYTE	=	0x00fa
+                           0000F9   792 _TX_BYTE	=	0x00f9
+                           0000F8   793 _ACTIVE	=	0x00f8
+                                    794 ;--------------------------------------------------------
+                                    795 ; overlayable register banks
+                                    796 ;--------------------------------------------------------
+                                    797 	.area REG_BANK_0	(REL,OVR,DATA)
+      000000                        798 	.ds 8
+                                    799 ;--------------------------------------------------------
+                                    800 ; internal ram data
+                                    801 ;--------------------------------------------------------
+                                    802 	.area DSEG    (DATA)
+                                    803 ;--------------------------------------------------------
+                                    804 ; overlayable items in internal ram 
+                                    805 ;--------------------------------------------------------
+                                    806 ;--------------------------------------------------------
+                                    807 ; indirectly addressable internal ram data
+                                    808 ;--------------------------------------------------------
+                                    809 	.area ISEG    (DATA)
+                                    810 ;--------------------------------------------------------
+                                    811 ; absolute internal ram data
+                                    812 ;--------------------------------------------------------
+                                    813 	.area IABS    (ABS,DATA)
+                                    814 	.area IABS    (ABS,DATA)
+                                    815 ;--------------------------------------------------------
+                                    816 ; bit data
+                                    817 ;--------------------------------------------------------
+                                    818 	.area BSEG    (BIT)
+                                    819 ;--------------------------------------------------------
+                                    820 ; paged external ram data
+                                    821 ;--------------------------------------------------------
+                                    822 	.area PSEG    (PAG,XDATA)
+                                    823 ;--------------------------------------------------------
+                                    824 ; external ram data
+                                    825 ;--------------------------------------------------------
+                                    826 	.area XSEG    (XDATA)
+                           0061A6   827 _MONMUX	=	0x61a6
+                           0061A6   828 _OPAMPMC	=	0x61a6
+                           006230   829 _I2CCFG	=	0x6230
+                           006231   830 _I2CSTAT	=	0x6231
+                           006232   831 _I2CDATA	=	0x6232
+                           006233   832 _I2CADDR	=	0x6233
+                           006234   833 _I2CWC	=	0x6234
+                           006235   834 _I2CIO	=	0x6235
+                           006243   835 _OBSSEL0	=	0x6243
+                           006244   836 _OBSSEL1	=	0x6244
+                           006245   837 _OBSSEL2	=	0x6245
+                           006246   838 _OBSSEL3	=	0x6246
+                           006247   839 _OBSSEL4	=	0x6247
+                           006248   840 _OBSSEL5	=	0x6248
+                           006249   841 _CHVER	=	0x6249
+                           00624A   842 _CHIPID	=	0x624a
+                           00624B   843 _TESTREG0	=	0x624b
+                           006260   844 _DBGDATA	=	0x6260
+                           006262   845 _SRCRC	=	0x6262
+                           006264   846 _BATTMON	=	0x6264
+                           006265   847 _IVCTRL	=	0x6265
+                           006270   848 _FCTL	=	0x6270
+                           006271   849 _FADDRL	=	0x6271
+                           006272   850 _FADDRH	=	0x6272
+                           006273   851 _FWDATA	=	0x6273
+                           006276   852 _CHIPINFO0	=	0x6276
+                           006277   853 _CHIPINFO1	=	0x6277
+                           006281   854 _IRCTL	=	0x6281
+                           006290   855 _CLD	=	0x6290
+                           0062A0   856 _XX_T1CCTL0	=	0x62a0
+                           0062A1   857 _XX_T1CCTL1	=	0x62a1
+                           0062A2   858 _XX_T1CCTL2	=	0x62a2
+                           0062A3   859 _T1CCTL3	=	0x62a3
+                           0062A4   860 _T1CCTL4	=	0x62a4
+                           0062A6   861 _XX_T1CC0L	=	0x62a6
+                           0062A7   862 _XX_T1CC0H	=	0x62a7
+                           0062A8   863 _XX_T1CC1L	=	0x62a8
+                           0062A9   864 _XX_T1CC1H	=	0x62a9
+                           0062AA   865 _XX_T1CC2L	=	0x62aa
+                           0062AB   866 _XX_T1CC2H	=	0x62ab
+                           0062AC   867 _T1CC3L	=	0x62ac
+                           0062AD   868 _T1CC3H	=	0x62ad
+                           0062AE   869 _T1CC4L	=	0x62ae
+                           0062AF   870 _T1CC4H	=	0x62af
+                           0062B0   871 _STCC	=	0x62b0
+                           0062B1   872 _STCS	=	0x62b1
+                           0062B2   873 _STCV0	=	0x62b2
+                           0062B3   874 _STCV1	=	0x62b3
+                           0062B4   875 _STCV2	=	0x62b4
+                           0062C0   876 _OPAMPC	=	0x62c0
+                           0062C1   877 _OPAMPS	=	0x62c1
+                           0062D0   878 _CMPCTL	=	0x62d0
+                           006000   879 _RFCORE_RAM	=	0x6000
+                           006000   880 _RXFIFO	=	0x6000
+                           006080   881 _TXFIFO	=	0x6080
+                           006100   882 _SRC_ADDR_TABLE	=	0x6100
+                           006160   883 _SRCRESMASK0	=	0x6160
+                           006161   884 _SRCRESMASK1	=	0x6161
+                           006162   885 _SRCRESMASK2	=	0x6162
+                           006163   886 _SRCRESINDEX	=	0x6163
+                           006164   887 _SRCEXTPENDEN0	=	0x6164
+                           006165   888 _SRCEXTPENDEN1	=	0x6165
+                           006166   889 _SRCEXTPENDEN2	=	0x6166
+                           006167   890 _SRCSHORTPENDEN0	=	0x6167
+                           006168   891 _SRCSHORTPENDEN1	=	0x6168
+                           006169   892 _SRCSHORTPENDEN2	=	0x6169
+                           00616A   893 _EXT_ADDR0	=	0x616a
+                           00616B   894 _EXT_ADDR1	=	0x616b
+                           00616C   895 _EXT_ADDR2	=	0x616c
+                           00616D   896 _EXT_ADDR3	=	0x616d
+                           00616E   897 _EXT_ADDR4	=	0x616e
+                           00616F   898 _EXT_ADDR5	=	0x616f
+                           006170   899 _EXT_ADDR6	=	0x6170
+                           006171   900 _EXT_ADDR7	=	0x6171
+                           006172   901 _PAN_ID0	=	0x6172
+                           006173   902 _PAN_ID1	=	0x6173
+                           006174   903 _SHORT_ADDR0	=	0x6174
+                           006175   904 _SHORT_ADDR1	=	0x6175
+                           006180   905 _FRMFILT0	=	0x6180
+                           006181   906 _FRMFILT1	=	0x6181
+                           006182   907 _SRCMATCH	=	0x6182
+                           006183   908 _SRCSHORTEN0	=	0x6183
+                           006184   909 _SRCSHORTEN1	=	0x6184
+                           006185   910 _SRCSHORTEN2	=	0x6185
+                           006186   911 _SRCEXTEN0	=	0x6186
+                           006187   912 _SRCEXTEN1	=	0x6187
+                           006188   913 _SRCEXTEN2	=	0x6188
+                           006189   914 _FRMCTRL0	=	0x6189
+                           00618A   915 _FRMCTRL1	=	0x618a
+                           00618B   916 _RXENABLE	=	0x618b
+                           00618C   917 _RXMASKSET	=	0x618c
+                           00618D   918 _RXMASKCLR	=	0x618d
+                           00618E   919 _FREQTUNE	=	0x618e
+                           00618F   920 _FREQCTRL	=	0x618f
+                           006190   921 _TXPOWER	=	0x6190
+                           006191   922 _TXCTRL	=	0x6191
+                           006192   923 _FSMSTAT0	=	0x6192
+                           006193   924 _FSMSTAT1	=	0x6193
+                           006194   925 _FIFOPCTRL	=	0x6194
+                           006195   926 _FSMCTRL	=	0x6195
+                           006196   927 _CCACTRL0	=	0x6196
+                           006197   928 _CCACTRL1	=	0x6197
+                           006198   929 _RSSI	=	0x6198
+                           006199   930 _RSSISTAT	=	0x6199
+                           00619A   931 _RXFIRST	=	0x619a
+                           00619B   932 _RXFIFOCNT	=	0x619b
+                           00619C   933 _TXFIFOCNT	=	0x619c
+                           00619D   934 _RXFIRST_PTR	=	0x619d
+                           00619E   935 _RXLAST_PTR	=	0x619e
+                           00619F   936 _RXP1_PTR	=	0x619f
+                           0061A1   937 _TXFIRST_PTR	=	0x61a1
+                           0061A2   938 _TXLAST_PTR	=	0x61a2
+                           0061A3   939 _RFIRQM0	=	0x61a3
+                           0061A4   940 _RFIRQM1	=	0x61a4
+                           0061A5   941 _RFERRM	=	0x61a5
+                           0061A7   942 _RFRND	=	0x61a7
+                           0061A8   943 _MDMCTRL0	=	0x61a8
+                           0061A9   944 _MDMCTRL1	=	0x61a9
+                           0061AA   945 _FREQEST	=	0x61aa
+                           0061AB   946 _RXCTRL	=	0x61ab
+                           0061AC   947 _FSCTRL	=	0x61ac
+                           0061AD   948 _FSCAL0	=	0x61ad
+                           0061AE   949 _FSCAL1	=	0x61ae
+                           0061AF   950 _FSCAL2	=	0x61af
+                           0061B0   951 _FSCAL3	=	0x61b0
+                           0061B1   952 _AGCCTRL0	=	0x61b1
+                           0061B2   953 _AGCCTRL1	=	0x61b2
+                           0061B3   954 _AGCCTRL2	=	0x61b3
+                           0061B4   955 _AGCCTRL3	=	0x61b4
+                           0061B5   956 _ADCTEST0	=	0x61b5
+                           0061B6   957 _ADCTEST1	=	0x61b6
+                           0061B7   958 _ADCTEST2	=	0x61b7
+                           0061B8   959 _MDMTEST0	=	0x61b8
+                           0061B9   960 _MDMTEST1	=	0x61b9
+                           0061BA   961 _DACTEST0	=	0x61ba
+                           0061BB   962 _DACTEST1	=	0x61bb
+                           0061BC   963 _DACTEST2	=	0x61bc
+                           0061BD   964 _ATEST	=	0x61bd
+                           0061BE   965 _PTEST0	=	0x61be
+                           0061BF   966 _PTEST1	=	0x61bf
+                           0061FA   967 _TXFILTCFG	=	0x61fa
+                           0061EB   968 _RFC_OBS_CTRL0	=	0x61eb
+                           0061EC   969 _RFC_OBS_CTRL1	=	0x61ec
+                           0061ED   970 _RFC_OBS_CTRL2	=	0x61ed
+                           0061C0   971 _CSPPROG0	=	0x61c0
+                           0061C1   972 _CSPPROG1	=	0x61c1
+                           0061C2   973 _CSPPROG2	=	0x61c2
+                           0061C3   974 _CSPPROG3	=	0x61c3
+                           0061C4   975 _CSPPROG4	=	0x61c4
+                           0061C5   976 _CSPPROG5	=	0x61c5
+                           0061C6   977 _CSPPROG6	=	0x61c6
+                           0061C7   978 _CSPPROG7	=	0x61c7
+                           0061C8   979 _CSPPROG8	=	0x61c8
+                           0061C9   980 _CSPPROG9	=	0x61c9
+                           0061CA   981 _CSPPROG10	=	0x61ca
+                           0061CB   982 _CSPPROG11	=	0x61cb
+                           0061CC   983 _CSPPROG12	=	0x61cc
+                           0061CD   984 _CSPPROG13	=	0x61cd
+                           0061CE   985 _CSPPROG14	=	0x61ce
+                           0061CF   986 _CSPPROG15	=	0x61cf
+                           0061D0   987 _CSPPROG16	=	0x61d0
+                           0061D1   988 _CSPPROG17	=	0x61d1
+                           0061D2   989 _CSPPROG18	=	0x61d2
+                           0061D3   990 _CSPPROG19	=	0x61d3
+                           0061D4   991 _CSPPROG20	=	0x61d4
+                           0061D5   992 _CSPPROG21	=	0x61d5
+                           0061D6   993 _CSPPROG22	=	0x61d6
+                           0061D7   994 _CSPPROG23	=	0x61d7
+                           0061E0   995 _CSPCTRL	=	0x61e0
+                           0061E1   996 _CSPSTAT	=	0x61e1
+                           0061E2   997 _CSPX	=	0x61e2
+                           0061E3   998 _CSPY	=	0x61e3
+                           0061E4   999 _CSPZ	=	0x61e4
+                           0061E5  1000 _CSPT	=	0x61e5
+                           006200  1001 _USBADDR	=	0x6200
+                           006201  1002 _USBPOW	=	0x6201
+                           006202  1003 _USBIIF	=	0x6202
+                           006204  1004 _USBOIF	=	0x6204
+                           006206  1005 _USBCIF	=	0x6206
+                           006207  1006 _USBIIE	=	0x6207
+                           006209  1007 _USBOIE	=	0x6209
+                           00620B  1008 _USBCIE	=	0x620b
+                           00620C  1009 _USBFRML	=	0x620c
+                           00620D  1010 _USBFRMH	=	0x620d
+                           00620E  1011 _USBINDEX	=	0x620e
+                           00620F  1012 _USBCTRL	=	0x620f
+                           006210  1013 _USBMAXI	=	0x6210
+                           006211  1014 _USBCS0	=	0x6211
+                           006211  1015 _USBCSIL	=	0x6211
+                           006212  1016 _USBCSIH	=	0x6212
+                           006213  1017 _USBMAXO	=	0x6213
+                           006214  1018 _USBCSOL	=	0x6214
+                           006215  1019 _USBCSOH	=	0x6215
+                           006216  1020 _USBCNT0	=	0x6216
+                           006216  1021 _USBCNTL	=	0x6216
+                           006217  1022 _USBCNTH	=	0x6217
+                           006220  1023 _USBF0	=	0x6220
+                           006222  1024 _USBF1	=	0x6222
+                           006224  1025 _USBF2	=	0x6224
+                           006226  1026 _USBF3	=	0x6226
+                           006228  1027 _USBF4	=	0x6228
+                           00622A  1028 _USBF5	=	0x622a
+                           007080  1029 _X_P0	=	0x7080
+                           007086  1030 _X_U0CSR	=	0x7086
+                           007089  1031 _X_P0IFG	=	0x7089
+                           00708A  1032 _X_P1IFG	=	0x708a
+                           00708B  1033 _X_P2IFG	=	0x708b
+                           00708C  1034 _X_PICTL	=	0x708c
+                           00708D  1035 _X_P1IEN	=	0x708d
+                           00708F  1036 _X_P0INP	=	0x708f
+                           007090  1037 _X_P1	=	0x7090
+                           007091  1038 _X_RFIRQF1	=	0x7091
+                           007093  1039 _X_MPAGE	=	0x7093
+                           007093  1040 _X__XPAGE	=	0x7093
+                           007094  1041 _X_T2CTRL	=	0x7094
+                           007095  1042 _X_ST0	=	0x7095
+                           007096  1043 _X_ST1	=	0x7096
+                           007097  1044 _X_ST2	=	0x7097
+                           00709C  1045 _X_T2EVTCFG	=	0x709c
+                           00709D  1046 _X_SLEEPSTA	=	0x709d
+                           00709E  1047 _X_CLKCONSTA	=	0x709e
+                           00709F  1048 _X_FMAP	=	0x709f
+                           00709F  1049 _X_PSBANK	=	0x709f
+                           0070A0  1050 _X_P2	=	0x70a0
+                           0070A1  1051 _X_T2IRQF	=	0x70a1
+                           0070A2  1052 _X_T2M0	=	0x70a2
+                           0070A3  1053 _X_T2M1	=	0x70a3
+                           0070A4  1054 _X_T2MOVF0	=	0x70a4
+                           0070A5  1055 _X_T2MOVF1	=	0x70a5
+                           0070A6  1056 _X_T2MOVF2	=	0x70a6
+                           0070A7  1057 _X_T2IRQM	=	0x70a7
+                           0070AB  1058 _X_P0IEN	=	0x70ab
+                           0070AC  1059 _X_P2IEN	=	0x70ac
+                           0070AD  1060 _X_STLOAD	=	0x70ad
+                           0070AE  1061 _X_PMUX	=	0x70ae
+                           0070AF  1062 _X_T1STAT	=	0x70af
+                           0070B1  1063 _X_ENCDI	=	0x70b1
+                           0070B2  1064 _X_ENCDO	=	0x70b2
+                           0070B3  1065 _X_ENCCS	=	0x70b3
+                           0070B4  1066 _X_ADCCON1	=	0x70b4
+                           0070B5  1067 _X_ADCCON2	=	0x70b5
+                           0070B6  1068 _X_ADCCON3	=	0x70b6
+                           0070BA  1069 _X_ADCL	=	0x70ba
+                           0070BB  1070 _X_ADCH	=	0x70bb
+                           0070BC  1071 _X_RNDL	=	0x70bc
+                           0070BD  1072 _X_RNDH	=	0x70bd
+                           0070BE  1073 _X_SLEEPCMD	=	0x70be
+                           0070BF  1074 _X_RFERRF	=	0x70bf
+                           0070C1  1075 _X_U0DBUF	=	0x70c1
+                           0070C2  1076 _X_U0BAUD	=	0x70c2
+                           0070C3  1077 _X_T2MSEL	=	0x70c3
+                           0070C4  1078 _X_U0UCR	=	0x70c4
+                           0070C5  1079 _X_U0GCR	=	0x70c5
+                           0070C6  1080 _X_CLKCONCMD	=	0x70c6
+                           0070C7  1081 _X_MEMCTR	=	0x70c7
+                           0070C9  1082 _X_WDCTL	=	0x70c9
+                           0070CA  1083 _X_T3CNT	=	0x70ca
+                           0070CB  1084 _X_T3CTL	=	0x70cb
+                           0070CC  1085 _X_T3CCTL0	=	0x70cc
+                           0070CD  1086 _X_T3CC0	=	0x70cd
+                           0070CE  1087 _X_T3CCTL1	=	0x70ce
+                           0070CF  1088 _X_T3CC1	=	0x70cf
+                           0070D1  1089 _X_DMAIRQ	=	0x70d1
+                           0070D2  1090 _X_DMA1CFGL	=	0x70d2
+                           0070D3  1091 _X_DMA1CFGH	=	0x70d3
+                           0070D4  1092 _X_DMA0CFGL	=	0x70d4
+                           0070D5  1093 _X_DMA0CFGH	=	0x70d5
+                           0070D6  1094 _X_DMAARM	=	0x70d6
+                           0070D7  1095 _X_DMAREQ	=	0x70d7
+                           0070D8  1096 _X_TIMIF	=	0x70d8
+                           0070D9  1097 _X_RFD	=	0x70d9
+                           0070DA  1098 _X_T1CC0L	=	0x70da
+                           0070DB  1099 _X_T1CC0H	=	0x70db
+                           0070DC  1100 _X_T1CC1L	=	0x70dc
+                           0070DD  1101 _X_T1CC1H	=	0x70dd
+                           0070DE  1102 _X_T1CC2L	=	0x70de
+                           0070DF  1103 _X_T1CC2H	=	0x70df
+                           0070E1  1104 _X_RFST	=	0x70e1
+                           0070E2  1105 _X_T1CNTL	=	0x70e2
+                           0070E3  1106 _X_T1CNTH	=	0x70e3
+                           0070E4  1107 _X_T1CTL	=	0x70e4
+                           0070E5  1108 _X_T1CCTL0	=	0x70e5
+                           0070E6  1109 _X_T1CCTL1	=	0x70e6
+                           0070E7  1110 _X_T1CCTL2	=	0x70e7
+                           0070E9  1111 _X_RFIRQF0	=	0x70e9
+                           0070EA  1112 _X_T4CNT	=	0x70ea
+                           0070EB  1113 _X_T4CTL	=	0x70eb
+                           0070EC  1114 _X_T4CCTL0	=	0x70ec
+                           0070ED  1115 _X_T4CC0	=	0x70ed
+                           0070EE  1116 _X_T4CCTL1	=	0x70ee
+                           0070EF  1117 _X_T4CC1	=	0x70ef
+                           0070F1  1118 _X_PERCFG	=	0x70f1
+                           0070F2  1119 _X_APCFG	=	0x70f2
+                           0070F3  1120 _X_P0SEL	=	0x70f3
+                           0070F4  1121 _X_P1SEL	=	0x70f4
+                           0070F5  1122 _X_P2SEL	=	0x70f5
+                           0070F6  1123 _X_P1INP	=	0x70f6
+                           0070F7  1124 _X_P2INP	=	0x70f7
+                           0070F8  1125 _X_U1CSR	=	0x70f8
+                           0070F9  1126 _X_U1DBUF	=	0x70f9
+                           0070FA  1127 _X_U1BAUD	=	0x70fa
+                           0070FB  1128 _X_U1UCR	=	0x70fb
+                           0070FC  1129 _X_U1GCR	=	0x70fc
+                           0070FD  1130 _X_P0DIR	=	0x70fd
+                           0070FE  1131 _X_P1DIR	=	0x70fe
+                           0070FF  1132 _X_P2DIR	=	0x70ff
+                           007800  1133 _X_INFOPAGE	=	0x7800
+                           00780C  1134 _X_IEEE_ADDR	=	0x780c
+      000000                       1135 _ac1::
+      000000                       1136 	.ds 2
+      000002                       1137 _ac2::
+      000002                       1138 	.ds 2
+      000004                       1139 _ac3::
+      000004                       1140 	.ds 2
+      000006                       1141 _ac4::
+      000006                       1142 	.ds 2
+      000008                       1143 _ac5::
+      000008                       1144 	.ds 2
+      00000A                       1145 _ac6::
+      00000A                       1146 	.ds 2
+      00000C                       1147 _b1::
+      00000C                       1148 	.ds 2
+      00000E                       1149 _b2::
+      00000E                       1150 	.ds 2
+      000010                       1151 _mb::
+      000010                       1152 	.ds 2
+      000012                       1153 _mc::
+      000012                       1154 	.ds 2
+      000014                       1155 _md::
+      000014                       1156 	.ds 2
+                                   1157 ;--------------------------------------------------------
+                                   1158 ; absolute external ram data
+                                   1159 ;--------------------------------------------------------
+                                   1160 	.area XABS    (ABS,XDATA)
+                                   1161 ;--------------------------------------------------------
+                                   1162 ; external initialized ram data
+                                   1163 ;--------------------------------------------------------
+                                   1164 	.area XISEG   (XDATA)
+                                   1165 	.area HOME    (CODE)
+                                   1166 	.area GSINIT0 (CODE)
+                                   1167 	.area GSINIT1 (CODE)
+                                   1168 	.area GSINIT2 (CODE)
+                                   1169 	.area GSINIT3 (CODE)
+                                   1170 	.area GSINIT4 (CODE)
+                                   1171 	.area GSINIT5 (CODE)
+                                   1172 	.area GSINIT  (CODE)
+                                   1173 	.area GSFINAL (CODE)
+                                   1174 	.area CSEG    (CODE)
+                                   1175 ;--------------------------------------------------------
+                                   1176 ; global & static initialisations
+                                   1177 ;--------------------------------------------------------
+                                   1178 	.area HOME    (CODE)
+                                   1179 	.area GSINIT  (CODE)
+                                   1180 	.area GSFINAL (CODE)
+                                   1181 	.area GSINIT  (CODE)
+                                   1182 ;--------------------------------------------------------
+                                   1183 ; Home
+                                   1184 ;--------------------------------------------------------
+                                   1185 	.area HOME    (CODE)
+                                   1186 	.area HOME    (CODE)
+                                   1187 ;--------------------------------------------------------
+                                   1188 ; code
+                                   1189 ;--------------------------------------------------------
+                                   1190 	.area BANK1   (CODE)
+                                   1191 ;------------------------------------------------------------
+                                   1192 ;Allocation info for local variables in function 'BMP085_Read_2B'
+                                   1193 ;------------------------------------------------------------
+                                   1194 ;addr                      Allocated to registers r7 
+                                   1195 ;msb                       Allocated to registers r7 
+                                   1196 ;lsb                       Allocated to registers r6 
+                                   1197 ;------------------------------------------------------------
+                                   1198 ;	../../../../platform/cc2530eb/drivers/bmp085.c:22: int16_t BMP085_Read_2B(uint8_t addr)
+                                   1199 ;	-----------------------------------------
+                                   1200 ;	 function BMP085_Read_2B
+                                   1201 ;	-----------------------------------------
+      000000                       1202 _BMP085_Read_2B:
+                           000007  1203 	ar7 = 0x07
+                           000006  1204 	ar6 = 0x06
+                           000005  1205 	ar5 = 0x05
+                           000004  1206 	ar4 = 0x04
+                           000003  1207 	ar3 = 0x03
+                           000002  1208 	ar2 = 0x02
+                           000001  1209 	ar1 = 0x01
+                           000000  1210 	ar0 = 0x00
+      000000 AF 82            [24] 1211 	mov	r7,dpl
+                                   1212 ;	../../../../platform/cc2530eb/drivers/bmp085.c:25: I2C_Start();
+      000002 C0 07            [24] 1213 	push	ar7
+      000004 78r00            [12] 1214 	mov	r0,#_I2C_Start
+      000006 79s00            [12] 1215 	mov	r1,#(_I2C_Start >> 8)
+      000008 7As00            [12] 1216 	mov	r2,#(_I2C_Start >> 16)
+      00000A 12r00r00         [24] 1217 	lcall	__sdcc_banked_call
+                                   1218 ;	../../../../platform/cc2530eb/drivers/bmp085.c:26: I2C_Write_Byte(BMP085_SLAVE_ADDR);
+      00000D 75 82 EE         [24] 1219 	mov	dpl,#0xEE
+      000010 78r00            [12] 1220 	mov	r0,#_I2C_Write_Byte
+      000012 79s00            [12] 1221 	mov	r1,#(_I2C_Write_Byte >> 8)
+      000014 7As00            [12] 1222 	mov	r2,#(_I2C_Write_Byte >> 16)
+      000016 12r00r00         [24] 1223 	lcall	__sdcc_banked_call
+      000019 D0 07            [24] 1224 	pop	ar7
+                                   1225 ;	../../../../platform/cc2530eb/drivers/bmp085.c:27: I2C_Write_Byte(addr);
+      00001B 8F 82            [24] 1226 	mov	dpl,r7
+      00001D 78r00            [12] 1227 	mov	r0,#_I2C_Write_Byte
+      00001F 79s00            [12] 1228 	mov	r1,#(_I2C_Write_Byte >> 8)
+      000021 7As00            [12] 1229 	mov	r2,#(_I2C_Write_Byte >> 16)
+      000023 12r00r00         [24] 1230 	lcall	__sdcc_banked_call
+                                   1231 ;	../../../../platform/cc2530eb/drivers/bmp085.c:28: I2C_Start();
+      000026 78r00            [12] 1232 	mov	r0,#_I2C_Start
+      000028 79s00            [12] 1233 	mov	r1,#(_I2C_Start >> 8)
+      00002A 7As00            [12] 1234 	mov	r2,#(_I2C_Start >> 16)
+      00002C 12r00r00         [24] 1235 	lcall	__sdcc_banked_call
+                                   1236 ;	../../../../platform/cc2530eb/drivers/bmp085.c:29: I2C_Write_Byte(BMP085_SLAVE_ADDR+1);
+      00002F 75 82 EF         [24] 1237 	mov	dpl,#0xEF
+      000032 78r00            [12] 1238 	mov	r0,#_I2C_Write_Byte
+      000034 79s00            [12] 1239 	mov	r1,#(_I2C_Write_Byte >> 8)
+      000036 7As00            [12] 1240 	mov	r2,#(_I2C_Write_Byte >> 16)
+      000038 12r00r00         [24] 1241 	lcall	__sdcc_banked_call
+                                   1242 ;	../../../../platform/cc2530eb/drivers/bmp085.c:30: msb=I2C_Read_Byte();
+      00003B 78r00            [12] 1243 	mov	r0,#_I2C_Read_Byte
+      00003D 79s00            [12] 1244 	mov	r1,#(_I2C_Read_Byte >> 8)
+      00003F 7As00            [12] 1245 	mov	r2,#(_I2C_Read_Byte >> 16)
+      000041 12r00r00         [24] 1246 	lcall	__sdcc_banked_call
+      000044 AF 82            [24] 1247 	mov	r7,dpl
+                                   1248 ;	../../../../platform/cc2530eb/drivers/bmp085.c:31: Sendack(0);
+      000046 75 82 00         [24] 1249 	mov	dpl,#0x00
+      000049 C0 07            [24] 1250 	push	ar7
+      00004B 78r00            [12] 1251 	mov	r0,#_Sendack
+      00004D 79s00            [12] 1252 	mov	r1,#(_Sendack >> 8)
+      00004F 7As00            [12] 1253 	mov	r2,#(_Sendack >> 16)
+      000051 12r00r00         [24] 1254 	lcall	__sdcc_banked_call
+                                   1255 ;	../../../../platform/cc2530eb/drivers/bmp085.c:32: lsb=I2C_Read_Byte();
+      000054 78r00            [12] 1256 	mov	r0,#_I2C_Read_Byte
+      000056 79s00            [12] 1257 	mov	r1,#(_I2C_Read_Byte >> 8)
+      000058 7As00            [12] 1258 	mov	r2,#(_I2C_Read_Byte >> 16)
+      00005A 12r00r00         [24] 1259 	lcall	__sdcc_banked_call
+      00005D AE 82            [24] 1260 	mov	r6,dpl
+                                   1261 ;	../../../../platform/cc2530eb/drivers/bmp085.c:33: Sendack(1);
+      00005F 75 82 01         [24] 1262 	mov	dpl,#0x01
+      000062 C0 06            [24] 1263 	push	ar6
+      000064 78r00            [12] 1264 	mov	r0,#_Sendack
+      000066 79s00            [12] 1265 	mov	r1,#(_Sendack >> 8)
+      000068 7As00            [12] 1266 	mov	r2,#(_Sendack >> 16)
+      00006A 12r00r00         [24] 1267 	lcall	__sdcc_banked_call
+                                   1268 ;	../../../../platform/cc2530eb/drivers/bmp085.c:34: I2C_Stop();
+      00006D 78r00            [12] 1269 	mov	r0,#_I2C_Stop
+      00006F 79s00            [12] 1270 	mov	r1,#(_I2C_Stop >> 8)
+      000071 7As00            [12] 1271 	mov	r2,#(_I2C_Stop >> 16)
+      000073 12r00r00         [24] 1272 	lcall	__sdcc_banked_call
+      000076 D0 06            [24] 1273 	pop	ar6
+      000078 D0 07            [24] 1274 	pop	ar7
+                                   1275 ;	../../../../platform/cc2530eb/drivers/bmp085.c:35: return (int16_t)((msb << 8) | lsb);
+      00007A 8F 05            [24] 1276 	mov	ar5,r7
+      00007C E4               [12] 1277 	clr	a
+      00007D FF               [12] 1278 	mov	r7,a
+      00007E FC               [12] 1279 	mov	r4,a
+      00007F EE               [12] 1280 	mov	a,r6
+      000080 42 07            [12] 1281 	orl	ar7,a
+      000082 EC               [12] 1282 	mov	a,r4
+      000083 42 05            [12] 1283 	orl	ar5,a
+      000085 8F 82            [24] 1284 	mov	dpl,r7
+      000087 8D 83            [24] 1285 	mov	dph,r5
+      000089 02r00r00         [24] 1286 	ljmp	__sdcc_banked_ret
+                                   1287 ;------------------------------------------------------------
+                                   1288 ;Allocation info for local variables in function 'BMP085_Read_3B'
+                                   1289 ;------------------------------------------------------------
+                                   1290 ;addr                      Allocated to registers r7 
+                                   1291 ;msb                       Allocated to registers r7 
+                                   1292 ;lsb                       Allocated to registers r6 
+                                   1293 ;xlsb                      Allocated to stack - sp +0
+                                   1294 ;up                        Allocated to registers 
+                                   1295 ;sloc0                     Allocated to stack - sp -4
+                                   1296 ;------------------------------------------------------------
+                                   1297 ;	../../../../platform/cc2530eb/drivers/bmp085.c:38: uint32_t BMP085_Read_3B(uint8_t addr)
+                                   1298 ;	-----------------------------------------
+                                   1299 ;	 function BMP085_Read_3B
+                                   1300 ;	-----------------------------------------
+      00008C                       1301 _BMP085_Read_3B:
+      00008C E5 81            [12] 1302 	mov	a,sp
+      00008E 24 05            [12] 1303 	add	a,#0x05
+      000090 F5 81            [12] 1304 	mov	sp,a
+      000092 AF 82            [24] 1305 	mov	r7,dpl
+                                   1306 ;	../../../../platform/cc2530eb/drivers/bmp085.c:42: I2C_Start();
+      000094 C0 07            [24] 1307 	push	ar7
+      000096 78r00            [12] 1308 	mov	r0,#_I2C_Start
+      000098 79s00            [12] 1309 	mov	r1,#(_I2C_Start >> 8)
+      00009A 7As00            [12] 1310 	mov	r2,#(_I2C_Start >> 16)
+      00009C 12r00r00         [24] 1311 	lcall	__sdcc_banked_call
+                                   1312 ;	../../../../platform/cc2530eb/drivers/bmp085.c:43: I2C_Write_Byte(BMP085_SLAVE_ADDR);
+      00009F 75 82 EE         [24] 1313 	mov	dpl,#0xEE
+      0000A2 78r00            [12] 1314 	mov	r0,#_I2C_Write_Byte
+      0000A4 79s00            [12] 1315 	mov	r1,#(_I2C_Write_Byte >> 8)
+      0000A6 7As00            [12] 1316 	mov	r2,#(_I2C_Write_Byte >> 16)
+      0000A8 12r00r00         [24] 1317 	lcall	__sdcc_banked_call
+      0000AB D0 07            [24] 1318 	pop	ar7
+                                   1319 ;	../../../../platform/cc2530eb/drivers/bmp085.c:44: I2C_Write_Byte(addr);
+      0000AD 8F 82            [24] 1320 	mov	dpl,r7
+      0000AF 78r00            [12] 1321 	mov	r0,#_I2C_Write_Byte
+      0000B1 79s00            [12] 1322 	mov	r1,#(_I2C_Write_Byte >> 8)
+      0000B3 7As00            [12] 1323 	mov	r2,#(_I2C_Write_Byte >> 16)
+      0000B5 12r00r00         [24] 1324 	lcall	__sdcc_banked_call
+                                   1325 ;	../../../../platform/cc2530eb/drivers/bmp085.c:45: I2C_Start();
+      0000B8 78r00            [12] 1326 	mov	r0,#_I2C_Start
+      0000BA 79s00            [12] 1327 	mov	r1,#(_I2C_Start >> 8)
+      0000BC 7As00            [12] 1328 	mov	r2,#(_I2C_Start >> 16)
+      0000BE 12r00r00         [24] 1329 	lcall	__sdcc_banked_call
+                                   1330 ;	../../../../platform/cc2530eb/drivers/bmp085.c:46: I2C_Write_Byte(BMP085_SLAVE_ADDR+1);
+      0000C1 75 82 EF         [24] 1331 	mov	dpl,#0xEF
+      0000C4 78r00            [12] 1332 	mov	r0,#_I2C_Write_Byte
+      0000C6 79s00            [12] 1333 	mov	r1,#(_I2C_Write_Byte >> 8)
+      0000C8 7As00            [12] 1334 	mov	r2,#(_I2C_Write_Byte >> 16)
+      0000CA 12r00r00         [24] 1335 	lcall	__sdcc_banked_call
+                                   1336 ;	../../../../platform/cc2530eb/drivers/bmp085.c:47: msb=I2C_Read_Byte();
+      0000CD 78r00            [12] 1337 	mov	r0,#_I2C_Read_Byte
+      0000CF 79s00            [12] 1338 	mov	r1,#(_I2C_Read_Byte >> 8)
+      0000D1 7As00            [12] 1339 	mov	r2,#(_I2C_Read_Byte >> 16)
+      0000D3 12r00r00         [24] 1340 	lcall	__sdcc_banked_call
+      0000D6 AF 82            [24] 1341 	mov	r7,dpl
+                                   1342 ;	../../../../platform/cc2530eb/drivers/bmp085.c:48: Sendack(0);
+      0000D8 75 82 00         [24] 1343 	mov	dpl,#0x00
+      0000DB C0 07            [24] 1344 	push	ar7
+      0000DD 78r00            [12] 1345 	mov	r0,#_Sendack
+      0000DF 79s00            [12] 1346 	mov	r1,#(_Sendack >> 8)
+      0000E1 7As00            [12] 1347 	mov	r2,#(_Sendack >> 16)
+      0000E3 12r00r00         [24] 1348 	lcall	__sdcc_banked_call
+                                   1349 ;	../../../../platform/cc2530eb/drivers/bmp085.c:49: lsb=I2C_Read_Byte();
+      0000E6 78r00            [12] 1350 	mov	r0,#_I2C_Read_Byte
+      0000E8 79s00            [12] 1351 	mov	r1,#(_I2C_Read_Byte >> 8)
+      0000EA 7As00            [12] 1352 	mov	r2,#(_I2C_Read_Byte >> 16)
+      0000EC 12r00r00         [24] 1353 	lcall	__sdcc_banked_call
+      0000EF AE 82            [24] 1354 	mov	r6,dpl
+                                   1355 ;	../../../../platform/cc2530eb/drivers/bmp085.c:50: Sendack(0);
+      0000F1 75 82 00         [24] 1356 	mov	dpl,#0x00
+      0000F4 C0 06            [24] 1357 	push	ar6
+      0000F6 78r00            [12] 1358 	mov	r0,#_Sendack
+      0000F8 79s00            [12] 1359 	mov	r1,#(_Sendack >> 8)
+      0000FA 7As00            [12] 1360 	mov	r2,#(_Sendack >> 16)
+      0000FC 12r00r00         [24] 1361 	lcall	__sdcc_banked_call
+                                   1362 ;	../../../../platform/cc2530eb/drivers/bmp085.c:51: xlsb=I2C_Read_Byte();
+      0000FF 78r00            [12] 1363 	mov	r0,#_I2C_Read_Byte
+      000101 79s00            [12] 1364 	mov	r1,#(_I2C_Read_Byte >> 8)
+      000103 7As00            [12] 1365 	mov	r2,#(_I2C_Read_Byte >> 16)
+      000105 12r00r00         [24] 1366 	lcall	__sdcc_banked_call
+      000108 AD 82            [24] 1367 	mov	r5,dpl
+      00010A D0 06            [24] 1368 	pop	ar6
+      00010C D0 07            [24] 1369 	pop	ar7
+      00010E A8 81            [24] 1370 	mov	r0,sp
+      000110 A6 05            [24] 1371 	mov	@r0,ar5
+                                   1372 ;	../../../../platform/cc2530eb/drivers/bmp085.c:52: Sendack(1);
+      000112 75 82 01         [24] 1373 	mov	dpl,#0x01
+      000115 C0 07            [24] 1374 	push	ar7
+      000117 C0 06            [24] 1375 	push	ar6
+      000119 78r00            [12] 1376 	mov	r0,#_Sendack
+      00011B 79s00            [12] 1377 	mov	r1,#(_Sendack >> 8)
+      00011D 7As00            [12] 1378 	mov	r2,#(_Sendack >> 16)
+      00011F 12r00r00         [24] 1379 	lcall	__sdcc_banked_call
+                                   1380 ;	../../../../platform/cc2530eb/drivers/bmp085.c:53: I2C_Stop();
+      000122 78r00            [12] 1381 	mov	r0,#_I2C_Stop
+      000124 79s00            [12] 1382 	mov	r1,#(_I2C_Stop >> 8)
+      000126 7As00            [12] 1383 	mov	r2,#(_I2C_Stop >> 16)
+      000128 12r00r00         [24] 1384 	lcall	__sdcc_banked_call
+      00012B D0 06            [24] 1385 	pop	ar6
+      00012D D0 07            [24] 1386 	pop	ar7
+                                   1387 ;	../../../../platform/cc2530eb/drivers/bmp085.c:54: return (((uint32_t) msb << 16) | ((uint32_t) lsb << 8) | (uint32_t) xlsb) >> (8-OSS);
+      00012F E4               [12] 1388 	clr	a
+      000130 FC               [12] 1389 	mov	r4,a
+      000131 E5 81            [12] 1390 	mov	a,sp
+      000133 24 FC            [12] 1391 	add	a,#0xfc
+      000135 F8               [12] 1392 	mov	r0,a
+      000136 08               [12] 1393 	inc	r0
+      000137 08               [12] 1394 	inc	r0
+      000138 08               [12] 1395 	inc	r0
+      000139 A6 04            [24] 1396 	mov	@r0,ar4
+      00013B 18               [12] 1397 	dec	r0
+      00013C A6 07            [24] 1398 	mov	@r0,ar7
+      00013E 18               [12] 1399 	dec	r0
+      00013F 76 00            [12] 1400 	mov	@r0,#0x00
+      000141 18               [12] 1401 	dec	r0
+      000142 76 00            [12] 1402 	mov	@r0,#0x00
+      000144 8E 04            [24] 1403 	mov	ar4,r6
+      000146 7D 00            [12] 1404 	mov	r5,#0x00
+      000148 7E 00            [12] 1405 	mov	r6,#0x00
+      00014A 8E 07            [24] 1406 	mov	ar7,r6
+      00014C 8D 06            [24] 1407 	mov	ar6,r5
+      00014E 8C 05            [24] 1408 	mov	ar5,r4
+      000150 7C 00            [12] 1409 	mov	r4,#0x00
+      000152 E5 81            [12] 1410 	mov	a,sp
+      000154 24 FC            [12] 1411 	add	a,#0xfc
+      000156 F8               [12] 1412 	mov	r0,a
+      000157 EC               [12] 1413 	mov	a,r4
+      000158 46               [12] 1414 	orl	a,@r0
+      000159 F6               [12] 1415 	mov	@r0,a
+      00015A ED               [12] 1416 	mov	a,r5
+      00015B 08               [12] 1417 	inc	r0
+      00015C 46               [12] 1418 	orl	a,@r0
+      00015D F6               [12] 1419 	mov	@r0,a
+      00015E EE               [12] 1420 	mov	a,r6
+      00015F 08               [12] 1421 	inc	r0
+      000160 46               [12] 1422 	orl	a,@r0
+      000161 F6               [12] 1423 	mov	@r0,a
+      000162 EF               [12] 1424 	mov	a,r7
+      000163 08               [12] 1425 	inc	r0
+      000164 46               [12] 1426 	orl	a,@r0
+      000165 F6               [12] 1427 	mov	@r0,a
+      000166 A8 81            [24] 1428 	mov	r0,sp
+      000168 86 02            [24] 1429 	mov	ar2,@r0
+      00016A E4               [12] 1430 	clr	a
+      00016B FB               [12] 1431 	mov	r3,a
+      00016C FE               [12] 1432 	mov	r6,a
+      00016D FF               [12] 1433 	mov	r7,a
+      00016E E5 81            [12] 1434 	mov	a,sp
+      000170 24 FC            [12] 1435 	add	a,#0xfc
+      000172 F8               [12] 1436 	mov	r0,a
+      000173 E6               [12] 1437 	mov	a,@r0
+      000174 42 02            [12] 1438 	orl	ar2,a
+      000176 08               [12] 1439 	inc	r0
+      000177 E6               [12] 1440 	mov	a,@r0
+      000178 42 03            [12] 1441 	orl	ar3,a
+      00017A 08               [12] 1442 	inc	r0
+      00017B E6               [12] 1443 	mov	a,@r0
+      00017C 42 06            [12] 1444 	orl	ar6,a
+      00017E 08               [12] 1445 	inc	r0
+      00017F E6               [12] 1446 	mov	a,@r0
+      000180 42 07            [12] 1447 	orl	ar7,a
+      000182 8B 02            [24] 1448 	mov	ar2,r3
+      000184 8E 03            [24] 1449 	mov	ar3,r6
+      000186 8F 06            [24] 1450 	mov	ar6,r7
+      000188 7F 00            [12] 1451 	mov	r7,#0x00
+      00018A 8A 82            [24] 1452 	mov	dpl,r2
+      00018C 8B 83            [24] 1453 	mov	dph,r3
+      00018E 8E F0            [24] 1454 	mov	b,r6
+      000190 EF               [12] 1455 	mov	a,r7
+      000191 C8               [12] 1456 	xch	a,r0
+      000192 E5 81            [12] 1457 	mov	a,sp
+      000194 24 FB            [12] 1458 	add	a,#0xFB
+      000196 F5 81            [12] 1459 	mov	sp,a
+      000198 C8               [12] 1460 	xch	a,r0
+      000199 02r00r00         [24] 1461 	ljmp	__sdcc_banked_ret
+                                   1462 ;------------------------------------------------------------
+                                   1463 ;Allocation info for local variables in function 'BMP085_Read_TEMP'
+                                   1464 ;------------------------------------------------------------
+                                   1465 ;temp                      Allocated to stack - sp +1
+                                   1466 ;------------------------------------------------------------
+                                   1467 ;	../../../../platform/cc2530eb/drivers/bmp085.c:56: int16_t BMP085_Read_TEMP(void)
+                                   1468 ;	-----------------------------------------
+                                   1469 ;	 function BMP085_Read_TEMP
+                                   1470 ;	-----------------------------------------
+      00019C                       1471 _BMP085_Read_TEMP:
+                                   1472 ;	../../../../platform/cc2530eb/drivers/bmp085.c:59: I2C_Write(BMP085_SLAVE_ADDR, 0xF4, 0x2E);
+      00019C 74 2E            [12] 1473 	mov	a,#0x2E
+      00019E C0 E0            [24] 1474 	push	acc
+      0001A0 74 F4            [12] 1475 	mov	a,#0xF4
+      0001A2 C0 E0            [24] 1476 	push	acc
+      0001A4 75 82 EE         [24] 1477 	mov	dpl,#0xEE
+      0001A7 78r00            [12] 1478 	mov	r0,#_I2C_Write
+      0001A9 79s00            [12] 1479 	mov	r1,#(_I2C_Write >> 8)
+      0001AB 7As00            [12] 1480 	mov	r2,#(_I2C_Write >> 16)
+      0001AD 12r00r00         [24] 1481 	lcall	__sdcc_banked_call
+      0001B0 15 81            [12] 1482 	dec	sp
+      0001B2 15 81            [12] 1483 	dec	sp
+                                   1484 ;	../../../../platform/cc2530eb/drivers/bmp085.c:60: clock_delay_usec(5000);
+      0001B4 90 13 88         [24] 1485 	mov	dptr,#0x1388
+      0001B7 78r00            [12] 1486 	mov	r0,#_clock_delay_usec
+      0001B9 79s00            [12] 1487 	mov	r1,#(_clock_delay_usec >> 8)
+      0001BB 7As00            [12] 1488 	mov	r2,#(_clock_delay_usec >> 16)
+      0001BD 12r00r00         [24] 1489 	lcall	__sdcc_banked_call
+                                   1490 ;	../../../../platform/cc2530eb/drivers/bmp085.c:61: return (int16_t)BMP085_Read_2B(0xF6);
+      0001C0 75 82 F6         [24] 1491 	mov	dpl,#0xF6
+      0001C3 78r00            [12] 1492 	mov	r0,#_BMP085_Read_2B
+      0001C5 79s00            [12] 1493 	mov	r1,#(_BMP085_Read_2B >> 8)
+      0001C7 7As00            [12] 1494 	mov	r2,#(_BMP085_Read_2B >> 16)
+      0001C9 12r00r00         [24] 1495 	lcall	__sdcc_banked_call
+      0001CC AE 82            [24] 1496 	mov	r6,dpl
+      0001CE AF 83            [24] 1497 	mov  r7,dph
+      0001D0 02r00r00         [24] 1498 	ljmp	__sdcc_banked_ret
+                                   1499 ;------------------------------------------------------------
+                                   1500 ;Allocation info for local variables in function 'BMP085_Read_Pressure'
+                                   1501 ;------------------------------------------------------------
+                                   1502 ;pressure                  Allocated to stack - sp +1
+                                   1503 ;------------------------------------------------------------
+                                   1504 ;	../../../../platform/cc2530eb/drivers/bmp085.c:64: int32_t BMP085_Read_Pressure(void)
+                                   1505 ;	-----------------------------------------
+                                   1506 ;	 function BMP085_Read_Pressure
+                                   1507 ;	-----------------------------------------
+      0001D3                       1508 _BMP085_Read_Pressure:
+                                   1509 ;	../../../../platform/cc2530eb/drivers/bmp085.c:67: I2C_Write(BMP085_SLAVE_ADDR, 0xF4, (0x34 + (OSS << 6)));
+      0001D3 74 34            [12] 1510 	mov	a,#0x34
+      0001D5 C0 E0            [24] 1511 	push	acc
+      0001D7 74 F4            [12] 1512 	mov	a,#0xF4
+      0001D9 C0 E0            [24] 1513 	push	acc
+      0001DB 75 82 EE         [24] 1514 	mov	dpl,#0xEE
+      0001DE 78r00            [12] 1515 	mov	r0,#_I2C_Write
+      0001E0 79s00            [12] 1516 	mov	r1,#(_I2C_Write >> 8)
+      0001E2 7As00            [12] 1517 	mov	r2,#(_I2C_Write >> 16)
+      0001E4 12r00r00         [24] 1518 	lcall	__sdcc_banked_call
+      0001E7 15 81            [12] 1519 	dec	sp
+      0001E9 15 81            [12] 1520 	dec	sp
+                                   1521 ;	../../../../platform/cc2530eb/drivers/bmp085.c:68: clock_delay_usec((2 + (3 << OSS)) * 1000);
+      0001EB 90 13 88         [24] 1522 	mov	dptr,#0x1388
+      0001EE 78r00            [12] 1523 	mov	r0,#_clock_delay_usec
+      0001F0 79s00            [12] 1524 	mov	r1,#(_clock_delay_usec >> 8)
+      0001F2 7As00            [12] 1525 	mov	r2,#(_clock_delay_usec >> 16)
+      0001F4 12r00r00         [24] 1526 	lcall	__sdcc_banked_call
+                                   1527 ;	../../../../platform/cc2530eb/drivers/bmp085.c:69: return ((int32_t)BMP085_Read_3B(0xF6));
+      0001F7 75 82 F6         [24] 1528 	mov	dpl,#0xF6
+      0001FA 78r8C            [12] 1529 	mov	r0,#_BMP085_Read_3B
+      0001FC 79s00            [12] 1530 	mov	r1,#(_BMP085_Read_3B >> 8)
+      0001FE 7As00            [12] 1531 	mov	r2,#(_BMP085_Read_3B >> 16)
+      000200 12r00r00         [24] 1532 	lcall	__sdcc_banked_call
+      000203 AC 82            [24] 1533 	mov	r4,dpl
+      000205 AD 83            [24] 1534 	mov	r5,dph
+      000207 AE F0            [24] 1535 	mov	r6,b
+      000209 FF               [12] 1536 	mov	r7,a
+      00020A 02r00r00         [24] 1537 	ljmp	__sdcc_banked_ret
+                                   1538 ;------------------------------------------------------------
+                                   1539 ;Allocation info for local variables in function 'Init_BMP085'
+                                   1540 ;------------------------------------------------------------
+                                   1541 ;	../../../../platform/cc2530eb/drivers/bmp085.c:72: void Init_BMP085(void)
+                                   1542 ;	-----------------------------------------
+                                   1543 ;	 function Init_BMP085
+                                   1544 ;	-----------------------------------------
+      00020D                       1545 _Init_BMP085:
+                                   1546 ;	../../../../platform/cc2530eb/drivers/bmp085.c:74: SCLDirOut();
+      00020D 43 FE 04         [24] 1547 	orl	_P1DIR,#0x04
+                                   1548 ;	../../../../platform/cc2530eb/drivers/bmp085.c:75: SDADirOut();
+      000210 43 FE 08         [24] 1549 	orl	_P1DIR,#0x08
+                                   1550 ;	../../../../platform/cc2530eb/drivers/bmp085.c:76: ac1 = BMP085_Read_2B(0xAA);
+      000213 75 82 AA         [24] 1551 	mov	dpl,#0xAA
+      000216 78r00            [12] 1552 	mov	r0,#_BMP085_Read_2B
+      000218 79s00            [12] 1553 	mov	r1,#(_BMP085_Read_2B >> 8)
+      00021A 7As00            [12] 1554 	mov	r2,#(_BMP085_Read_2B >> 16)
+      00021C 12r00r00         [24] 1555 	lcall	__sdcc_banked_call
+      00021F E5 82            [12] 1556 	mov	a,dpl
+      000221 85 83 F0         [24] 1557 	mov	b,dph
+      000224 90r00r00         [24] 1558 	mov	dptr,#_ac1
+      000227 F0               [24] 1559 	movx	@dptr,a
+      000228 E5 F0            [12] 1560 	mov	a,b
+      00022A A3               [24] 1561 	inc	dptr
+      00022B F0               [24] 1562 	movx	@dptr,a
+                                   1563 ;	../../../../platform/cc2530eb/drivers/bmp085.c:77: ac2 = BMP085_Read_2B(0xAC);
+      00022C 75 82 AC         [24] 1564 	mov	dpl,#0xAC
+      00022F 78r00            [12] 1565 	mov	r0,#_BMP085_Read_2B
+      000231 79s00            [12] 1566 	mov	r1,#(_BMP085_Read_2B >> 8)
+      000233 7As00            [12] 1567 	mov	r2,#(_BMP085_Read_2B >> 16)
+      000235 12r00r00         [24] 1568 	lcall	__sdcc_banked_call
+      000238 E5 82            [12] 1569 	mov	a,dpl
+      00023A 85 83 F0         [24] 1570 	mov	b,dph
+      00023D 90r00r02         [24] 1571 	mov	dptr,#_ac2
+      000240 F0               [24] 1572 	movx	@dptr,a
+      000241 E5 F0            [12] 1573 	mov	a,b
+      000243 A3               [24] 1574 	inc	dptr
+      000244 F0               [24] 1575 	movx	@dptr,a
+                                   1576 ;	../../../../platform/cc2530eb/drivers/bmp085.c:78: ac3 = BMP085_Read_2B(0xAE);
+      000245 75 82 AE         [24] 1577 	mov	dpl,#0xAE
+      000248 78r00            [12] 1578 	mov	r0,#_BMP085_Read_2B
+      00024A 79s00            [12] 1579 	mov	r1,#(_BMP085_Read_2B >> 8)
+      00024C 7As00            [12] 1580 	mov	r2,#(_BMP085_Read_2B >> 16)
+      00024E 12r00r00         [24] 1581 	lcall	__sdcc_banked_call
+      000251 E5 82            [12] 1582 	mov	a,dpl
+      000253 85 83 F0         [24] 1583 	mov	b,dph
+      000256 90r00r04         [24] 1584 	mov	dptr,#_ac3
+      000259 F0               [24] 1585 	movx	@dptr,a
+      00025A E5 F0            [12] 1586 	mov	a,b
+      00025C A3               [24] 1587 	inc	dptr
+      00025D F0               [24] 1588 	movx	@dptr,a
+                                   1589 ;	../../../../platform/cc2530eb/drivers/bmp085.c:79: ac4 = BMP085_Read_2B(0xB0);
+      00025E 75 82 B0         [24] 1590 	mov	dpl,#0xB0
+      000261 78r00            [12] 1591 	mov	r0,#_BMP085_Read_2B
+      000263 79s00            [12] 1592 	mov	r1,#(_BMP085_Read_2B >> 8)
+      000265 7As00            [12] 1593 	mov	r2,#(_BMP085_Read_2B >> 16)
+      000267 12r00r00         [24] 1594 	lcall	__sdcc_banked_call
+      00026A E5 82            [12] 1595 	mov	a,dpl
+      00026C 85 83 F0         [24] 1596 	mov	b,dph
+      00026F 90r00r06         [24] 1597 	mov	dptr,#_ac4
+      000272 F0               [24] 1598 	movx	@dptr,a
+      000273 E5 F0            [12] 1599 	mov	a,b
+      000275 A3               [24] 1600 	inc	dptr
+      000276 F0               [24] 1601 	movx	@dptr,a
+                                   1602 ;	../../../../platform/cc2530eb/drivers/bmp085.c:80: ac5 = BMP085_Read_2B(0xB2);
+      000277 75 82 B2         [24] 1603 	mov	dpl,#0xB2
+      00027A 78r00            [12] 1604 	mov	r0,#_BMP085_Read_2B
+      00027C 79s00            [12] 1605 	mov	r1,#(_BMP085_Read_2B >> 8)
+      00027E 7As00            [12] 1606 	mov	r2,#(_BMP085_Read_2B >> 16)
+      000280 12r00r00         [24] 1607 	lcall	__sdcc_banked_call
+      000283 E5 82            [12] 1608 	mov	a,dpl
+      000285 85 83 F0         [24] 1609 	mov	b,dph
+      000288 90r00r08         [24] 1610 	mov	dptr,#_ac5
+      00028B F0               [24] 1611 	movx	@dptr,a
+      00028C E5 F0            [12] 1612 	mov	a,b
+      00028E A3               [24] 1613 	inc	dptr
+      00028F F0               [24] 1614 	movx	@dptr,a
+                                   1615 ;	../../../../platform/cc2530eb/drivers/bmp085.c:81: ac6 = BMP085_Read_2B(0xB4);
+      000290 75 82 B4         [24] 1616 	mov	dpl,#0xB4
+      000293 78r00            [12] 1617 	mov	r0,#_BMP085_Read_2B
+      000295 79s00            [12] 1618 	mov	r1,#(_BMP085_Read_2B >> 8)
+      000297 7As00            [12] 1619 	mov	r2,#(_BMP085_Read_2B >> 16)
+      000299 12r00r00         [24] 1620 	lcall	__sdcc_banked_call
+      00029C E5 82            [12] 1621 	mov	a,dpl
+      00029E 85 83 F0         [24] 1622 	mov	b,dph
+      0002A1 90r00r0A         [24] 1623 	mov	dptr,#_ac6
+      0002A4 F0               [24] 1624 	movx	@dptr,a
+      0002A5 E5 F0            [12] 1625 	mov	a,b
+      0002A7 A3               [24] 1626 	inc	dptr
+      0002A8 F0               [24] 1627 	movx	@dptr,a
+                                   1628 ;	../../../../platform/cc2530eb/drivers/bmp085.c:82: b1 =  BMP085_Read_2B(0xB6);
+      0002A9 75 82 B6         [24] 1629 	mov	dpl,#0xB6
+      0002AC 78r00            [12] 1630 	mov	r0,#_BMP085_Read_2B
+      0002AE 79s00            [12] 1631 	mov	r1,#(_BMP085_Read_2B >> 8)
+      0002B0 7As00            [12] 1632 	mov	r2,#(_BMP085_Read_2B >> 16)
+      0002B2 12r00r00         [24] 1633 	lcall	__sdcc_banked_call
+      0002B5 E5 82            [12] 1634 	mov	a,dpl
+      0002B7 85 83 F0         [24] 1635 	mov	b,dph
+      0002BA 90r00r0C         [24] 1636 	mov	dptr,#_b1
+      0002BD F0               [24] 1637 	movx	@dptr,a
+      0002BE E5 F0            [12] 1638 	mov	a,b
+      0002C0 A3               [24] 1639 	inc	dptr
+      0002C1 F0               [24] 1640 	movx	@dptr,a
+                                   1641 ;	../../../../platform/cc2530eb/drivers/bmp085.c:83: b2 =  BMP085_Read_2B(0xB8);
+      0002C2 75 82 B8         [24] 1642 	mov	dpl,#0xB8
+      0002C5 78r00            [12] 1643 	mov	r0,#_BMP085_Read_2B
+      0002C7 79s00            [12] 1644 	mov	r1,#(_BMP085_Read_2B >> 8)
+      0002C9 7As00            [12] 1645 	mov	r2,#(_BMP085_Read_2B >> 16)
+      0002CB 12r00r00         [24] 1646 	lcall	__sdcc_banked_call
+      0002CE E5 82            [12] 1647 	mov	a,dpl
+      0002D0 85 83 F0         [24] 1648 	mov	b,dph
+      0002D3 90r00r0E         [24] 1649 	mov	dptr,#_b2
+      0002D6 F0               [24] 1650 	movx	@dptr,a
+      0002D7 E5 F0            [12] 1651 	mov	a,b
+      0002D9 A3               [24] 1652 	inc	dptr
+      0002DA F0               [24] 1653 	movx	@dptr,a
+                                   1654 ;	../../../../platform/cc2530eb/drivers/bmp085.c:84: mb =  BMP085_Read_2B(0xBA);
+      0002DB 75 82 BA         [24] 1655 	mov	dpl,#0xBA
+      0002DE 78r00            [12] 1656 	mov	r0,#_BMP085_Read_2B
+      0002E0 79s00            [12] 1657 	mov	r1,#(_BMP085_Read_2B >> 8)
+      0002E2 7As00            [12] 1658 	mov	r2,#(_BMP085_Read_2B >> 16)
+      0002E4 12r00r00         [24] 1659 	lcall	__sdcc_banked_call
+      0002E7 E5 82            [12] 1660 	mov	a,dpl
+      0002E9 85 83 F0         [24] 1661 	mov	b,dph
+      0002EC 90r00r10         [24] 1662 	mov	dptr,#_mb
+      0002EF F0               [24] 1663 	movx	@dptr,a
+      0002F0 E5 F0            [12] 1664 	mov	a,b
+      0002F2 A3               [24] 1665 	inc	dptr
+      0002F3 F0               [24] 1666 	movx	@dptr,a
+                                   1667 ;	../../../../platform/cc2530eb/drivers/bmp085.c:85: mc =  BMP085_Read_2B(0xBC);
+      0002F4 75 82 BC         [24] 1668 	mov	dpl,#0xBC
+      0002F7 78r00            [12] 1669 	mov	r0,#_BMP085_Read_2B
+      0002F9 79s00            [12] 1670 	mov	r1,#(_BMP085_Read_2B >> 8)
+      0002FB 7As00            [12] 1671 	mov	r2,#(_BMP085_Read_2B >> 16)
+      0002FD 12r00r00         [24] 1672 	lcall	__sdcc_banked_call
+      000300 E5 82            [12] 1673 	mov	a,dpl
+      000302 85 83 F0         [24] 1674 	mov	b,dph
+      000305 90r00r12         [24] 1675 	mov	dptr,#_mc
+      000308 F0               [24] 1676 	movx	@dptr,a
+      000309 E5 F0            [12] 1677 	mov	a,b
+      00030B A3               [24] 1678 	inc	dptr
+      00030C F0               [24] 1679 	movx	@dptr,a
+                                   1680 ;	../../../../platform/cc2530eb/drivers/bmp085.c:86: md =  BMP085_Read_2B(0xBE);
+      00030D 75 82 BE         [24] 1681 	mov	dpl,#0xBE
+      000310 78r00            [12] 1682 	mov	r0,#_BMP085_Read_2B
+      000312 79s00            [12] 1683 	mov	r1,#(_BMP085_Read_2B >> 8)
+      000314 7As00            [12] 1684 	mov	r2,#(_BMP085_Read_2B >> 16)
+      000316 12r00r00         [24] 1685 	lcall	__sdcc_banked_call
+      000319 E5 82            [12] 1686 	mov	a,dpl
+      00031B 85 83 F0         [24] 1687 	mov	b,dph
+      00031E 90r00r14         [24] 1688 	mov	dptr,#_md
+      000321 F0               [24] 1689 	movx	@dptr,a
+      000322 E5 F0            [12] 1690 	mov	a,b
+      000324 A3               [24] 1691 	inc	dptr
+      000325 F0               [24] 1692 	movx	@dptr,a
+      000326 02r00r00         [24] 1693 	ljmp	__sdcc_banked_ret
+                                   1694 ;------------------------------------------------------------
+                                   1695 ;Allocation info for local variables in function 'Multiple_Read_BMP085'
+                                   1696 ;------------------------------------------------------------
+                                   1697 ;dat                       Allocated to stack - sp -46
+                                   1698 ;ut                        Allocated to stack - sp -43
+                                   1699 ;x1                        Allocated to stack - sp -27
+                                   1700 ;x2                        Allocated to stack - sp -23
+                                   1701 ;b5                        Allocated to registers r7 r6 r5 r4 
+                                   1702 ;b6                        Allocated to registers r7 r6 r5 r4 
+                                   1703 ;x3                        Allocated to stack - sp -19
+                                   1704 ;b3                        Allocated to stack - sp -15
+                                   1705 ;p                         Allocated to stack - sp -11
+                                   1706 ;b4                        Allocated to stack - sp -7
+                                   1707 ;b7                        Allocated to stack - sp -3
+                                   1708 ;sloc0                     Allocated to stack - sp -43
+                                   1709 ;sloc1                     Allocated to stack - sp -39
+                                   1710 ;sloc2                     Allocated to stack - sp -35
+                                   1711 ;sloc3                     Allocated to stack - sp -31
+                                   1712 ;------------------------------------------------------------
+                                   1713 ;	../../../../platform/cc2530eb/drivers/bmp085.c:89: void Multiple_Read_BMP085(BMP085_DATA *dat)
+                                   1714 ;	-----------------------------------------
+                                   1715 ;	 function Multiple_Read_BMP085
+                                   1716 ;	-----------------------------------------
+      000329                       1717 _Multiple_Read_BMP085:
+      000329 C0 82            [24] 1718 	push	dpl
+      00032B C0 83            [24] 1719 	push	dph
+      00032D C0 F0            [24] 1720 	push	b
+      00032F E5 81            [12] 1721 	mov	a,sp
+      000331 24 2C            [12] 1722 	add	a,#0x2C
+      000333 F5 81            [12] 1723 	mov	sp,a
+                                   1724 ;	../../../../platform/cc2530eb/drivers/bmp085.c:94: dat->temp = BMP085_Read_TEMP();
+      000335 78r9C            [12] 1725 	mov	r0,#_BMP085_Read_TEMP
+      000337 79s01            [12] 1726 	mov	r1,#(_BMP085_Read_TEMP >> 8)
+      000339 7As00            [12] 1727 	mov	r2,#(_BMP085_Read_TEMP >> 16)
+      00033B 12r00r00         [24] 1728 	lcall	__sdcc_banked_call
+      00033E AB 82            [24] 1729 	mov	r3,dpl
+      000340 AC 83            [24] 1730 	mov	r4,dph
+      000342 E5 81            [12] 1731 	mov	a,sp
+      000344 24 D2            [12] 1732 	add	a,#0xd2
+      000346 F8               [12] 1733 	mov	r0,a
+      000347 86 82            [24] 1734 	mov	dpl,@r0
+      000349 08               [12] 1735 	inc	r0
+      00034A 86 83            [24] 1736 	mov	dph,@r0
+      00034C 08               [12] 1737 	inc	r0
+      00034D 86 F0            [24] 1738 	mov	b,@r0
+      00034F EB               [12] 1739 	mov	a,r3
+      000350 12r00r00         [24] 1740 	lcall	__gptrput
+      000353 A3               [24] 1741 	inc	dptr
+      000354 EC               [12] 1742 	mov	a,r4
+      000355 12r00r00         [24] 1743 	lcall	__gptrput
+                                   1744 ;	../../../../platform/cc2530eb/drivers/bmp085.c:96: x1 = (((int32_t)dat->temp - ac6) * ac5) >> 15;
+      000358 E5 81            [12] 1745 	mov	a,sp
+      00035A 24 D5            [12] 1746 	add	a,#0xd5
+      00035C F8               [12] 1747 	mov	r0,a
+      00035D A6 03            [24] 1748 	mov	@r0,ar3
+      00035F 08               [12] 1749 	inc	r0
+      000360 A6 04            [24] 1750 	mov	@r0,ar4
+      000362 EC               [12] 1751 	mov	a,r4
+      000363 33               [12] 1752 	rlc	a
+      000364 95 E0            [12] 1753 	subb	a,acc
+      000366 08               [12] 1754 	inc	r0
+      000367 F6               [12] 1755 	mov	@r0,a
+      000368 08               [12] 1756 	inc	r0
+      000369 F6               [12] 1757 	mov	@r0,a
+      00036A 90r00r0A         [24] 1758 	mov	dptr,#_ac6
+      00036D E0               [24] 1759 	movx	a,@dptr
+      00036E FD               [12] 1760 	mov	r5,a
+      00036F A3               [24] 1761 	inc	dptr
+      000370 E0               [24] 1762 	movx	a,@dptr
+      000371 FC               [12] 1763 	mov	r4,a
+      000372 E4               [12] 1764 	clr	a
+      000373 FE               [12] 1765 	mov	r6,a
+      000374 FF               [12] 1766 	mov	r7,a
+      000375 E5 81            [12] 1767 	mov	a,sp
+      000377 24 D5            [12] 1768 	add	a,#0xd5
+      000379 F8               [12] 1769 	mov	r0,a
+      00037A E6               [12] 1770 	mov	a,@r0
+      00037B C3               [12] 1771 	clr	c
+      00037C 9D               [12] 1772 	subb	a,r5
+      00037D F6               [12] 1773 	mov	@r0,a
+      00037E 08               [12] 1774 	inc	r0
+      00037F E6               [12] 1775 	mov	a,@r0
+      000380 9C               [12] 1776 	subb	a,r4
+      000381 F6               [12] 1777 	mov	@r0,a
+      000382 08               [12] 1778 	inc	r0
+      000383 E6               [12] 1779 	mov	a,@r0
+      000384 9E               [12] 1780 	subb	a,r6
+      000385 F6               [12] 1781 	mov	@r0,a
+      000386 08               [12] 1782 	inc	r0
+      000387 E6               [12] 1783 	mov	a,@r0
+      000388 9F               [12] 1784 	subb	a,r7
+      000389 F6               [12] 1785 	mov	@r0,a
+      00038A 90r00r08         [24] 1786 	mov	dptr,#_ac5
+      00038D E0               [24] 1787 	movx	a,@dptr
+      00038E FA               [12] 1788 	mov	r2,a
+      00038F A3               [24] 1789 	inc	dptr
+      000390 E0               [24] 1790 	movx	a,@dptr
+      000391 FB               [12] 1791 	mov	r3,a
+      000392 7E 00            [12] 1792 	mov	r6,#0x00
+      000394 7F 00            [12] 1793 	mov	r7,#0x00
+      000396 C0 02            [24] 1794 	push	ar2
+      000398 C0 03            [24] 1795 	push	ar3
+      00039A C0 06            [24] 1796 	push	ar6
+      00039C C0 07            [24] 1797 	push	ar7
+      00039E E5 81            [12] 1798 	mov	a,sp
+      0003A0 24 D1            [12] 1799 	add	a,#0xd1
+      0003A2 F8               [12] 1800 	mov	r0,a
+      0003A3 86 82            [24] 1801 	mov	dpl,@r0
+      0003A5 08               [12] 1802 	inc	r0
+      0003A6 86 83            [24] 1803 	mov	dph,@r0
+      0003A8 08               [12] 1804 	inc	r0
+      0003A9 86 F0            [24] 1805 	mov	b,@r0
+      0003AB 08               [12] 1806 	inc	r0
+      0003AC E6               [12] 1807 	mov	a,@r0
+      0003AD 12r00r00         [24] 1808 	lcall	__mullong
+      0003B0 AC 82            [24] 1809 	mov	r4,dpl
+      0003B2 AD 83            [24] 1810 	mov	r5,dph
+      0003B4 AE F0            [24] 1811 	mov	r6,b
+      0003B6 FF               [12] 1812 	mov	r7,a
+      0003B7 E5 81            [12] 1813 	mov	a,sp
+      0003B9 24 FC            [12] 1814 	add	a,#0xfc
+      0003BB F5 81            [12] 1815 	mov	sp,a
+      0003BD 24 E5            [12] 1816 	add	a,#0xe5
+      0003BF F8               [12] 1817 	mov	r0,a
+      0003C0 A6 05            [24] 1818 	mov	@r0,ar5
+      0003C2 EE               [12] 1819 	mov	a,r6
+      0003C3 A2 E7            [12] 1820 	mov	c,acc.7
+      0003C5 C6               [12] 1821 	xch	a,@r0
+      0003C6 33               [12] 1822 	rlc	a
+      0003C7 C6               [12] 1823 	xch	a,@r0
+      0003C8 33               [12] 1824 	rlc	a
+      0003C9 C6               [12] 1825 	xch	a,@r0
+      0003CA 54 01            [12] 1826 	anl	a,#0x01
+      0003CC 08               [12] 1827 	inc	r0
+      0003CD F6               [12] 1828 	mov	@r0,a
+      0003CE EF               [12] 1829 	mov	a,r7
+      0003CF 2F               [12] 1830 	add	a,r7
+      0003D0 46               [12] 1831 	orl	a,@r0
+      0003D1 F6               [12] 1832 	mov	@r0,a
+      0003D2 EF               [12] 1833 	mov	a,r7
+      0003D3 23               [12] 1834 	rl	a
+      0003D4 54 01            [12] 1835 	anl	a,#0x01
+      0003D6 30 E0 02         [24] 1836 	jnb	acc.0,00109$
+      0003D9 44 FE            [12] 1837 	orl	a,#0xFE
+      0003DB                       1838 00109$:
+      0003DB 08               [12] 1839 	inc	r0
+      0003DC F6               [12] 1840 	mov	@r0,a
+      0003DD 33               [12] 1841 	rlc	a
+      0003DE 95 E0            [12] 1842 	subb	a,acc
+      0003E0 08               [12] 1843 	inc	r0
+      0003E1 F6               [12] 1844 	mov	@r0,a
+                                   1845 ;	../../../../platform/cc2530eb/drivers/bmp085.c:97: x2 = ((int32_t)mc << 11) / (x1 + md);
+      0003E2 90r00r12         [24] 1846 	mov	dptr,#_mc
+      0003E5 E0               [24] 1847 	movx	a,@dptr
+      0003E6 FA               [12] 1848 	mov	r2,a
+      0003E7 A3               [24] 1849 	inc	dptr
+      0003E8 E0               [24] 1850 	movx	a,@dptr
+      0003E9 FB               [12] 1851 	mov	r3,a
+      0003EA 33               [12] 1852 	rlc	a
+      0003EB 95 E0            [12] 1853 	subb	a,acc
+      0003ED FE               [12] 1854 	mov	r6,a
+      0003EE E5 81            [12] 1855 	mov	a,sp
+      0003F0 24 D5            [12] 1856 	add	a,#0xd5
+      0003F2 F8               [12] 1857 	mov	r0,a
+      0003F3 08               [12] 1858 	inc	r0
+      0003F4 08               [12] 1859 	inc	r0
+      0003F5 A6 03            [24] 1860 	mov	@r0,ar3
+      0003F7 EE               [12] 1861 	mov	a,r6
+      0003F8 C4               [12] 1862 	swap	a
+      0003F9 03               [12] 1863 	rr	a
+      0003FA 54 F8            [12] 1864 	anl	a,#0xF8
+      0003FC C6               [12] 1865 	xch	a,@r0
+      0003FD C4               [12] 1866 	swap	a
+      0003FE 03               [12] 1867 	rr	a
+      0003FF C6               [12] 1868 	xch	a,@r0
+      000400 66               [12] 1869 	xrl	a,@r0
+      000401 C6               [12] 1870 	xch	a,@r0
+      000402 54 F8            [12] 1871 	anl	a,#0xF8
+      000404 C6               [12] 1872 	xch	a,@r0
+      000405 66               [12] 1873 	xrl	a,@r0
+      000406 08               [12] 1874 	inc	r0
+      000407 F6               [12] 1875 	mov	@r0,a
+      000408 EA               [12] 1876 	mov	a,r2
+      000409 C4               [12] 1877 	swap	a
+      00040A 03               [12] 1878 	rr	a
+      00040B 54 F8            [12] 1879 	anl	a,#0xF8
+      00040D 18               [12] 1880 	dec	r0
+      00040E 18               [12] 1881 	dec	r0
+      00040F F6               [12] 1882 	mov	@r0,a
+      000410 EA               [12] 1883 	mov	a,r2
+      000411 C4               [12] 1884 	swap	a
+      000412 03               [12] 1885 	rr	a
+      000413 54 07            [12] 1886 	anl	a,#0x07
+      000415 08               [12] 1887 	inc	r0
+      000416 46               [12] 1888 	orl	a,@r0
+      000417 F6               [12] 1889 	mov	@r0,a
+      000418 18               [12] 1890 	dec	r0
+      000419 18               [12] 1891 	dec	r0
+      00041A 76 00            [12] 1892 	mov	@r0,#0x00
+      00041C 90r00r14         [24] 1893 	mov	dptr,#_md
+      00041F E0               [24] 1894 	movx	a,@dptr
+      000420 FC               [12] 1895 	mov	r4,a
+      000421 A3               [24] 1896 	inc	dptr
+      000422 E0               [24] 1897 	movx	a,@dptr
+      000423 FD               [12] 1898 	mov	r5,a
+      000424 33               [12] 1899 	rlc	a
+      000425 95 E0            [12] 1900 	subb	a,acc
+      000427 FE               [12] 1901 	mov	r6,a
+      000428 FF               [12] 1902 	mov	r7,a
+      000429 E5 81            [12] 1903 	mov	a,sp
+      00042B 24 E5            [12] 1904 	add	a,#0xe5
+      00042D F8               [12] 1905 	mov	r0,a
+      00042E EC               [12] 1906 	mov	a,r4
+      00042F 26               [12] 1907 	add	a,@r0
+      000430 FC               [12] 1908 	mov	r4,a
+      000431 ED               [12] 1909 	mov	a,r5
+      000432 08               [12] 1910 	inc	r0
+      000433 36               [12] 1911 	addc	a,@r0
+      000434 FD               [12] 1912 	mov	r5,a
+      000435 EE               [12] 1913 	mov	a,r6
+      000436 08               [12] 1914 	inc	r0
+      000437 36               [12] 1915 	addc	a,@r0
+      000438 FE               [12] 1916 	mov	r6,a
+      000439 EF               [12] 1917 	mov	a,r7
+      00043A 08               [12] 1918 	inc	r0
+      00043B 36               [12] 1919 	addc	a,@r0
+      00043C FF               [12] 1920 	mov	r7,a
+      00043D C0 04            [24] 1921 	push	ar4
+      00043F C0 05            [24] 1922 	push	ar5
+      000441 C0 06            [24] 1923 	push	ar6
+      000443 C0 07            [24] 1924 	push	ar7
+      000445 E5 81            [12] 1925 	mov	a,sp
+      000447 24 D1            [12] 1926 	add	a,#0xd1
+      000449 F8               [12] 1927 	mov	r0,a
+      00044A 86 82            [24] 1928 	mov	dpl,@r0
+      00044C 08               [12] 1929 	inc	r0
+      00044D 86 83            [24] 1930 	mov	dph,@r0
+      00044F 08               [12] 1931 	inc	r0
+      000450 86 F0            [24] 1932 	mov	b,@r0
+      000452 08               [12] 1933 	inc	r0
+      000453 E6               [12] 1934 	mov	a,@r0
+      000454 12r00r00         [24] 1935 	lcall	__divslong
+      000457 AC 82            [24] 1936 	mov	r4,dpl
+      000459 AD 83            [24] 1937 	mov	r5,dph
+      00045B AE F0            [24] 1938 	mov	r6,b
+      00045D FF               [12] 1939 	mov	r7,a
+      00045E E5 81            [12] 1940 	mov	a,sp
+      000460 24 FC            [12] 1941 	add	a,#0xfc
+      000462 F5 81            [12] 1942 	mov	sp,a
+      000464 24 E9            [12] 1943 	add	a,#0xe9
+      000466 F8               [12] 1944 	mov	r0,a
+      000467 A6 04            [24] 1945 	mov	@r0,ar4
+      000469 08               [12] 1946 	inc	r0
+      00046A A6 05            [24] 1947 	mov	@r0,ar5
+      00046C 08               [12] 1948 	inc	r0
+      00046D A6 06            [24] 1949 	mov	@r0,ar6
+      00046F 08               [12] 1950 	inc	r0
+      000470 A6 07            [24] 1951 	mov	@r0,ar7
+                                   1952 ;	../../../../platform/cc2530eb/drivers/bmp085.c:98: b5 = x1 + x2;
+      000472 E5 81            [12] 1953 	mov	a,sp
+      000474 24 E5            [12] 1954 	add	a,#0xe5
+      000476 F8               [12] 1955 	mov	r0,a
+      000477 E5 81            [12] 1956 	mov	a,sp
+      000479 24 E9            [12] 1957 	add	a,#0xe9
+      00047B F9               [12] 1958 	mov	r1,a
+      00047C E7               [12] 1959 	mov	a,@r1
+      00047D 26               [12] 1960 	add	a,@r0
+      00047E FF               [12] 1961 	mov	r7,a
+      00047F 09               [12] 1962 	inc	r1
+      000480 E7               [12] 1963 	mov	a,@r1
+      000481 08               [12] 1964 	inc	r0
+      000482 36               [12] 1965 	addc	a,@r0
+      000483 FE               [12] 1966 	mov	r6,a
+      000484 09               [12] 1967 	inc	r1
+      000485 E7               [12] 1968 	mov	a,@r1
+      000486 08               [12] 1969 	inc	r0
+      000487 36               [12] 1970 	addc	a,@r0
+      000488 FD               [12] 1971 	mov	r5,a
+      000489 09               [12] 1972 	inc	r1
+      00048A E7               [12] 1973 	mov	a,@r1
+      00048B 08               [12] 1974 	inc	r0
+      00048C 36               [12] 1975 	addc	a,@r0
+      00048D FC               [12] 1976 	mov	r4,a
+                                   1977 ;	../../../../platform/cc2530eb/drivers/bmp085.c:99: dat->temp = ((b5 + 8) >> 4);
+      00048E E5 81            [12] 1978 	mov	a,sp
+      000490 24 D5            [12] 1979 	add	a,#0xd5
+      000492 F8               [12] 1980 	mov	r0,a
+      000493 74 08            [12] 1981 	mov	a,#0x08
+      000495 2F               [12] 1982 	add	a,r7
+      000496 F6               [12] 1983 	mov	@r0,a
+      000497 E4               [12] 1984 	clr	a
+      000498 3E               [12] 1985 	addc	a,r6
+      000499 08               [12] 1986 	inc	r0
+      00049A F6               [12] 1987 	mov	@r0,a
+      00049B E4               [12] 1988 	clr	a
+      00049C 3D               [12] 1989 	addc	a,r5
+      00049D 08               [12] 1990 	inc	r0
+      00049E F6               [12] 1991 	mov	@r0,a
+      00049F E4               [12] 1992 	clr	a
+      0004A0 3C               [12] 1993 	addc	a,r4
+      0004A1 08               [12] 1994 	inc	r0
+      0004A2 F6               [12] 1995 	mov	@r0,a
+      0004A3 E5 81            [12] 1996 	mov	a,sp
+      0004A5 24 D5            [12] 1997 	add	a,#0xd5
+      0004A7 F8               [12] 1998 	mov	r0,a
+      0004A8 08               [12] 1999 	inc	r0
+      0004A9 E6               [12] 2000 	mov	a,@r0
+      0004AA 18               [12] 2001 	dec	r0
+      0004AB C4               [12] 2002 	swap	a
+      0004AC C6               [12] 2003 	xch	a,@r0
+      0004AD C4               [12] 2004 	swap	a
+      0004AE 54 0F            [12] 2005 	anl	a,#0x0F
+      0004B0 66               [12] 2006 	xrl	a,@r0
+      0004B1 C6               [12] 2007 	xch	a,@r0
+      0004B2 54 0F            [12] 2008 	anl	a,#0x0F
+      0004B4 C6               [12] 2009 	xch	a,@r0
+      0004B5 66               [12] 2010 	xrl	a,@r0
+      0004B6 C6               [12] 2011 	xch	a,@r0
+      0004B7 08               [12] 2012 	inc	r0
+      0004B8 F6               [12] 2013 	mov	@r0,a
+      0004B9 08               [12] 2014 	inc	r0
+      0004BA E6               [12] 2015 	mov	a,@r0
+      0004BB C4               [12] 2016 	swap	a
+      0004BC 54 F0            [12] 2017 	anl	a,#0xF0
+      0004BE 18               [12] 2018 	dec	r0
+      0004BF 46               [12] 2019 	orl	a,@r0
+      0004C0 F6               [12] 2020 	mov	@r0,a
+      0004C1 08               [12] 2021 	inc	r0
+      0004C2 08               [12] 2022 	inc	r0
+      0004C3 E6               [12] 2023 	mov	a,@r0
+      0004C4 18               [12] 2024 	dec	r0
+      0004C5 C4               [12] 2025 	swap	a
+      0004C6 C6               [12] 2026 	xch	a,@r0
+      0004C7 C4               [12] 2027 	swap	a
+      0004C8 54 0F            [12] 2028 	anl	a,#0x0F
+      0004CA 66               [12] 2029 	xrl	a,@r0
+      0004CB C6               [12] 2030 	xch	a,@r0
+      0004CC 54 0F            [12] 2031 	anl	a,#0x0F
+      0004CE C6               [12] 2032 	xch	a,@r0
+      0004CF 66               [12] 2033 	xrl	a,@r0
+      0004D0 C6               [12] 2034 	xch	a,@r0
+      0004D1 30 E3 02         [24] 2035 	jnb	acc.3,00110$
+      0004D4 44 F0            [12] 2036 	orl	a,#0xF0
+      0004D6                       2037 00110$:
+      0004D6 08               [12] 2038 	inc	r0
+      0004D7 F6               [12] 2039 	mov	@r0,a
+      0004D8 E5 81            [12] 2040 	mov	a,sp
+      0004DA 24 D5            [12] 2041 	add	a,#0xd5
+      0004DC F8               [12] 2042 	mov	r0,a
+      0004DD 86 02            [24] 2043 	mov	ar2,@r0
+      0004DF 08               [12] 2044 	inc	r0
+      0004E0 86 03            [24] 2045 	mov	ar3,@r0
+      0004E2 E5 81            [12] 2046 	mov	a,sp
+      0004E4 24 D2            [12] 2047 	add	a,#0xd2
+      0004E6 F8               [12] 2048 	mov	r0,a
+      0004E7 86 82            [24] 2049 	mov	dpl,@r0
+      0004E9 08               [12] 2050 	inc	r0
+      0004EA 86 83            [24] 2051 	mov	dph,@r0
+      0004EC 08               [12] 2052 	inc	r0
+      0004ED 86 F0            [24] 2053 	mov	b,@r0
+      0004EF EA               [12] 2054 	mov	a,r2
+      0004F0 12r00r00         [24] 2055 	lcall	__gptrput
+      0004F3 A3               [24] 2056 	inc	dptr
+      0004F4 EB               [12] 2057 	mov	a,r3
+      0004F5 12r00r00         [24] 2058 	lcall	__gptrput
+                                   2059 ;	../../../../platform/cc2530eb/drivers/bmp085.c:101: dat->press = BMP085_Read_Pressure();
+      0004F8 E5 81            [12] 2060 	mov	a,sp
+      0004FA 24 D2            [12] 2061 	add	a,#0xd2
+      0004FC F8               [12] 2062 	mov	r0,a
+      0004FD E5 81            [12] 2063 	mov	a,sp
+      0004FF 24 D5            [12] 2064 	add	a,#0xd5
+      000501 F9               [12] 2065 	mov	r1,a
+      000502 74 02            [12] 2066 	mov	a,#0x02
+      000504 26               [12] 2067 	add	a,@r0
+      000505 F7               [12] 2068 	mov	@r1,a
+      000506 E4               [12] 2069 	clr	a
+      000507 08               [12] 2070 	inc	r0
+      000508 36               [12] 2071 	addc	a,@r0
+      000509 09               [12] 2072 	inc	r1
+      00050A F7               [12] 2073 	mov	@r1,a
+      00050B 08               [12] 2074 	inc	r0
+      00050C 09               [12] 2075 	inc	r1
+      00050D E6               [12] 2076 	mov	a,@r0
+      00050E F7               [12] 2077 	mov	@r1,a
+      00050F C0 07            [24] 2078 	push	ar7
+      000511 C0 06            [24] 2079 	push	ar6
+      000513 C0 05            [24] 2080 	push	ar5
+      000515 C0 04            [24] 2081 	push	ar4
+      000517 78rD3            [12] 2082 	mov	r0,#_BMP085_Read_Pressure
+      000519 79s01            [12] 2083 	mov	r1,#(_BMP085_Read_Pressure >> 8)
+      00051B 7As00            [12] 2084 	mov	r2,#(_BMP085_Read_Pressure >> 16)
+      00051D 12r00r00         [24] 2085 	lcall	__sdcc_banked_call
+      000520 C8               [12] 2086 	xch	a,r0
+      000521 E5 81            [12] 2087 	mov	a,sp
+      000523 24 D5            [12] 2088 	add	a,#0xd5
+      000525 C8               [12] 2089 	xch	a,r0
+      000526 A6 82            [24] 2090 	mov	@r0,dpl
+      000528 08               [12] 2091 	inc	r0
+      000529 A6 83            [24] 2092 	mov	@r0,dph
+      00052B 08               [12] 2093 	inc	r0
+      00052C A6 F0            [24] 2094 	mov	@r0,b
+      00052E 08               [12] 2095 	inc	r0
+      00052F F6               [12] 2096 	mov	@r0,a
+      000530 D0 04            [24] 2097 	pop	ar4
+      000532 D0 05            [24] 2098 	pop	ar5
+      000534 D0 06            [24] 2099 	pop	ar6
+      000536 D0 07            [24] 2100 	pop	ar7
+      000538 E5 81            [12] 2101 	mov	a,sp
+      00053A 24 D5            [12] 2102 	add	a,#0xd5
+      00053C F8               [12] 2103 	mov	r0,a
+      00053D 86 82            [24] 2104 	mov	dpl,@r0
+      00053F 08               [12] 2105 	inc	r0
+      000540 86 83            [24] 2106 	mov	dph,@r0
+      000542 08               [12] 2107 	inc	r0
+      000543 86 F0            [24] 2108 	mov	b,@r0
+      000545 E5 81            [12] 2109 	mov	a,sp
+      000547 24 D9            [12] 2110 	add	a,#0xd9
+      000549 F9               [12] 2111 	mov	r1,a
+      00054A E7               [12] 2112 	mov	a,@r1
+      00054B 12r00r00         [24] 2113 	lcall	__gptrput
+      00054E A3               [24] 2114 	inc	dptr
+      00054F 09               [12] 2115 	inc	r1
+      000550 E7               [12] 2116 	mov	a,@r1
+      000551 12r00r00         [24] 2117 	lcall	__gptrput
+      000554 A3               [24] 2118 	inc	dptr
+      000555 09               [12] 2119 	inc	r1
+      000556 E7               [12] 2120 	mov	a,@r1
+      000557 12r00r00         [24] 2121 	lcall	__gptrput
+      00055A A3               [24] 2122 	inc	dptr
+      00055B 09               [12] 2123 	inc	r1
+      00055C E7               [12] 2124 	mov	a,@r1
+      00055D 12r00r00         [24] 2125 	lcall	__gptrput
+                                   2126 ;	../../../../platform/cc2530eb/drivers/bmp085.c:102: b6 = b5 - 4000;
+      000560 EF               [12] 2127 	mov	a,r7
+      000561 24 60            [12] 2128 	add	a,#0x60
+      000563 FF               [12] 2129 	mov	r7,a
+      000564 EE               [12] 2130 	mov	a,r6
+      000565 34 F0            [12] 2131 	addc	a,#0xF0
+      000567 FE               [12] 2132 	mov	r6,a
+      000568 ED               [12] 2133 	mov	a,r5
+      000569 34 FF            [12] 2134 	addc	a,#0xFF
+      00056B FD               [12] 2135 	mov	r5,a
+      00056C EC               [12] 2136 	mov	a,r4
+      00056D 34 FF            [12] 2137 	addc	a,#0xFF
+      00056F FC               [12] 2138 	mov	r4,a
+                                   2139 ;	../../../../platform/cc2530eb/drivers/bmp085.c:103: x1 = (b2 * (b6 * b6) >> 12) >> 11;
+      000570 C0 07            [24] 2140 	push	ar7
+      000572 C0 06            [24] 2141 	push	ar6
+      000574 C0 05            [24] 2142 	push	ar5
+      000576 C0 04            [24] 2143 	push	ar4
+      000578 C0 07            [24] 2144 	push	ar7
+      00057A C0 06            [24] 2145 	push	ar6
+      00057C C0 05            [24] 2146 	push	ar5
+      00057E C0 04            [24] 2147 	push	ar4
+      000580 8F 82            [24] 2148 	mov	dpl,r7
+      000582 8E 83            [24] 2149 	mov	dph,r6
+      000584 8D F0            [24] 2150 	mov	b,r5
+      000586 EC               [12] 2151 	mov	a,r4
+      000587 12r00r00         [24] 2152 	lcall	__mullong
+      00058A C8               [12] 2153 	xch	a,r0
+      00058B E5 81            [12] 2154 	mov	a,sp
+      00058D 24 D5            [12] 2155 	add	a,#0xd5
+      00058F C8               [12] 2156 	xch	a,r0
+      000590 A6 82            [24] 2157 	mov	@r0,dpl
+      000592 08               [12] 2158 	inc	r0
+      000593 A6 83            [24] 2159 	mov	@r0,dph
+      000595 08               [12] 2160 	inc	r0
+      000596 A6 F0            [24] 2161 	mov	@r0,b
+      000598 08               [12] 2162 	inc	r0
+      000599 F6               [12] 2163 	mov	@r0,a
+      00059A E5 81            [12] 2164 	mov	a,sp
+      00059C 24 FC            [12] 2165 	add	a,#0xfc
+      00059E F5 81            [12] 2166 	mov	sp,a
+      0005A0 D0 04            [24] 2167 	pop	ar4
+      0005A2 D0 05            [24] 2168 	pop	ar5
+      0005A4 D0 06            [24] 2169 	pop	ar6
+      0005A6 D0 07            [24] 2170 	pop	ar7
+      0005A8 90r00r0E         [24] 2171 	mov	dptr,#_b2
+      0005AB E0               [24] 2172 	movx	a,@dptr
+      0005AC FA               [12] 2173 	mov	r2,a
+      0005AD A3               [24] 2174 	inc	dptr
+      0005AE E0               [24] 2175 	movx	a,@dptr
+      0005AF FB               [12] 2176 	mov	r3,a
+      0005B0 E5 81            [12] 2177 	mov	a,sp
+      0005B2 24 E1            [12] 2178 	add	a,#0xe1
+      0005B4 F8               [12] 2179 	mov	r0,a
+      0005B5 A6 02            [24] 2180 	mov	@r0,ar2
+      0005B7 08               [12] 2181 	inc	r0
+      0005B8 A6 03            [24] 2182 	mov	@r0,ar3
+      0005BA EB               [12] 2183 	mov	a,r3
+      0005BB 33               [12] 2184 	rlc	a
+      0005BC 95 E0            [12] 2185 	subb	a,acc
+      0005BE 08               [12] 2186 	inc	r0
+      0005BF F6               [12] 2187 	mov	@r0,a
+      0005C0 08               [12] 2188 	inc	r0
+      0005C1 F6               [12] 2189 	mov	@r0,a
+      0005C2 C0 07            [24] 2190 	push	ar7
+      0005C4 C0 06            [24] 2191 	push	ar6
+      0005C6 C0 05            [24] 2192 	push	ar5
+      0005C8 C0 04            [24] 2193 	push	ar4
+      0005CA E5 81            [12] 2194 	mov	a,sp
+      0005CC 24 D9            [12] 2195 	add	a,#0xd9
+      0005CE F8               [12] 2196 	mov	r0,a
+      0005CF E6               [12] 2197 	mov	a,@r0
+      0005D0 C0 E0            [24] 2198 	push	acc
+      0005D2 08               [12] 2199 	inc	r0
+      0005D3 E6               [12] 2200 	mov	a,@r0
+      0005D4 C0 E0            [24] 2201 	push	acc
+      0005D6 08               [12] 2202 	inc	r0
+      0005D7 E6               [12] 2203 	mov	a,@r0
+      0005D8 C0 E0            [24] 2204 	push	acc
+      0005DA 08               [12] 2205 	inc	r0
+      0005DB E6               [12] 2206 	mov	a,@r0
+      0005DC C0 E0            [24] 2207 	push	acc
+      0005DE E5 81            [12] 2208 	mov	a,sp
+      0005E0 24 D9            [12] 2209 	add	a,#0xd9
+      0005E2 F8               [12] 2210 	mov	r0,a
+      0005E3 86 82            [24] 2211 	mov	dpl,@r0
+      0005E5 08               [12] 2212 	inc	r0
+      0005E6 86 83            [24] 2213 	mov	dph,@r0
+      0005E8 08               [12] 2214 	inc	r0
+      0005E9 86 F0            [24] 2215 	mov	b,@r0
+      0005EB 08               [12] 2216 	inc	r0
+      0005EC E6               [12] 2217 	mov	a,@r0
+      0005ED 12r00r00         [24] 2218 	lcall	__mullong
+      0005F0 C8               [12] 2219 	xch	a,r0
+      0005F1 E5 81            [12] 2220 	mov	a,sp
+      0005F3 24 D9            [12] 2221 	add	a,#0xd9
+      0005F5 C8               [12] 2222 	xch	a,r0
+      0005F6 A6 82            [24] 2223 	mov	@r0,dpl
+      0005F8 08               [12] 2224 	inc	r0
+      0005F9 A6 83            [24] 2225 	mov	@r0,dph
+      0005FB 08               [12] 2226 	inc	r0
+      0005FC A6 F0            [24] 2227 	mov	@r0,b
+      0005FE 08               [12] 2228 	inc	r0
+      0005FF F6               [12] 2229 	mov	@r0,a
+      000600 E5 81            [12] 2230 	mov	a,sp
+      000602 24 FC            [12] 2231 	add	a,#0xfc
+      000604 F5 81            [12] 2232 	mov	sp,a
+      000606 D0 04            [24] 2233 	pop	ar4
+      000608 D0 05            [24] 2234 	pop	ar5
+      00060A D0 06            [24] 2235 	pop	ar6
+      00060C D0 07            [24] 2236 	pop	ar7
+      00060E E5 81            [12] 2237 	mov	a,sp
+      000610 24 E1            [12] 2238 	add	a,#0xe1
+      000612 F8               [12] 2239 	mov	r0,a
+      000613 08               [12] 2240 	inc	r0
+      000614 E6               [12] 2241 	mov	a,@r0
+      000615 18               [12] 2242 	dec	r0
+      000616 F6               [12] 2243 	mov	@r0,a
+      000617 08               [12] 2244 	inc	r0
+      000618 08               [12] 2245 	inc	r0
+      000619 E6               [12] 2246 	mov	a,@r0
+      00061A 18               [12] 2247 	dec	r0
+      00061B 18               [12] 2248 	dec	r0
+      00061C C4               [12] 2249 	swap	a
+      00061D C6               [12] 2250 	xch	a,@r0
+      00061E C4               [12] 2251 	swap	a
+      00061F 54 0F            [12] 2252 	anl	a,#0x0F
+      000621 66               [12] 2253 	xrl	a,@r0
+      000622 C6               [12] 2254 	xch	a,@r0
+      000623 54 0F            [12] 2255 	anl	a,#0x0F
+      000625 C6               [12] 2256 	xch	a,@r0
+      000626 66               [12] 2257 	xrl	a,@r0
+      000627 C6               [12] 2258 	xch	a,@r0
+      000628 08               [12] 2259 	inc	r0
+      000629 F6               [12] 2260 	mov	@r0,a
+      00062A 08               [12] 2261 	inc	r0
+      00062B 08               [12] 2262 	inc	r0
+      00062C E6               [12] 2263 	mov	a,@r0
+      00062D C4               [12] 2264 	swap	a
+      00062E 54 F0            [12] 2265 	anl	a,#0xF0
+      000630 18               [12] 2266 	dec	r0
+      000631 18               [12] 2267 	dec	r0
+      000632 46               [12] 2268 	orl	a,@r0
+      000633 F6               [12] 2269 	mov	@r0,a
+      000634 08               [12] 2270 	inc	r0
+      000635 08               [12] 2271 	inc	r0
+      000636 E6               [12] 2272 	mov	a,@r0
+      000637 C4               [12] 2273 	swap	a
+      000638 54 0F            [12] 2274 	anl	a,#0x0F
+      00063A 30 E3 02         [24] 2275 	jnb	acc.3,00111$
+      00063D 44 F0            [12] 2276 	orl	a,#0xF0
+      00063F                       2277 00111$:
+      00063F 18               [12] 2278 	dec	r0
+      000640 F6               [12] 2279 	mov	@r0,a
+      000641 33               [12] 2280 	rlc	a
+      000642 95 E0            [12] 2281 	subb	a,acc
+      000644 08               [12] 2282 	inc	r0
+      000645 F6               [12] 2283 	mov	@r0,a
+      000646 E5 81            [12] 2284 	mov	a,sp
+      000648 24 E1            [12] 2285 	add	a,#0xe1
+      00064A F8               [12] 2286 	mov	r0,a
+      00064B E5 81            [12] 2287 	mov	a,sp
+      00064D 24 E5            [12] 2288 	add	a,#0xe5
+      00064F F9               [12] 2289 	mov	r1,a
+      000650 08               [12] 2290 	inc	r0
+      000651 E6               [12] 2291 	mov	a,@r0
+      000652 F7               [12] 2292 	mov	@r1,a
+      000653 08               [12] 2293 	inc	r0
+      000654 E6               [12] 2294 	mov	a,@r0
+      000655 C4               [12] 2295 	swap	a
+      000656 23               [12] 2296 	rl	a
+      000657 C7               [12] 2297 	xch	a,@r1
+      000658 C4               [12] 2298 	swap	a
+      000659 23               [12] 2299 	rl	a
+      00065A 54 1F            [12] 2300 	anl	a,#0x1F
+      00065C 67               [12] 2301 	xrl	a,@r1
+      00065D C7               [12] 2302 	xch	a,@r1
+      00065E 54 1F            [12] 2303 	anl	a,#0x1F
+      000660 C7               [12] 2304 	xch	a,@r1
+      000661 67               [12] 2305 	xrl	a,@r1
+      000662 C7               [12] 2306 	xch	a,@r1
+      000663 09               [12] 2307 	inc	r1
+      000664 F7               [12] 2308 	mov	@r1,a
+      000665 08               [12] 2309 	inc	r0
+      000666 E6               [12] 2310 	mov	a,@r0
+      000667 C4               [12] 2311 	swap	a
+      000668 23               [12] 2312 	rl	a
+      000669 54 E0            [12] 2313 	anl	a,#0xE0
+      00066B 47               [12] 2314 	orl	a,@r1
+      00066C F7               [12] 2315 	mov	@r1,a
+      00066D E6               [12] 2316 	mov	a,@r0
+      00066E C4               [12] 2317 	swap	a
+      00066F 23               [12] 2318 	rl	a
+      000670 54 1F            [12] 2319 	anl	a,#0x1F
+      000672 30 E4 02         [24] 2320 	jnb	acc.4,00112$
+      000675 44 E0            [12] 2321 	orl	a,#0xE0
+      000677                       2322 00112$:
+      000677 09               [12] 2323 	inc	r1
+      000678 F7               [12] 2324 	mov	@r1,a
+      000679 33               [12] 2325 	rlc	a
+      00067A 95 E0            [12] 2326 	subb	a,acc
+      00067C 09               [12] 2327 	inc	r1
+      00067D F7               [12] 2328 	mov	@r1,a
+                                   2329 ;	../../../../platform/cc2530eb/drivers/bmp085.c:104: x2 = (ac2 * b6) >> 11;
+      00067E 90r00r02         [24] 2330 	mov	dptr,#_ac2
+      000681 E0               [24] 2331 	movx	a,@dptr
+      000682 FA               [12] 2332 	mov	r2,a
+      000683 A3               [24] 2333 	inc	dptr
+      000684 E0               [24] 2334 	movx	a,@dptr
+      000685 FB               [12] 2335 	mov	r3,a
+      000686 E5 81            [12] 2336 	mov	a,sp
+      000688 24 E1            [12] 2337 	add	a,#0xe1
+      00068A F8               [12] 2338 	mov	r0,a
+      00068B A6 02            [24] 2339 	mov	@r0,ar2
+      00068D 08               [12] 2340 	inc	r0
+      00068E A6 03            [24] 2341 	mov	@r0,ar3
+      000690 EB               [12] 2342 	mov	a,r3
+      000691 33               [12] 2343 	rlc	a
+      000692 95 E0            [12] 2344 	subb	a,acc
+      000694 08               [12] 2345 	inc	r0
+      000695 F6               [12] 2346 	mov	@r0,a
+      000696 08               [12] 2347 	inc	r0
+      000697 F6               [12] 2348 	mov	@r0,a
+      000698 C0 07            [24] 2349 	push	ar7
+      00069A C0 06            [24] 2350 	push	ar6
+      00069C C0 05            [24] 2351 	push	ar5
+      00069E C0 04            [24] 2352 	push	ar4
+      0006A0 C0 07            [24] 2353 	push	ar7
+      0006A2 C0 06            [24] 2354 	push	ar6
+      0006A4 C0 05            [24] 2355 	push	ar5
+      0006A6 C0 04            [24] 2356 	push	ar4
+      0006A8 E5 81            [12] 2357 	mov	a,sp
+      0006AA 24 D9            [12] 2358 	add	a,#0xd9
+      0006AC F8               [12] 2359 	mov	r0,a
+      0006AD 86 82            [24] 2360 	mov	dpl,@r0
+      0006AF 08               [12] 2361 	inc	r0
+      0006B0 86 83            [24] 2362 	mov	dph,@r0
+      0006B2 08               [12] 2363 	inc	r0
+      0006B3 86 F0            [24] 2364 	mov	b,@r0
+      0006B5 08               [12] 2365 	inc	r0
+      0006B6 E6               [12] 2366 	mov	a,@r0
+      0006B7 12r00r00         [24] 2367 	lcall	__mullong
+      0006BA C8               [12] 2368 	xch	a,r0
+      0006BB E5 81            [12] 2369 	mov	a,sp
+      0006BD 24 D9            [12] 2370 	add	a,#0xd9
+      0006BF C8               [12] 2371 	xch	a,r0
+      0006C0 A6 82            [24] 2372 	mov	@r0,dpl
+      0006C2 08               [12] 2373 	inc	r0
+      0006C3 A6 83            [24] 2374 	mov	@r0,dph
+      0006C5 08               [12] 2375 	inc	r0
+      0006C6 A6 F0            [24] 2376 	mov	@r0,b
+      0006C8 08               [12] 2377 	inc	r0
+      0006C9 F6               [12] 2378 	mov	@r0,a
+      0006CA E5 81            [12] 2379 	mov	a,sp
+      0006CC 24 FC            [12] 2380 	add	a,#0xfc
+      0006CE F5 81            [12] 2381 	mov	sp,a
+      0006D0 D0 04            [24] 2382 	pop	ar4
+      0006D2 D0 05            [24] 2383 	pop	ar5
+      0006D4 D0 06            [24] 2384 	pop	ar6
+      0006D6 D0 07            [24] 2385 	pop	ar7
+      0006D8 E5 81            [12] 2386 	mov	a,sp
+      0006DA 24 E1            [12] 2387 	add	a,#0xe1
+      0006DC F8               [12] 2388 	mov	r0,a
+      0006DD E5 81            [12] 2389 	mov	a,sp
+      0006DF 24 E9            [12] 2390 	add	a,#0xe9
+      0006E1 F9               [12] 2391 	mov	r1,a
+      0006E2 08               [12] 2392 	inc	r0
+      0006E3 E6               [12] 2393 	mov	a,@r0
+      0006E4 F7               [12] 2394 	mov	@r1,a
+      0006E5 08               [12] 2395 	inc	r0
+      0006E6 E6               [12] 2396 	mov	a,@r0
+      0006E7 C4               [12] 2397 	swap	a
+      0006E8 23               [12] 2398 	rl	a
+      0006E9 C7               [12] 2399 	xch	a,@r1
+      0006EA C4               [12] 2400 	swap	a
+      0006EB 23               [12] 2401 	rl	a
+      0006EC 54 1F            [12] 2402 	anl	a,#0x1F
+      0006EE 67               [12] 2403 	xrl	a,@r1
+      0006EF C7               [12] 2404 	xch	a,@r1
+      0006F0 54 1F            [12] 2405 	anl	a,#0x1F
+      0006F2 C7               [12] 2406 	xch	a,@r1
+      0006F3 67               [12] 2407 	xrl	a,@r1
+      0006F4 C7               [12] 2408 	xch	a,@r1
+      0006F5 09               [12] 2409 	inc	r1
+      0006F6 F7               [12] 2410 	mov	@r1,a
+      0006F7 08               [12] 2411 	inc	r0
+      0006F8 E6               [12] 2412 	mov	a,@r0
+      0006F9 C4               [12] 2413 	swap	a
+      0006FA 23               [12] 2414 	rl	a
+      0006FB 54 E0            [12] 2415 	anl	a,#0xE0
+      0006FD 47               [12] 2416 	orl	a,@r1
+      0006FE F7               [12] 2417 	mov	@r1,a
+      0006FF E6               [12] 2418 	mov	a,@r0
+      000700 C4               [12] 2419 	swap	a
+      000701 23               [12] 2420 	rl	a
+      000702 54 1F            [12] 2421 	anl	a,#0x1F
+      000704 30 E4 02         [24] 2422 	jnb	acc.4,00113$
+      000707 44 E0            [12] 2423 	orl	a,#0xE0
+      000709                       2424 00113$:
+      000709 09               [12] 2425 	inc	r1
+      00070A F7               [12] 2426 	mov	@r1,a
+      00070B 33               [12] 2427 	rlc	a
+      00070C 95 E0            [12] 2428 	subb	a,acc
+      00070E 09               [12] 2429 	inc	r1
+      00070F F7               [12] 2430 	mov	@r1,a
+                                   2431 ;	../../../../platform/cc2530eb/drivers/bmp085.c:105: x3 = x1 + x2;
+      000710 E5 81            [12] 2432 	mov	a,sp
+      000712 24 E5            [12] 2433 	add	a,#0xe5
+      000714 F8               [12] 2434 	mov	r0,a
+      000715 E5 81            [12] 2435 	mov	a,sp
+      000717 24 E9            [12] 2436 	add	a,#0xe9
+      000719 F9               [12] 2437 	mov	r1,a
+      00071A E7               [12] 2438 	mov	a,@r1
+      00071B 26               [12] 2439 	add	a,@r0
+      00071C C0 E0            [24] 2440 	push	acc
+      00071E 09               [12] 2441 	inc	r1
+      00071F E7               [12] 2442 	mov	a,@r1
+      000720 08               [12] 2443 	inc	r0
+      000721 36               [12] 2444 	addc	a,@r0
+      000722 C0 E0            [24] 2445 	push	acc
+      000724 09               [12] 2446 	inc	r1
+      000725 E7               [12] 2447 	mov	a,@r1
+      000726 08               [12] 2448 	inc	r0
+      000727 36               [12] 2449 	addc	a,@r0
+      000728 C0 E0            [24] 2450 	push	acc
+      00072A 09               [12] 2451 	inc	r1
+      00072B E7               [12] 2452 	mov	a,@r1
+      00072C 08               [12] 2453 	inc	r0
+      00072D 36               [12] 2454 	addc	a,@r0
+      00072E C0 E0            [24] 2455 	push	acc
+      000730 E5 81            [12] 2456 	mov	a,sp
+      000732 24 EC            [12] 2457 	add	a,#0xec
+      000734 F8               [12] 2458 	mov	r0,a
+      000735 D0 E0            [24] 2459 	pop	acc
+      000737 F6               [12] 2460 	mov	@r0,a
+      000738 18               [12] 2461 	dec	r0
+      000739 D0 E0            [24] 2462 	pop	acc
+      00073B F6               [12] 2463 	mov	@r0,a
+      00073C 18               [12] 2464 	dec	r0
+      00073D D0 E0            [24] 2465 	pop	acc
+      00073F F6               [12] 2466 	mov	@r0,a
+      000740 18               [12] 2467 	dec	r0
+      000741 D0 E0            [24] 2468 	pop	acc
+      000743 F6               [12] 2469 	mov	@r0,a
+      000744 E5 81            [12] 2470 	mov	a,sp
+      000746 24 ED            [12] 2471 	add	a,#0xed
+                                   2472 ;	../../../../platform/cc2530eb/drivers/bmp085.c:106: b3 = (((((int32_t)ac1) * 4 + x3) << OSS) + 2) >> 2;
+      000748 90r00r00         [24] 2473 	mov	dptr,#_ac1
+      00074B E0               [24] 2474 	movx	a,@dptr
+      00074C FA               [12] 2475 	mov	r2,a
+      00074D A3               [24] 2476 	inc	dptr
+      00074E E0               [24] 2477 	movx	a,@dptr
+      00074F FB               [12] 2478 	mov	r3,a
+      000750 E5 81            [12] 2479 	mov	a,sp
+      000752 24 E1            [12] 2480 	add	a,#0xe1
+      000754 F8               [12] 2481 	mov	r0,a
+      000755 A6 02            [24] 2482 	mov	@r0,ar2
+      000757 08               [12] 2483 	inc	r0
+      000758 A6 03            [24] 2484 	mov	@r0,ar3
+      00075A EB               [12] 2485 	mov	a,r3
+      00075B 33               [12] 2486 	rlc	a
+      00075C 95 E0            [12] 2487 	subb	a,acc
+      00075E 08               [12] 2488 	inc	r0
+      00075F F6               [12] 2489 	mov	@r0,a
+      000760 08               [12] 2490 	inc	r0
+      000761 F6               [12] 2491 	mov	@r0,a
+      000762 E5 81            [12] 2492 	mov	a,sp
+      000764 24 E1            [12] 2493 	add	a,#0xe1
+      000766 F8               [12] 2494 	mov	r0,a
+      000767 E6               [12] 2495 	mov	a,@r0
+      000768 25 E0            [12] 2496 	add	a,acc
+      00076A F6               [12] 2497 	mov	@r0,a
+      00076B 08               [12] 2498 	inc	r0
+      00076C E6               [12] 2499 	mov	a,@r0
+      00076D 33               [12] 2500 	rlc	a
+      00076E F6               [12] 2501 	mov	@r0,a
+      00076F 08               [12] 2502 	inc	r0
+      000770 E6               [12] 2503 	mov	a,@r0
+      000771 33               [12] 2504 	rlc	a
+      000772 F6               [12] 2505 	mov	@r0,a
+      000773 08               [12] 2506 	inc	r0
+      000774 E6               [12] 2507 	mov	a,@r0
+      000775 33               [12] 2508 	rlc	a
+      000776 F6               [12] 2509 	mov	@r0,a
+      000777 18               [12] 2510 	dec	r0
+      000778 18               [12] 2511 	dec	r0
+      000779 18               [12] 2512 	dec	r0
+      00077A E6               [12] 2513 	mov	a,@r0
+      00077B 25 E0            [12] 2514 	add	a,acc
+      00077D F6               [12] 2515 	mov	@r0,a
+      00077E 08               [12] 2516 	inc	r0
+      00077F E6               [12] 2517 	mov	a,@r0
+      000780 33               [12] 2518 	rlc	a
+      000781 F6               [12] 2519 	mov	@r0,a
+      000782 08               [12] 2520 	inc	r0
+      000783 E6               [12] 2521 	mov	a,@r0
+      000784 33               [12] 2522 	rlc	a
+      000785 F6               [12] 2523 	mov	@r0,a
+      000786 08               [12] 2524 	inc	r0
+      000787 E6               [12] 2525 	mov	a,@r0
+      000788 33               [12] 2526 	rlc	a
+      000789 F6               [12] 2527 	mov	@r0,a
+      00078A E5 81            [12] 2528 	mov	a,sp
+      00078C 24 E1            [12] 2529 	add	a,#0xe1
+      00078E F8               [12] 2530 	mov	r0,a
+      00078F E5 81            [12] 2531 	mov	a,sp
+      000791 24 ED            [12] 2532 	add	a,#0xed
+      000793 F9               [12] 2533 	mov	r1,a
+      000794 E7               [12] 2534 	mov	a,@r1
+      000795 26               [12] 2535 	add	a,@r0
+      000796 F6               [12] 2536 	mov	@r0,a
+      000797 09               [12] 2537 	inc	r1
+      000798 E7               [12] 2538 	mov	a,@r1
+      000799 08               [12] 2539 	inc	r0
+      00079A 36               [12] 2540 	addc	a,@r0
+      00079B F6               [12] 2541 	mov	@r0,a
+      00079C 09               [12] 2542 	inc	r1
+      00079D E7               [12] 2543 	mov	a,@r1
+      00079E 08               [12] 2544 	inc	r0
+      00079F 36               [12] 2545 	addc	a,@r0
+      0007A0 F6               [12] 2546 	mov	@r0,a
+      0007A1 09               [12] 2547 	inc	r1
+      0007A2 E7               [12] 2548 	mov	a,@r1
+      0007A3 08               [12] 2549 	inc	r0
+      0007A4 36               [12] 2550 	addc	a,@r0
+      0007A5 F6               [12] 2551 	mov	@r0,a
+      0007A6 E5 81            [12] 2552 	mov	a,sp
+      0007A8 24 E1            [12] 2553 	add	a,#0xe1
+      0007AA E5 81            [12] 2554 	mov	a,sp
+      0007AC 24 E1            [12] 2555 	add	a,#0xe1
+      0007AE F8               [12] 2556 	mov	r0,a
+      0007AF 74 02            [12] 2557 	mov	a,#0x02
+      0007B1 26               [12] 2558 	add	a,@r0
+      0007B2 F6               [12] 2559 	mov	@r0,a
+      0007B3 E4               [12] 2560 	clr	a
+      0007B4 08               [12] 2561 	inc	r0
+      0007B5 36               [12] 2562 	addc	a,@r0
+      0007B6 F6               [12] 2563 	mov	@r0,a
+      0007B7 E4               [12] 2564 	clr	a
+      0007B8 08               [12] 2565 	inc	r0
+      0007B9 36               [12] 2566 	addc	a,@r0
+      0007BA F6               [12] 2567 	mov	@r0,a
+      0007BB E4               [12] 2568 	clr	a
+      0007BC 08               [12] 2569 	inc	r0
+      0007BD 36               [12] 2570 	addc	a,@r0
+      0007BE F6               [12] 2571 	mov	@r0,a
+      0007BF E5 81            [12] 2572 	mov	a,sp
+      0007C1 24 E1            [12] 2573 	add	a,#0xe1
+      0007C3 F8               [12] 2574 	mov	r0,a
+      0007C4 E5 81            [12] 2575 	mov	a,sp
+      0007C6 24 F1            [12] 2576 	add	a,#0xf1
+      0007C8 F9               [12] 2577 	mov	r1,a
+      0007C9 08               [12] 2578 	inc	r0
+      0007CA 08               [12] 2579 	inc	r0
+      0007CB 08               [12] 2580 	inc	r0
+      0007CC E6               [12] 2581 	mov	a,@r0
+      0007CD A2 E7            [12] 2582 	mov	c,acc.7
+      0007CF 13               [12] 2583 	rrc	a
+      0007D0 09               [12] 2584 	inc	r1
+      0007D1 09               [12] 2585 	inc	r1
+      0007D2 09               [12] 2586 	inc	r1
+      0007D3 F7               [12] 2587 	mov	@r1,a
+      0007D4 18               [12] 2588 	dec	r0
+      0007D5 E6               [12] 2589 	mov	a,@r0
+      0007D6 13               [12] 2590 	rrc	a
+      0007D7 19               [12] 2591 	dec	r1
+      0007D8 F7               [12] 2592 	mov	@r1,a
+      0007D9 18               [12] 2593 	dec	r0
+      0007DA E6               [12] 2594 	mov	a,@r0
+      0007DB 13               [12] 2595 	rrc	a
+      0007DC 19               [12] 2596 	dec	r1
+      0007DD F7               [12] 2597 	mov	@r1,a
+      0007DE 18               [12] 2598 	dec	r0
+      0007DF E6               [12] 2599 	mov	a,@r0
+      0007E0 13               [12] 2600 	rrc	a
+      0007E1 19               [12] 2601 	dec	r1
+      0007E2 F7               [12] 2602 	mov	@r1,a
+      0007E3 09               [12] 2603 	inc	r1
+      0007E4 09               [12] 2604 	inc	r1
+      0007E5 09               [12] 2605 	inc	r1
+      0007E6 E7               [12] 2606 	mov	a,@r1
+      0007E7 A2 E7            [12] 2607 	mov	c,acc.7
+      0007E9 13               [12] 2608 	rrc	a
+      0007EA F7               [12] 2609 	mov	@r1,a
+      0007EB 19               [12] 2610 	dec	r1
+      0007EC E7               [12] 2611 	mov	a,@r1
+      0007ED 13               [12] 2612 	rrc	a
+      0007EE F7               [12] 2613 	mov	@r1,a
+      0007EF 19               [12] 2614 	dec	r1
+      0007F0 E7               [12] 2615 	mov	a,@r1
+      0007F1 13               [12] 2616 	rrc	a
+      0007F2 F7               [12] 2617 	mov	@r1,a
+      0007F3 19               [12] 2618 	dec	r1
+      0007F4 E7               [12] 2619 	mov	a,@r1
+      0007F5 13               [12] 2620 	rrc	a
+      0007F6 F7               [12] 2621 	mov	@r1,a
+                                   2622 ;	../../../../platform/cc2530eb/drivers/bmp085.c:107: x1 = (ac3 * b6) >> 13;
+      0007F7 90r00r04         [24] 2623 	mov	dptr,#_ac3
+      0007FA E0               [24] 2624 	movx	a,@dptr
+      0007FB FA               [12] 2625 	mov	r2,a
+      0007FC A3               [24] 2626 	inc	dptr
+      0007FD E0               [24] 2627 	movx	a,@dptr
+      0007FE FB               [12] 2628 	mov	r3,a
+      0007FF E5 81            [12] 2629 	mov	a,sp
+      000801 24 E1            [12] 2630 	add	a,#0xe1
+      000803 F8               [12] 2631 	mov	r0,a
+      000804 A6 02            [24] 2632 	mov	@r0,ar2
+      000806 08               [12] 2633 	inc	r0
+      000807 A6 03            [24] 2634 	mov	@r0,ar3
+      000809 EB               [12] 2635 	mov	a,r3
+      00080A 33               [12] 2636 	rlc	a
+      00080B 95 E0            [12] 2637 	subb	a,acc
+      00080D 08               [12] 2638 	inc	r0
+      00080E F6               [12] 2639 	mov	@r0,a
+      00080F 08               [12] 2640 	inc	r0
+      000810 F6               [12] 2641 	mov	@r0,a
+      000811 C0 07            [24] 2642 	push	ar7
+      000813 C0 06            [24] 2643 	push	ar6
+      000815 C0 05            [24] 2644 	push	ar5
+      000817 C0 04            [24] 2645 	push	ar4
+      000819 E5 81            [12] 2646 	mov	a,sp
+      00081B 24 DD            [12] 2647 	add	a,#0xdd
+      00081D F8               [12] 2648 	mov	r0,a
+      00081E 86 82            [24] 2649 	mov	dpl,@r0
+      000820 08               [12] 2650 	inc	r0
+      000821 86 83            [24] 2651 	mov	dph,@r0
+      000823 08               [12] 2652 	inc	r0
+      000824 86 F0            [24] 2653 	mov	b,@r0
+      000826 08               [12] 2654 	inc	r0
+      000827 E6               [12] 2655 	mov	a,@r0
+      000828 12r00r00         [24] 2656 	lcall	__mullong
+      00082B AF 82            [24] 2657 	mov	r7,dpl
+      00082D AE 83            [24] 2658 	mov	r6,dph
+      00082F AD F0            [24] 2659 	mov	r5,b
+      000831 FC               [12] 2660 	mov	r4,a
+      000832 E5 81            [12] 2661 	mov	a,sp
+      000834 24 FC            [12] 2662 	add	a,#0xfc
+      000836 F5 81            [12] 2663 	mov	sp,a
+      000838 24 E5            [12] 2664 	add	a,#0xe5
+      00083A F8               [12] 2665 	mov	r0,a
+      00083B A6 06            [24] 2666 	mov	@r0,ar6
+      00083D ED               [12] 2667 	mov	a,r5
+      00083E C4               [12] 2668 	swap	a
+      00083F 03               [12] 2669 	rr	a
+      000840 C6               [12] 2670 	xch	a,@r0
+      000841 C4               [12] 2671 	swap	a
+      000842 03               [12] 2672 	rr	a
+      000843 54 07            [12] 2673 	anl	a,#0x07
+      000845 66               [12] 2674 	xrl	a,@r0
+      000846 C6               [12] 2675 	xch	a,@r0
+      000847 54 07            [12] 2676 	anl	a,#0x07
+      000849 C6               [12] 2677 	xch	a,@r0
+      00084A 66               [12] 2678 	xrl	a,@r0
+      00084B C6               [12] 2679 	xch	a,@r0
+      00084C 08               [12] 2680 	inc	r0
+      00084D F6               [12] 2681 	mov	@r0,a
+      00084E EC               [12] 2682 	mov	a,r4
+      00084F C4               [12] 2683 	swap	a
+      000850 03               [12] 2684 	rr	a
+      000851 54 F8            [12] 2685 	anl	a,#0xF8
+      000853 46               [12] 2686 	orl	a,@r0
+      000854 F6               [12] 2687 	mov	@r0,a
+      000855 EC               [12] 2688 	mov	a,r4
+      000856 C4               [12] 2689 	swap	a
+      000857 03               [12] 2690 	rr	a
+      000858 54 07            [12] 2691 	anl	a,#0x07
+      00085A 30 E2 02         [24] 2692 	jnb	acc.2,00114$
+      00085D 44 F8            [12] 2693 	orl	a,#0xF8
+      00085F                       2694 00114$:
+      00085F 08               [12] 2695 	inc	r0
+      000860 F6               [12] 2696 	mov	@r0,a
+      000861 33               [12] 2697 	rlc	a
+      000862 95 E0            [12] 2698 	subb	a,acc
+      000864 08               [12] 2699 	inc	r0
+      000865 F6               [12] 2700 	mov	@r0,a
+                                   2701 ;	../../../../platform/cc2530eb/drivers/bmp085.c:108: x2 = (b1 * ((b6 * b6) >> 12)) >> 16;
+      000866 E5 81            [12] 2702 	mov	a,sp
+      000868 24 DD            [12] 2703 	add	a,#0xdd
+      00086A F8               [12] 2704 	mov	r0,a
+      00086B 08               [12] 2705 	inc	r0
+      00086C 86 07            [24] 2706 	mov	ar7,@r0
+      00086E 08               [12] 2707 	inc	r0
+      00086F E6               [12] 2708 	mov	a,@r0
+      000870 C4               [12] 2709 	swap	a
+      000871 CF               [12] 2710 	xch	a,r7
+      000872 C4               [12] 2711 	swap	a
+      000873 54 0F            [12] 2712 	anl	a,#0x0F
+      000875 6F               [12] 2713 	xrl	a,r7
+      000876 CF               [12] 2714 	xch	a,r7
+      000877 54 0F            [12] 2715 	anl	a,#0x0F
+      000879 CF               [12] 2716 	xch	a,r7
+      00087A 6F               [12] 2717 	xrl	a,r7
+      00087B CF               [12] 2718 	xch	a,r7
+      00087C FE               [12] 2719 	mov	r6,a
+      00087D 08               [12] 2720 	inc	r0
+      00087E E6               [12] 2721 	mov	a,@r0
+      00087F C4               [12] 2722 	swap	a
+      000880 54 F0            [12] 2723 	anl	a,#0xF0
+      000882 4E               [12] 2724 	orl	a,r6
+      000883 FE               [12] 2725 	mov	r6,a
+      000884 E6               [12] 2726 	mov	a,@r0
+      000885 C4               [12] 2727 	swap	a
+      000886 54 0F            [12] 2728 	anl	a,#0x0F
+      000888 30 E3 02         [24] 2729 	jnb	acc.3,00115$
+      00088B 44 F0            [12] 2730 	orl	a,#0xF0
+      00088D                       2731 00115$:
+      00088D FD               [12] 2732 	mov	r5,a
+      00088E 33               [12] 2733 	rlc	a
+      00088F 95 E0            [12] 2734 	subb	a,acc
+      000891 FC               [12] 2735 	mov	r4,a
+      000892 90r00r0C         [24] 2736 	mov	dptr,#_b1
+      000895 E0               [24] 2737 	movx	a,@dptr
+      000896 FA               [12] 2738 	mov	r2,a
+      000897 A3               [24] 2739 	inc	dptr
+      000898 E0               [24] 2740 	movx	a,@dptr
+      000899 FB               [12] 2741 	mov	r3,a
+      00089A E5 81            [12] 2742 	mov	a,sp
+      00089C 24 DD            [12] 2743 	add	a,#0xdd
+      00089E F8               [12] 2744 	mov	r0,a
+      00089F A6 02            [24] 2745 	mov	@r0,ar2
+      0008A1 08               [12] 2746 	inc	r0
+      0008A2 A6 03            [24] 2747 	mov	@r0,ar3
+      0008A4 EB               [12] 2748 	mov	a,r3
+      0008A5 33               [12] 2749 	rlc	a
+      0008A6 95 E0            [12] 2750 	subb	a,acc
+      0008A8 08               [12] 2751 	inc	r0
+      0008A9 F6               [12] 2752 	mov	@r0,a
+      0008AA 08               [12] 2753 	inc	r0
+      0008AB F6               [12] 2754 	mov	@r0,a
+      0008AC C0 07            [24] 2755 	push	ar7
+      0008AE C0 06            [24] 2756 	push	ar6
+      0008B0 C0 05            [24] 2757 	push	ar5
+      0008B2 C0 04            [24] 2758 	push	ar4
+      0008B4 E5 81            [12] 2759 	mov	a,sp
+      0008B6 24 D9            [12] 2760 	add	a,#0xd9
+      0008B8 F8               [12] 2761 	mov	r0,a
+      0008B9 86 82            [24] 2762 	mov	dpl,@r0
+      0008BB 08               [12] 2763 	inc	r0
+      0008BC 86 83            [24] 2764 	mov	dph,@r0
+      0008BE 08               [12] 2765 	inc	r0
+      0008BF 86 F0            [24] 2766 	mov	b,@r0
+      0008C1 08               [12] 2767 	inc	r0
+      0008C2 E6               [12] 2768 	mov	a,@r0
+      0008C3 12r00r00         [24] 2769 	lcall	__mullong
+      0008C6 AD F0            [24] 2770 	mov	r5,b
+      0008C8 FC               [12] 2771 	mov	r4,a
+      0008C9 E5 81            [12] 2772 	mov	a,sp
+      0008CB 24 FC            [12] 2773 	add	a,#0xfc
+      0008CD F5 81            [12] 2774 	mov	sp,a
+      0008CF 24 E9            [12] 2775 	add	a,#0xe9
+      0008D1 F8               [12] 2776 	mov	r0,a
+      0008D2 A6 05            [24] 2777 	mov	@r0,ar5
+      0008D4 EC               [12] 2778 	mov	a,r4
+      0008D5 08               [12] 2779 	inc	r0
+      0008D6 F6               [12] 2780 	mov	@r0,a
+      0008D7 33               [12] 2781 	rlc	a
+      0008D8 95 E0            [12] 2782 	subb	a,acc
+      0008DA 08               [12] 2783 	inc	r0
+      0008DB F6               [12] 2784 	mov	@r0,a
+      0008DC 08               [12] 2785 	inc	r0
+      0008DD F6               [12] 2786 	mov	@r0,a
+                                   2787 ;	../../../../platform/cc2530eb/drivers/bmp085.c:109: x3 = ((x1 + x2) + 2) >> 2;
+      0008DE E5 81            [12] 2788 	mov	a,sp
+      0008E0 24 E5            [12] 2789 	add	a,#0xe5
+      0008E2 F8               [12] 2790 	mov	r0,a
+      0008E3 E5 81            [12] 2791 	mov	a,sp
+      0008E5 24 E9            [12] 2792 	add	a,#0xe9
+      0008E7 F9               [12] 2793 	mov	r1,a
+      0008E8 E7               [12] 2794 	mov	a,@r1
+      0008E9 26               [12] 2795 	add	a,@r0
+      0008EA FA               [12] 2796 	mov	r2,a
+      0008EB 09               [12] 2797 	inc	r1
+      0008EC E7               [12] 2798 	mov	a,@r1
+      0008ED 08               [12] 2799 	inc	r0
+      0008EE 36               [12] 2800 	addc	a,@r0
+      0008EF FB               [12] 2801 	mov	r3,a
+      0008F0 09               [12] 2802 	inc	r1
+      0008F1 E7               [12] 2803 	mov	a,@r1
+      0008F2 08               [12] 2804 	inc	r0
+      0008F3 36               [12] 2805 	addc	a,@r0
+      0008F4 FE               [12] 2806 	mov	r6,a
+      0008F5 09               [12] 2807 	inc	r1
+      0008F6 E7               [12] 2808 	mov	a,@r1
+      0008F7 08               [12] 2809 	inc	r0
+      0008F8 36               [12] 2810 	addc	a,@r0
+      0008F9 FF               [12] 2811 	mov	r7,a
+      0008FA 74 02            [12] 2812 	mov	a,#0x02
+      0008FC 2A               [12] 2813 	add	a,r2
+      0008FD FA               [12] 2814 	mov	r2,a
+      0008FE E4               [12] 2815 	clr	a
+      0008FF 3B               [12] 2816 	addc	a,r3
+      000900 FB               [12] 2817 	mov	r3,a
+      000901 E4               [12] 2818 	clr	a
+      000902 3E               [12] 2819 	addc	a,r6
+      000903 FE               [12] 2820 	mov	r6,a
+      000904 E4               [12] 2821 	clr	a
+      000905 3F               [12] 2822 	addc	a,r7
+      000906 FF               [12] 2823 	mov	r7,a
+      000907 E5 81            [12] 2824 	mov	a,sp
+      000909 24 ED            [12] 2825 	add	a,#0xed
+      00090B F8               [12] 2826 	mov	r0,a
+      00090C EF               [12] 2827 	mov	a,r7
+      00090D A2 E7            [12] 2828 	mov	c,acc.7
+      00090F 13               [12] 2829 	rrc	a
+      000910 08               [12] 2830 	inc	r0
+      000911 08               [12] 2831 	inc	r0
+      000912 08               [12] 2832 	inc	r0
+      000913 F6               [12] 2833 	mov	@r0,a
+      000914 EE               [12] 2834 	mov	a,r6
+      000915 13               [12] 2835 	rrc	a
+      000916 18               [12] 2836 	dec	r0
+      000917 F6               [12] 2837 	mov	@r0,a
+      000918 EB               [12] 2838 	mov	a,r3
+      000919 13               [12] 2839 	rrc	a
+      00091A 18               [12] 2840 	dec	r0
+      00091B F6               [12] 2841 	mov	@r0,a
+      00091C EA               [12] 2842 	mov	a,r2
+      00091D 13               [12] 2843 	rrc	a
+      00091E 18               [12] 2844 	dec	r0
+      00091F F6               [12] 2845 	mov	@r0,a
+      000920 08               [12] 2846 	inc	r0
+      000921 08               [12] 2847 	inc	r0
+      000922 08               [12] 2848 	inc	r0
+      000923 E6               [12] 2849 	mov	a,@r0
+      000924 A2 E7            [12] 2850 	mov	c,acc.7
+      000926 13               [12] 2851 	rrc	a
+      000927 F6               [12] 2852 	mov	@r0,a
+      000928 18               [12] 2853 	dec	r0
+      000929 E6               [12] 2854 	mov	a,@r0
+      00092A 13               [12] 2855 	rrc	a
+      00092B F6               [12] 2856 	mov	@r0,a
+      00092C 18               [12] 2857 	dec	r0
+      00092D E6               [12] 2858 	mov	a,@r0
+      00092E 13               [12] 2859 	rrc	a
+      00092F F6               [12] 2860 	mov	@r0,a
+      000930 18               [12] 2861 	dec	r0
+      000931 E6               [12] 2862 	mov	a,@r0
+      000932 13               [12] 2863 	rrc	a
+      000933 F6               [12] 2864 	mov	@r0,a
+                                   2865 ;	../../../../platform/cc2530eb/drivers/bmp085.c:110: b4 = (ac4 * (uint32_t)(x3 + 32768)) >> 15;
+      000934 E5 81            [12] 2866 	mov	a,sp
+      000936 24 ED            [12] 2867 	add	a,#0xed
+      000938 F8               [12] 2868 	mov	r0,a
+      000939 86 04            [24] 2869 	mov	ar4,@r0
+      00093B 74 80            [12] 2870 	mov	a,#0x80
+      00093D 08               [12] 2871 	inc	r0
+      00093E 26               [12] 2872 	add	a,@r0
+      00093F FD               [12] 2873 	mov	r5,a
+      000940 E4               [12] 2874 	clr	a
+      000941 08               [12] 2875 	inc	r0
+      000942 36               [12] 2876 	addc	a,@r0
+      000943 FE               [12] 2877 	mov	r6,a
+      000944 E4               [12] 2878 	clr	a
+      000945 08               [12] 2879 	inc	r0
+      000946 36               [12] 2880 	addc	a,@r0
+      000947 FF               [12] 2881 	mov	r7,a
+      000948 E5 81            [12] 2882 	mov	a,sp
+      00094A 24 E1            [12] 2883 	add	a,#0xe1
+      00094C F8               [12] 2884 	mov	r0,a
+      00094D A6 04            [24] 2885 	mov	@r0,ar4
+      00094F 08               [12] 2886 	inc	r0
+      000950 A6 05            [24] 2887 	mov	@r0,ar5
+      000952 08               [12] 2888 	inc	r0
+      000953 A6 06            [24] 2889 	mov	@r0,ar6
+      000955 08               [12] 2890 	inc	r0
+      000956 A6 07            [24] 2891 	mov	@r0,ar7
+      000958 90r00r06         [24] 2892 	mov	dptr,#_ac4
+      00095B E0               [24] 2893 	movx	a,@dptr
+      00095C FA               [12] 2894 	mov	r2,a
+      00095D A3               [24] 2895 	inc	dptr
+      00095E E0               [24] 2896 	movx	a,@dptr
+      00095F FB               [12] 2897 	mov	r3,a
+      000960 E4               [12] 2898 	clr	a
+      000961 FE               [12] 2899 	mov	r6,a
+      000962 FF               [12] 2900 	mov	r7,a
+      000963 E5 81            [12] 2901 	mov	a,sp
+      000965 24 E1            [12] 2902 	add	a,#0xe1
+      000967 F8               [12] 2903 	mov	r0,a
+      000968 E6               [12] 2904 	mov	a,@r0
+      000969 C0 E0            [24] 2905 	push	acc
+      00096B 08               [12] 2906 	inc	r0
+      00096C E6               [12] 2907 	mov	a,@r0
+      00096D C0 E0            [24] 2908 	push	acc
+      00096F 08               [12] 2909 	inc	r0
+      000970 E6               [12] 2910 	mov	a,@r0
+      000971 C0 E0            [24] 2911 	push	acc
+      000973 08               [12] 2912 	inc	r0
+      000974 E6               [12] 2913 	mov	a,@r0
+      000975 C0 E0            [24] 2914 	push	acc
+      000977 8A 82            [24] 2915 	mov	dpl,r2
+      000979 8B 83            [24] 2916 	mov	dph,r3
+      00097B 8E F0            [24] 2917 	mov	b,r6
+      00097D EF               [12] 2918 	mov	a,r7
+      00097E 12r00r00         [24] 2919 	lcall	__mullong
+      000981 AD 83            [24] 2920 	mov	r5,dph
+      000983 AE F0            [24] 2921 	mov	r6,b
+      000985 FF               [12] 2922 	mov	r7,a
+      000986 E5 81            [12] 2923 	mov	a,sp
+      000988 24 FC            [12] 2924 	add	a,#0xfc
+      00098A F5 81            [12] 2925 	mov	sp,a
+      00098C 24 F9            [12] 2926 	add	a,#0xf9
+      00098E F8               [12] 2927 	mov	r0,a
+      00098F A6 05            [24] 2928 	mov	@r0,ar5
+      000991 EE               [12] 2929 	mov	a,r6
+      000992 A2 E7            [12] 2930 	mov	c,acc.7
+      000994 C6               [12] 2931 	xch	a,@r0
+      000995 33               [12] 2932 	rlc	a
+      000996 C6               [12] 2933 	xch	a,@r0
+      000997 33               [12] 2934 	rlc	a
+      000998 C6               [12] 2935 	xch	a,@r0
+      000999 54 01            [12] 2936 	anl	a,#0x01
+      00099B 08               [12] 2937 	inc	r0
+      00099C F6               [12] 2938 	mov	@r0,a
+      00099D EF               [12] 2939 	mov	a,r7
+      00099E 2F               [12] 2940 	add	a,r7
+      00099F 46               [12] 2941 	orl	a,@r0
+      0009A0 F6               [12] 2942 	mov	@r0,a
+      0009A1 EF               [12] 2943 	mov	a,r7
+      0009A2 23               [12] 2944 	rl	a
+      0009A3 54 01            [12] 2945 	anl	a,#0x01
+      0009A5 08               [12] 2946 	inc	r0
+      0009A6 F6               [12] 2947 	mov	@r0,a
+      0009A7 08               [12] 2948 	inc	r0
+      0009A8 76 00            [12] 2949 	mov	@r0,#0x00
+                                   2950 ;	../../../../platform/cc2530eb/drivers/bmp085.c:111: b7 = ((uint32_t)dat->press - b3) * (50000 >> OSS);
+      0009AA E5 81            [12] 2951 	mov	a,sp
+      0009AC 24 D9            [12] 2952 	add	a,#0xd9
+      0009AE F8               [12] 2953 	mov	r0,a
+      0009AF E5 81            [12] 2954 	mov	a,sp
+      0009B1 24 E1            [12] 2955 	add	a,#0xe1
+      0009B3 F9               [12] 2956 	mov	r1,a
+      0009B4 E6               [12] 2957 	mov	a,@r0
+      0009B5 F7               [12] 2958 	mov	@r1,a
+      0009B6 08               [12] 2959 	inc	r0
+      0009B7 09               [12] 2960 	inc	r1
+      0009B8 E6               [12] 2961 	mov	a,@r0
+      0009B9 F7               [12] 2962 	mov	@r1,a
+      0009BA 08               [12] 2963 	inc	r0
+      0009BB 09               [12] 2964 	inc	r1
+      0009BC E6               [12] 2965 	mov	a,@r0
+      0009BD F7               [12] 2966 	mov	@r1,a
+      0009BE 08               [12] 2967 	inc	r0
+      0009BF 09               [12] 2968 	inc	r1
+      0009C0 E6               [12] 2969 	mov	a,@r0
+      0009C1 F7               [12] 2970 	mov	@r1,a
+      0009C2 E5 81            [12] 2971 	mov	a,sp
+      0009C4 24 F1            [12] 2972 	add	a,#0xf1
+      0009C6 F8               [12] 2973 	mov	r0,a
+      0009C7 86 04            [24] 2974 	mov	ar4,@r0
+      0009C9 08               [12] 2975 	inc	r0
+      0009CA 86 05            [24] 2976 	mov	ar5,@r0
+      0009CC 08               [12] 2977 	inc	r0
+      0009CD 86 06            [24] 2978 	mov	ar6,@r0
+      0009CF 08               [12] 2979 	inc	r0
+      0009D0 86 07            [24] 2980 	mov	ar7,@r0
+      0009D2 E5 81            [12] 2981 	mov	a,sp
+      0009D4 24 E1            [12] 2982 	add	a,#0xe1
+      0009D6 F8               [12] 2983 	mov	r0,a
+      0009D7 E6               [12] 2984 	mov	a,@r0
+      0009D8 C3               [12] 2985 	clr	c
+      0009D9 9C               [12] 2986 	subb	a,r4
+      0009DA FC               [12] 2987 	mov	r4,a
+      0009DB 08               [12] 2988 	inc	r0
+      0009DC E6               [12] 2989 	mov	a,@r0
+      0009DD 9D               [12] 2990 	subb	a,r5
+      0009DE FD               [12] 2991 	mov	r5,a
+      0009DF 08               [12] 2992 	inc	r0
+      0009E0 E6               [12] 2993 	mov	a,@r0
+      0009E1 9E               [12] 2994 	subb	a,r6
+      0009E2 FE               [12] 2995 	mov	r6,a
+      0009E3 08               [12] 2996 	inc	r0
+      0009E4 E6               [12] 2997 	mov	a,@r0
+      0009E5 9F               [12] 2998 	subb	a,r7
+      0009E6 FF               [12] 2999 	mov	r7,a
+      0009E7 C0 04            [24] 3000 	push	ar4
+      0009E9 C0 05            [24] 3001 	push	ar5
+      0009EB C0 06            [24] 3002 	push	ar6
+      0009ED C0 07            [24] 3003 	push	ar7
+      0009EF 90 C3 50         [24] 3004 	mov	dptr,#0xC350
+      0009F2 E4               [12] 3005 	clr	a
+      0009F3 F5 F0            [12] 3006 	mov	b,a
+      0009F5 12r00r00         [24] 3007 	lcall	__mullong
+      0009F8 AC 82            [24] 3008 	mov	r4,dpl
+      0009FA AD 83            [24] 3009 	mov	r5,dph
+      0009FC AE F0            [24] 3010 	mov	r6,b
+      0009FE FF               [12] 3011 	mov	r7,a
+      0009FF E5 81            [12] 3012 	mov	a,sp
+      000A01 24 FC            [12] 3013 	add	a,#0xfc
+      000A03 F5 81            [12] 3014 	mov	sp,a
+      000A05 24 FD            [12] 3015 	add	a,#0xfd
+      000A07 F8               [12] 3016 	mov	r0,a
+      000A08 A6 04            [24] 3017 	mov	@r0,ar4
+      000A0A 08               [12] 3018 	inc	r0
+      000A0B A6 05            [24] 3019 	mov	@r0,ar5
+      000A0D 08               [12] 3020 	inc	r0
+      000A0E A6 06            [24] 3021 	mov	@r0,ar6
+      000A10 08               [12] 3022 	inc	r0
+      000A11 A6 07            [24] 3023 	mov	@r0,ar7
+                                   3024 ;	../../../../platform/cc2530eb/drivers/bmp085.c:112: if( b7 < 0x80000000)
+      000A13 E5 81            [12] 3025 	mov	a,sp
+      000A15 24 FD            [12] 3026 	add	a,#0xfd
+      000A17 F8               [12] 3027 	mov	r0,a
+      000A18 C3               [12] 3028 	clr	c
+      000A19 08               [12] 3029 	inc	r0
+      000A1A 08               [12] 3030 	inc	r0
+      000A1B 08               [12] 3031 	inc	r0
+      000A1C E6               [12] 3032 	mov	a,@r0
+      000A1D 94 80            [12] 3033 	subb	a,#0x80
+      000A1F 50 50            [24] 3034 	jnc	00102$
+                                   3035 ;	../../../../platform/cc2530eb/drivers/bmp085.c:113: p = (b7 * 2) / b4 ;
+      000A21 E5 81            [12] 3036 	mov	a,sp
+      000A23 24 FD            [12] 3037 	add	a,#0xfd
+      000A25 F8               [12] 3038 	mov	r0,a
+      000A26 E6               [12] 3039 	mov	a,@r0
+      000A27 25 E0            [12] 3040 	add	a,acc
+      000A29 FA               [12] 3041 	mov	r2,a
+      000A2A 08               [12] 3042 	inc	r0
+      000A2B E6               [12] 3043 	mov	a,@r0
+      000A2C 33               [12] 3044 	rlc	a
+      000A2D FB               [12] 3045 	mov	r3,a
+      000A2E 08               [12] 3046 	inc	r0
+      000A2F E6               [12] 3047 	mov	a,@r0
+      000A30 33               [12] 3048 	rlc	a
+      000A31 FE               [12] 3049 	mov	r6,a
+      000A32 08               [12] 3050 	inc	r0
+      000A33 E6               [12] 3051 	mov	a,@r0
+      000A34 33               [12] 3052 	rlc	a
+      000A35 FF               [12] 3053 	mov	r7,a
+      000A36 E5 81            [12] 3054 	mov	a,sp
+      000A38 24 F9            [12] 3055 	add	a,#0xf9
+      000A3A F8               [12] 3056 	mov	r0,a
+      000A3B E6               [12] 3057 	mov	a,@r0
+      000A3C C0 E0            [24] 3058 	push	acc
+      000A3E 08               [12] 3059 	inc	r0
+      000A3F E6               [12] 3060 	mov	a,@r0
+      000A40 C0 E0            [24] 3061 	push	acc
+      000A42 08               [12] 3062 	inc	r0
+      000A43 E6               [12] 3063 	mov	a,@r0
+      000A44 C0 E0            [24] 3064 	push	acc
+      000A46 08               [12] 3065 	inc	r0
+      000A47 E6               [12] 3066 	mov	a,@r0
+      000A48 C0 E0            [24] 3067 	push	acc
+      000A4A 8A 82            [24] 3068 	mov	dpl,r2
+      000A4C 8B 83            [24] 3069 	mov	dph,r3
+      000A4E 8E F0            [24] 3070 	mov	b,r6
+      000A50 EF               [12] 3071 	mov	a,r7
+      000A51 12r00r00         [24] 3072 	lcall	__divulong
+      000A54 AC 82            [24] 3073 	mov	r4,dpl
+      000A56 AD 83            [24] 3074 	mov	r5,dph
+      000A58 AE F0            [24] 3075 	mov	r6,b
+      000A5A FF               [12] 3076 	mov	r7,a
+      000A5B E5 81            [12] 3077 	mov	a,sp
+      000A5D 24 FC            [12] 3078 	add	a,#0xfc
+      000A5F F5 81            [12] 3079 	mov	sp,a
+      000A61 24 F5            [12] 3080 	add	a,#0xf5
+      000A63 F8               [12] 3081 	mov	r0,a
+      000A64 A6 04            [24] 3082 	mov	@r0,ar4
+      000A66 08               [12] 3083 	inc	r0
+      000A67 A6 05            [24] 3084 	mov	@r0,ar5
+      000A69 08               [12] 3085 	inc	r0
+      000A6A A6 06            [24] 3086 	mov	@r0,ar6
+      000A6C 08               [12] 3087 	inc	r0
+      000A6D A6 07            [24] 3088 	mov	@r0,ar7
+      000A6F 80 45            [24] 3089 	sjmp	00103$
+      000A71                       3090 00102$:
+                                   3091 ;	../../../../platform/cc2530eb/drivers/bmp085.c:115: p = (b7 / b4) * 2;
+      000A71 E5 81            [12] 3092 	mov	a,sp
+      000A73 24 F9            [12] 3093 	add	a,#0xf9
+      000A75 F8               [12] 3094 	mov	r0,a
+      000A76 E6               [12] 3095 	mov	a,@r0
+      000A77 C0 E0            [24] 3096 	push	acc
+      000A79 08               [12] 3097 	inc	r0
+      000A7A E6               [12] 3098 	mov	a,@r0
+      000A7B C0 E0            [24] 3099 	push	acc
+      000A7D 08               [12] 3100 	inc	r0
+      000A7E E6               [12] 3101 	mov	a,@r0
+      000A7F C0 E0            [24] 3102 	push	acc
+      000A81 08               [12] 3103 	inc	r0
+      000A82 E6               [12] 3104 	mov	a,@r0
+      000A83 C0 E0            [24] 3105 	push	acc
+      000A85 E5 81            [12] 3106 	mov	a,sp
+      000A87 24 F9            [12] 3107 	add	a,#0xf9
+      000A89 F8               [12] 3108 	mov	r0,a
+      000A8A 86 82            [24] 3109 	mov	dpl,@r0
+      000A8C 08               [12] 3110 	inc	r0
+      000A8D 86 83            [24] 3111 	mov	dph,@r0
+      000A8F 08               [12] 3112 	inc	r0
+      000A90 86 F0            [24] 3113 	mov	b,@r0
+      000A92 08               [12] 3114 	inc	r0
+      000A93 E6               [12] 3115 	mov	a,@r0
+      000A94 12r00r00         [24] 3116 	lcall	__divulong
+      000A97 AF 82            [24] 3117 	mov	r7,dpl
+      000A99 AE 83            [24] 3118 	mov	r6,dph
+      000A9B AD F0            [24] 3119 	mov	r5,b
+      000A9D FC               [12] 3120 	mov	r4,a
+      000A9E E5 81            [12] 3121 	mov	a,sp
+      000AA0 24 FC            [12] 3122 	add	a,#0xfc
+      000AA2 F5 81            [12] 3123 	mov	sp,a
+      000AA4 24 F5            [12] 3124 	add	a,#0xf5
+      000AA6 F8               [12] 3125 	mov	r0,a
+      000AA7 EF               [12] 3126 	mov	a,r7
+      000AA8 2F               [12] 3127 	add	a,r7
+      000AA9 F6               [12] 3128 	mov	@r0,a
+      000AAA EE               [12] 3129 	mov	a,r6
+      000AAB 33               [12] 3130 	rlc	a
+      000AAC 08               [12] 3131 	inc	r0
+      000AAD F6               [12] 3132 	mov	@r0,a
+      000AAE ED               [12] 3133 	mov	a,r5
+      000AAF 33               [12] 3134 	rlc	a
+      000AB0 08               [12] 3135 	inc	r0
+      000AB1 F6               [12] 3136 	mov	@r0,a
+      000AB2 EC               [12] 3137 	mov	a,r4
+      000AB3 33               [12] 3138 	rlc	a
+      000AB4 08               [12] 3139 	inc	r0
+      000AB5 F6               [12] 3140 	mov	@r0,a
+      000AB6                       3141 00103$:
+                                   3142 ;	../../../../platform/cc2530eb/drivers/bmp085.c:116: x1 = (p >> 8) * (p >> 8);
+      000AB6 E5 81            [12] 3143 	mov	a,sp
+      000AB8 24 F5            [12] 3144 	add	a,#0xf5
+      000ABA F8               [12] 3145 	mov	r0,a
+      000ABB 08               [12] 3146 	inc	r0
+      000ABC 86 02            [24] 3147 	mov	ar2,@r0
+      000ABE 08               [12] 3148 	inc	r0
+      000ABF 86 03            [24] 3149 	mov	ar3,@r0
+      000AC1 08               [12] 3150 	inc	r0
+      000AC2 E6               [12] 3151 	mov	a,@r0
+      000AC3 FE               [12] 3152 	mov	r6,a
+      000AC4 33               [12] 3153 	rlc	a
+      000AC5 95 E0            [12] 3154 	subb	a,acc
+      000AC7 FF               [12] 3155 	mov	r7,a
+      000AC8 C0 02            [24] 3156 	push	ar2
+      000ACA C0 03            [24] 3157 	push	ar3
+      000ACC C0 06            [24] 3158 	push	ar6
+      000ACE C0 07            [24] 3159 	push	ar7
+      000AD0 8A 82            [24] 3160 	mov	dpl,r2
+      000AD2 8B 83            [24] 3161 	mov	dph,r3
+      000AD4 8E F0            [24] 3162 	mov	b,r6
+      000AD6 EF               [12] 3163 	mov	a,r7
+      000AD7 12r00r00         [24] 3164 	lcall	__mullong
+      000ADA AC 82            [24] 3165 	mov	r4,dpl
+      000ADC AD 83            [24] 3166 	mov	r5,dph
+      000ADE AE F0            [24] 3167 	mov	r6,b
+      000AE0 FF               [12] 3168 	mov	r7,a
+      000AE1 E5 81            [12] 3169 	mov	a,sp
+      000AE3 24 FC            [12] 3170 	add	a,#0xfc
+      000AE5 F5 81            [12] 3171 	mov	sp,a
+      000AE7 24 E5            [12] 3172 	add	a,#0xe5
+      000AE9 F8               [12] 3173 	mov	r0,a
+      000AEA A6 04            [24] 3174 	mov	@r0,ar4
+      000AEC 08               [12] 3175 	inc	r0
+      000AED A6 05            [24] 3176 	mov	@r0,ar5
+      000AEF 08               [12] 3177 	inc	r0
+      000AF0 A6 06            [24] 3178 	mov	@r0,ar6
+      000AF2 08               [12] 3179 	inc	r0
+      000AF3 A6 07            [24] 3180 	mov	@r0,ar7
+                                   3181 ;	../../../../platform/cc2530eb/drivers/bmp085.c:117: x1 = (x1 * 3038) >> 16;
+      000AF5 E5 81            [12] 3182 	mov	a,sp
+      000AF7 24 E5            [12] 3183 	add	a,#0xe5
+      000AF9 F8               [12] 3184 	mov	r0,a
+      000AFA E6               [12] 3185 	mov	a,@r0
+      000AFB C0 E0            [24] 3186 	push	acc
+      000AFD 08               [12] 3187 	inc	r0
+      000AFE E6               [12] 3188 	mov	a,@r0
+      000AFF C0 E0            [24] 3189 	push	acc
+      000B01 08               [12] 3190 	inc	r0
+      000B02 E6               [12] 3191 	mov	a,@r0
+      000B03 C0 E0            [24] 3192 	push	acc
+      000B05 08               [12] 3193 	inc	r0
+      000B06 E6               [12] 3194 	mov	a,@r0
+      000B07 C0 E0            [24] 3195 	push	acc
+      000B09 90 0B DE         [24] 3196 	mov	dptr,#0x0BDE
+      000B0C E4               [12] 3197 	clr	a
+      000B0D F5 F0            [12] 3198 	mov	b,a
+      000B0F 12r00r00         [24] 3199 	lcall	__mullong
+      000B12 AE F0            [24] 3200 	mov	r6,b
+      000B14 FF               [12] 3201 	mov	r7,a
+      000B15 E5 81            [12] 3202 	mov	a,sp
+      000B17 24 FC            [12] 3203 	add	a,#0xfc
+      000B19 F5 81            [12] 3204 	mov	sp,a
+      000B1B 24 E5            [12] 3205 	add	a,#0xe5
+      000B1D F8               [12] 3206 	mov	r0,a
+      000B1E A6 06            [24] 3207 	mov	@r0,ar6
+      000B20 EF               [12] 3208 	mov	a,r7
+      000B21 08               [12] 3209 	inc	r0
+      000B22 F6               [12] 3210 	mov	@r0,a
+      000B23 33               [12] 3211 	rlc	a
+      000B24 95 E0            [12] 3212 	subb	a,acc
+      000B26 08               [12] 3213 	inc	r0
+      000B27 F6               [12] 3214 	mov	@r0,a
+      000B28 08               [12] 3215 	inc	r0
+      000B29 F6               [12] 3216 	mov	@r0,a
+                                   3217 ;	../../../../platform/cc2530eb/drivers/bmp085.c:118: x2 = (-7357 * p) >> 16;
+      000B2A E5 81            [12] 3218 	mov	a,sp
+      000B2C 24 F5            [12] 3219 	add	a,#0xf5
+      000B2E F8               [12] 3220 	mov	r0,a
+      000B2F E6               [12] 3221 	mov	a,@r0
+      000B30 C0 E0            [24] 3222 	push	acc
+      000B32 08               [12] 3223 	inc	r0
+      000B33 E6               [12] 3224 	mov	a,@r0
+      000B34 C0 E0            [24] 3225 	push	acc
+      000B36 08               [12] 3226 	inc	r0
+      000B37 E6               [12] 3227 	mov	a,@r0
+      000B38 C0 E0            [24] 3228 	push	acc
+      000B3A 08               [12] 3229 	inc	r0
+      000B3B E6               [12] 3230 	mov	a,@r0
+      000B3C C0 E0            [24] 3231 	push	acc
+      000B3E 90 E3 43         [24] 3232 	mov	dptr,#0xE343
+      000B41 74 FF            [12] 3233 	mov	a,#0xFF
+      000B43 F5 F0            [12] 3234 	mov	b,a
+      000B45 12r00r00         [24] 3235 	lcall	__mullong
+      000B48 AE F0            [24] 3236 	mov	r6,b
+      000B4A FF               [12] 3237 	mov	r7,a
+      000B4B E5 81            [12] 3238 	mov	a,sp
+      000B4D 24 FC            [12] 3239 	add	a,#0xfc
+      000B4F F5 81            [12] 3240 	mov	sp,a
+      000B51 24 E9            [12] 3241 	add	a,#0xe9
+      000B53 F8               [12] 3242 	mov	r0,a
+      000B54 A6 06            [24] 3243 	mov	@r0,ar6
+      000B56 EF               [12] 3244 	mov	a,r7
+      000B57 08               [12] 3245 	inc	r0
+      000B58 F6               [12] 3246 	mov	@r0,a
+      000B59 33               [12] 3247 	rlc	a
+      000B5A 95 E0            [12] 3248 	subb	a,acc
+      000B5C 08               [12] 3249 	inc	r0
+      000B5D F6               [12] 3250 	mov	@r0,a
+      000B5E 08               [12] 3251 	inc	r0
+      000B5F F6               [12] 3252 	mov	@r0,a
+                                   3253 ;	../../../../platform/cc2530eb/drivers/bmp085.c:119: p += ((x1 + x2 + 3791) >> 4);
+      000B60 E5 81            [12] 3254 	mov	a,sp
+      000B62 24 E5            [12] 3255 	add	a,#0xe5
+      000B64 F8               [12] 3256 	mov	r0,a
+      000B65 E5 81            [12] 3257 	mov	a,sp
+      000B67 24 E9            [12] 3258 	add	a,#0xe9
+      000B69 F9               [12] 3259 	mov	r1,a
+      000B6A E7               [12] 3260 	mov	a,@r1
+      000B6B 26               [12] 3261 	add	a,@r0
+      000B6C FC               [12] 3262 	mov	r4,a
+      000B6D 09               [12] 3263 	inc	r1
+      000B6E E7               [12] 3264 	mov	a,@r1
+      000B6F 08               [12] 3265 	inc	r0
+      000B70 36               [12] 3266 	addc	a,@r0
+      000B71 FD               [12] 3267 	mov	r5,a
+      000B72 09               [12] 3268 	inc	r1
+      000B73 E7               [12] 3269 	mov	a,@r1
+      000B74 08               [12] 3270 	inc	r0
+      000B75 36               [12] 3271 	addc	a,@r0
+      000B76 FE               [12] 3272 	mov	r6,a
+      000B77 09               [12] 3273 	inc	r1
+      000B78 E7               [12] 3274 	mov	a,@r1
+      000B79 08               [12] 3275 	inc	r0
+      000B7A 36               [12] 3276 	addc	a,@r0
+      000B7B FF               [12] 3277 	mov	r7,a
+      000B7C 74 CF            [12] 3278 	mov	a,#0xCF
+      000B7E 2C               [12] 3279 	add	a,r4
+      000B7F FC               [12] 3280 	mov	r4,a
+      000B80 74 0E            [12] 3281 	mov	a,#0x0E
+      000B82 3D               [12] 3282 	addc	a,r5
+      000B83 FD               [12] 3283 	mov	r5,a
+      000B84 E4               [12] 3284 	clr	a
+      000B85 3E               [12] 3285 	addc	a,r6
+      000B86 FE               [12] 3286 	mov	r6,a
+      000B87 E4               [12] 3287 	clr	a
+      000B88 3F               [12] 3288 	addc	a,r7
+      000B89 FF               [12] 3289 	mov	r7,a
+      000B8A ED               [12] 3290 	mov	a,r5
+      000B8B C4               [12] 3291 	swap	a
+      000B8C CC               [12] 3292 	xch	a,r4
+      000B8D C4               [12] 3293 	swap	a
+      000B8E 54 0F            [12] 3294 	anl	a,#0x0F
+      000B90 6C               [12] 3295 	xrl	a,r4
+      000B91 CC               [12] 3296 	xch	a,r4
+      000B92 54 0F            [12] 3297 	anl	a,#0x0F
+      000B94 CC               [12] 3298 	xch	a,r4
+      000B95 6C               [12] 3299 	xrl	a,r4
+      000B96 CC               [12] 3300 	xch	a,r4
+      000B97 FD               [12] 3301 	mov	r5,a
+      000B98 EE               [12] 3302 	mov	a,r6
+      000B99 C4               [12] 3303 	swap	a
+      000B9A 54 F0            [12] 3304 	anl	a,#0xF0
+      000B9C 4D               [12] 3305 	orl	a,r5
+      000B9D FD               [12] 3306 	mov	r5,a
+      000B9E EF               [12] 3307 	mov	a,r7
+      000B9F C4               [12] 3308 	swap	a
+      000BA0 CE               [12] 3309 	xch	a,r6
+      000BA1 C4               [12] 3310 	swap	a
+      000BA2 54 0F            [12] 3311 	anl	a,#0x0F
+      000BA4 6E               [12] 3312 	xrl	a,r6
+      000BA5 CE               [12] 3313 	xch	a,r6
+      000BA6 54 0F            [12] 3314 	anl	a,#0x0F
+      000BA8 CE               [12] 3315 	xch	a,r6
+      000BA9 6E               [12] 3316 	xrl	a,r6
+      000BAA CE               [12] 3317 	xch	a,r6
+      000BAB 30 E3 02         [24] 3318 	jnb	acc.3,00117$
+      000BAE 44 F0            [12] 3319 	orl	a,#0xF0
+      000BB0                       3320 00117$:
+      000BB0 FF               [12] 3321 	mov	r7,a
+      000BB1 E5 81            [12] 3322 	mov	a,sp
+      000BB3 24 F5            [12] 3323 	add	a,#0xf5
+      000BB5 F8               [12] 3324 	mov	r0,a
+      000BB6 EC               [12] 3325 	mov	a,r4
+      000BB7 26               [12] 3326 	add	a,@r0
+      000BB8 F6               [12] 3327 	mov	@r0,a
+      000BB9 ED               [12] 3328 	mov	a,r5
+      000BBA 08               [12] 3329 	inc	r0
+      000BBB 36               [12] 3330 	addc	a,@r0
+      000BBC F6               [12] 3331 	mov	@r0,a
+      000BBD EE               [12] 3332 	mov	a,r6
+      000BBE 08               [12] 3333 	inc	r0
+      000BBF 36               [12] 3334 	addc	a,@r0
+      000BC0 F6               [12] 3335 	mov	@r0,a
+      000BC1 EF               [12] 3336 	mov	a,r7
+      000BC2 08               [12] 3337 	inc	r0
+      000BC3 36               [12] 3338 	addc	a,@r0
+      000BC4 F6               [12] 3339 	mov	@r0,a
+                                   3340 ;	../../../../platform/cc2530eb/drivers/bmp085.c:120: dat->press = p;
+      000BC5 E5 81            [12] 3341 	mov	a,sp
+      000BC7 24 D5            [12] 3342 	add	a,#0xd5
+      000BC9 F8               [12] 3343 	mov	r0,a
+      000BCA 86 82            [24] 3344 	mov	dpl,@r0
+      000BCC 08               [12] 3345 	inc	r0
+      000BCD 86 83            [24] 3346 	mov	dph,@r0
+      000BCF 08               [12] 3347 	inc	r0
+      000BD0 86 F0            [24] 3348 	mov	b,@r0
+      000BD2 E5 81            [12] 3349 	mov	a,sp
+      000BD4 24 F5            [12] 3350 	add	a,#0xf5
+      000BD6 F9               [12] 3351 	mov	r1,a
+      000BD7 E7               [12] 3352 	mov	a,@r1
+      000BD8 12r00r00         [24] 3353 	lcall	__gptrput
+      000BDB A3               [24] 3354 	inc	dptr
+      000BDC 09               [12] 3355 	inc	r1
+      000BDD E7               [12] 3356 	mov	a,@r1
+      000BDE 12r00r00         [24] 3357 	lcall	__gptrput
+      000BE1 A3               [24] 3358 	inc	dptr
+      000BE2 09               [12] 3359 	inc	r1
+      000BE3 E7               [12] 3360 	mov	a,@r1
+      000BE4 12r00r00         [24] 3361 	lcall	__gptrput
+      000BE7 A3               [24] 3362 	inc	dptr
+      000BE8 09               [12] 3363 	inc	r1
+      000BE9 E7               [12] 3364 	mov	a,@r1
+      000BEA 12r00r00         [24] 3365 	lcall	__gptrput
+      000BED E5 81            [12] 3366 	mov	a,sp
+      000BEF 24 D1            [12] 3367 	add	a,#0xD1
+      000BF1 F5 81            [12] 3368 	mov	sp,a
+      000BF3 02r00r00         [24] 3369 	ljmp	__sdcc_banked_ret
+                                   3370 	.area CSEG    (CODE)
+                                   3371 	.area CONST   (CODE)
+                                   3372 	.area XINIT   (CODE)
+                                   3373 	.area CABS    (ABS,CODE)

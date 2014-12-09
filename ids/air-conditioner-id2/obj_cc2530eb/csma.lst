@@ -1,0 +1,2895 @@
+                                      1 ;--------------------------------------------------------
+                                      2 ; File Created by SDCC : free open source ANSI-C Compiler
+                                      3 ; Version 3.3.1 #8804 (Aug  6 2013) (Linux)
+                                      4 ; This file was generated Mon Aug 25 04:16:21 2014
+                                      5 ;--------------------------------------------------------
+                                      6 	.module csma
+                                      7 	.optsdcc -mmcs51 --model-huge
+                                      8 	
+                                      9 ;--------------------------------------------------------
+                                     10 ; Public variables in this module
+                                     11 ;--------------------------------------------------------
+                                     12 	.globl _csma_driver
+                                     13 	.globl _memb_free
+                                     14 	.globl _memb_alloc
+                                     15 	.globl _memb_init
+                                     16 	.globl _list_item_next
+                                     17 	.globl _list_length
+                                     18 	.globl _list_remove
+                                     19 	.globl _list_add
+                                     20 	.globl _list_push
+                                     21 	.globl _list_pop
+                                     22 	.globl _list_head
+                                     23 	.globl _list_init
+                                     24 	.globl _random_rand
+                                     25 	.globl _ctimer_stop
+                                     26 	.globl _ctimer_set
+                                     27 	.globl _queuebuf_free
+                                     28 	.globl _queuebuf_update_attr_from_packetbuf
+                                     29 	.globl _queuebuf_new_from_packetbuf
+                                     30 	.globl _packetbuf_addr
+                                     31 	.globl _packetbuf_attr
+                                     32 	.globl _rimeaddr_cmp
+                                     33 	.globl _rimeaddr_copy
+                                     34 ;--------------------------------------------------------
+                                     35 ; special function registers
+                                     36 ;--------------------------------------------------------
+                                     37 	.area RSEG    (ABS,DATA)
+      000000                         38 	.org 0x0000
+                                     39 ;--------------------------------------------------------
+                                     40 ; special function bits
+                                     41 ;--------------------------------------------------------
+                                     42 	.area RSEG    (ABS,DATA)
+      000000                         43 	.org 0x0000
+                                     44 ;--------------------------------------------------------
+                                     45 ; overlayable register banks
+                                     46 ;--------------------------------------------------------
+                                     47 	.area REG_BANK_0	(REL,OVR,DATA)
+      000000                         48 	.ds 8
+                                     49 ;--------------------------------------------------------
+                                     50 ; internal ram data
+                                     51 ;--------------------------------------------------------
+                                     52 	.area DSEG    (DATA)
+                                     53 ;--------------------------------------------------------
+                                     54 ; overlayable items in internal ram 
+                                     55 ;--------------------------------------------------------
+                                     56 ;--------------------------------------------------------
+                                     57 ; indirectly addressable internal ram data
+                                     58 ;--------------------------------------------------------
+                                     59 	.area ISEG    (DATA)
+                                     60 ;--------------------------------------------------------
+                                     61 ; absolute internal ram data
+                                     62 ;--------------------------------------------------------
+                                     63 	.area IABS    (ABS,DATA)
+                                     64 	.area IABS    (ABS,DATA)
+                                     65 ;--------------------------------------------------------
+                                     66 ; bit data
+                                     67 ;--------------------------------------------------------
+                                     68 	.area BSEG    (BIT)
+                                     69 ;--------------------------------------------------------
+                                     70 ; paged external ram data
+                                     71 ;--------------------------------------------------------
+                                     72 	.area PSEG    (PAG,XDATA)
+                                     73 ;--------------------------------------------------------
+                                     74 ; external ram data
+                                     75 ;--------------------------------------------------------
+                                     76 	.area XSEG    (XDATA)
+      000000                         77 _neighbor_memb_memb_count:
+      000000                         78 	.ds 2
+      000002                         79 _neighbor_memb_memb_mem:
+      000002                         80 	.ds 84
+      000056                         81 _packet_memb_memb_count:
+      000056                         82 	.ds 6
+      00005C                         83 _packet_memb_memb_mem:
+      00005C                         84 	.ds 54
+      000092                         85 _metadata_memb_memb_count:
+      000092                         86 	.ds 6
+      000098                         87 _metadata_memb_memb_mem:
+      000098                         88 	.ds 42
+      0000C2                         89 _mac_status:
+      0000C2                         90 	.ds 2
+      0000C4                         91 _packet_sent_cb_sent_1_189:
+      0000C4                         92 	.ds 3
+      0000C7                         93 _packet_sent_cb_cptr_1_189:
+      0000C7                         94 	.ds 3
+      0000CA                         95 _packet_sent_cb_num_tx_1_189:
+      0000CA                         96 	.ds 2
+      0000CC                         97 _send_packet_addr_2_205:
+      0000CC                         98 	.ds 3
+                                     99 ;--------------------------------------------------------
+                                    100 ; absolute external ram data
+                                    101 ;--------------------------------------------------------
+                                    102 	.area XABS    (ABS,XDATA)
+                                    103 ;--------------------------------------------------------
+                                    104 ; external initialized ram data
+                                    105 ;--------------------------------------------------------
+                                    106 	.area XISEG   (XDATA)
+      000000                        107 _neighbor_memb:
+      000000                        108 	.ds 10
+      00000A                        109 _packet_memb:
+      00000A                        110 	.ds 10
+      000014                        111 _metadata_memb:
+      000014                        112 	.ds 10
+      00001E                        113 _neighbor_list_list:
+      00001E                        114 	.ds 3
+      000021                        115 _neighbor_list:
+      000021                        116 	.ds 3
+                                    117 	.area HOME    (CODE)
+                                    118 	.area GSINIT0 (CODE)
+                                    119 	.area GSINIT1 (CODE)
+                                    120 	.area GSINIT2 (CODE)
+                                    121 	.area GSINIT3 (CODE)
+                                    122 	.area GSINIT4 (CODE)
+                                    123 	.area GSINIT5 (CODE)
+                                    124 	.area GSINIT  (CODE)
+                                    125 	.area GSFINAL (CODE)
+                                    126 	.area CSEG    (CODE)
+                                    127 ;--------------------------------------------------------
+                                    128 ; global & static initialisations
+                                    129 ;--------------------------------------------------------
+                                    130 	.area HOME    (CODE)
+                                    131 	.area GSINIT  (CODE)
+                                    132 	.area GSFINAL (CODE)
+                                    133 	.area GSINIT  (CODE)
+                                    134 ;--------------------------------------------------------
+                                    135 ; Home
+                                    136 ;--------------------------------------------------------
+                                    137 	.area HOME    (CODE)
+                                    138 	.area HOME    (CODE)
+                                    139 ;--------------------------------------------------------
+                                    140 ; code
+                                    141 ;--------------------------------------------------------
+                                    142 	.area BANK1   (CODE)
+                                    143 ;------------------------------------------------------------
+                                    144 ;Allocation info for local variables in function 'neighbor_queue_from_addr'
+                                    145 ;------------------------------------------------------------
+                                    146 ;addr                      Allocated to stack - sp -2
+                                    147 ;n                         Allocated to registers r2 r3 r4 
+                                    148 ;------------------------------------------------------------
+                                    149 ;	../../../../core/net/mac/csma.c:123: neighbor_queue *neighbor_queue_from_addr(const rimeaddr_t *addr) {
+                                    150 ;	-----------------------------------------
+                                    151 ;	 function neighbor_queue_from_addr
+                                    152 ;	-----------------------------------------
+      000000                        153 _neighbor_queue_from_addr:
+                           000007   154 	ar7 = 0x07
+                           000006   155 	ar6 = 0x06
+                           000005   156 	ar5 = 0x05
+                           000004   157 	ar4 = 0x04
+                           000003   158 	ar3 = 0x03
+                           000002   159 	ar2 = 0x02
+                           000001   160 	ar1 = 0x01
+                           000000   161 	ar0 = 0x00
+      000000 C0 82            [24]  162 	push	dpl
+      000002 C0 83            [24]  163 	push	dph
+      000004 C0 F0            [24]  164 	push	b
+                                    165 ;	../../../../core/net/mac/csma.c:124: struct neighbor_queue *n = list_head(neighbor_list);
+      000006 90r00r21         [24]  166 	mov	dptr,#_neighbor_list
+      000009 E0               [24]  167 	movx	a,@dptr
+      00000A FA               [12]  168 	mov	r2,a
+      00000B A3               [24]  169 	inc	dptr
+      00000C E0               [24]  170 	movx	a,@dptr
+      00000D FB               [12]  171 	mov	r3,a
+      00000E A3               [24]  172 	inc	dptr
+      00000F E0               [24]  173 	movx	a,@dptr
+      000010 FC               [12]  174 	mov	r4,a
+      000011 8A 82            [24]  175 	mov	dpl,r2
+      000013 8B 83            [24]  176 	mov	dph,r3
+      000015 8C F0            [24]  177 	mov	b,r4
+      000017 78r00            [12]  178 	mov	r0,#_list_head
+      000019 79s00            [12]  179 	mov	r1,#(_list_head >> 8)
+      00001B 7As00            [12]  180 	mov	r2,#(_list_head >> 16)
+      00001D 12r00r00         [24]  181 	lcall	__sdcc_banked_call
+      000020 AA 82            [24]  182 	mov	r2,dpl
+      000022 AB 83            [24]  183 	mov	r3,dph
+      000024 AC F0            [24]  184 	mov	r4,b
+                                    185 ;	../../../../core/net/mac/csma.c:125: while(n != NULL) {
+      000026                        186 00103$:
+      000026 EA               [12]  187 	mov	a,r2
+      000027 4B               [12]  188 	orl	a,r3
+      000028 60 6D            [24]  189 	jz	00105$
+                                    190 ;	../../../../core/net/mac/csma.c:126: if(rimeaddr_cmp(&n->addr, addr)) {
+      00002A 74 03            [12]  191 	mov	a,#0x03
+      00002C 2A               [12]  192 	add	a,r2
+      00002D FD               [12]  193 	mov	r5,a
+      00002E E4               [12]  194 	clr	a
+      00002F 3B               [12]  195 	addc	a,r3
+      000030 FE               [12]  196 	mov	r6,a
+      000031 8C 07            [24]  197 	mov	ar7,r4
+      000033 C0 04            [24]  198 	push	ar4
+      000035 C0 03            [24]  199 	push	ar3
+      000037 C0 02            [24]  200 	push	ar2
+      000039 E5 81            [12]  201 	mov	a,sp
+      00003B 24 FB            [12]  202 	add	a,#0xfb
+      00003D F8               [12]  203 	mov	r0,a
+      00003E E6               [12]  204 	mov	a,@r0
+      00003F C0 E0            [24]  205 	push	acc
+      000041 08               [12]  206 	inc	r0
+      000042 E6               [12]  207 	mov	a,@r0
+      000043 C0 E0            [24]  208 	push	acc
+      000045 08               [12]  209 	inc	r0
+      000046 E6               [12]  210 	mov	a,@r0
+      000047 C0 E0            [24]  211 	push	acc
+      000049 8D 82            [24]  212 	mov	dpl,r5
+      00004B 8E 83            [24]  213 	mov	dph,r6
+      00004D 8F F0            [24]  214 	mov	b,r7
+      00004F 78r00            [12]  215 	mov	r0,#_rimeaddr_cmp
+      000051 79s00            [12]  216 	mov	r1,#(_rimeaddr_cmp >> 8)
+      000053 7As00            [12]  217 	mov	r2,#(_rimeaddr_cmp >> 16)
+      000055 12r00r00         [24]  218 	lcall	__sdcc_banked_call
+      000058 AE 82            [24]  219 	mov	r6,dpl
+      00005A AF 83            [24]  220 	mov	r7,dph
+      00005C 15 81            [12]  221 	dec	sp
+      00005E 15 81            [12]  222 	dec	sp
+      000060 15 81            [12]  223 	dec	sp
+      000062 D0 02            [24]  224 	pop	ar2
+      000064 D0 03            [24]  225 	pop	ar3
+      000066 D0 04            [24]  226 	pop	ar4
+      000068 EE               [12]  227 	mov	a,r6
+      000069 4F               [12]  228 	orl	a,r7
+      00006A 60 08            [24]  229 	jz	00102$
+                                    230 ;	../../../../core/net/mac/csma.c:127: return n;
+      00006C 8A 82            [24]  231 	mov	dpl,r2
+      00006E 8B 83            [24]  232 	mov	dph,r3
+      000070 8C F0            [24]  233 	mov	b,r4
+      000072 80 29            [24]  234 	sjmp	00106$
+      000074                        235 00102$:
+                                    236 ;	../../../../core/net/mac/csma.c:129: n = list_item_next(n);
+      000074 8A 05            [24]  237 	mov	ar5,r2
+      000076 8B 06            [24]  238 	mov	ar6,r3
+      000078 8C 07            [24]  239 	mov	ar7,r4
+      00007A 8D 82            [24]  240 	mov	dpl,r5
+      00007C 8E 83            [24]  241 	mov	dph,r6
+      00007E 8F F0            [24]  242 	mov	b,r7
+      000080 78r00            [12]  243 	mov	r0,#_list_item_next
+      000082 79s00            [12]  244 	mov	r1,#(_list_item_next >> 8)
+      000084 7As00            [12]  245 	mov	r2,#(_list_item_next >> 16)
+      000086 12r00r00         [24]  246 	lcall	__sdcc_banked_call
+      000089 AD 82            [24]  247 	mov	r5,dpl
+      00008B AE 83            [24]  248 	mov	r6,dph
+      00008D AF F0            [24]  249 	mov	r7,b
+      00008F 8D 02            [24]  250 	mov	ar2,r5
+      000091 8E 03            [24]  251 	mov	ar3,r6
+      000093 8F 04            [24]  252 	mov	ar4,r7
+      000095 80 8F            [24]  253 	sjmp	00103$
+      000097                        254 00105$:
+                                    255 ;	../../../../core/net/mac/csma.c:131: return NULL;
+      000097 90 00 00         [24]  256 	mov	dptr,#0x0000
+      00009A 75 F0 00         [24]  257 	mov	b,#0x00
+      00009D                        258 00106$:
+      00009D 15 81            [12]  259 	dec	sp
+      00009F 15 81            [12]  260 	dec	sp
+      0000A1 15 81            [12]  261 	dec	sp
+      0000A3 02r00r00         [24]  262 	ljmp	__sdcc_banked_ret
+                                    263 ;------------------------------------------------------------
+                                    264 ;Allocation info for local variables in function 'default_timebase'
+                                    265 ;------------------------------------------------------------
+                                    266 ;time                      Allocated to registers r7 r6 
+                                    267 ;------------------------------------------------------------
+                                    268 ;	../../../../core/net/mac/csma.c:135: default_timebase(void)
+                                    269 ;	-----------------------------------------
+                                    270 ;	 function default_timebase
+                                    271 ;	-----------------------------------------
+      0000A6                        272 _default_timebase:
+                                    273 ;	../../../../core/net/mac/csma.c:140: time = NETSTACK_RDC.channel_check_interval();
+      0000A6 90r00r15         [24]  274 	mov	dptr,#(_nullrdc_driver + 0x0015)
+      0000A9 E4               [12]  275 	clr	a
+      0000AA 93               [24]  276 	movc	a,@a+dptr
+      0000AB FD               [12]  277 	mov	r5,a
+      0000AC A3               [24]  278 	inc	dptr
+      0000AD E4               [12]  279 	clr	a
+      0000AE 93               [24]  280 	movc	a,@a+dptr
+      0000AF FE               [12]  281 	mov	r6,a
+      0000B0 A3               [24]  282 	inc	dptr
+      0000B1 E4               [12]  283 	clr	a
+      0000B2 93               [24]  284 	movc	a,@a+dptr
+      0000B3 FF               [12]  285 	mov	r7,a
+      0000B4 C0 07            [24]  286 	push	ar7
+      0000B6 C0 05            [24]  287 	push	ar5
+      0000B8 C0 06            [24]  288 	push	ar6
+      0000BA C0 07            [24]  289 	push	ar7
+      0000BC D0 02            [24]  290 	pop	ar2
+      0000BE D0 01            [24]  291 	pop	ar1
+      0000C0 D0 00            [24]  292 	pop	ar0
+      0000C2 12r00r00         [24]  293 	lcall	__sdcc_banked_call
+      0000C5 AD 82            [24]  294 	mov	r5,dpl
+      0000C7 AE 83            [24]  295 	mov	r6,dph
+      0000C9 D0 07            [24]  296 	pop	ar7
+      0000CB 8D 07            [24]  297 	mov	ar7,r5
+                                    298 ;	../../../../core/net/mac/csma.c:145: if(time == 0) {
+      0000CD EF               [12]  299 	mov	a,r7
+      0000CE 4E               [12]  300 	orl	a,r6
+                                    301 ;	../../../../core/net/mac/csma.c:146: time = CLOCK_SECOND / NETSTACK_RDC_CHANNEL_CHECK_RATE;
+      0000CF 70 03            [24]  302 	jnz	00102$
+      0000D1 7F 10            [12]  303 	mov	r7,#0x10
+      0000D3 FE               [12]  304 	mov	r6,a
+      0000D4                        305 00102$:
+                                    306 ;	../../../../core/net/mac/csma.c:148: return time;
+      0000D4 8F 82            [24]  307 	mov	dpl,r7
+      0000D6 8E 83            [24]  308 	mov	dph,r6
+      0000D8 02r00r00         [24]  309 	ljmp	__sdcc_banked_ret
+                                    310 ;------------------------------------------------------------
+                                    311 ;Allocation info for local variables in function 'transmit_packet_list'
+                                    312 ;------------------------------------------------------------
+                                    313 ;ptr                       Allocated to registers r5 r6 r7 
+                                    314 ;n                         Allocated to stack - sp -5
+                                    315 ;q                         Allocated to stack - sp -2
+                                    316 ;------------------------------------------------------------
+                                    317 ;	../../../../core/net/mac/csma.c:152: transmit_packet_list(void *ptr)
+                                    318 ;	-----------------------------------------
+                                    319 ;	 function transmit_packet_list
+                                    320 ;	-----------------------------------------
+      0000DB                        321 _transmit_packet_list:
+      0000DB E5 81            [12]  322 	mov	a,sp
+      0000DD 24 06            [12]  323 	add	a,#0x06
+      0000DF F5 81            [12]  324 	mov	sp,a
+      0000E1 AD 82            [24]  325 	mov	r5,dpl
+      0000E3 AE 83            [24]  326 	mov	r6,dph
+      0000E5 AF F0            [24]  327 	mov	r7,b
+                                    328 ;	../../../../core/net/mac/csma.c:154: struct neighbor_queue *n = ptr;
+      0000E7 E5 81            [12]  329 	mov	a,sp
+      0000E9 24 FB            [12]  330 	add	a,#0xfb
+      0000EB F8               [12]  331 	mov	r0,a
+      0000EC A6 05            [24]  332 	mov	@r0,ar5
+      0000EE 08               [12]  333 	inc	r0
+      0000EF A6 06            [24]  334 	mov	@r0,ar6
+      0000F1 08               [12]  335 	inc	r0
+      0000F2 A6 07            [24]  336 	mov	@r0,ar7
+                                    337 ;	../../../../core/net/mac/csma.c:155: if(n) {
+      0000F4 E5 81            [12]  338 	mov	a,sp
+      0000F6 24 FB            [12]  339 	add	a,#0xfb
+      0000F8 F8               [12]  340 	mov	r0,a
+      0000F9 E6               [12]  341 	mov	a,@r0
+      0000FA 08               [12]  342 	inc	r0
+      0000FB 46               [12]  343 	orl	a,@r0
+      0000FC 70 03            [24]  344 	jnz	00113$
+      0000FE 02r01rD4         [24]  345 	ljmp	00105$
+      000101                        346 00113$:
+                                    347 ;	../../../../core/net/mac/csma.c:156: struct rdc_buf_list *q = list_head(n->queued_packet_list);
+      000101 E5 81            [12]  348 	mov	a,sp
+      000103 24 FB            [12]  349 	add	a,#0xfb
+      000105 F8               [12]  350 	mov	r0,a
+      000106 74 27            [12]  351 	mov	a,#0x27
+      000108 26               [12]  352 	add	a,@r0
+      000109 FA               [12]  353 	mov	r2,a
+      00010A E4               [12]  354 	clr	a
+      00010B 08               [12]  355 	inc	r0
+      00010C 36               [12]  356 	addc	a,@r0
+      00010D FB               [12]  357 	mov	r3,a
+      00010E 08               [12]  358 	inc	r0
+      00010F 86 04            [24]  359 	mov	ar4,@r0
+      000111 8A 82            [24]  360 	mov	dpl,r2
+      000113 8B 83            [24]  361 	mov	dph,r3
+      000115 8C F0            [24]  362 	mov	b,r4
+      000117 12r00r00         [24]  363 	lcall	__gptrget
+      00011A FA               [12]  364 	mov	r2,a
+      00011B A3               [24]  365 	inc	dptr
+      00011C 12r00r00         [24]  366 	lcall	__gptrget
+      00011F FB               [12]  367 	mov	r3,a
+      000120 A3               [24]  368 	inc	dptr
+      000121 12r00r00         [24]  369 	lcall	__gptrget
+      000124 FC               [12]  370 	mov	r4,a
+      000125 8A 82            [24]  371 	mov	dpl,r2
+      000127 8B 83            [24]  372 	mov	dph,r3
+      000129 8C F0            [24]  373 	mov	b,r4
+      00012B 78r00            [12]  374 	mov	r0,#_list_head
+      00012D 79s00            [12]  375 	mov	r1,#(_list_head >> 8)
+      00012F 7As00            [12]  376 	mov	r2,#(_list_head >> 16)
+      000131 12r00r00         [24]  377 	lcall	__sdcc_banked_call
+      000134 AA 82            [24]  378 	mov	r2,dpl
+      000136 AB 83            [24]  379 	mov	r3,dph
+      000138 AC F0            [24]  380 	mov	r4,b
+      00013A A8 81            [24]  381 	mov	r0,sp
+      00013C 18               [12]  382 	dec	r0
+      00013D 18               [12]  383 	dec	r0
+      00013E A6 02            [24]  384 	mov	@r0,ar2
+      000140 08               [12]  385 	inc	r0
+      000141 A6 03            [24]  386 	mov	@r0,ar3
+      000143 08               [12]  387 	inc	r0
+      000144 A6 04            [24]  388 	mov	@r0,ar4
+                                    389 ;	../../../../core/net/mac/csma.c:157: if(q != NULL) {
+      000146 A8 81            [24]  390 	mov	r0,sp
+      000148 18               [12]  391 	dec	r0
+      000149 18               [12]  392 	dec	r0
+      00014A E6               [12]  393 	mov	a,@r0
+      00014B 08               [12]  394 	inc	r0
+      00014C 46               [12]  395 	orl	a,@r0
+      00014D 70 03            [24]  396 	jnz	00114$
+      00014F 02r01rD4         [24]  397 	ljmp	00105$
+      000152                        398 00114$:
+                                    399 ;	../../../../core/net/mac/csma.c:161: NETSTACK_RDC.send_list(packet_sent, n, q);
+      000152 90r00r09         [24]  400 	mov	dptr,#(_nullrdc_driver + 0x0009)
+      000155 E4               [12]  401 	clr	a
+      000156 93               [24]  402 	movc	a,@a+dptr
+      000157 FA               [12]  403 	mov	r2,a
+      000158 A3               [24]  404 	inc	dptr
+      000159 E4               [12]  405 	clr	a
+      00015A 93               [24]  406 	movc	a,@a+dptr
+      00015B FB               [12]  407 	mov	r3,a
+      00015C A3               [24]  408 	inc	dptr
+      00015D E4               [12]  409 	clr	a
+      00015E 93               [24]  410 	movc	a,@a+dptr
+      00015F FC               [12]  411 	mov	r4,a
+      000160 E5 81            [12]  412 	mov	a,sp
+      000162 24 FB            [12]  413 	add	a,#0xfb
+      000164 F8               [12]  414 	mov	r0,a
+      000165 86 05            [24]  415 	mov	ar5,@r0
+      000167 08               [12]  416 	inc	r0
+      000168 86 06            [24]  417 	mov	ar6,@r0
+      00016A 08               [12]  418 	inc	r0
+      00016B 86 07            [24]  419 	mov	ar7,@r0
+      00016D C0 04            [24]  420 	push	ar4
+      00016F C0 03            [24]  421 	push	ar3
+      000171 C0 02            [24]  422 	push	ar2
+      000173 E5 81            [12]  423 	mov	a,sp
+      000175 24 FB            [12]  424 	add	a,#0xfb
+      000177 F8               [12]  425 	mov	r0,a
+      000178 E6               [12]  426 	mov	a,@r0
+      000179 C0 E0            [24]  427 	push	acc
+      00017B 08               [12]  428 	inc	r0
+      00017C E6               [12]  429 	mov	a,@r0
+      00017D C0 E0            [24]  430 	push	acc
+      00017F 08               [12]  431 	inc	r0
+      000180 E6               [12]  432 	mov	a,@r0
+      000181 C0 E0            [24]  433 	push	acc
+      000183 C0 05            [24]  434 	push	ar5
+      000185 C0 06            [24]  435 	push	ar6
+      000187 C0 07            [24]  436 	push	ar7
+      000189 C0 02            [24]  437 	push	ar2
+      00018B C0 03            [24]  438 	push	ar3
+      00018D C0 04            [24]  439 	push	ar4
+      00018F 90r04rA2         [24]  440 	mov	dptr,#_packet_sent
+      000192 75 F0s00         [24]  441 	mov	b,#(_packet_sent >> 16)
+      000195 D0 02            [24]  442 	pop	ar2
+      000197 D0 01            [24]  443 	pop	ar1
+      000199 D0 00            [24]  444 	pop	ar0
+      00019B 12r00r00         [24]  445 	lcall	__sdcc_banked_call
+      00019E E5 81            [12]  446 	mov	a,sp
+      0001A0 24 FA            [12]  447 	add	a,#0xfa
+      0001A2 F5 81            [12]  448 	mov	sp,a
+      0001A4 D0 02            [24]  449 	pop	ar2
+      0001A6 D0 03            [24]  450 	pop	ar3
+      0001A8 D0 04            [24]  451 	pop	ar4
+                                    452 ;	../../../../core/net/mac/csma.c:163: packet_sent_cb(n, mac_status);
+      0001AA E5 81            [12]  453 	mov	a,sp
+      0001AC 24 FB            [12]  454 	add	a,#0xfb
+      0001AE F8               [12]  455 	mov	r0,a
+      0001AF 86 05            [24]  456 	mov	ar5,@r0
+      0001B1 08               [12]  457 	inc	r0
+      0001B2 86 06            [24]  458 	mov	ar6,@r0
+      0001B4 08               [12]  459 	inc	r0
+      0001B5 86 07            [24]  460 	mov	ar7,@r0
+      0001B7 90r00rC2         [24]  461 	mov	dptr,#_mac_status
+      0001BA E0               [24]  462 	movx	a,@dptr
+      0001BB C0 E0            [24]  463 	push	acc
+      0001BD A3               [24]  464 	inc	dptr
+      0001BE E0               [24]  465 	movx	a,@dptr
+      0001BF C0 E0            [24]  466 	push	acc
+      0001C1 8D 82            [24]  467 	mov	dpl,r5
+      0001C3 8E 83            [24]  468 	mov	dph,r6
+      0001C5 8F F0            [24]  469 	mov	b,r7
+      0001C7 78rB3            [12]  470 	mov	r0,#_packet_sent_cb
+      0001C9 79s04            [12]  471 	mov	r1,#(_packet_sent_cb >> 8)
+      0001CB 7As00            [12]  472 	mov	r2,#(_packet_sent_cb >> 16)
+      0001CD 12r00r00         [24]  473 	lcall	__sdcc_banked_call
+      0001D0 15 81            [12]  474 	dec	sp
+      0001D2 15 81            [12]  475 	dec	sp
+      0001D4                        476 00105$:
+      0001D4 E5 81            [12]  477 	mov	a,sp
+      0001D6 24 FA            [12]  478 	add	a,#0xFA
+      0001D8 F5 81            [12]  479 	mov	sp,a
+      0001DA 02r00r00         [24]  480 	ljmp	__sdcc_banked_ret
+                                    481 ;------------------------------------------------------------
+                                    482 ;Allocation info for local variables in function 'free_first_packet'
+                                    483 ;------------------------------------------------------------
+                                    484 ;n                         Allocated to stack - sp -7
+                                    485 ;q                         Allocated to stack - sp -2
+                                    486 ;sloc0                     Allocated to stack - sp -4
+                                    487 ;------------------------------------------------------------
+                                    488 ;	../../../../core/net/mac/csma.c:170: free_first_packet(struct neighbor_queue *n)
+                                    489 ;	-----------------------------------------
+                                    490 ;	 function free_first_packet
+                                    491 ;	-----------------------------------------
+      0001DD                        492 _free_first_packet:
+      0001DD C0 82            [24]  493 	push	dpl
+      0001DF C0 83            [24]  494 	push	dph
+      0001E1 C0 F0            [24]  495 	push	b
+      0001E3 E5 81            [12]  496 	mov	a,sp
+      0001E5 24 05            [12]  497 	add	a,#0x05
+                                    498 ;	../../../../core/net/mac/csma.c:172: struct rdc_buf_list *q = list_head(n->queued_packet_list);
+      0001E7 F5 81            [12]  499 	mov	sp,a
+      0001E9 24 F9            [12]  500 	add	a,#0xf9
+      0001EB F8               [12]  501 	mov	r0,a
+      0001EC 74 27            [12]  502 	mov	a,#0x27
+      0001EE 26               [12]  503 	add	a,@r0
+      0001EF FA               [12]  504 	mov	r2,a
+      0001F0 E4               [12]  505 	clr	a
+      0001F1 08               [12]  506 	inc	r0
+      0001F2 36               [12]  507 	addc	a,@r0
+      0001F3 FB               [12]  508 	mov	r3,a
+      0001F4 08               [12]  509 	inc	r0
+      0001F5 86 04            [24]  510 	mov	ar4,@r0
+      0001F7 8A 82            [24]  511 	mov	dpl,r2
+      0001F9 8B 83            [24]  512 	mov	dph,r3
+      0001FB 8C F0            [24]  513 	mov	b,r4
+      0001FD 12r00r00         [24]  514 	lcall	__gptrget
+      000200 FD               [12]  515 	mov	r5,a
+      000201 A3               [24]  516 	inc	dptr
+      000202 12r00r00         [24]  517 	lcall	__gptrget
+      000205 FE               [12]  518 	mov	r6,a
+      000206 A3               [24]  519 	inc	dptr
+      000207 12r00r00         [24]  520 	lcall	__gptrget
+      00020A FF               [12]  521 	mov	r7,a
+      00020B 8D 82            [24]  522 	mov	dpl,r5
+      00020D 8E 83            [24]  523 	mov	dph,r6
+      00020F 8F F0            [24]  524 	mov	b,r7
+      000211 C0 04            [24]  525 	push	ar4
+      000213 C0 03            [24]  526 	push	ar3
+      000215 C0 02            [24]  527 	push	ar2
+      000217 78r00            [12]  528 	mov	r0,#_list_head
+      000219 79s00            [12]  529 	mov	r1,#(_list_head >> 8)
+      00021B 7As00            [12]  530 	mov	r2,#(_list_head >> 16)
+      00021D 12r00r00         [24]  531 	lcall	__sdcc_banked_call
+      000220 AD 82            [24]  532 	mov	r5,dpl
+      000222 AE 83            [24]  533 	mov	r6,dph
+      000224 AF F0            [24]  534 	mov	r7,b
+      000226 D0 02            [24]  535 	pop	ar2
+      000228 D0 03            [24]  536 	pop	ar3
+      00022A D0 04            [24]  537 	pop	ar4
+      00022C A8 81            [24]  538 	mov	r0,sp
+      00022E 18               [12]  539 	dec	r0
+      00022F 18               [12]  540 	dec	r0
+      000230 A6 05            [24]  541 	mov	@r0,ar5
+      000232 08               [12]  542 	inc	r0
+      000233 A6 06            [24]  543 	mov	@r0,ar6
+      000235 08               [12]  544 	inc	r0
+      000236 A6 07            [24]  545 	mov	@r0,ar7
+                                    546 ;	../../../../core/net/mac/csma.c:173: if(q != NULL) {
+      000238 A8 81            [24]  547 	mov	r0,sp
+      00023A 18               [12]  548 	dec	r0
+      00023B 18               [12]  549 	dec	r0
+      00023C E6               [12]  550 	mov	a,@r0
+      00023D 08               [12]  551 	inc	r0
+      00023E 46               [12]  552 	orl	a,@r0
+      00023F 70 03            [24]  553 	jnz	00114$
+      000241 02r04r99         [24]  554 	ljmp	00106$
+      000244                        555 00114$:
+                                    556 ;	../../../../core/net/mac/csma.c:175: queuebuf_free(q->buf);
+      000244 A8 81            [24]  557 	mov	r0,sp
+      000246 18               [12]  558 	dec	r0
+      000247 18               [12]  559 	dec	r0
+      000248 74 03            [12]  560 	mov	a,#0x03
+      00024A 26               [12]  561 	add	a,@r0
+      00024B FD               [12]  562 	mov	r5,a
+      00024C E4               [12]  563 	clr	a
+      00024D 08               [12]  564 	inc	r0
+      00024E 36               [12]  565 	addc	a,@r0
+      00024F FE               [12]  566 	mov	r6,a
+      000250 08               [12]  567 	inc	r0
+      000251 86 07            [24]  568 	mov	ar7,@r0
+      000253 8D 82            [24]  569 	mov	dpl,r5
+      000255 8E 83            [24]  570 	mov	dph,r6
+      000257 8F F0            [24]  571 	mov	b,r7
+      000259 12r00r00         [24]  572 	lcall	__gptrget
+      00025C FD               [12]  573 	mov	r5,a
+      00025D A3               [24]  574 	inc	dptr
+      00025E 12r00r00         [24]  575 	lcall	__gptrget
+      000261 FE               [12]  576 	mov	r6,a
+      000262 A3               [24]  577 	inc	dptr
+      000263 12r00r00         [24]  578 	lcall	__gptrget
+      000266 FF               [12]  579 	mov	r7,a
+      000267 8D 82            [24]  580 	mov	dpl,r5
+      000269 8E 83            [24]  581 	mov	dph,r6
+      00026B 8F F0            [24]  582 	mov	b,r7
+      00026D C0 04            [24]  583 	push	ar4
+      00026F C0 03            [24]  584 	push	ar3
+      000271 C0 02            [24]  585 	push	ar2
+      000273 78r00            [12]  586 	mov	r0,#_queuebuf_free
+      000275 79s00            [12]  587 	mov	r1,#(_queuebuf_free >> 8)
+      000277 7As00            [12]  588 	mov	r2,#(_queuebuf_free >> 16)
+      000279 12r00r00         [24]  589 	lcall	__sdcc_banked_call
+      00027C D0 02            [24]  590 	pop	ar2
+      00027E D0 03            [24]  591 	pop	ar3
+      000280 D0 04            [24]  592 	pop	ar4
+                                    593 ;	../../../../core/net/mac/csma.c:176: list_pop(n->queued_packet_list);
+      000282 8A 82            [24]  594 	mov	dpl,r2
+      000284 8B 83            [24]  595 	mov	dph,r3
+      000286 8C F0            [24]  596 	mov	b,r4
+      000288 12r00r00         [24]  597 	lcall	__gptrget
+      00028B FD               [12]  598 	mov	r5,a
+      00028C A3               [24]  599 	inc	dptr
+      00028D 12r00r00         [24]  600 	lcall	__gptrget
+      000290 FE               [12]  601 	mov	r6,a
+      000291 A3               [24]  602 	inc	dptr
+      000292 12r00r00         [24]  603 	lcall	__gptrget
+      000295 FF               [12]  604 	mov	r7,a
+      000296 8D 82            [24]  605 	mov	dpl,r5
+      000298 8E 83            [24]  606 	mov	dph,r6
+      00029A 8F F0            [24]  607 	mov	b,r7
+      00029C C0 04            [24]  608 	push	ar4
+      00029E C0 03            [24]  609 	push	ar3
+      0002A0 C0 02            [24]  610 	push	ar2
+      0002A2 78r00            [12]  611 	mov	r0,#_list_pop
+      0002A4 79s00            [12]  612 	mov	r1,#(_list_pop >> 8)
+      0002A6 7As00            [12]  613 	mov	r2,#(_list_pop >> 16)
+      0002A8 12r00r00         [24]  614 	lcall	__sdcc_banked_call
+      0002AB D0 02            [24]  615 	pop	ar2
+      0002AD D0 03            [24]  616 	pop	ar3
+      0002AF D0 04            [24]  617 	pop	ar4
+                                    618 ;	../../../../core/net/mac/csma.c:177: memb_free(&metadata_memb, q->ptr);
+      0002B1 A8 81            [24]  619 	mov	r0,sp
+      0002B3 18               [12]  620 	dec	r0
+      0002B4 18               [12]  621 	dec	r0
+      0002B5 74 06            [12]  622 	mov	a,#0x06
+      0002B7 26               [12]  623 	add	a,@r0
+      0002B8 FD               [12]  624 	mov	r5,a
+      0002B9 E4               [12]  625 	clr	a
+      0002BA 08               [12]  626 	inc	r0
+      0002BB 36               [12]  627 	addc	a,@r0
+      0002BC FE               [12]  628 	mov	r6,a
+      0002BD 08               [12]  629 	inc	r0
+      0002BE 86 07            [24]  630 	mov	ar7,@r0
+      0002C0 8D 82            [24]  631 	mov	dpl,r5
+      0002C2 8E 83            [24]  632 	mov	dph,r6
+      0002C4 8F F0            [24]  633 	mov	b,r7
+      0002C6 12r00r00         [24]  634 	lcall	__gptrget
+      0002C9 FD               [12]  635 	mov	r5,a
+      0002CA A3               [24]  636 	inc	dptr
+      0002CB 12r00r00         [24]  637 	lcall	__gptrget
+      0002CE FE               [12]  638 	mov	r6,a
+      0002CF A3               [24]  639 	inc	dptr
+      0002D0 12r00r00         [24]  640 	lcall	__gptrget
+      0002D3 FF               [12]  641 	mov	r7,a
+      0002D4 C0 04            [24]  642 	push	ar4
+      0002D6 C0 03            [24]  643 	push	ar3
+      0002D8 C0 02            [24]  644 	push	ar2
+      0002DA C0 05            [24]  645 	push	ar5
+      0002DC C0 06            [24]  646 	push	ar6
+      0002DE C0 07            [24]  647 	push	ar7
+      0002E0 90r00r14         [24]  648 	mov	dptr,#_metadata_memb
+      0002E3 75 F0 00         [24]  649 	mov	b,#0x00
+      0002E6 78r00            [12]  650 	mov	r0,#_memb_free
+      0002E8 79s00            [12]  651 	mov	r1,#(_memb_free >> 8)
+      0002EA 7As00            [12]  652 	mov	r2,#(_memb_free >> 16)
+      0002EC 12r00r00         [24]  653 	lcall	__sdcc_banked_call
+      0002EF 15 81            [12]  654 	dec	sp
+      0002F1 15 81            [12]  655 	dec	sp
+      0002F3 15 81            [12]  656 	dec	sp
+      0002F5 D0 02            [24]  657 	pop	ar2
+      0002F7 D0 03            [24]  658 	pop	ar3
+      0002F9 D0 04            [24]  659 	pop	ar4
+                                    660 ;	../../../../core/net/mac/csma.c:178: memb_free(&packet_memb, q);
+      0002FB A8 81            [24]  661 	mov	r0,sp
+      0002FD 18               [12]  662 	dec	r0
+      0002FE 18               [12]  663 	dec	r0
+      0002FF 86 05            [24]  664 	mov	ar5,@r0
+      000301 08               [12]  665 	inc	r0
+      000302 86 06            [24]  666 	mov	ar6,@r0
+      000304 08               [12]  667 	inc	r0
+      000305 86 07            [24]  668 	mov	ar7,@r0
+      000307 C0 04            [24]  669 	push	ar4
+      000309 C0 03            [24]  670 	push	ar3
+      00030B C0 02            [24]  671 	push	ar2
+      00030D C0 05            [24]  672 	push	ar5
+      00030F C0 06            [24]  673 	push	ar6
+      000311 C0 07            [24]  674 	push	ar7
+      000313 90r00r0A         [24]  675 	mov	dptr,#_packet_memb
+      000316 75 F0 00         [24]  676 	mov	b,#0x00
+      000319 78r00            [12]  677 	mov	r0,#_memb_free
+      00031B 79s00            [12]  678 	mov	r1,#(_memb_free >> 8)
+      00031D 7As00            [12]  679 	mov	r2,#(_memb_free >> 16)
+      00031F 12r00r00         [24]  680 	lcall	__sdcc_banked_call
+      000322 15 81            [12]  681 	dec	sp
+      000324 15 81            [12]  682 	dec	sp
+      000326 15 81            [12]  683 	dec	sp
+      000328 D0 02            [24]  684 	pop	ar2
+      00032A D0 03            [24]  685 	pop	ar3
+      00032C D0 04            [24]  686 	pop	ar4
+                                    687 ;	../../../../core/net/mac/csma.c:181: if(list_head(n->queued_packet_list)) {
+      00032E 8A 82            [24]  688 	mov	dpl,r2
+      000330 8B 83            [24]  689 	mov	dph,r3
+      000332 8C F0            [24]  690 	mov	b,r4
+      000334 12r00r00         [24]  691 	lcall	__gptrget
+      000337 FA               [12]  692 	mov	r2,a
+      000338 A3               [24]  693 	inc	dptr
+      000339 12r00r00         [24]  694 	lcall	__gptrget
+      00033C FB               [12]  695 	mov	r3,a
+      00033D A3               [24]  696 	inc	dptr
+      00033E 12r00r00         [24]  697 	lcall	__gptrget
+      000341 FC               [12]  698 	mov	r4,a
+      000342 8A 82            [24]  699 	mov	dpl,r2
+      000344 8B 83            [24]  700 	mov	dph,r3
+      000346 8C F0            [24]  701 	mov	b,r4
+      000348 78r00            [12]  702 	mov	r0,#_list_head
+      00034A 79s00            [12]  703 	mov	r1,#(_list_head >> 8)
+      00034C 7As00            [12]  704 	mov	r2,#(_list_head >> 16)
+      00034E 12r00r00         [24]  705 	lcall	__sdcc_banked_call
+      000351 AD 82            [24]  706 	mov	r5,dpl
+      000353 AE 83            [24]  707 	mov	r6,dph
+      000355 AF F0            [24]  708 	mov	r7,b
+      000357 ED               [12]  709 	mov	a,r5
+      000358 4E               [12]  710 	orl	a,r6
+      000359 70 03            [24]  711 	jnz	00115$
+      00035B 02r04r1F         [24]  712 	ljmp	00102$
+      00035E                        713 00115$:
+                                    714 ;	../../../../core/net/mac/csma.c:183: n->transmissions = 0;
+      00035E E5 81            [12]  715 	mov	a,sp
+      000360 24 F9            [12]  716 	add	a,#0xf9
+      000362 F8               [12]  717 	mov	r0,a
+      000363 74 21            [12]  718 	mov	a,#0x21
+      000365 26               [12]  719 	add	a,@r0
+      000366 FD               [12]  720 	mov	r5,a
+      000367 E4               [12]  721 	clr	a
+      000368 08               [12]  722 	inc	r0
+      000369 36               [12]  723 	addc	a,@r0
+      00036A FE               [12]  724 	mov	r6,a
+      00036B 08               [12]  725 	inc	r0
+      00036C 86 07            [24]  726 	mov	ar7,@r0
+      00036E 8D 82            [24]  727 	mov	dpl,r5
+      000370 8E 83            [24]  728 	mov	dph,r6
+      000372 8F F0            [24]  729 	mov	b,r7
+      000374 E4               [12]  730 	clr	a
+      000375 12r00r00         [24]  731 	lcall	__gptrput
+                                    732 ;	../../../../core/net/mac/csma.c:184: n->collisions = 0;
+      000378 E5 81            [12]  733 	mov	a,sp
+      00037A 24 F9            [12]  734 	add	a,#0xf9
+      00037C F8               [12]  735 	mov	r0,a
+      00037D 74 22            [12]  736 	mov	a,#0x22
+      00037F 26               [12]  737 	add	a,@r0
+      000380 FD               [12]  738 	mov	r5,a
+      000381 E4               [12]  739 	clr	a
+      000382 08               [12]  740 	inc	r0
+      000383 36               [12]  741 	addc	a,@r0
+      000384 FE               [12]  742 	mov	r6,a
+      000385 08               [12]  743 	inc	r0
+      000386 86 07            [24]  744 	mov	ar7,@r0
+      000388 8D 82            [24]  745 	mov	dpl,r5
+      00038A 8E 83            [24]  746 	mov	dph,r6
+      00038C 8F F0            [24]  747 	mov	b,r7
+      00038E E4               [12]  748 	clr	a
+      00038F 12r00r00         [24]  749 	lcall	__gptrput
+                                    750 ;	../../../../core/net/mac/csma.c:185: n->deferrals = 0;
+      000392 E5 81            [12]  751 	mov	a,sp
+      000394 24 F9            [12]  752 	add	a,#0xf9
+      000396 F8               [12]  753 	mov	r0,a
+      000397 74 23            [12]  754 	mov	a,#0x23
+      000399 26               [12]  755 	add	a,@r0
+      00039A FD               [12]  756 	mov	r5,a
+      00039B E4               [12]  757 	clr	a
+      00039C 08               [12]  758 	inc	r0
+      00039D 36               [12]  759 	addc	a,@r0
+      00039E FE               [12]  760 	mov	r6,a
+      00039F 08               [12]  761 	inc	r0
+      0003A0 86 07            [24]  762 	mov	ar7,@r0
+      0003A2 8D 82            [24]  763 	mov	dpl,r5
+      0003A4 8E 83            [24]  764 	mov	dph,r6
+      0003A6 8F F0            [24]  765 	mov	b,r7
+      0003A8 E4               [12]  766 	clr	a
+      0003A9 12r00r00         [24]  767 	lcall	__gptrput
+                                    768 ;	../../../../core/net/mac/csma.c:187: ctimer_set(&n->transmit_timer, default_timebase(), transmit_packet_list, n);
+      0003AC E5 81            [12]  769 	mov	a,sp
+      0003AE 24 F9            [12]  770 	add	a,#0xf9
+      0003B0 F8               [12]  771 	mov	r0,a
+      0003B1 86 05            [24]  772 	mov	ar5,@r0
+      0003B3 08               [12]  773 	inc	r0
+      0003B4 86 06            [24]  774 	mov	ar6,@r0
+      0003B6 08               [12]  775 	inc	r0
+      0003B7 86 07            [24]  776 	mov	ar7,@r0
+      0003B9 C0 07            [24]  777 	push	ar7
+      0003BB C0 06            [24]  778 	push	ar6
+      0003BD C0 05            [24]  779 	push	ar5
+      0003BF 78rA6            [12]  780 	mov	r0,#_default_timebase
+      0003C1 79s00            [12]  781 	mov	r1,#(_default_timebase >> 8)
+      0003C3 7As00            [12]  782 	mov	r2,#(_default_timebase >> 16)
+      0003C5 12r00r00         [24]  783 	lcall	__sdcc_banked_call
+      0003C8 C8               [12]  784 	xch	a,r0
+      0003C9 E5 81            [12]  785 	mov	a,sp
+      0003CB 24 F9            [12]  786 	add	a,#0xf9
+      0003CD C8               [12]  787 	xch	a,r0
+      0003CE A6 82            [24]  788 	mov	@r0,dpl
+      0003D0 08               [12]  789 	inc	r0
+      0003D1 A6 83            [24]  790 	mov	@r0,dph
+      0003D3 D0 05            [24]  791 	pop	ar5
+      0003D5 D0 06            [24]  792 	pop	ar6
+      0003D7 D0 07            [24]  793 	pop	ar7
+      0003D9 E5 81            [12]  794 	mov	a,sp
+      0003DB 24 F9            [12]  795 	add	a,#0xf9
+      0003DD F8               [12]  796 	mov	r0,a
+      0003DE 74 0B            [12]  797 	mov	a,#0x0B
+      0003E0 26               [12]  798 	add	a,@r0
+      0003E1 FA               [12]  799 	mov	r2,a
+      0003E2 E4               [12]  800 	clr	a
+      0003E3 08               [12]  801 	inc	r0
+      0003E4 36               [12]  802 	addc	a,@r0
+      0003E5 FB               [12]  803 	mov	r3,a
+      0003E6 08               [12]  804 	inc	r0
+      0003E7 86 04            [24]  805 	mov	ar4,@r0
+      0003E9 C0 05            [24]  806 	push	ar5
+      0003EB C0 06            [24]  807 	push	ar6
+      0003ED C0 07            [24]  808 	push	ar7
+      0003EF 74rDB            [12]  809 	mov	a,#_transmit_packet_list
+      0003F1 C0 E0            [24]  810 	push	acc
+      0003F3 74s00            [12]  811 	mov	a,#(_transmit_packet_list >> 8)
+      0003F5 C0 E0            [24]  812 	push	acc
+      0003F7 74s00            [12]  813 	mov	a,#(_transmit_packet_list >> 16)
+      0003F9 C0 E0            [24]  814 	push	acc
+      0003FB E5 81            [12]  815 	mov	a,sp
+      0003FD 24 F6            [12]  816 	add	a,#0xf6
+      0003FF F8               [12]  817 	mov	r0,a
+      000400 E6               [12]  818 	mov	a,@r0
+      000401 C0 E0            [24]  819 	push	acc
+      000403 08               [12]  820 	inc	r0
+      000404 E6               [12]  821 	mov	a,@r0
+      000405 C0 E0            [24]  822 	push	acc
+      000407 8A 82            [24]  823 	mov	dpl,r2
+      000409 8B 83            [24]  824 	mov	dph,r3
+      00040B 8C F0            [24]  825 	mov	b,r4
+      00040D 78r00            [12]  826 	mov	r0,#_ctimer_set
+      00040F 79s00            [12]  827 	mov	r1,#(_ctimer_set >> 8)
+      000411 7As00            [12]  828 	mov	r2,#(_ctimer_set >> 16)
+      000413 12r00r00         [24]  829 	lcall	__sdcc_banked_call
+      000416 E5 81            [12]  830 	mov	a,sp
+      000418 24 F8            [12]  831 	add	a,#0xf8
+      00041A F5 81            [12]  832 	mov	sp,a
+      00041C 02r04r99         [24]  833 	ljmp	00106$
+      00041F                        834 00102$:
+                                    835 ;	../../../../core/net/mac/csma.c:190: ctimer_stop(&n->transmit_timer);
+      00041F E5 81            [12]  836 	mov	a,sp
+      000421 24 F9            [12]  837 	add	a,#0xf9
+      000423 F8               [12]  838 	mov	r0,a
+      000424 74 0B            [12]  839 	mov	a,#0x0B
+      000426 26               [12]  840 	add	a,@r0
+      000427 FD               [12]  841 	mov	r5,a
+      000428 E4               [12]  842 	clr	a
+      000429 08               [12]  843 	inc	r0
+      00042A 36               [12]  844 	addc	a,@r0
+      00042B FE               [12]  845 	mov	r6,a
+      00042C 08               [12]  846 	inc	r0
+      00042D 86 07            [24]  847 	mov	ar7,@r0
+      00042F 8D 82            [24]  848 	mov	dpl,r5
+      000431 8E 83            [24]  849 	mov	dph,r6
+      000433 8F F0            [24]  850 	mov	b,r7
+      000435 78r00            [12]  851 	mov	r0,#_ctimer_stop
+      000437 79s00            [12]  852 	mov	r1,#(_ctimer_stop >> 8)
+      000439 7As00            [12]  853 	mov	r2,#(_ctimer_stop >> 16)
+      00043B 12r00r00         [24]  854 	lcall	__sdcc_banked_call
+                                    855 ;	../../../../core/net/mac/csma.c:191: list_remove(neighbor_list, n);
+      00043E E5 81            [12]  856 	mov	a,sp
+      000440 24 F9            [12]  857 	add	a,#0xf9
+      000442 F8               [12]  858 	mov	r0,a
+      000443 86 05            [24]  859 	mov	ar5,@r0
+      000445 08               [12]  860 	inc	r0
+      000446 86 06            [24]  861 	mov	ar6,@r0
+      000448 08               [12]  862 	inc	r0
+      000449 86 07            [24]  863 	mov	ar7,@r0
+      00044B 90r00r21         [24]  864 	mov	dptr,#_neighbor_list
+      00044E E0               [24]  865 	movx	a,@dptr
+      00044F FA               [12]  866 	mov	r2,a
+      000450 A3               [24]  867 	inc	dptr
+      000451 E0               [24]  868 	movx	a,@dptr
+      000452 FB               [12]  869 	mov	r3,a
+      000453 A3               [24]  870 	inc	dptr
+      000454 E0               [24]  871 	movx	a,@dptr
+      000455 FC               [12]  872 	mov	r4,a
+      000456 C0 05            [24]  873 	push	ar5
+      000458 C0 06            [24]  874 	push	ar6
+      00045A C0 07            [24]  875 	push	ar7
+      00045C 8A 82            [24]  876 	mov	dpl,r2
+      00045E 8B 83            [24]  877 	mov	dph,r3
+      000460 8C F0            [24]  878 	mov	b,r4
+      000462 78r00            [12]  879 	mov	r0,#_list_remove
+      000464 79s00            [12]  880 	mov	r1,#(_list_remove >> 8)
+      000466 7As00            [12]  881 	mov	r2,#(_list_remove >> 16)
+      000468 12r00r00         [24]  882 	lcall	__sdcc_banked_call
+      00046B 15 81            [12]  883 	dec	sp
+      00046D 15 81            [12]  884 	dec	sp
+      00046F 15 81            [12]  885 	dec	sp
+                                    886 ;	../../../../core/net/mac/csma.c:192: memb_free(&neighbor_memb, n);
+      000471 E5 81            [12]  887 	mov	a,sp
+      000473 24 F9            [12]  888 	add	a,#0xf9
+      000475 F8               [12]  889 	mov	r0,a
+      000476 86 05            [24]  890 	mov	ar5,@r0
+      000478 08               [12]  891 	inc	r0
+      000479 86 06            [24]  892 	mov	ar6,@r0
+      00047B 08               [12]  893 	inc	r0
+      00047C 86 07            [24]  894 	mov	ar7,@r0
+      00047E C0 05            [24]  895 	push	ar5
+      000480 C0 06            [24]  896 	push	ar6
+      000482 C0 07            [24]  897 	push	ar7
+      000484 90r00r00         [24]  898 	mov	dptr,#_neighbor_memb
+      000487 75 F0 00         [24]  899 	mov	b,#0x00
+      00048A 78r00            [12]  900 	mov	r0,#_memb_free
+      00048C 79s00            [12]  901 	mov	r1,#(_memb_free >> 8)
+      00048E 7As00            [12]  902 	mov	r2,#(_memb_free >> 16)
+      000490 12r00r00         [24]  903 	lcall	__sdcc_banked_call
+      000493 15 81            [12]  904 	dec	sp
+      000495 15 81            [12]  905 	dec	sp
+      000497 15 81            [12]  906 	dec	sp
+      000499                        907 00106$:
+      000499 E5 81            [12]  908 	mov	a,sp
+      00049B 24 F8            [12]  909 	add	a,#0xF8
+      00049D F5 81            [12]  910 	mov	sp,a
+      00049F 02r00r00         [24]  911 	ljmp	__sdcc_banked_ret
+                                    912 ;------------------------------------------------------------
+                                    913 ;Allocation info for local variables in function 'packet_sent'
+                                    914 ;------------------------------------------------------------
+                                    915 ;status                    Allocated to stack - sp -4
+                                    916 ;num_transmissions         Allocated to stack - sp -6
+                                    917 ;ptr                       Allocated to registers 
+                                    918 ;------------------------------------------------------------
+                                    919 ;	../../../../core/net/mac/csma.c:201: packet_sent(void *ptr, int status, int num_transmissions)
+                                    920 ;	-----------------------------------------
+                                    921 ;	 function packet_sent
+                                    922 ;	-----------------------------------------
+      0004A2                        923 _packet_sent:
+                                    924 ;	../../../../core/net/mac/csma.c:203: mac_status = status;
+      0004A2 E5 81            [12]  925 	mov	a,sp
+      0004A4 24 FC            [12]  926 	add	a,#0xfc
+      0004A6 F8               [12]  927 	mov	r0,a
+      0004A7 90r00rC2         [24]  928 	mov	dptr,#_mac_status
+      0004AA E6               [12]  929 	mov	a,@r0
+      0004AB F0               [24]  930 	movx	@dptr,a
+      0004AC 08               [12]  931 	inc	r0
+      0004AD E6               [12]  932 	mov	a,@r0
+      0004AE A3               [24]  933 	inc	dptr
+      0004AF F0               [24]  934 	movx	@dptr,a
+                                    935 ;	../../../../core/net/mac/csma.c:204: return;
+      0004B0 02r00r00         [24]  936 	ljmp	__sdcc_banked_ret
+                                    937 ;------------------------------------------------------------
+                                    938 ;Allocation info for local variables in function 'packet_sent_cb'
+                                    939 ;------------------------------------------------------------
+                                    940 ;status                    Allocated to stack - sp -17
+                                    941 ;ptr                       Allocated to registers r5 r6 r7 
+                                    942 ;n                         Allocated to stack - sp -10
+                                    943 ;q                         Allocated to stack - sp -7
+                                    944 ;metadata                  Allocated to stack - sp -4
+                                    945 ;time                      Allocated to stack - sp -1
+                                    946 ;backoff_transmissions     Allocated to registers r3 r4 
+                                    947 ;sloc0                     Allocated to stack - sp -12
+                                    948 ;sent                      Allocated with name '_packet_sent_cb_sent_1_189'
+                                    949 ;cptr                      Allocated with name '_packet_sent_cb_cptr_1_189'
+                                    950 ;num_tx                    Allocated with name '_packet_sent_cb_num_tx_1_189'
+                                    951 ;------------------------------------------------------------
+                                    952 ;	../../../../core/net/mac/csma.c:208: packet_sent_cb(void *ptr, int status)
+                                    953 ;	-----------------------------------------
+                                    954 ;	 function packet_sent_cb
+                                    955 ;	-----------------------------------------
+      0004B3                        956 _packet_sent_cb:
+      0004B3 E5 81            [12]  957 	mov	a,sp
+      0004B5 24 0D            [12]  958 	add	a,#0x0D
+      0004B7 F5 81            [12]  959 	mov	sp,a
+      0004B9 AD 82            [24]  960 	mov	r5,dpl
+      0004BB AE 83            [24]  961 	mov	r6,dph
+      0004BD AF F0            [24]  962 	mov	r7,b
+                                    963 ;	../../../../core/net/mac/csma.c:214: struct neighbor_queue *n = ptr;
+      0004BF E5 81            [12]  964 	mov	a,sp
+      0004C1 24 F6            [12]  965 	add	a,#0xf6
+      0004C3 F8               [12]  966 	mov	r0,a
+      0004C4 A6 05            [24]  967 	mov	@r0,ar5
+      0004C6 08               [12]  968 	inc	r0
+      0004C7 A6 06            [24]  969 	mov	@r0,ar6
+      0004C9 08               [12]  970 	inc	r0
+      0004CA A6 07            [24]  971 	mov	@r0,ar7
+                                    972 ;	../../../../core/net/mac/csma.c:215: struct rdc_buf_list *q = list_head(n->queued_packet_list);
+      0004CC E5 81            [12]  973 	mov	a,sp
+      0004CE 24 F6            [12]  974 	add	a,#0xf6
+      0004D0 F8               [12]  975 	mov	r0,a
+      0004D1 74 27            [12]  976 	mov	a,#0x27
+      0004D3 26               [12]  977 	add	a,@r0
+      0004D4 FA               [12]  978 	mov	r2,a
+      0004D5 E4               [12]  979 	clr	a
+      0004D6 08               [12]  980 	inc	r0
+      0004D7 36               [12]  981 	addc	a,@r0
+      0004D8 FB               [12]  982 	mov	r3,a
+      0004D9 08               [12]  983 	inc	r0
+      0004DA 86 04            [24]  984 	mov	ar4,@r0
+      0004DC 8A 82            [24]  985 	mov	dpl,r2
+      0004DE 8B 83            [24]  986 	mov	dph,r3
+      0004E0 8C F0            [24]  987 	mov	b,r4
+      0004E2 12r00r00         [24]  988 	lcall	__gptrget
+      0004E5 FA               [12]  989 	mov	r2,a
+      0004E6 A3               [24]  990 	inc	dptr
+      0004E7 12r00r00         [24]  991 	lcall	__gptrget
+      0004EA FB               [12]  992 	mov	r3,a
+      0004EB A3               [24]  993 	inc	dptr
+      0004EC 12r00r00         [24]  994 	lcall	__gptrget
+      0004EF FC               [12]  995 	mov	r4,a
+      0004F0 8A 82            [24]  996 	mov	dpl,r2
+      0004F2 8B 83            [24]  997 	mov	dph,r3
+      0004F4 8C F0            [24]  998 	mov	b,r4
+      0004F6 78r00            [12]  999 	mov	r0,#_list_head
+      0004F8 79s00            [12] 1000 	mov	r1,#(_list_head >> 8)
+      0004FA 7As00            [12] 1001 	mov	r2,#(_list_head >> 16)
+      0004FC 12r00r00         [24] 1002 	lcall	__sdcc_banked_call
+      0004FF AA 82            [24] 1003 	mov	r2,dpl
+      000501 AB 83            [24] 1004 	mov	r3,dph
+      000503 AC F0            [24] 1005 	mov	r4,b
+      000505 E5 81            [12] 1006 	mov	a,sp
+      000507 24 F9            [12] 1007 	add	a,#0xf9
+      000509 F8               [12] 1008 	mov	r0,a
+      00050A A6 02            [24] 1009 	mov	@r0,ar2
+      00050C 08               [12] 1010 	inc	r0
+      00050D A6 03            [24] 1011 	mov	@r0,ar3
+      00050F 08               [12] 1012 	inc	r0
+      000510 A6 04            [24] 1013 	mov	@r0,ar4
+                                   1014 ;	../../../../core/net/mac/csma.c:216: struct qbuf_metadata *metadata = (struct qbuf_metadata *)q->ptr;
+      000512 E5 81            [12] 1015 	mov	a,sp
+      000514 24 F9            [12] 1016 	add	a,#0xf9
+      000516 F8               [12] 1017 	mov	r0,a
+      000517 74 06            [12] 1018 	mov	a,#0x06
+      000519 26               [12] 1019 	add	a,@r0
+      00051A FA               [12] 1020 	mov	r2,a
+      00051B E4               [12] 1021 	clr	a
+      00051C 08               [12] 1022 	inc	r0
+      00051D 36               [12] 1023 	addc	a,@r0
+      00051E FB               [12] 1024 	mov	r3,a
+      00051F 08               [12] 1025 	inc	r0
+      000520 86 04            [24] 1026 	mov	ar4,@r0
+      000522 8A 82            [24] 1027 	mov	dpl,r2
+      000524 8B 83            [24] 1028 	mov	dph,r3
+      000526 8C F0            [24] 1029 	mov	b,r4
+      000528 12r00r00         [24] 1030 	lcall	__gptrget
+      00052B FA               [12] 1031 	mov	r2,a
+      00052C A3               [24] 1032 	inc	dptr
+      00052D 12r00r00         [24] 1033 	lcall	__gptrget
+      000530 FB               [12] 1034 	mov	r3,a
+      000531 A3               [24] 1035 	inc	dptr
+      000532 12r00r00         [24] 1036 	lcall	__gptrget
+      000535 FC               [12] 1037 	mov	r4,a
+      000536 E5 81            [12] 1038 	mov	a,sp
+      000538 24 FC            [12] 1039 	add	a,#0xfc
+      00053A F8               [12] 1040 	mov	r0,a
+      00053B A6 02            [24] 1041 	mov	@r0,ar2
+      00053D 08               [12] 1042 	inc	r0
+      00053E A6 03            [24] 1043 	mov	@r0,ar3
+      000540 08               [12] 1044 	inc	r0
+      000541 A6 04            [24] 1045 	mov	@r0,ar4
+                                   1046 ;	../../../../core/net/mac/csma.c:223: switch(status) {
+      000543 E5 81            [12] 1047 	mov	a,sp
+      000545 24 EF            [12] 1048 	add	a,#0xef
+      000547 F8               [12] 1049 	mov	r0,a
+      000548 B6 00 06         [24] 1050 	cjne	@r0,#0x00,00159$
+      00054B 08               [12] 1051 	inc	r0
+      00054C B6 00 02         [24] 1052 	cjne	@r0,#0x00,00159$
+      00054F 80 2A            [24] 1053 	sjmp	00102$
+      000551                       1054 00159$:
+      000551 E5 81            [12] 1055 	mov	a,sp
+      000553 24 EF            [12] 1056 	add	a,#0xef
+      000555 F8               [12] 1057 	mov	r0,a
+      000556 B6 01 06         [24] 1058 	cjne	@r0,#0x01,00160$
+      000559 08               [12] 1059 	inc	r0
+      00055A B6 00 02         [24] 1060 	cjne	@r0,#0x00,00160$
+      00055D 80 43            [24] 1061 	sjmp	00103$
+      00055F                       1062 00160$:
+      00055F E5 81            [12] 1063 	mov	a,sp
+      000561 24 EF            [12] 1064 	add	a,#0xef
+      000563 F8               [12] 1065 	mov	r0,a
+      000564 B6 02 06         [24] 1066 	cjne	@r0,#0x02,00161$
+      000567 08               [12] 1067 	inc	r0
+      000568 B6 00 02         [24] 1068 	cjne	@r0,#0x00,00161$
+      00056B 80 0E            [24] 1069 	sjmp	00102$
+      00056D                       1070 00161$:
+      00056D E5 81            [12] 1071 	mov	a,sp
+      00056F 24 EF            [12] 1072 	add	a,#0xef
+      000571 F8               [12] 1073 	mov	r0,a
+                                   1074 ;	../../../../core/net/mac/csma.c:225: case MAC_TX_NOACK:
+      000572 B6 03 79         [24] 1075 	cjne	@r0,#0x03,00105$
+      000575 08               [12] 1076 	inc	r0
+      000576 B6 00 75         [24] 1077 	cjne	@r0,#0x00,00105$
+      000579 80 4E            [24] 1078 	sjmp	00104$
+      00057B                       1079 00102$:
+                                   1080 ;	../../../../core/net/mac/csma.c:226: n->transmissions++;
+      00057B E5 81            [12] 1081 	mov	a,sp
+      00057D 24 F6            [12] 1082 	add	a,#0xf6
+      00057F F8               [12] 1083 	mov	r0,a
+      000580 74 21            [12] 1084 	mov	a,#0x21
+      000582 26               [12] 1085 	add	a,@r0
+      000583 FA               [12] 1086 	mov	r2,a
+      000584 E4               [12] 1087 	clr	a
+      000585 08               [12] 1088 	inc	r0
+      000586 36               [12] 1089 	addc	a,@r0
+      000587 FB               [12] 1090 	mov	r3,a
+      000588 08               [12] 1091 	inc	r0
+      000589 86 04            [24] 1092 	mov	ar4,@r0
+      00058B 8A 82            [24] 1093 	mov	dpl,r2
+      00058D 8B 83            [24] 1094 	mov	dph,r3
+      00058F 8C F0            [24] 1095 	mov	b,r4
+      000591 12r00r00         [24] 1096 	lcall	__gptrget
+      000594 FF               [12] 1097 	mov	r7,a
+      000595 0F               [12] 1098 	inc	r7
+      000596 8A 82            [24] 1099 	mov	dpl,r2
+      000598 8B 83            [24] 1100 	mov	dph,r3
+      00059A 8C F0            [24] 1101 	mov	b,r4
+      00059C EF               [12] 1102 	mov	a,r7
+      00059D 12r00r00         [24] 1103 	lcall	__gptrput
+                                   1104 ;	../../../../core/net/mac/csma.c:227: break;
+                                   1105 ;	../../../../core/net/mac/csma.c:228: case MAC_TX_COLLISION:
+      0005A0 80 4C            [24] 1106 	sjmp	00105$
+      0005A2                       1107 00103$:
+                                   1108 ;	../../../../core/net/mac/csma.c:229: n->collisions++;
+      0005A2 E5 81            [12] 1109 	mov	a,sp
+      0005A4 24 F6            [12] 1110 	add	a,#0xf6
+      0005A6 F8               [12] 1111 	mov	r0,a
+      0005A7 74 22            [12] 1112 	mov	a,#0x22
+      0005A9 26               [12] 1113 	add	a,@r0
+      0005AA FD               [12] 1114 	mov	r5,a
+      0005AB E4               [12] 1115 	clr	a
+      0005AC 08               [12] 1116 	inc	r0
+      0005AD 36               [12] 1117 	addc	a,@r0
+      0005AE FE               [12] 1118 	mov	r6,a
+      0005AF 08               [12] 1119 	inc	r0
+      0005B0 86 07            [24] 1120 	mov	ar7,@r0
+      0005B2 8D 82            [24] 1121 	mov	dpl,r5
+      0005B4 8E 83            [24] 1122 	mov	dph,r6
+      0005B6 8F F0            [24] 1123 	mov	b,r7
+      0005B8 12r00r00         [24] 1124 	lcall	__gptrget
+      0005BB FC               [12] 1125 	mov	r4,a
+      0005BC 0C               [12] 1126 	inc	r4
+      0005BD 8D 82            [24] 1127 	mov	dpl,r5
+      0005BF 8E 83            [24] 1128 	mov	dph,r6
+      0005C1 8F F0            [24] 1129 	mov	b,r7
+      0005C3 EC               [12] 1130 	mov	a,r4
+      0005C4 12r00r00         [24] 1131 	lcall	__gptrput
+                                   1132 ;	../../../../core/net/mac/csma.c:230: break;
+                                   1133 ;	../../../../core/net/mac/csma.c:231: case MAC_TX_DEFERRED:
+      0005C7 80 25            [24] 1134 	sjmp	00105$
+      0005C9                       1135 00104$:
+                                   1136 ;	../../../../core/net/mac/csma.c:232: n->deferrals++;
+      0005C9 E5 81            [12] 1137 	mov	a,sp
+      0005CB 24 F6            [12] 1138 	add	a,#0xf6
+      0005CD F8               [12] 1139 	mov	r0,a
+      0005CE 74 23            [12] 1140 	mov	a,#0x23
+      0005D0 26               [12] 1141 	add	a,@r0
+      0005D1 FD               [12] 1142 	mov	r5,a
+      0005D2 E4               [12] 1143 	clr	a
+      0005D3 08               [12] 1144 	inc	r0
+      0005D4 36               [12] 1145 	addc	a,@r0
+      0005D5 FE               [12] 1146 	mov	r6,a
+      0005D6 08               [12] 1147 	inc	r0
+      0005D7 86 07            [24] 1148 	mov	ar7,@r0
+      0005D9 8D 82            [24] 1149 	mov	dpl,r5
+      0005DB 8E 83            [24] 1150 	mov	dph,r6
+      0005DD 8F F0            [24] 1151 	mov	b,r7
+      0005DF 12r00r00         [24] 1152 	lcall	__gptrget
+      0005E2 FC               [12] 1153 	mov	r4,a
+      0005E3 0C               [12] 1154 	inc	r4
+      0005E4 8D 82            [24] 1155 	mov	dpl,r5
+      0005E6 8E 83            [24] 1156 	mov	dph,r6
+      0005E8 8F F0            [24] 1157 	mov	b,r7
+      0005EA EC               [12] 1158 	mov	a,r4
+      0005EB 12r00r00         [24] 1159 	lcall	__gptrput
+                                   1160 ;	../../../../core/net/mac/csma.c:295: mac_call_sent_callback(sent, cptr, status, num_tx);
+                                   1161 ;	../../../../core/net/mac/csma.c:234: }
+      0005EE                       1162 00105$:
+                                   1163 ;	../../../../core/net/mac/csma.c:236: sent = metadata->sent;
+      0005EE E5 81            [12] 1164 	mov	a,sp
+      0005F0 24 FC            [12] 1165 	add	a,#0xfc
+      0005F2 F8               [12] 1166 	mov	r0,a
+      0005F3 86 82            [24] 1167 	mov	dpl,@r0
+      0005F5 08               [12] 1168 	inc	r0
+      0005F6 86 83            [24] 1169 	mov	dph,@r0
+      0005F8 08               [12] 1170 	inc	r0
+      0005F9 86 F0            [24] 1171 	mov	b,@r0
+      0005FB 12r00r00         [24] 1172 	lcall	__gptrget
+      0005FE FD               [12] 1173 	mov	r5,a
+      0005FF A3               [24] 1174 	inc	dptr
+      000600 12r00r00         [24] 1175 	lcall	__gptrget
+      000603 FE               [12] 1176 	mov	r6,a
+      000604 A3               [24] 1177 	inc	dptr
+      000605 12r00r00         [24] 1178 	lcall	__gptrget
+      000608 FF               [12] 1179 	mov	r7,a
+      000609 90r00rC4         [24] 1180 	mov	dptr,#_packet_sent_cb_sent_1_189
+      00060C ED               [12] 1181 	mov	a,r5
+      00060D F0               [24] 1182 	movx	@dptr,a
+      00060E EE               [12] 1183 	mov	a,r6
+      00060F A3               [24] 1184 	inc	dptr
+      000610 F0               [24] 1185 	movx	@dptr,a
+      000611 EF               [12] 1186 	mov	a,r7
+      000612 A3               [24] 1187 	inc	dptr
+      000613 F0               [24] 1188 	movx	@dptr,a
+                                   1189 ;	../../../../core/net/mac/csma.c:237: cptr = metadata->cptr;
+      000614 E5 81            [12] 1190 	mov	a,sp
+      000616 24 FC            [12] 1191 	add	a,#0xfc
+      000618 F8               [12] 1192 	mov	r0,a
+      000619 74 03            [12] 1193 	mov	a,#0x03
+      00061B 26               [12] 1194 	add	a,@r0
+      00061C FD               [12] 1195 	mov	r5,a
+      00061D E4               [12] 1196 	clr	a
+      00061E 08               [12] 1197 	inc	r0
+      00061F 36               [12] 1198 	addc	a,@r0
+      000620 FE               [12] 1199 	mov	r6,a
+      000621 08               [12] 1200 	inc	r0
+      000622 86 07            [24] 1201 	mov	ar7,@r0
+      000624 8D 82            [24] 1202 	mov	dpl,r5
+      000626 8E 83            [24] 1203 	mov	dph,r6
+      000628 8F F0            [24] 1204 	mov	b,r7
+      00062A 12r00r00         [24] 1205 	lcall	__gptrget
+      00062D FD               [12] 1206 	mov	r5,a
+      00062E A3               [24] 1207 	inc	dptr
+      00062F 12r00r00         [24] 1208 	lcall	__gptrget
+      000632 FE               [12] 1209 	mov	r6,a
+      000633 A3               [24] 1210 	inc	dptr
+      000634 12r00r00         [24] 1211 	lcall	__gptrget
+      000637 FF               [12] 1212 	mov	r7,a
+      000638 90r00rC7         [24] 1213 	mov	dptr,#_packet_sent_cb_cptr_1_189
+      00063B ED               [12] 1214 	mov	a,r5
+      00063C F0               [24] 1215 	movx	@dptr,a
+      00063D EE               [12] 1216 	mov	a,r6
+      00063E A3               [24] 1217 	inc	dptr
+      00063F F0               [24] 1218 	movx	@dptr,a
+      000640 EF               [12] 1219 	mov	a,r7
+      000641 A3               [24] 1220 	inc	dptr
+      000642 F0               [24] 1221 	movx	@dptr,a
+                                   1222 ;	../../../../core/net/mac/csma.c:238: num_tx = n->transmissions;
+      000643 E5 81            [12] 1223 	mov	a,sp
+      000645 24 F6            [12] 1224 	add	a,#0xf6
+      000647 F8               [12] 1225 	mov	r0,a
+      000648 74 21            [12] 1226 	mov	a,#0x21
+      00064A 26               [12] 1227 	add	a,@r0
+      00064B FD               [12] 1228 	mov	r5,a
+      00064C E4               [12] 1229 	clr	a
+      00064D 08               [12] 1230 	inc	r0
+      00064E 36               [12] 1231 	addc	a,@r0
+      00064F FE               [12] 1232 	mov	r6,a
+      000650 08               [12] 1233 	inc	r0
+      000651 86 07            [24] 1234 	mov	ar7,@r0
+      000653 8D 82            [24] 1235 	mov	dpl,r5
+      000655 8E 83            [24] 1236 	mov	dph,r6
+      000657 8F F0            [24] 1237 	mov	b,r7
+      000659 12r00r00         [24] 1238 	lcall	__gptrget
+      00065C FC               [12] 1239 	mov	r4,a
+      00065D 90r00rCA         [24] 1240 	mov	dptr,#_packet_sent_cb_num_tx_1_189
+      000660 F0               [24] 1241 	movx	@dptr,a
+      000661 E4               [12] 1242 	clr	a
+      000662 A3               [24] 1243 	inc	dptr
+      000663 F0               [24] 1244 	movx	@dptr,a
+                                   1245 ;	../../../../core/net/mac/csma.c:240: if(status == MAC_TX_COLLISION ||
+      000664 E5 81            [12] 1246 	mov	a,sp
+      000666 24 EF            [12] 1247 	add	a,#0xef
+      000668 F8               [12] 1248 	mov	r0,a
+      000669 B6 01 06         [24] 1249 	cjne	@r0,#0x01,00163$
+      00066C 08               [12] 1250 	inc	r0
+      00066D B6 00 02         [24] 1251 	cjne	@r0,#0x00,00163$
+      000670 80 11            [24] 1252 	sjmp	00109$
+      000672                       1253 00163$:
+                                   1254 ;	../../../../core/net/mac/csma.c:241: status == MAC_TX_NOACK) {
+      000672 E5 81            [12] 1255 	mov	a,sp
+      000674 24 EF            [12] 1256 	add	a,#0xef
+      000676 F8               [12] 1257 	mov	r0,a
+      000677 B6 02 06         [24] 1258 	cjne	@r0,#0x02,00164$
+      00067A 08               [12] 1259 	inc	r0
+      00067B B6 00 02         [24] 1260 	cjne	@r0,#0x00,00164$
+      00067E 80 03            [24] 1261 	sjmp	00165$
+      000680                       1262 00164$:
+      000680 02r08r5B         [24] 1263 	ljmp	00126$
+      000683                       1264 00165$:
+                                   1265 ;	../../../../core/net/mac/csma.c:255: }
+      000683                       1266 00109$:
+                                   1267 ;	../../../../core/net/mac/csma.c:259: time = default_timebase();
+      000683 C0 07            [24] 1268 	push	ar7
+      000685 C0 06            [24] 1269 	push	ar6
+      000687 C0 05            [24] 1270 	push	ar5
+      000689 78rA6            [12] 1271 	mov	r0,#_default_timebase
+      00068B 79s00            [12] 1272 	mov	r1,#(_default_timebase >> 8)
+      00068D 7As00            [12] 1273 	mov	r2,#(_default_timebase >> 16)
+      00068F 12r00r00         [24] 1274 	lcall	__sdcc_banked_call
+      000692 AC 82            [24] 1275 	mov	r4,dpl
+      000694 AB 83            [24] 1276 	mov	r3,dph
+      000696 D0 05            [24] 1277 	pop	ar5
+      000698 D0 06            [24] 1278 	pop	ar6
+      00069A D0 07            [24] 1279 	pop	ar7
+      00069C A8 81            [24] 1280 	mov	r0,sp
+      00069E 18               [12] 1281 	dec	r0
+      00069F A6 04            [24] 1282 	mov	@r0,ar4
+      0006A1 08               [12] 1283 	inc	r0
+      0006A2 A6 03            [24] 1284 	mov	@r0,ar3
+                                   1285 ;	../../../../core/net/mac/csma.c:264: backoff_transmissions = n->transmissions + 1;
+      0006A4 8D 82            [24] 1286 	mov	dpl,r5
+      0006A6 8E 83            [24] 1287 	mov	dph,r6
+      0006A8 8F F0            [24] 1288 	mov	b,r7
+      0006AA 12r00r00         [24] 1289 	lcall	__gptrget
+      0006AD FA               [12] 1290 	mov	r2,a
+      0006AE C0 05            [24] 1291 	push	ar5
+      0006B0 C0 06            [24] 1292 	push	ar6
+      0006B2 C0 07            [24] 1293 	push	ar7
+      0006B4 7F 00            [12] 1294 	mov	r7,#0x00
+      0006B6 74 01            [12] 1295 	mov	a,#0x01
+      0006B8 2A               [12] 1296 	add	a,r2
+      0006B9 FB               [12] 1297 	mov	r3,a
+      0006BA E4               [12] 1298 	clr	a
+      0006BB 3F               [12] 1299 	addc	a,r7
+      0006BC FC               [12] 1300 	mov	r4,a
+                                   1301 ;	../../../../core/net/mac/csma.c:269: if(backoff_transmissions > 3) {
+      0006BD C3               [12] 1302 	clr	c
+      0006BE 74 03            [12] 1303 	mov	a,#0x03
+      0006C0 9B               [12] 1304 	subb	a,r3
+      0006C1 E4               [12] 1305 	clr	a
+      0006C2 64 80            [12] 1306 	xrl	a,#0x80
+      0006C4 8C F0            [24] 1307 	mov	b,r4
+      0006C6 63 F0 80         [24] 1308 	xrl	b,#0x80
+      0006C9 95 F0            [12] 1309 	subb	a,b
+      0006CB D0 07            [24] 1310 	pop	ar7
+      0006CD D0 06            [24] 1311 	pop	ar6
+      0006CF D0 05            [24] 1312 	pop	ar5
+      0006D1 50 04            [24] 1313 	jnc	00111$
+                                   1314 ;	../../../../core/net/mac/csma.c:270: backoff_transmissions = 3;
+      0006D3 7B 03            [12] 1315 	mov	r3,#0x03
+      0006D5 7C 00            [12] 1316 	mov	r4,#0x00
+      0006D7                       1317 00111$:
+                                   1318 ;	../../../../core/net/mac/csma.c:273: time = time + (random_rand() % (backoff_transmissions * time));
+      0006D7 C0 07            [24] 1319 	push	ar7
+      0006D9 C0 06            [24] 1320 	push	ar6
+      0006DB C0 05            [24] 1321 	push	ar5
+      0006DD C0 04            [24] 1322 	push	ar4
+      0006DF C0 03            [24] 1323 	push	ar3
+      0006E1 78r00            [12] 1324 	mov	r0,#_random_rand
+      0006E3 79s00            [12] 1325 	mov	r1,#(_random_rand >> 8)
+      0006E5 7As00            [12] 1326 	mov	r2,#(_random_rand >> 16)
+      0006E7 12r00r00         [24] 1327 	lcall	__sdcc_banked_call
+      0006EA C8               [12] 1328 	xch	a,r0
+      0006EB E5 81            [12] 1329 	mov	a,sp
+      0006ED 24 EF            [12] 1330 	add	a,#0xef
+      0006EF C8               [12] 1331 	xch	a,r0
+      0006F0 A6 82            [24] 1332 	mov	@r0,dpl
+      0006F2 08               [12] 1333 	inc	r0
+      0006F3 A6 83            [24] 1334 	mov	@r0,dph
+      0006F5 D0 03            [24] 1335 	pop	ar3
+      0006F7 D0 04            [24] 1336 	pop	ar4
+      0006F9 E5 81            [12] 1337 	mov	a,sp
+      0006FB 24 FC            [12] 1338 	add	a,#0xfc
+      0006FD F8               [12] 1339 	mov	r0,a
+      0006FE E6               [12] 1340 	mov	a,@r0
+      0006FF C0 E0            [24] 1341 	push	acc
+      000701 08               [12] 1342 	inc	r0
+      000702 E6               [12] 1343 	mov	a,@r0
+      000703 C0 E0            [24] 1344 	push	acc
+      000705 8B 82            [24] 1345 	mov	dpl,r3
+      000707 8C 83            [24] 1346 	mov	dph,r4
+      000709 12r00r00         [24] 1347 	lcall	__mulint
+      00070C AB 82            [24] 1348 	mov	r3,dpl
+      00070E AC 83            [24] 1349 	mov	r4,dph
+      000710 15 81            [12] 1350 	dec	sp
+      000712 15 81            [12] 1351 	dec	sp
+      000714 C0 03            [24] 1352 	push	ar3
+      000716 C0 04            [24] 1353 	push	ar4
+      000718 E5 81            [12] 1354 	mov	a,sp
+      00071A 24 EF            [12] 1355 	add	a,#0xef
+      00071C F8               [12] 1356 	mov	r0,a
+      00071D 86 82            [24] 1357 	mov	dpl,@r0
+      00071F 08               [12] 1358 	inc	r0
+      000720 86 83            [24] 1359 	mov	dph,@r0
+      000722 12r00r00         [24] 1360 	lcall	__moduint
+      000725 AB 82            [24] 1361 	mov	r3,dpl
+      000727 AC 83            [24] 1362 	mov	r4,dph
+      000729 15 81            [12] 1363 	dec	sp
+      00072B 15 81            [12] 1364 	dec	sp
+      00072D D0 05            [24] 1365 	pop	ar5
+      00072F D0 06            [24] 1366 	pop	ar6
+      000731 D0 07            [24] 1367 	pop	ar7
+      000733 A8 81            [24] 1368 	mov	r0,sp
+      000735 18               [12] 1369 	dec	r0
+      000736 EB               [12] 1370 	mov	a,r3
+      000737 26               [12] 1371 	add	a,@r0
+      000738 F6               [12] 1372 	mov	@r0,a
+      000739 EC               [12] 1373 	mov	a,r4
+      00073A 08               [12] 1374 	inc	r0
+      00073B 36               [12] 1375 	addc	a,@r0
+      00073C F6               [12] 1376 	mov	@r0,a
+                                   1377 ;	../../../../core/net/mac/csma.c:275: if(n->transmissions < metadata->max_transmissions) {
+      00073D 8D 82            [24] 1378 	mov	dpl,r5
+      00073F 8E 83            [24] 1379 	mov	dph,r6
+      000741 8F F0            [24] 1380 	mov	b,r7
+      000743 12r00r00         [24] 1381 	lcall	__gptrget
+      000746 FD               [12] 1382 	mov	r5,a
+      000747 E5 81            [12] 1383 	mov	a,sp
+      000749 24 FC            [12] 1384 	add	a,#0xfc
+      00074B F8               [12] 1385 	mov	r0,a
+      00074C 74 06            [12] 1386 	mov	a,#0x06
+      00074E 26               [12] 1387 	add	a,@r0
+      00074F FC               [12] 1388 	mov	r4,a
+      000750 E4               [12] 1389 	clr	a
+      000751 08               [12] 1390 	inc	r0
+      000752 36               [12] 1391 	addc	a,@r0
+      000753 FE               [12] 1392 	mov	r6,a
+      000754 08               [12] 1393 	inc	r0
+      000755 86 07            [24] 1394 	mov	ar7,@r0
+      000757 8C 82            [24] 1395 	mov	dpl,r4
+      000759 8E 83            [24] 1396 	mov	dph,r6
+      00075B 8F F0            [24] 1397 	mov	b,r7
+      00075D 12r00r00         [24] 1398 	lcall	__gptrget
+      000760 FC               [12] 1399 	mov	r4,a
+      000761 C3               [12] 1400 	clr	c
+      000762 ED               [12] 1401 	mov	a,r5
+      000763 9C               [12] 1402 	subb	a,r4
+      000764 40 03            [24] 1403 	jc	00167$
+      000766 02r07rED         [24] 1404 	ljmp	00118$
+      000769                       1405 00167$:
+                                   1406 ;	../../../../core/net/mac/csma.c:278: transmit_packet_list, n);
+      000769 E5 81            [12] 1407 	mov	a,sp
+      00076B 24 F6            [12] 1408 	add	a,#0xf6
+      00076D F8               [12] 1409 	mov	r0,a
+      00076E 86 05            [24] 1410 	mov	ar5,@r0
+      000770 08               [12] 1411 	inc	r0
+      000771 86 06            [24] 1412 	mov	ar6,@r0
+      000773 08               [12] 1413 	inc	r0
+      000774 86 07            [24] 1414 	mov	ar7,@r0
+                                   1415 ;	../../../../core/net/mac/csma.c:277: ctimer_set(&n->transmit_timer, time,
+      000776 E5 81            [12] 1416 	mov	a,sp
+      000778 24 F6            [12] 1417 	add	a,#0xf6
+      00077A F8               [12] 1418 	mov	r0,a
+      00077B 74 0B            [12] 1419 	mov	a,#0x0B
+      00077D 26               [12] 1420 	add	a,@r0
+      00077E FA               [12] 1421 	mov	r2,a
+      00077F E4               [12] 1422 	clr	a
+      000780 08               [12] 1423 	inc	r0
+      000781 36               [12] 1424 	addc	a,@r0
+      000782 FB               [12] 1425 	mov	r3,a
+      000783 08               [12] 1426 	inc	r0
+      000784 86 04            [24] 1427 	mov	ar4,@r0
+      000786 C0 05            [24] 1428 	push	ar5
+      000788 C0 06            [24] 1429 	push	ar6
+      00078A C0 07            [24] 1430 	push	ar7
+      00078C 74rDB            [12] 1431 	mov	a,#_transmit_packet_list
+      00078E C0 E0            [24] 1432 	push	acc
+      000790 74s00            [12] 1433 	mov	a,#(_transmit_packet_list >> 8)
+      000792 C0 E0            [24] 1434 	push	acc
+      000794 74s00            [12] 1435 	mov	a,#(_transmit_packet_list >> 16)
+      000796 C0 E0            [24] 1436 	push	acc
+      000798 E5 81            [12] 1437 	mov	a,sp
+      00079A 24 F9            [12] 1438 	add	a,#0xf9
+      00079C F8               [12] 1439 	mov	r0,a
+      00079D E6               [12] 1440 	mov	a,@r0
+      00079E C0 E0            [24] 1441 	push	acc
+      0007A0 08               [12] 1442 	inc	r0
+      0007A1 E6               [12] 1443 	mov	a,@r0
+      0007A2 C0 E0            [24] 1444 	push	acc
+      0007A4 8A 82            [24] 1445 	mov	dpl,r2
+      0007A6 8B 83            [24] 1446 	mov	dph,r3
+      0007A8 8C F0            [24] 1447 	mov	b,r4
+      0007AA 78r00            [12] 1448 	mov	r0,#_ctimer_set
+      0007AC 79s00            [12] 1449 	mov	r1,#(_ctimer_set >> 8)
+      0007AE 7As00            [12] 1450 	mov	r2,#(_ctimer_set >> 16)
+      0007B0 12r00r00         [24] 1451 	lcall	__sdcc_banked_call
+      0007B3 E5 81            [12] 1452 	mov	a,sp
+      0007B5 24 F8            [12] 1453 	add	a,#0xf8
+                                   1454 ;	../../../../core/net/mac/csma.c:281: queuebuf_update_attr_from_packetbuf(q->buf);
+      0007B7 F5 81            [12] 1455 	mov	sp,a
+      0007B9 24 F9            [12] 1456 	add	a,#0xf9
+      0007BB F8               [12] 1457 	mov	r0,a
+      0007BC 74 03            [12] 1458 	mov	a,#0x03
+      0007BE 26               [12] 1459 	add	a,@r0
+      0007BF FD               [12] 1460 	mov	r5,a
+      0007C0 E4               [12] 1461 	clr	a
+      0007C1 08               [12] 1462 	inc	r0
+      0007C2 36               [12] 1463 	addc	a,@r0
+      0007C3 FE               [12] 1464 	mov	r6,a
+      0007C4 08               [12] 1465 	inc	r0
+      0007C5 86 07            [24] 1466 	mov	ar7,@r0
+      0007C7 8D 82            [24] 1467 	mov	dpl,r5
+      0007C9 8E 83            [24] 1468 	mov	dph,r6
+      0007CB 8F F0            [24] 1469 	mov	b,r7
+      0007CD 12r00r00         [24] 1470 	lcall	__gptrget
+      0007D0 FD               [12] 1471 	mov	r5,a
+      0007D1 A3               [24] 1472 	inc	dptr
+      0007D2 12r00r00         [24] 1473 	lcall	__gptrget
+      0007D5 FE               [12] 1474 	mov	r6,a
+      0007D6 A3               [24] 1475 	inc	dptr
+      0007D7 12r00r00         [24] 1476 	lcall	__gptrget
+      0007DA FF               [12] 1477 	mov	r7,a
+      0007DB 8D 82            [24] 1478 	mov	dpl,r5
+      0007DD 8E 83            [24] 1479 	mov	dph,r6
+      0007DF 8F F0            [24] 1480 	mov	b,r7
+      0007E1 78r00            [12] 1481 	mov	r0,#_queuebuf_update_attr_from_packetbuf
+      0007E3 79s00            [12] 1482 	mov	r1,#(_queuebuf_update_attr_from_packetbuf >> 8)
+      0007E5 7As00            [12] 1483 	mov	r2,#(_queuebuf_update_attr_from_packetbuf >> 16)
+      0007E7 12r00r00         [24] 1484 	lcall	__sdcc_banked_call
+      0007EA 02r08rC4         [24] 1485 	ljmp	00129$
+      0007ED                       1486 00118$:
+                                   1487 ;	../../../../core/net/mac/csma.c:285: free_first_packet(n);
+      0007ED E5 81            [12] 1488 	mov	a,sp
+      0007EF 24 F6            [12] 1489 	add	a,#0xf6
+      0007F1 F8               [12] 1490 	mov	r0,a
+      0007F2 86 82            [24] 1491 	mov	dpl,@r0
+      0007F4 08               [12] 1492 	inc	r0
+      0007F5 86 83            [24] 1493 	mov	dph,@r0
+      0007F7 08               [12] 1494 	inc	r0
+      0007F8 86 F0            [24] 1495 	mov	b,@r0
+      0007FA 78rDD            [12] 1496 	mov	r0,#_free_first_packet
+      0007FC 79s01            [12] 1497 	mov	r1,#(_free_first_packet >> 8)
+      0007FE 7As00            [12] 1498 	mov	r2,#(_free_first_packet >> 16)
+      000800 12r00r00         [24] 1499 	lcall	__sdcc_banked_call
+                                   1500 ;	../../../../core/net/mac/csma.c:286: mac_call_sent_callback(sent, cptr, status, num_tx);
+      000803 90r00rC4         [24] 1501 	mov	dptr,#_packet_sent_cb_sent_1_189
+      000806 E0               [24] 1502 	movx	a,@dptr
+      000807 FD               [12] 1503 	mov	r5,a
+      000808 A3               [24] 1504 	inc	dptr
+      000809 E0               [24] 1505 	movx	a,@dptr
+      00080A FE               [12] 1506 	mov	r6,a
+      00080B A3               [24] 1507 	inc	dptr
+      00080C E0               [24] 1508 	movx	a,@dptr
+      00080D FF               [12] 1509 	mov	r7,a
+      00080E ED               [12] 1510 	mov	a,r5
+      00080F 4E               [12] 1511 	orl	a,r6
+      000810 70 03            [24] 1512 	jnz	00168$
+      000812 02r08rC4         [24] 1513 	ljmp	00129$
+      000815                       1514 00168$:
+      000815 90r00rC7         [24] 1515 	mov	dptr,#_packet_sent_cb_cptr_1_189
+      000818 E0               [24] 1516 	movx	a,@dptr
+      000819 FD               [12] 1517 	mov	r5,a
+      00081A A3               [24] 1518 	inc	dptr
+      00081B E0               [24] 1519 	movx	a,@dptr
+      00081C FE               [12] 1520 	mov	r6,a
+      00081D A3               [24] 1521 	inc	dptr
+      00081E E0               [24] 1522 	movx	a,@dptr
+      00081F FF               [12] 1523 	mov	r7,a
+      000820 90r00rCA         [24] 1524 	mov	dptr,#_packet_sent_cb_num_tx_1_189
+      000823 E0               [24] 1525 	movx	a,@dptr
+      000824 C0 E0            [24] 1526 	push	acc
+      000826 A3               [24] 1527 	inc	dptr
+      000827 E0               [24] 1528 	movx	a,@dptr
+      000828 C0 E0            [24] 1529 	push	acc
+      00082A E5 81            [12] 1530 	mov	a,sp
+      00082C 24 ED            [12] 1531 	add	a,#0xed
+      00082E F8               [12] 1532 	mov	r0,a
+      00082F E6               [12] 1533 	mov	a,@r0
+      000830 C0 E0            [24] 1534 	push	acc
+      000832 08               [12] 1535 	inc	r0
+      000833 E6               [12] 1536 	mov	a,@r0
+      000834 C0 E0            [24] 1537 	push	acc
+      000836 90r00rC4         [24] 1538 	mov	dptr,#_packet_sent_cb_sent_1_189
+      000839 E0               [24] 1539 	movx	a,@dptr
+      00083A C0 E0            [24] 1540 	push	acc
+      00083C A3               [24] 1541 	inc	dptr
+      00083D E0               [24] 1542 	movx	a,@dptr
+      00083E C0 E0            [24] 1543 	push	acc
+      000840 A3               [24] 1544 	inc	dptr
+      000841 E0               [24] 1545 	movx	a,@dptr
+      000842 C0 E0            [24] 1546 	push	acc
+      000844 8D 82            [24] 1547 	mov	dpl,r5
+      000846 8E 83            [24] 1548 	mov	dph,r6
+      000848 8F F0            [24] 1549 	mov	b,r7
+      00084A D0 02            [24] 1550 	pop	ar2
+      00084C D0 01            [24] 1551 	pop	ar1
+      00084E D0 00            [24] 1552 	pop	ar0
+      000850 12r00r00         [24] 1553 	lcall	__sdcc_banked_call
+      000853 E5 81            [12] 1554 	mov	a,sp
+      000855 24 FC            [12] 1555 	add	a,#0xfc
+      000857 F5 81            [12] 1556 	mov	sp,a
+      000859 80 69            [24] 1557 	sjmp	00129$
+      00085B                       1558 00126$:
+                                   1559 ;	../../../../core/net/mac/csma.c:294: free_first_packet(n);
+      00085B E5 81            [12] 1560 	mov	a,sp
+      00085D 24 F6            [12] 1561 	add	a,#0xf6
+      00085F F8               [12] 1562 	mov	r0,a
+      000860 86 82            [24] 1563 	mov	dpl,@r0
+      000862 08               [12] 1564 	inc	r0
+      000863 86 83            [24] 1565 	mov	dph,@r0
+      000865 08               [12] 1566 	inc	r0
+      000866 86 F0            [24] 1567 	mov	b,@r0
+      000868 78rDD            [12] 1568 	mov	r0,#_free_first_packet
+      00086A 79s01            [12] 1569 	mov	r1,#(_free_first_packet >> 8)
+      00086C 7As00            [12] 1570 	mov	r2,#(_free_first_packet >> 16)
+      00086E 12r00r00         [24] 1571 	lcall	__sdcc_banked_call
+                                   1572 ;	../../../../core/net/mac/csma.c:295: mac_call_sent_callback(sent, cptr, status, num_tx);
+      000871 90r00rC4         [24] 1573 	mov	dptr,#_packet_sent_cb_sent_1_189
+      000874 E0               [24] 1574 	movx	a,@dptr
+      000875 FD               [12] 1575 	mov	r5,a
+      000876 A3               [24] 1576 	inc	dptr
+      000877 E0               [24] 1577 	movx	a,@dptr
+      000878 FE               [12] 1578 	mov	r6,a
+      000879 A3               [24] 1579 	inc	dptr
+      00087A E0               [24] 1580 	movx	a,@dptr
+      00087B FF               [12] 1581 	mov	r7,a
+      00087C ED               [12] 1582 	mov	a,r5
+      00087D 4E               [12] 1583 	orl	a,r6
+      00087E 60 44            [24] 1584 	jz	00129$
+      000880 90r00rC7         [24] 1585 	mov	dptr,#_packet_sent_cb_cptr_1_189
+      000883 E0               [24] 1586 	movx	a,@dptr
+      000884 FD               [12] 1587 	mov	r5,a
+      000885 A3               [24] 1588 	inc	dptr
+      000886 E0               [24] 1589 	movx	a,@dptr
+      000887 FE               [12] 1590 	mov	r6,a
+      000888 A3               [24] 1591 	inc	dptr
+      000889 E0               [24] 1592 	movx	a,@dptr
+      00088A FF               [12] 1593 	mov	r7,a
+      00088B 90r00rCA         [24] 1594 	mov	dptr,#_packet_sent_cb_num_tx_1_189
+      00088E E0               [24] 1595 	movx	a,@dptr
+      00088F C0 E0            [24] 1596 	push	acc
+      000891 A3               [24] 1597 	inc	dptr
+      000892 E0               [24] 1598 	movx	a,@dptr
+      000893 C0 E0            [24] 1599 	push	acc
+      000895 E5 81            [12] 1600 	mov	a,sp
+      000897 24 ED            [12] 1601 	add	a,#0xed
+      000899 F8               [12] 1602 	mov	r0,a
+      00089A E6               [12] 1603 	mov	a,@r0
+      00089B C0 E0            [24] 1604 	push	acc
+      00089D 08               [12] 1605 	inc	r0
+      00089E E6               [12] 1606 	mov	a,@r0
+      00089F C0 E0            [24] 1607 	push	acc
+      0008A1 90r00rC4         [24] 1608 	mov	dptr,#_packet_sent_cb_sent_1_189
+      0008A4 E0               [24] 1609 	movx	a,@dptr
+      0008A5 C0 E0            [24] 1610 	push	acc
+      0008A7 A3               [24] 1611 	inc	dptr
+      0008A8 E0               [24] 1612 	movx	a,@dptr
+      0008A9 C0 E0            [24] 1613 	push	acc
+      0008AB A3               [24] 1614 	inc	dptr
+      0008AC E0               [24] 1615 	movx	a,@dptr
+      0008AD C0 E0            [24] 1616 	push	acc
+      0008AF 8D 82            [24] 1617 	mov	dpl,r5
+      0008B1 8E 83            [24] 1618 	mov	dph,r6
+      0008B3 8F F0            [24] 1619 	mov	b,r7
+      0008B5 D0 02            [24] 1620 	pop	ar2
+      0008B7 D0 01            [24] 1621 	pop	ar1
+      0008B9 D0 00            [24] 1622 	pop	ar0
+      0008BB 12r00r00         [24] 1623 	lcall	__sdcc_banked_call
+      0008BE E5 81            [12] 1624 	mov	a,sp
+      0008C0 24 FC            [12] 1625 	add	a,#0xfc
+      0008C2 F5 81            [12] 1626 	mov	sp,a
+      0008C4                       1627 00129$:
+      0008C4 E5 81            [12] 1628 	mov	a,sp
+      0008C6 24 F3            [12] 1629 	add	a,#0xF3
+      0008C8 F5 81            [12] 1630 	mov	sp,a
+      0008CA 02r00r00         [24] 1631 	ljmp	__sdcc_banked_ret
+                                   1632 ;------------------------------------------------------------
+                                   1633 ;Allocation info for local variables in function 'send_packet'
+                                   1634 ;------------------------------------------------------------
+                                   1635 ;ptr                       Allocated to stack - sp -17
+                                   1636 ;sent                      Allocated to stack - sp -11
+                                   1637 ;q                         Allocated to stack - sp -2
+                                   1638 ;n                         Allocated to stack - sp -5
+                                   1639 ;metadata                  Allocated to registers r7 r6 r5 
+                                   1640 ;sloc0                     Allocated to stack - sp -8
+                                   1641 ;addr                      Allocated with name '_send_packet_addr_2_205'
+                                   1642 ;------------------------------------------------------------
+                                   1643 ;	../../../../core/net/mac/csma.c:300: send_packet(mac_callback_t sent, void *ptr)
+                                   1644 ;	-----------------------------------------
+                                   1645 ;	 function send_packet
+                                   1646 ;	-----------------------------------------
+      0008CD                       1647 _send_packet:
+      0008CD C0 82            [24] 1648 	push	dpl
+      0008CF C0 83            [24] 1649 	push	dph
+      0008D1 C0 F0            [24] 1650 	push	b
+      0008D3 E5 81            [12] 1651 	mov	a,sp
+      0008D5 24 09            [12] 1652 	add	a,#0x09
+      0008D7 F5 81            [12] 1653 	mov	sp,a
+                                   1654 ;	../../../../core/net/mac/csma.c:308: &rimeaddr_null)) {
+                                   1655 ;	../../../../core/net/mac/csma.c:307: if(!rimeaddr_cmp(packetbuf_addr(PACKETBUF_ADDR_RECEIVER),
+      0008D9 75 82 19         [24] 1656 	mov	dpl,#0x19
+      0008DC 78r00            [12] 1657 	mov	r0,#_packetbuf_addr
+      0008DE 79s00            [12] 1658 	mov	r1,#(_packetbuf_addr >> 8)
+      0008E0 7As00            [12] 1659 	mov	r2,#(_packetbuf_addr >> 16)
+      0008E2 12r00r00         [24] 1660 	lcall	__sdcc_banked_call
+      0008E5 AA 82            [24] 1661 	mov	r2,dpl
+      0008E7 AB 83            [24] 1662 	mov	r3,dph
+      0008E9 AC F0            [24] 1663 	mov	r4,b
+      0008EB 74r00            [12] 1664 	mov	a,#_rimeaddr_null
+      0008ED C0 E0            [24] 1665 	push	acc
+      0008EF 74s00            [12] 1666 	mov	a,#(_rimeaddr_null >> 8)
+      0008F1 C0 E0            [24] 1667 	push	acc
+      0008F3 74 80            [12] 1668 	mov	a,#0x80
+      0008F5 C0 E0            [24] 1669 	push	acc
+      0008F7 8A 82            [24] 1670 	mov	dpl,r2
+      0008F9 8B 83            [24] 1671 	mov	dph,r3
+      0008FB 8C F0            [24] 1672 	mov	b,r4
+      0008FD 78r00            [12] 1673 	mov	r0,#_rimeaddr_cmp
+      0008FF 79s00            [12] 1674 	mov	r1,#(_rimeaddr_cmp >> 8)
+      000901 7As00            [12] 1675 	mov	r2,#(_rimeaddr_cmp >> 16)
+      000903 12r00r00         [24] 1676 	lcall	__sdcc_banked_call
+      000906 AB 82            [24] 1677 	mov	r3,dpl
+      000908 AC 83            [24] 1678 	mov	r4,dph
+      00090A 15 81            [12] 1679 	dec	sp
+      00090C 15 81            [12] 1680 	dec	sp
+      00090E 15 81            [12] 1681 	dec	sp
+      000910 EB               [12] 1682 	mov	a,r3
+      000911 4C               [12] 1683 	orl	a,r4
+      000912 60 03            [24] 1684 	jz	00177$
+      000914 02r0ErD1         [24] 1685 	ljmp	00134$
+      000917                       1686 00177$:
+                                   1687 ;	../../../../core/net/mac/csma.c:310: addr = packetbuf_addr(PACKETBUF_ADDR_RECEIVER);
+      000917 75 82 19         [24] 1688 	mov	dpl,#0x19
+      00091A 78r00            [12] 1689 	mov	r0,#_packetbuf_addr
+      00091C 79s00            [12] 1690 	mov	r1,#(_packetbuf_addr >> 8)
+      00091E 7As00            [12] 1691 	mov	r2,#(_packetbuf_addr >> 16)
+      000920 12r00r00         [24] 1692 	lcall	__sdcc_banked_call
+      000923 AA 82            [24] 1693 	mov	r2,dpl
+      000925 AB 83            [24] 1694 	mov	r3,dph
+      000927 AC F0            [24] 1695 	mov	r4,b
+      000929 90r00rCC         [24] 1696 	mov	dptr,#_send_packet_addr_2_205
+      00092C EA               [12] 1697 	mov	a,r2
+      00092D F0               [24] 1698 	movx	@dptr,a
+      00092E EB               [12] 1699 	mov	a,r3
+      00092F A3               [24] 1700 	inc	dptr
+      000930 F0               [24] 1701 	movx	@dptr,a
+      000931 EC               [12] 1702 	mov	a,r4
+      000932 A3               [24] 1703 	inc	dptr
+      000933 F0               [24] 1704 	movx	@dptr,a
+                                   1705 ;	../../../../core/net/mac/csma.c:313: n = neighbor_queue_from_addr(addr);
+      000934 8A 82            [24] 1706 	mov	dpl,r2
+      000936 8B 83            [24] 1707 	mov	dph,r3
+      000938 8C F0            [24] 1708 	mov	b,r4
+      00093A 78r00            [12] 1709 	mov	r0,#_neighbor_queue_from_addr
+      00093C 79s00            [12] 1710 	mov	r1,#(_neighbor_queue_from_addr >> 8)
+      00093E 7As00            [12] 1711 	mov	r2,#(_neighbor_queue_from_addr >> 16)
+      000940 12r00r00         [24] 1712 	lcall	__sdcc_banked_call
+      000943 AA 82            [24] 1713 	mov	r2,dpl
+      000945 AB 83            [24] 1714 	mov	r3,dph
+      000947 AC F0            [24] 1715 	mov	r4,b
+      000949 E5 81            [12] 1716 	mov	a,sp
+      00094B 24 FB            [12] 1717 	add	a,#0xfb
+      00094D F8               [12] 1718 	mov	r0,a
+      00094E A6 02            [24] 1719 	mov	@r0,ar2
+      000950 08               [12] 1720 	inc	r0
+      000951 A6 03            [24] 1721 	mov	@r0,ar3
+      000953 08               [12] 1722 	inc	r0
+      000954 A6 04            [24] 1723 	mov	@r0,ar4
+                                   1724 ;	../../../../core/net/mac/csma.c:314: if(n == NULL) {
+      000956 E5 81            [12] 1725 	mov	a,sp
+      000958 24 FB            [12] 1726 	add	a,#0xfb
+      00095A F8               [12] 1727 	mov	r0,a
+      00095B E6               [12] 1728 	mov	a,@r0
+      00095C 08               [12] 1729 	inc	r0
+      00095D 46               [12] 1730 	orl	a,@r0
+      00095E 60 03            [24] 1731 	jz	00178$
+      000960 02r0Ar9D         [24] 1732 	ljmp	00107$
+      000963                       1733 00178$:
+                                   1734 ;	../../../../core/net/mac/csma.c:316: n = memb_alloc(&neighbor_memb);
+      000963 90r00r00         [24] 1735 	mov	dptr,#_neighbor_memb
+      000966 75 F0 00         [24] 1736 	mov	b,#0x00
+      000969 78r00            [12] 1737 	mov	r0,#_memb_alloc
+      00096B 79s00            [12] 1738 	mov	r1,#(_memb_alloc >> 8)
+      00096D 7As00            [12] 1739 	mov	r2,#(_memb_alloc >> 16)
+      00096F 12r00r00         [24] 1740 	lcall	__sdcc_banked_call
+      000972 AD 82            [24] 1741 	mov	r5,dpl
+      000974 AE 83            [24] 1742 	mov	r6,dph
+      000976 AF F0            [24] 1743 	mov	r7,b
+      000978 E5 81            [12] 1744 	mov	a,sp
+      00097A 24 FB            [12] 1745 	add	a,#0xfb
+      00097C F8               [12] 1746 	mov	r0,a
+      00097D A6 05            [24] 1747 	mov	@r0,ar5
+      00097F 08               [12] 1748 	inc	r0
+      000980 A6 06            [24] 1749 	mov	@r0,ar6
+      000982 08               [12] 1750 	inc	r0
+      000983 A6 07            [24] 1751 	mov	@r0,ar7
+                                   1752 ;	../../../../core/net/mac/csma.c:317: if(n != NULL) {
+      000985 E5 81            [12] 1753 	mov	a,sp
+      000987 24 FB            [12] 1754 	add	a,#0xfb
+      000989 F8               [12] 1755 	mov	r0,a
+      00098A E6               [12] 1756 	mov	a,@r0
+      00098B 08               [12] 1757 	inc	r0
+      00098C 46               [12] 1758 	orl	a,@r0
+      00098D 70 03            [24] 1759 	jnz	00179$
+      00098F 02r0Ar9D         [24] 1760 	ljmp	00107$
+      000992                       1761 00179$:
+                                   1762 ;	../../../../core/net/mac/csma.c:319: rimeaddr_copy(&n->addr, addr);
+      000992 E5 81            [12] 1763 	mov	a,sp
+      000994 24 FB            [12] 1764 	add	a,#0xfb
+      000996 F8               [12] 1765 	mov	r0,a
+      000997 74 03            [12] 1766 	mov	a,#0x03
+      000999 26               [12] 1767 	add	a,@r0
+      00099A FD               [12] 1768 	mov	r5,a
+      00099B E4               [12] 1769 	clr	a
+      00099C 08               [12] 1770 	inc	r0
+      00099D 36               [12] 1771 	addc	a,@r0
+      00099E FE               [12] 1772 	mov	r6,a
+      00099F 08               [12] 1773 	inc	r0
+      0009A0 86 07            [24] 1774 	mov	ar7,@r0
+      0009A2 90r00rCC         [24] 1775 	mov	dptr,#_send_packet_addr_2_205
+      0009A5 E0               [24] 1776 	movx	a,@dptr
+      0009A6 C0 E0            [24] 1777 	push	acc
+      0009A8 A3               [24] 1778 	inc	dptr
+      0009A9 E0               [24] 1779 	movx	a,@dptr
+      0009AA C0 E0            [24] 1780 	push	acc
+      0009AC A3               [24] 1781 	inc	dptr
+      0009AD E0               [24] 1782 	movx	a,@dptr
+      0009AE C0 E0            [24] 1783 	push	acc
+      0009B0 8D 82            [24] 1784 	mov	dpl,r5
+      0009B2 8E 83            [24] 1785 	mov	dph,r6
+      0009B4 8F F0            [24] 1786 	mov	b,r7
+      0009B6 78r00            [12] 1787 	mov	r0,#_rimeaddr_copy
+      0009B8 79s00            [12] 1788 	mov	r1,#(_rimeaddr_copy >> 8)
+      0009BA 7As00            [12] 1789 	mov	r2,#(_rimeaddr_copy >> 16)
+      0009BC 12r00r00         [24] 1790 	lcall	__sdcc_banked_call
+      0009BF 15 81            [12] 1791 	dec	sp
+      0009C1 15 81            [12] 1792 	dec	sp
+      0009C3 15 81            [12] 1793 	dec	sp
+                                   1794 ;	../../../../core/net/mac/csma.c:320: n->transmissions = 0;
+      0009C5 E5 81            [12] 1795 	mov	a,sp
+      0009C7 24 FB            [12] 1796 	add	a,#0xfb
+      0009C9 F8               [12] 1797 	mov	r0,a
+      0009CA 74 21            [12] 1798 	mov	a,#0x21
+      0009CC 26               [12] 1799 	add	a,@r0
+      0009CD FD               [12] 1800 	mov	r5,a
+      0009CE E4               [12] 1801 	clr	a
+      0009CF 08               [12] 1802 	inc	r0
+      0009D0 36               [12] 1803 	addc	a,@r0
+      0009D1 FE               [12] 1804 	mov	r6,a
+      0009D2 08               [12] 1805 	inc	r0
+      0009D3 86 07            [24] 1806 	mov	ar7,@r0
+      0009D5 8D 82            [24] 1807 	mov	dpl,r5
+      0009D7 8E 83            [24] 1808 	mov	dph,r6
+      0009D9 8F F0            [24] 1809 	mov	b,r7
+      0009DB E4               [12] 1810 	clr	a
+      0009DC 12r00r00         [24] 1811 	lcall	__gptrput
+                                   1812 ;	../../../../core/net/mac/csma.c:321: n->collisions = 0;
+      0009DF E5 81            [12] 1813 	mov	a,sp
+      0009E1 24 FB            [12] 1814 	add	a,#0xfb
+      0009E3 F8               [12] 1815 	mov	r0,a
+      0009E4 74 22            [12] 1816 	mov	a,#0x22
+      0009E6 26               [12] 1817 	add	a,@r0
+      0009E7 FD               [12] 1818 	mov	r5,a
+      0009E8 E4               [12] 1819 	clr	a
+      0009E9 08               [12] 1820 	inc	r0
+      0009EA 36               [12] 1821 	addc	a,@r0
+      0009EB FE               [12] 1822 	mov	r6,a
+      0009EC 08               [12] 1823 	inc	r0
+      0009ED 86 07            [24] 1824 	mov	ar7,@r0
+      0009EF 8D 82            [24] 1825 	mov	dpl,r5
+      0009F1 8E 83            [24] 1826 	mov	dph,r6
+      0009F3 8F F0            [24] 1827 	mov	b,r7
+      0009F5 E4               [12] 1828 	clr	a
+      0009F6 12r00r00         [24] 1829 	lcall	__gptrput
+                                   1830 ;	../../../../core/net/mac/csma.c:322: n->deferrals = 0;
+      0009F9 E5 81            [12] 1831 	mov	a,sp
+      0009FB 24 FB            [12] 1832 	add	a,#0xfb
+      0009FD F8               [12] 1833 	mov	r0,a
+      0009FE 74 23            [12] 1834 	mov	a,#0x23
+      000A00 26               [12] 1835 	add	a,@r0
+      000A01 FD               [12] 1836 	mov	r5,a
+      000A02 E4               [12] 1837 	clr	a
+      000A03 08               [12] 1838 	inc	r0
+      000A04 36               [12] 1839 	addc	a,@r0
+      000A05 FE               [12] 1840 	mov	r6,a
+      000A06 08               [12] 1841 	inc	r0
+      000A07 86 07            [24] 1842 	mov	ar7,@r0
+      000A09 8D 82            [24] 1843 	mov	dpl,r5
+      000A0B 8E 83            [24] 1844 	mov	dph,r6
+      000A0D 8F F0            [24] 1845 	mov	b,r7
+      000A0F E4               [12] 1846 	clr	a
+      000A10 12r00r00         [24] 1847 	lcall	__gptrput
+                                   1848 ;	../../../../core/net/mac/csma.c:324: LIST_STRUCT_INIT(n, queued_packet_list);
+      000A13 E5 81            [12] 1849 	mov	a,sp
+      000A15 24 FB            [12] 1850 	add	a,#0xfb
+      000A17 F8               [12] 1851 	mov	r0,a
+      000A18 74 27            [12] 1852 	mov	a,#0x27
+      000A1A 26               [12] 1853 	add	a,@r0
+      000A1B FD               [12] 1854 	mov	r5,a
+      000A1C E4               [12] 1855 	clr	a
+      000A1D 08               [12] 1856 	inc	r0
+      000A1E 36               [12] 1857 	addc	a,@r0
+      000A1F FE               [12] 1858 	mov	r6,a
+      000A20 08               [12] 1859 	inc	r0
+      000A21 86 07            [24] 1860 	mov	ar7,@r0
+      000A23 E5 81            [12] 1861 	mov	a,sp
+      000A25 24 FB            [12] 1862 	add	a,#0xfb
+      000A27 F8               [12] 1863 	mov	r0,a
+      000A28 74 24            [12] 1864 	mov	a,#0x24
+      000A2A 26               [12] 1865 	add	a,@r0
+      000A2B FA               [12] 1866 	mov	r2,a
+      000A2C E4               [12] 1867 	clr	a
+      000A2D 08               [12] 1868 	inc	r0
+      000A2E 36               [12] 1869 	addc	a,@r0
+      000A2F FB               [12] 1870 	mov	r3,a
+      000A30 08               [12] 1871 	inc	r0
+      000A31 86 04            [24] 1872 	mov	ar4,@r0
+      000A33 8D 82            [24] 1873 	mov	dpl,r5
+      000A35 8E 83            [24] 1874 	mov	dph,r6
+      000A37 8F F0            [24] 1875 	mov	b,r7
+      000A39 EA               [12] 1876 	mov	a,r2
+      000A3A 12r00r00         [24] 1877 	lcall	__gptrput
+      000A3D A3               [24] 1878 	inc	dptr
+      000A3E EB               [12] 1879 	mov	a,r3
+      000A3F 12r00r00         [24] 1880 	lcall	__gptrput
+      000A42 A3               [24] 1881 	inc	dptr
+      000A43 EC               [12] 1882 	mov	a,r4
+      000A44 12r00r00         [24] 1883 	lcall	__gptrput
+      000A47 8A 82            [24] 1884 	mov	dpl,r2
+      000A49 8B 83            [24] 1885 	mov	dph,r3
+      000A4B 8C F0            [24] 1886 	mov	b,r4
+      000A4D E4               [12] 1887 	clr	a
+      000A4E 12r00r00         [24] 1888 	lcall	__gptrput
+      000A51 A3               [24] 1889 	inc	dptr
+      000A52 E4               [12] 1890 	clr	a
+      000A53 12r00r00         [24] 1891 	lcall	__gptrput
+      000A56 A3               [24] 1892 	inc	dptr
+      000A57 E4               [12] 1893 	clr	a
+      000A58 12r00r00         [24] 1894 	lcall	__gptrput
+      000A5B 8A 82            [24] 1895 	mov	dpl,r2
+      000A5D 8B 83            [24] 1896 	mov	dph,r3
+      000A5F 8C F0            [24] 1897 	mov	b,r4
+      000A61 78r00            [12] 1898 	mov	r0,#_list_init
+      000A63 79s00            [12] 1899 	mov	r1,#(_list_init >> 8)
+      000A65 7As00            [12] 1900 	mov	r2,#(_list_init >> 16)
+      000A67 12r00r00         [24] 1901 	lcall	__sdcc_banked_call
+                                   1902 ;	../../../../core/net/mac/csma.c:326: list_add(neighbor_list, n);
+      000A6A E5 81            [12] 1903 	mov	a,sp
+      000A6C 24 FB            [12] 1904 	add	a,#0xfb
+      000A6E F8               [12] 1905 	mov	r0,a
+      000A6F 86 02            [24] 1906 	mov	ar2,@r0
+      000A71 08               [12] 1907 	inc	r0
+      000A72 86 03            [24] 1908 	mov	ar3,@r0
+      000A74 08               [12] 1909 	inc	r0
+      000A75 86 04            [24] 1910 	mov	ar4,@r0
+      000A77 90r00r21         [24] 1911 	mov	dptr,#_neighbor_list
+      000A7A E0               [24] 1912 	movx	a,@dptr
+      000A7B FD               [12] 1913 	mov	r5,a
+      000A7C A3               [24] 1914 	inc	dptr
+      000A7D E0               [24] 1915 	movx	a,@dptr
+      000A7E FE               [12] 1916 	mov	r6,a
+      000A7F A3               [24] 1917 	inc	dptr
+      000A80 E0               [24] 1918 	movx	a,@dptr
+      000A81 FF               [12] 1919 	mov	r7,a
+      000A82 C0 02            [24] 1920 	push	ar2
+      000A84 C0 03            [24] 1921 	push	ar3
+      000A86 C0 04            [24] 1922 	push	ar4
+      000A88 8D 82            [24] 1923 	mov	dpl,r5
+      000A8A 8E 83            [24] 1924 	mov	dph,r6
+      000A8C 8F F0            [24] 1925 	mov	b,r7
+      000A8E 78r00            [12] 1926 	mov	r0,#_list_add
+      000A90 79s00            [12] 1927 	mov	r1,#(_list_add >> 8)
+      000A92 7As00            [12] 1928 	mov	r2,#(_list_add >> 16)
+      000A94 12r00r00         [24] 1929 	lcall	__sdcc_banked_call
+      000A97 15 81            [12] 1930 	dec	sp
+      000A99 15 81            [12] 1931 	dec	sp
+      000A9B 15 81            [12] 1932 	dec	sp
+                                   1933 ;	../../../../core/net/mac/csma.c:384: sent(ptr, mac_status, 1);
+                                   1934 ;	../../../../core/net/mac/csma.c:326: list_add(neighbor_list, n);
+      000A9D                       1935 00107$:
+                                   1936 ;	../../../../core/net/mac/csma.c:330: if(n != NULL) {
+      000A9D E5 81            [12] 1937 	mov	a,sp
+      000A9F 24 FB            [12] 1938 	add	a,#0xfb
+      000AA1 F8               [12] 1939 	mov	r0,a
+      000AA2 E6               [12] 1940 	mov	a,@r0
+      000AA3 08               [12] 1941 	inc	r0
+      000AA4 46               [12] 1942 	orl	a,@r0
+      000AA5 70 03            [24] 1943 	jnz	00180$
+      000AA7 02r0Er87         [24] 1944 	ljmp	00128$
+      000AAA                       1945 00180$:
+                                   1946 ;	../../../../core/net/mac/csma.c:332: q = memb_alloc(&packet_memb);
+      000AAA 90r00r0A         [24] 1947 	mov	dptr,#_packet_memb
+      000AAD 75 F0 00         [24] 1948 	mov	b,#0x00
+      000AB0 78r00            [12] 1949 	mov	r0,#_memb_alloc
+      000AB2 79s00            [12] 1950 	mov	r1,#(_memb_alloc >> 8)
+      000AB4 7As00            [12] 1951 	mov	r2,#(_memb_alloc >> 16)
+      000AB6 12r00r00         [24] 1952 	lcall	__sdcc_banked_call
+      000AB9 AA 82            [24] 1953 	mov	r2,dpl
+      000ABB AB 83            [24] 1954 	mov	r3,dph
+      000ABD AC F0            [24] 1955 	mov	r4,b
+      000ABF A8 81            [24] 1956 	mov	r0,sp
+      000AC1 18               [12] 1957 	dec	r0
+      000AC2 18               [12] 1958 	dec	r0
+      000AC3 A6 02            [24] 1959 	mov	@r0,ar2
+      000AC5 08               [12] 1960 	inc	r0
+      000AC6 A6 03            [24] 1961 	mov	@r0,ar3
+      000AC8 08               [12] 1962 	inc	r0
+      000AC9 A6 04            [24] 1963 	mov	@r0,ar4
+                                   1964 ;	../../../../core/net/mac/csma.c:333: if(q != NULL) {
+      000ACB A8 81            [24] 1965 	mov	r0,sp
+      000ACD 18               [12] 1966 	dec	r0
+      000ACE 18               [12] 1967 	dec	r0
+      000ACF E6               [12] 1968 	mov	a,@r0
+      000AD0 08               [12] 1969 	inc	r0
+      000AD1 46               [12] 1970 	orl	a,@r0
+      000AD2 70 03            [24] 1971 	jnz	00181$
+      000AD4 02r0DrF0         [24] 1972 	ljmp	00121$
+      000AD7                       1973 00181$:
+                                   1974 ;	../../../../core/net/mac/csma.c:334: q->ptr = memb_alloc(&metadata_memb);
+      000AD7 A8 81            [24] 1975 	mov	r0,sp
+      000AD9 18               [12] 1976 	dec	r0
+      000ADA 18               [12] 1977 	dec	r0
+      000ADB 74 06            [12] 1978 	mov	a,#0x06
+      000ADD 26               [12] 1979 	add	a,@r0
+      000ADE FD               [12] 1980 	mov	r5,a
+      000ADF E4               [12] 1981 	clr	a
+      000AE0 08               [12] 1982 	inc	r0
+      000AE1 36               [12] 1983 	addc	a,@r0
+      000AE2 FE               [12] 1984 	mov	r6,a
+      000AE3 08               [12] 1985 	inc	r0
+      000AE4 86 07            [24] 1986 	mov	ar7,@r0
+      000AE6 90r00r14         [24] 1987 	mov	dptr,#_metadata_memb
+      000AE9 75 F0 00         [24] 1988 	mov	b,#0x00
+      000AEC C0 07            [24] 1989 	push	ar7
+      000AEE C0 06            [24] 1990 	push	ar6
+      000AF0 C0 05            [24] 1991 	push	ar5
+      000AF2 78r00            [12] 1992 	mov	r0,#_memb_alloc
+      000AF4 79s00            [12] 1993 	mov	r1,#(_memb_alloc >> 8)
+      000AF6 7As00            [12] 1994 	mov	r2,#(_memb_alloc >> 16)
+      000AF8 12r00r00         [24] 1995 	lcall	__sdcc_banked_call
+      000AFB AA 82            [24] 1996 	mov	r2,dpl
+      000AFD AB 83            [24] 1997 	mov	r3,dph
+      000AFF AC F0            [24] 1998 	mov	r4,b
+      000B01 D0 05            [24] 1999 	pop	ar5
+      000B03 D0 06            [24] 2000 	pop	ar6
+      000B05 D0 07            [24] 2001 	pop	ar7
+      000B07 8D 82            [24] 2002 	mov	dpl,r5
+      000B09 8E 83            [24] 2003 	mov	dph,r6
+      000B0B 8F F0            [24] 2004 	mov	b,r7
+      000B0D EA               [12] 2005 	mov	a,r2
+      000B0E 12r00r00         [24] 2006 	lcall	__gptrput
+      000B11 A3               [24] 2007 	inc	dptr
+      000B12 EB               [12] 2008 	mov	a,r3
+      000B13 12r00r00         [24] 2009 	lcall	__gptrput
+      000B16 A3               [24] 2010 	inc	dptr
+      000B17 EC               [12] 2011 	mov	a,r4
+      000B18 12r00r00         [24] 2012 	lcall	__gptrput
+                                   2013 ;	../../../../core/net/mac/csma.c:335: if(q->ptr != NULL) {
+      000B1B EA               [12] 2014 	mov	a,r2
+      000B1C 4B               [12] 2015 	orl	a,r3
+      000B1D 70 03            [24] 2016 	jnz	00182$
+      000B1F 02r0DrC9         [24] 2017 	ljmp	00119$
+      000B22                       2018 00182$:
+                                   2019 ;	../../../../core/net/mac/csma.c:336: q->buf = queuebuf_new_from_packetbuf();
+      000B22 A8 81            [24] 2020 	mov	r0,sp
+      000B24 18               [12] 2021 	dec	r0
+      000B25 18               [12] 2022 	dec	r0
+      000B26 E5 81            [12] 2023 	mov	a,sp
+      000B28 24 F8            [12] 2024 	add	a,#0xf8
+      000B2A F9               [12] 2025 	mov	r1,a
+      000B2B 74 03            [12] 2026 	mov	a,#0x03
+      000B2D 26               [12] 2027 	add	a,@r0
+      000B2E F7               [12] 2028 	mov	@r1,a
+      000B2F E4               [12] 2029 	clr	a
+      000B30 08               [12] 2030 	inc	r0
+      000B31 36               [12] 2031 	addc	a,@r0
+      000B32 09               [12] 2032 	inc	r1
+      000B33 F7               [12] 2033 	mov	@r1,a
+      000B34 08               [12] 2034 	inc	r0
+      000B35 09               [12] 2035 	inc	r1
+      000B36 E6               [12] 2036 	mov	a,@r0
+      000B37 F7               [12] 2037 	mov	@r1,a
+      000B38 C0 07            [24] 2038 	push	ar7
+      000B3A C0 06            [24] 2039 	push	ar6
+      000B3C C0 05            [24] 2040 	push	ar5
+      000B3E 78r00            [12] 2041 	mov	r0,#_queuebuf_new_from_packetbuf
+      000B40 79s00            [12] 2042 	mov	r1,#(_queuebuf_new_from_packetbuf >> 8)
+      000B42 7As00            [12] 2043 	mov	r2,#(_queuebuf_new_from_packetbuf >> 16)
+      000B44 12r00r00         [24] 2044 	lcall	__sdcc_banked_call
+      000B47 AA 82            [24] 2045 	mov	r2,dpl
+      000B49 AB 83            [24] 2046 	mov	r3,dph
+      000B4B AC F0            [24] 2047 	mov	r4,b
+      000B4D D0 05            [24] 2048 	pop	ar5
+      000B4F D0 06            [24] 2049 	pop	ar6
+      000B51 D0 07            [24] 2050 	pop	ar7
+      000B53 E5 81            [12] 2051 	mov	a,sp
+      000B55 24 F8            [12] 2052 	add	a,#0xf8
+      000B57 F8               [12] 2053 	mov	r0,a
+      000B58 86 82            [24] 2054 	mov	dpl,@r0
+      000B5A 08               [12] 2055 	inc	r0
+      000B5B 86 83            [24] 2056 	mov	dph,@r0
+      000B5D 08               [12] 2057 	inc	r0
+      000B5E 86 F0            [24] 2058 	mov	b,@r0
+      000B60 EA               [12] 2059 	mov	a,r2
+      000B61 12r00r00         [24] 2060 	lcall	__gptrput
+      000B64 A3               [24] 2061 	inc	dptr
+      000B65 EB               [12] 2062 	mov	a,r3
+      000B66 12r00r00         [24] 2063 	lcall	__gptrput
+      000B69 A3               [24] 2064 	inc	dptr
+      000B6A EC               [12] 2065 	mov	a,r4
+      000B6B 12r00r00         [24] 2066 	lcall	__gptrput
+                                   2067 ;	../../../../core/net/mac/csma.c:337: if(q->buf != NULL) {
+      000B6E EA               [12] 2068 	mov	a,r2
+      000B6F 4B               [12] 2069 	orl	a,r3
+      000B70 70 03            [24] 2070 	jnz	00183$
+      000B72 02r0Dr9A         [24] 2071 	ljmp	00117$
+      000B75                       2072 00183$:
+                                   2073 ;	../../../../core/net/mac/csma.c:338: struct qbuf_metadata *metadata = (struct qbuf_metadata *)q->ptr;
+      000B75 8D 82            [24] 2074 	mov	dpl,r5
+      000B77 8E 83            [24] 2075 	mov	dph,r6
+      000B79 8F F0            [24] 2076 	mov	b,r7
+      000B7B 12r00r00         [24] 2077 	lcall	__gptrget
+      000B7E FA               [12] 2078 	mov	r2,a
+      000B7F A3               [24] 2079 	inc	dptr
+      000B80 12r00r00         [24] 2080 	lcall	__gptrget
+      000B83 FB               [12] 2081 	mov	r3,a
+      000B84 A3               [24] 2082 	inc	dptr
+      000B85 12r00r00         [24] 2083 	lcall	__gptrget
+      000B88 FC               [12] 2084 	mov	r4,a
+      000B89 8A 07            [24] 2085 	mov	ar7,r2
+      000B8B 8B 06            [24] 2086 	mov	ar6,r3
+      000B8D 8C 05            [24] 2087 	mov	ar5,r4
+                                   2088 ;	../../../../core/net/mac/csma.c:340: if(packetbuf_attr(PACKETBUF_ATTR_MAX_MAC_TRANSMISSIONS) == 0) {
+      000B8F 75 82 09         [24] 2089 	mov	dpl,#0x09
+      000B92 C0 07            [24] 2090 	push	ar7
+      000B94 C0 06            [24] 2091 	push	ar6
+      000B96 C0 05            [24] 2092 	push	ar5
+      000B98 78r00            [12] 2093 	mov	r0,#_packetbuf_attr
+      000B9A 79s00            [12] 2094 	mov	r1,#(_packetbuf_attr >> 8)
+      000B9C 7As00            [12] 2095 	mov	r2,#(_packetbuf_attr >> 16)
+      000B9E 12r00r00         [24] 2096 	lcall	__sdcc_banked_call
+      000BA1 E5 82            [12] 2097 	mov	a,dpl
+      000BA3 85 83 F0         [24] 2098 	mov	b,dph
+      000BA6 D0 05            [24] 2099 	pop	ar5
+      000BA8 D0 06            [24] 2100 	pop	ar6
+      000BAA D0 07            [24] 2101 	pop	ar7
+      000BAC 45 F0            [12] 2102 	orl	a,b
+      000BAE 70 16            [24] 2103 	jnz	00109$
+                                   2104 ;	../../../../core/net/mac/csma.c:342: metadata->max_transmissions = CSMA_MAX_MAC_TRANSMISSIONS;
+      000BB0 74 06            [12] 2105 	mov	a,#0x06
+      000BB2 2F               [12] 2106 	add	a,r7
+      000BB3 FA               [12] 2107 	mov	r2,a
+      000BB4 E4               [12] 2108 	clr	a
+      000BB5 3E               [12] 2109 	addc	a,r6
+      000BB6 FB               [12] 2110 	mov	r3,a
+      000BB7 8D 04            [24] 2111 	mov	ar4,r5
+      000BB9 8A 82            [24] 2112 	mov	dpl,r2
+      000BBB 8B 83            [24] 2113 	mov	dph,r3
+      000BBD 8C F0            [24] 2114 	mov	b,r4
+      000BBF 74 03            [12] 2115 	mov	a,#0x03
+      000BC1 12r00r00         [24] 2116 	lcall	__gptrput
+      000BC4 80 3D            [24] 2117 	sjmp	00110$
+      000BC6                       2118 00109$:
+                                   2119 ;	../../../../core/net/mac/csma.c:344: metadata->max_transmissions =
+      000BC6 E5 81            [12] 2120 	mov	a,sp
+      000BC8 24 F8            [12] 2121 	add	a,#0xf8
+      000BCA F8               [12] 2122 	mov	r0,a
+      000BCB 74 06            [12] 2123 	mov	a,#0x06
+      000BCD 2F               [12] 2124 	add	a,r7
+      000BCE F6               [12] 2125 	mov	@r0,a
+      000BCF E4               [12] 2126 	clr	a
+      000BD0 3E               [12] 2127 	addc	a,r6
+      000BD1 08               [12] 2128 	inc	r0
+      000BD2 F6               [12] 2129 	mov	@r0,a
+      000BD3 08               [12] 2130 	inc	r0
+      000BD4 A6 05            [24] 2131 	mov	@r0,ar5
+                                   2132 ;	../../../../core/net/mac/csma.c:345: packetbuf_attr(PACKETBUF_ATTR_MAX_MAC_TRANSMISSIONS);
+      000BD6 75 82 09         [24] 2133 	mov	dpl,#0x09
+      000BD9 C0 07            [24] 2134 	push	ar7
+      000BDB C0 06            [24] 2135 	push	ar6
+      000BDD C0 05            [24] 2136 	push	ar5
+      000BDF 78r00            [12] 2137 	mov	r0,#_packetbuf_attr
+      000BE1 79s00            [12] 2138 	mov	r1,#(_packetbuf_attr >> 8)
+      000BE3 7As00            [12] 2139 	mov	r2,#(_packetbuf_attr >> 16)
+      000BE5 12r00r00         [24] 2140 	lcall	__sdcc_banked_call
+      000BE8 AB 82            [24] 2141 	mov	r3,dpl
+      000BEA AC 83            [24] 2142 	mov	r4,dph
+      000BEC D0 05            [24] 2143 	pop	ar5
+      000BEE D0 06            [24] 2144 	pop	ar6
+      000BF0 D0 07            [24] 2145 	pop	ar7
+      000BF2 E5 81            [12] 2146 	mov	a,sp
+      000BF4 24 F8            [12] 2147 	add	a,#0xf8
+      000BF6 F8               [12] 2148 	mov	r0,a
+      000BF7 86 82            [24] 2149 	mov	dpl,@r0
+      000BF9 08               [12] 2150 	inc	r0
+      000BFA 86 83            [24] 2151 	mov	dph,@r0
+      000BFC 08               [12] 2152 	inc	r0
+      000BFD 86 F0            [24] 2153 	mov	b,@r0
+      000BFF EB               [12] 2154 	mov	a,r3
+      000C00 12r00r00         [24] 2155 	lcall	__gptrput
+      000C03                       2156 00110$:
+                                   2157 ;	../../../../core/net/mac/csma.c:347: metadata->sent = sent;
+      000C03 8F 82            [24] 2158 	mov	dpl,r7
+      000C05 8E 83            [24] 2159 	mov	dph,r6
+      000C07 8D F0            [24] 2160 	mov	b,r5
+      000C09 E5 81            [12] 2161 	mov	a,sp
+      000C0B 24 F5            [12] 2162 	add	a,#0xf5
+      000C0D F8               [12] 2163 	mov	r0,a
+      000C0E E6               [12] 2164 	mov	a,@r0
+      000C0F 12r00r00         [24] 2165 	lcall	__gptrput
+      000C12 A3               [24] 2166 	inc	dptr
+      000C13 08               [12] 2167 	inc	r0
+      000C14 E6               [12] 2168 	mov	a,@r0
+      000C15 12r00r00         [24] 2169 	lcall	__gptrput
+      000C18 A3               [24] 2170 	inc	dptr
+      000C19 08               [12] 2171 	inc	r0
+      000C1A E6               [12] 2172 	mov	a,@r0
+      000C1B 12r00r00         [24] 2173 	lcall	__gptrput
+                                   2174 ;	../../../../core/net/mac/csma.c:348: metadata->cptr = ptr;
+      000C1E 74 03            [12] 2175 	mov	a,#0x03
+      000C20 2F               [12] 2176 	add	a,r7
+      000C21 FA               [12] 2177 	mov	r2,a
+      000C22 E4               [12] 2178 	clr	a
+      000C23 3E               [12] 2179 	addc	a,r6
+      000C24 FB               [12] 2180 	mov	r3,a
+      000C25 8D 04            [24] 2181 	mov	ar4,r5
+      000C27 8A 82            [24] 2182 	mov	dpl,r2
+      000C29 8B 83            [24] 2183 	mov	dph,r3
+      000C2B 8C F0            [24] 2184 	mov	b,r4
+      000C2D E5 81            [12] 2185 	mov	a,sp
+      000C2F 24 EF            [12] 2186 	add	a,#0xef
+      000C31 F8               [12] 2187 	mov	r0,a
+      000C32 E6               [12] 2188 	mov	a,@r0
+      000C33 12r00r00         [24] 2189 	lcall	__gptrput
+      000C36 A3               [24] 2190 	inc	dptr
+      000C37 08               [12] 2191 	inc	r0
+      000C38 E6               [12] 2192 	mov	a,@r0
+      000C39 12r00r00         [24] 2193 	lcall	__gptrput
+      000C3C A3               [24] 2194 	inc	dptr
+      000C3D 08               [12] 2195 	inc	r0
+      000C3E E6               [12] 2196 	mov	a,@r0
+      000C3F 12r00r00         [24] 2197 	lcall	__gptrput
+                                   2198 ;	../../../../core/net/mac/csma.c:350: if(packetbuf_attr(PACKETBUF_ATTR_PACKET_TYPE) ==
+      000C42 75 82 0E         [24] 2199 	mov	dpl,#0x0E
+      000C45 78r00            [12] 2200 	mov	r0,#_packetbuf_attr
+      000C47 79s00            [12] 2201 	mov	r1,#(_packetbuf_attr >> 8)
+      000C49 7As00            [12] 2202 	mov	r2,#(_packetbuf_attr >> 16)
+      000C4B 12r00r00         [24] 2203 	lcall	__sdcc_banked_call
+      000C4E AB 82            [24] 2204 	mov	r3,dpl
+      000C50 AC 83            [24] 2205 	mov	r4,dph
+      000C52 BB 01 50         [24] 2206 	cjne	r3,#0x01,00112$
+      000C55 BC 00 4D         [24] 2207 	cjne	r4,#0x00,00112$
+                                   2208 ;	../../../../core/net/mac/csma.c:352: list_push(n->queued_packet_list, q);
+      000C58 A8 81            [24] 2209 	mov	r0,sp
+      000C5A 18               [12] 2210 	dec	r0
+      000C5B 18               [12] 2211 	dec	r0
+      000C5C 86 07            [24] 2212 	mov	ar7,@r0
+      000C5E 08               [12] 2213 	inc	r0
+      000C5F 86 06            [24] 2214 	mov	ar6,@r0
+      000C61 08               [12] 2215 	inc	r0
+      000C62 86 05            [24] 2216 	mov	ar5,@r0
+      000C64 E5 81            [12] 2217 	mov	a,sp
+      000C66 24 FB            [12] 2218 	add	a,#0xfb
+      000C68 F8               [12] 2219 	mov	r0,a
+      000C69 74 27            [12] 2220 	mov	a,#0x27
+      000C6B 26               [12] 2221 	add	a,@r0
+      000C6C FA               [12] 2222 	mov	r2,a
+      000C6D E4               [12] 2223 	clr	a
+      000C6E 08               [12] 2224 	inc	r0
+      000C6F 36               [12] 2225 	addc	a,@r0
+      000C70 FB               [12] 2226 	mov	r3,a
+      000C71 08               [12] 2227 	inc	r0
+      000C72 86 04            [24] 2228 	mov	ar4,@r0
+      000C74 8A 82            [24] 2229 	mov	dpl,r2
+      000C76 8B 83            [24] 2230 	mov	dph,r3
+      000C78 8C F0            [24] 2231 	mov	b,r4
+      000C7A 12r00r00         [24] 2232 	lcall	__gptrget
+      000C7D FA               [12] 2233 	mov	r2,a
+      000C7E A3               [24] 2234 	inc	dptr
+      000C7F 12r00r00         [24] 2235 	lcall	__gptrget
+      000C82 FB               [12] 2236 	mov	r3,a
+      000C83 A3               [24] 2237 	inc	dptr
+      000C84 12r00r00         [24] 2238 	lcall	__gptrget
+      000C87 FC               [12] 2239 	mov	r4,a
+      000C88 C0 07            [24] 2240 	push	ar7
+      000C8A C0 06            [24] 2241 	push	ar6
+      000C8C C0 05            [24] 2242 	push	ar5
+      000C8E 8A 82            [24] 2243 	mov	dpl,r2
+      000C90 8B 83            [24] 2244 	mov	dph,r3
+      000C92 8C F0            [24] 2245 	mov	b,r4
+      000C94 78r00            [12] 2246 	mov	r0,#_list_push
+      000C96 79s00            [12] 2247 	mov	r1,#(_list_push >> 8)
+      000C98 7As00            [12] 2248 	mov	r2,#(_list_push >> 16)
+      000C9A 12r00r00         [24] 2249 	lcall	__sdcc_banked_call
+      000C9D 15 81            [12] 2250 	dec	sp
+      000C9F 15 81            [12] 2251 	dec	sp
+      000CA1 15 81            [12] 2252 	dec	sp
+      000CA3 80 4B            [24] 2253 	sjmp	00113$
+      000CA5                       2254 00112$:
+                                   2255 ;	../../../../core/net/mac/csma.c:354: list_add(n->queued_packet_list, q);
+      000CA5 A8 81            [24] 2256 	mov	r0,sp
+      000CA7 18               [12] 2257 	dec	r0
+      000CA8 18               [12] 2258 	dec	r0
+      000CA9 86 07            [24] 2259 	mov	ar7,@r0
+      000CAB 08               [12] 2260 	inc	r0
+      000CAC 86 06            [24] 2261 	mov	ar6,@r0
+      000CAE 08               [12] 2262 	inc	r0
+      000CAF 86 05            [24] 2263 	mov	ar5,@r0
+      000CB1 E5 81            [12] 2264 	mov	a,sp
+      000CB3 24 FB            [12] 2265 	add	a,#0xfb
+      000CB5 F8               [12] 2266 	mov	r0,a
+      000CB6 74 27            [12] 2267 	mov	a,#0x27
+      000CB8 26               [12] 2268 	add	a,@r0
+      000CB9 FA               [12] 2269 	mov	r2,a
+      000CBA E4               [12] 2270 	clr	a
+      000CBB 08               [12] 2271 	inc	r0
+      000CBC 36               [12] 2272 	addc	a,@r0
+      000CBD FB               [12] 2273 	mov	r3,a
+      000CBE 08               [12] 2274 	inc	r0
+      000CBF 86 04            [24] 2275 	mov	ar4,@r0
+      000CC1 8A 82            [24] 2276 	mov	dpl,r2
+      000CC3 8B 83            [24] 2277 	mov	dph,r3
+      000CC5 8C F0            [24] 2278 	mov	b,r4
+      000CC7 12r00r00         [24] 2279 	lcall	__gptrget
+      000CCA FA               [12] 2280 	mov	r2,a
+      000CCB A3               [24] 2281 	inc	dptr
+      000CCC 12r00r00         [24] 2282 	lcall	__gptrget
+      000CCF FB               [12] 2283 	mov	r3,a
+      000CD0 A3               [24] 2284 	inc	dptr
+      000CD1 12r00r00         [24] 2285 	lcall	__gptrget
+      000CD4 FC               [12] 2286 	mov	r4,a
+      000CD5 C0 07            [24] 2287 	push	ar7
+      000CD7 C0 06            [24] 2288 	push	ar6
+      000CD9 C0 05            [24] 2289 	push	ar5
+      000CDB 8A 82            [24] 2290 	mov	dpl,r2
+      000CDD 8B 83            [24] 2291 	mov	dph,r3
+      000CDF 8C F0            [24] 2292 	mov	b,r4
+      000CE1 78r00            [12] 2293 	mov	r0,#_list_add
+      000CE3 79s00            [12] 2294 	mov	r1,#(_list_add >> 8)
+      000CE5 7As00            [12] 2295 	mov	r2,#(_list_add >> 16)
+      000CE7 12r00r00         [24] 2296 	lcall	__sdcc_banked_call
+      000CEA 15 81            [12] 2297 	dec	sp
+      000CEC 15 81            [12] 2298 	dec	sp
+      000CEE 15 81            [12] 2299 	dec	sp
+      000CF0                       2300 00113$:
+                                   2301 ;	../../../../core/net/mac/csma.c:358: if(list_head(n->queued_packet_list) == q) {
+      000CF0 E5 81            [12] 2302 	mov	a,sp
+      000CF2 24 FB            [12] 2303 	add	a,#0xfb
+      000CF4 F8               [12] 2304 	mov	r0,a
+      000CF5 74 27            [12] 2305 	mov	a,#0x27
+      000CF7 26               [12] 2306 	add	a,@r0
+      000CF8 FA               [12] 2307 	mov	r2,a
+      000CF9 E4               [12] 2308 	clr	a
+      000CFA 08               [12] 2309 	inc	r0
+      000CFB 36               [12] 2310 	addc	a,@r0
+      000CFC FB               [12] 2311 	mov	r3,a
+      000CFD 08               [12] 2312 	inc	r0
+      000CFE 86 04            [24] 2313 	mov	ar4,@r0
+      000D00 8A 82            [24] 2314 	mov	dpl,r2
+      000D02 8B 83            [24] 2315 	mov	dph,r3
+      000D04 8C F0            [24] 2316 	mov	b,r4
+      000D06 12r00r00         [24] 2317 	lcall	__gptrget
+      000D09 FA               [12] 2318 	mov	r2,a
+      000D0A A3               [24] 2319 	inc	dptr
+      000D0B 12r00r00         [24] 2320 	lcall	__gptrget
+      000D0E FB               [12] 2321 	mov	r3,a
+      000D0F A3               [24] 2322 	inc	dptr
+      000D10 12r00r00         [24] 2323 	lcall	__gptrget
+      000D13 FC               [12] 2324 	mov	r4,a
+      000D14 8A 82            [24] 2325 	mov	dpl,r2
+      000D16 8B 83            [24] 2326 	mov	dph,r3
+      000D18 8C F0            [24] 2327 	mov	b,r4
+      000D1A 78r00            [12] 2328 	mov	r0,#_list_head
+      000D1C 79s00            [12] 2329 	mov	r1,#(_list_head >> 8)
+      000D1E 7As00            [12] 2330 	mov	r2,#(_list_head >> 16)
+      000D20 12r00r00         [24] 2331 	lcall	__sdcc_banked_call
+      000D23 AF 82            [24] 2332 	mov	r7,dpl
+      000D25 AE 83            [24] 2333 	mov	r6,dph
+      000D27 AD F0            [24] 2334 	mov	r5,b
+      000D29 A8 81            [24] 2335 	mov	r0,sp
+      000D2B 18               [12] 2336 	dec	r0
+      000D2C 18               [12] 2337 	dec	r0
+      000D2D 86 02            [24] 2338 	mov	ar2,@r0
+      000D2F 08               [12] 2339 	inc	r0
+      000D30 86 03            [24] 2340 	mov	ar3,@r0
+      000D32 08               [12] 2341 	inc	r0
+      000D33 86 04            [24] 2342 	mov	ar4,@r0
+      000D35 C0 02            [24] 2343 	push	ar2
+      000D37 C0 03            [24] 2344 	push	ar3
+      000D39 C0 04            [24] 2345 	push	ar4
+      000D3B 8F 82            [24] 2346 	mov	dpl,r7
+      000D3D 8E 83            [24] 2347 	mov	dph,r6
+      000D3F 8D F0            [24] 2348 	mov	b,r5
+      000D41 12r00r00         [24] 2349 	lcall	___gptr_cmp
+      000D44 15 81            [12] 2350 	dec	sp
+      000D46 15 81            [12] 2351 	dec	sp
+      000D48 15 81            [12] 2352 	dec	sp
+      000D4A 60 02            [24] 2353 	jz	00188$
+      000D4C 80 49            [24] 2354 	sjmp	00115$
+      000D4E                       2355 00188$:
+                                   2356 ;	../../../../core/net/mac/csma.c:359: ctimer_set(&n->transmit_timer, 0, transmit_packet_list, n);
+      000D4E E5 81            [12] 2357 	mov	a,sp
+      000D50 24 FB            [12] 2358 	add	a,#0xfb
+      000D52 F8               [12] 2359 	mov	r0,a
+      000D53 86 07            [24] 2360 	mov	ar7,@r0
+      000D55 08               [12] 2361 	inc	r0
+      000D56 86 06            [24] 2362 	mov	ar6,@r0
+      000D58 08               [12] 2363 	inc	r0
+      000D59 86 05            [24] 2364 	mov	ar5,@r0
+      000D5B E5 81            [12] 2365 	mov	a,sp
+      000D5D 24 FB            [12] 2366 	add	a,#0xfb
+      000D5F F8               [12] 2367 	mov	r0,a
+      000D60 74 0B            [12] 2368 	mov	a,#0x0B
+      000D62 26               [12] 2369 	add	a,@r0
+      000D63 FA               [12] 2370 	mov	r2,a
+      000D64 E4               [12] 2371 	clr	a
+      000D65 08               [12] 2372 	inc	r0
+      000D66 36               [12] 2373 	addc	a,@r0
+      000D67 FB               [12] 2374 	mov	r3,a
+      000D68 08               [12] 2375 	inc	r0
+      000D69 86 04            [24] 2376 	mov	ar4,@r0
+      000D6B C0 07            [24] 2377 	push	ar7
+      000D6D C0 06            [24] 2378 	push	ar6
+      000D6F C0 05            [24] 2379 	push	ar5
+      000D71 74rDB            [12] 2380 	mov	a,#_transmit_packet_list
+      000D73 C0 E0            [24] 2381 	push	acc
+      000D75 74s00            [12] 2382 	mov	a,#(_transmit_packet_list >> 8)
+      000D77 C0 E0            [24] 2383 	push	acc
+      000D79 74s00            [12] 2384 	mov	a,#(_transmit_packet_list >> 16)
+      000D7B C0 E0            [24] 2385 	push	acc
+      000D7D E4               [12] 2386 	clr	a
+      000D7E C0 E0            [24] 2387 	push	acc
+      000D80 C0 E0            [24] 2388 	push	acc
+      000D82 8A 82            [24] 2389 	mov	dpl,r2
+      000D84 8B 83            [24] 2390 	mov	dph,r3
+      000D86 8C F0            [24] 2391 	mov	b,r4
+      000D88 78r00            [12] 2392 	mov	r0,#_ctimer_set
+      000D8A 79s00            [12] 2393 	mov	r1,#(_ctimer_set >> 8)
+      000D8C 7As00            [12] 2394 	mov	r2,#(_ctimer_set >> 16)
+      000D8E 12r00r00         [24] 2395 	lcall	__sdcc_banked_call
+      000D91 E5 81            [12] 2396 	mov	a,sp
+      000D93 24 F8            [12] 2397 	add	a,#0xf8
+      000D95 F5 81            [12] 2398 	mov	sp,a
+      000D97                       2399 00115$:
+                                   2400 ;	../../../../core/net/mac/csma.c:361: return;
+      000D97 02r0Fr5D         [24] 2401 	ljmp	00136$
+      000D9A                       2402 00117$:
+                                   2403 ;	../../../../core/net/mac/csma.c:363: memb_free(&metadata_memb, q->ptr);
+      000D9A 8D 82            [24] 2404 	mov	dpl,r5
+      000D9C 8E 83            [24] 2405 	mov	dph,r6
+      000D9E 8F F0            [24] 2406 	mov	b,r7
+      000DA0 12r00r00         [24] 2407 	lcall	__gptrget
+      000DA3 FD               [12] 2408 	mov	r5,a
+      000DA4 A3               [24] 2409 	inc	dptr
+      000DA5 12r00r00         [24] 2410 	lcall	__gptrget
+      000DA8 FE               [12] 2411 	mov	r6,a
+      000DA9 A3               [24] 2412 	inc	dptr
+      000DAA 12r00r00         [24] 2413 	lcall	__gptrget
+      000DAD FF               [12] 2414 	mov	r7,a
+      000DAE C0 05            [24] 2415 	push	ar5
+      000DB0 C0 06            [24] 2416 	push	ar6
+      000DB2 C0 07            [24] 2417 	push	ar7
+      000DB4 90r00r14         [24] 2418 	mov	dptr,#_metadata_memb
+      000DB7 75 F0 00         [24] 2419 	mov	b,#0x00
+      000DBA 78r00            [12] 2420 	mov	r0,#_memb_free
+      000DBC 79s00            [12] 2421 	mov	r1,#(_memb_free >> 8)
+      000DBE 7As00            [12] 2422 	mov	r2,#(_memb_free >> 16)
+      000DC0 12r00r00         [24] 2423 	lcall	__sdcc_banked_call
+      000DC3 15 81            [12] 2424 	dec	sp
+      000DC5 15 81            [12] 2425 	dec	sp
+      000DC7 15 81            [12] 2426 	dec	sp
+      000DC9                       2427 00119$:
+                                   2428 ;	../../../../core/net/mac/csma.c:366: memb_free(&packet_memb, q);
+      000DC9 A8 81            [24] 2429 	mov	r0,sp
+      000DCB 18               [12] 2430 	dec	r0
+      000DCC 18               [12] 2431 	dec	r0
+      000DCD 86 02            [24] 2432 	mov	ar2,@r0
+      000DCF 08               [12] 2433 	inc	r0
+      000DD0 86 03            [24] 2434 	mov	ar3,@r0
+      000DD2 08               [12] 2435 	inc	r0
+      000DD3 86 04            [24] 2436 	mov	ar4,@r0
+      000DD5 C0 02            [24] 2437 	push	ar2
+      000DD7 C0 03            [24] 2438 	push	ar3
+      000DD9 C0 04            [24] 2439 	push	ar4
+      000DDB 90r00r0A         [24] 2440 	mov	dptr,#_packet_memb
+      000DDE 75 F0 00         [24] 2441 	mov	b,#0x00
+      000DE1 78r00            [12] 2442 	mov	r0,#_memb_free
+      000DE3 79s00            [12] 2443 	mov	r1,#(_memb_free >> 8)
+      000DE5 7As00            [12] 2444 	mov	r2,#(_memb_free >> 16)
+      000DE7 12r00r00         [24] 2445 	lcall	__sdcc_banked_call
+      000DEA 15 81            [12] 2446 	dec	sp
+      000DEC 15 81            [12] 2447 	dec	sp
+      000DEE 15 81            [12] 2448 	dec	sp
+      000DF0                       2449 00121$:
+                                   2450 ;	../../../../core/net/mac/csma.c:370: if(list_length(n->queued_packet_list) == 0) {
+      000DF0 E5 81            [12] 2451 	mov	a,sp
+      000DF2 24 FB            [12] 2452 	add	a,#0xfb
+      000DF4 F8               [12] 2453 	mov	r0,a
+      000DF5 74 27            [12] 2454 	mov	a,#0x27
+      000DF7 26               [12] 2455 	add	a,@r0
+      000DF8 FD               [12] 2456 	mov	r5,a
+      000DF9 E4               [12] 2457 	clr	a
+      000DFA 08               [12] 2458 	inc	r0
+      000DFB 36               [12] 2459 	addc	a,@r0
+      000DFC FE               [12] 2460 	mov	r6,a
+      000DFD 08               [12] 2461 	inc	r0
+      000DFE 86 07            [24] 2462 	mov	ar7,@r0
+      000E00 8D 82            [24] 2463 	mov	dpl,r5
+      000E02 8E 83            [24] 2464 	mov	dph,r6
+      000E04 8F F0            [24] 2465 	mov	b,r7
+      000E06 12r00r00         [24] 2466 	lcall	__gptrget
+      000E09 FD               [12] 2467 	mov	r5,a
+      000E0A A3               [24] 2468 	inc	dptr
+      000E0B 12r00r00         [24] 2469 	lcall	__gptrget
+      000E0E FE               [12] 2470 	mov	r6,a
+      000E0F A3               [24] 2471 	inc	dptr
+      000E10 12r00r00         [24] 2472 	lcall	__gptrget
+      000E13 FF               [12] 2473 	mov	r7,a
+      000E14 8D 82            [24] 2474 	mov	dpl,r5
+      000E16 8E 83            [24] 2475 	mov	dph,r6
+      000E18 8F F0            [24] 2476 	mov	b,r7
+      000E1A 78r00            [12] 2477 	mov	r0,#_list_length
+      000E1C 79s00            [12] 2478 	mov	r1,#(_list_length >> 8)
+      000E1E 7As00            [12] 2479 	mov	r2,#(_list_length >> 16)
+      000E20 12r00r00         [24] 2480 	lcall	__sdcc_banked_call
+      000E23 E5 82            [12] 2481 	mov	a,dpl
+      000E25 85 83 F0         [24] 2482 	mov	b,dph
+      000E28 45 F0            [12] 2483 	orl	a,b
+      000E2A 70 5B            [24] 2484 	jnz	00128$
+                                   2485 ;	../../../../core/net/mac/csma.c:371: list_remove(neighbor_list, n);
+      000E2C E5 81            [12] 2486 	mov	a,sp
+      000E2E 24 FB            [12] 2487 	add	a,#0xfb
+      000E30 F8               [12] 2488 	mov	r0,a
+      000E31 86 02            [24] 2489 	mov	ar2,@r0
+      000E33 08               [12] 2490 	inc	r0
+      000E34 86 03            [24] 2491 	mov	ar3,@r0
+      000E36 08               [12] 2492 	inc	r0
+      000E37 86 04            [24] 2493 	mov	ar4,@r0
+      000E39 90r00r21         [24] 2494 	mov	dptr,#_neighbor_list
+      000E3C E0               [24] 2495 	movx	a,@dptr
+      000E3D FD               [12] 2496 	mov	r5,a
+      000E3E A3               [24] 2497 	inc	dptr
+      000E3F E0               [24] 2498 	movx	a,@dptr
+      000E40 FE               [12] 2499 	mov	r6,a
+      000E41 A3               [24] 2500 	inc	dptr
+      000E42 E0               [24] 2501 	movx	a,@dptr
+      000E43 FF               [12] 2502 	mov	r7,a
+      000E44 C0 02            [24] 2503 	push	ar2
+      000E46 C0 03            [24] 2504 	push	ar3
+      000E48 C0 04            [24] 2505 	push	ar4
+      000E4A 8D 82            [24] 2506 	mov	dpl,r5
+      000E4C 8E 83            [24] 2507 	mov	dph,r6
+      000E4E 8F F0            [24] 2508 	mov	b,r7
+      000E50 78r00            [12] 2509 	mov	r0,#_list_remove
+      000E52 79s00            [12] 2510 	mov	r1,#(_list_remove >> 8)
+      000E54 7As00            [12] 2511 	mov	r2,#(_list_remove >> 16)
+      000E56 12r00r00         [24] 2512 	lcall	__sdcc_banked_call
+      000E59 15 81            [12] 2513 	dec	sp
+      000E5B 15 81            [12] 2514 	dec	sp
+      000E5D 15 81            [12] 2515 	dec	sp
+                                   2516 ;	../../../../core/net/mac/csma.c:372: memb_free(&neighbor_memb, n);
+      000E5F E5 81            [12] 2517 	mov	a,sp
+      000E61 24 FB            [12] 2518 	add	a,#0xfb
+      000E63 F8               [12] 2519 	mov	r0,a
+      000E64 86 02            [24] 2520 	mov	ar2,@r0
+      000E66 08               [12] 2521 	inc	r0
+      000E67 86 03            [24] 2522 	mov	ar3,@r0
+      000E69 08               [12] 2523 	inc	r0
+      000E6A 86 04            [24] 2524 	mov	ar4,@r0
+      000E6C C0 02            [24] 2525 	push	ar2
+      000E6E C0 03            [24] 2526 	push	ar3
+      000E70 C0 04            [24] 2527 	push	ar4
+      000E72 90r00r00         [24] 2528 	mov	dptr,#_neighbor_memb
+      000E75 75 F0 00         [24] 2529 	mov	b,#0x00
+      000E78 78r00            [12] 2530 	mov	r0,#_memb_free
+      000E7A 79s00            [12] 2531 	mov	r1,#(_memb_free >> 8)
+      000E7C 7As00            [12] 2532 	mov	r2,#(_memb_free >> 16)
+      000E7E 12r00r00         [24] 2533 	lcall	__sdcc_banked_call
+      000E81 15 81            [12] 2534 	dec	sp
+      000E83 15 81            [12] 2535 	dec	sp
+      000E85 15 81            [12] 2536 	dec	sp
+                                   2537 ;	../../../../core/net/mac/csma.c:378: mac_call_sent_callback(sent, ptr, MAC_TX_ERR, 1);
+      000E87                       2538 00128$:
+      000E87 E5 81            [12] 2539 	mov	a,sp
+      000E89 24 F5            [12] 2540 	add	a,#0xf5
+      000E8B F8               [12] 2541 	mov	r0,a
+      000E8C E6               [12] 2542 	mov	a,@r0
+      000E8D 08               [12] 2543 	inc	r0
+      000E8E 46               [12] 2544 	orl	a,@r0
+      000E8F 70 03            [24] 2545 	jnz	00190$
+      000E91 02r0Fr5D         [24] 2546 	ljmp	00136$
+      000E94                       2547 00190$:
+      000E94 74 01            [12] 2548 	mov	a,#0x01
+      000E96 C0 E0            [24] 2549 	push	acc
+      000E98 E4               [12] 2550 	clr	a
+      000E99 C0 E0            [24] 2551 	push	acc
+      000E9B 74 04            [12] 2552 	mov	a,#0x04
+      000E9D C0 E0            [24] 2553 	push	acc
+      000E9F E4               [12] 2554 	clr	a
+      000EA0 C0 E0            [24] 2555 	push	acc
+      000EA2 E5 81            [12] 2556 	mov	a,sp
+      000EA4 24 F1            [12] 2557 	add	a,#0xf1
+      000EA6 F8               [12] 2558 	mov	r0,a
+      000EA7 E6               [12] 2559 	mov	a,@r0
+      000EA8 C0 E0            [24] 2560 	push	acc
+      000EAA 08               [12] 2561 	inc	r0
+      000EAB E6               [12] 2562 	mov	a,@r0
+      000EAC C0 E0            [24] 2563 	push	acc
+      000EAE 08               [12] 2564 	inc	r0
+      000EAF E6               [12] 2565 	mov	a,@r0
+      000EB0 C0 E0            [24] 2566 	push	acc
+      000EB2 E5 81            [12] 2567 	mov	a,sp
+      000EB4 24 E8            [12] 2568 	add	a,#0xe8
+      000EB6 F8               [12] 2569 	mov	r0,a
+      000EB7 86 82            [24] 2570 	mov	dpl,@r0
+      000EB9 08               [12] 2571 	inc	r0
+      000EBA 86 83            [24] 2572 	mov	dph,@r0
+      000EBC 08               [12] 2573 	inc	r0
+      000EBD 86 F0            [24] 2574 	mov	b,@r0
+      000EBF D0 02            [24] 2575 	pop	ar2
+      000EC1 D0 01            [24] 2576 	pop	ar1
+      000EC3 D0 00            [24] 2577 	pop	ar0
+      000EC5 12r00r00         [24] 2578 	lcall	__sdcc_banked_call
+      000EC8 E5 81            [12] 2579 	mov	a,sp
+      000ECA 24 FC            [12] 2580 	add	a,#0xfc
+      000ECC F5 81            [12] 2581 	mov	sp,a
+      000ECE 02r0Fr5D         [24] 2582 	ljmp	00136$
+      000ED1                       2583 00134$:
+                                   2584 ;	../../../../core/net/mac/csma.c:382: NETSTACK_RDC.send(packet_sent, ptr);
+      000ED1 90r00r06         [24] 2585 	mov	dptr,#(_nullrdc_driver + 0x0006)
+      000ED4 E4               [12] 2586 	clr	a
+      000ED5 93               [24] 2587 	movc	a,@a+dptr
+      000ED6 FD               [12] 2588 	mov	r5,a
+      000ED7 A3               [24] 2589 	inc	dptr
+      000ED8 E4               [12] 2590 	clr	a
+      000ED9 93               [24] 2591 	movc	a,@a+dptr
+      000EDA FE               [12] 2592 	mov	r6,a
+      000EDB A3               [24] 2593 	inc	dptr
+      000EDC E4               [12] 2594 	clr	a
+      000EDD 93               [24] 2595 	movc	a,@a+dptr
+      000EDE FF               [12] 2596 	mov	r7,a
+      000EDF C0 07            [24] 2597 	push	ar7
+      000EE1 C0 06            [24] 2598 	push	ar6
+      000EE3 C0 05            [24] 2599 	push	ar5
+      000EE5 E5 81            [12] 2600 	mov	a,sp
+      000EE7 24 EC            [12] 2601 	add	a,#0xec
+      000EE9 F8               [12] 2602 	mov	r0,a
+      000EEA E6               [12] 2603 	mov	a,@r0
+      000EEB C0 E0            [24] 2604 	push	acc
+      000EED 08               [12] 2605 	inc	r0
+      000EEE E6               [12] 2606 	mov	a,@r0
+      000EEF C0 E0            [24] 2607 	push	acc
+      000EF1 08               [12] 2608 	inc	r0
+      000EF2 E6               [12] 2609 	mov	a,@r0
+      000EF3 C0 E0            [24] 2610 	push	acc
+      000EF5 C0 05            [24] 2611 	push	ar5
+      000EF7 C0 06            [24] 2612 	push	ar6
+      000EF9 C0 07            [24] 2613 	push	ar7
+      000EFB 90r04rA2         [24] 2614 	mov	dptr,#_packet_sent
+      000EFE 75 F0s00         [24] 2615 	mov	b,#(_packet_sent >> 16)
+      000F01 D0 02            [24] 2616 	pop	ar2
+      000F03 D0 01            [24] 2617 	pop	ar1
+      000F05 D0 00            [24] 2618 	pop	ar0
+      000F07 12r00r00         [24] 2619 	lcall	__sdcc_banked_call
+      000F0A 15 81            [12] 2620 	dec	sp
+      000F0C 15 81            [12] 2621 	dec	sp
+      000F0E 15 81            [12] 2622 	dec	sp
+      000F10 D0 05            [24] 2623 	pop	ar5
+      000F12 D0 06            [24] 2624 	pop	ar6
+      000F14 D0 07            [24] 2625 	pop	ar7
+                                   2626 ;	../../../../core/net/mac/csma.c:383: if(sent) {
+      000F16 E5 81            [12] 2627 	mov	a,sp
+      000F18 24 F5            [12] 2628 	add	a,#0xf5
+      000F1A F8               [12] 2629 	mov	r0,a
+      000F1B E6               [12] 2630 	mov	a,@r0
+      000F1C 08               [12] 2631 	inc	r0
+      000F1D 46               [12] 2632 	orl	a,@r0
+      000F1E 60 3D            [24] 2633 	jz	00136$
+                                   2634 ;	../../../../core/net/mac/csma.c:384: sent(ptr, mac_status, 1);
+      000F20 74 01            [12] 2635 	mov	a,#0x01
+      000F22 C0 E0            [24] 2636 	push	acc
+      000F24 E4               [12] 2637 	clr	a
+      000F25 C0 E0            [24] 2638 	push	acc
+      000F27 90r00rC2         [24] 2639 	mov	dptr,#_mac_status
+      000F2A E0               [24] 2640 	movx	a,@dptr
+      000F2B C0 E0            [24] 2641 	push	acc
+      000F2D A3               [24] 2642 	inc	dptr
+      000F2E E0               [24] 2643 	movx	a,@dptr
+      000F2F C0 E0            [24] 2644 	push	acc
+      000F31 E5 81            [12] 2645 	mov	a,sp
+      000F33 24 F1            [12] 2646 	add	a,#0xf1
+      000F35 F8               [12] 2647 	mov	r0,a
+      000F36 E6               [12] 2648 	mov	a,@r0
+      000F37 C0 E0            [24] 2649 	push	acc
+      000F39 08               [12] 2650 	inc	r0
+      000F3A E6               [12] 2651 	mov	a,@r0
+      000F3B C0 E0            [24] 2652 	push	acc
+      000F3D 08               [12] 2653 	inc	r0
+      000F3E E6               [12] 2654 	mov	a,@r0
+      000F3F C0 E0            [24] 2655 	push	acc
+      000F41 E5 81            [12] 2656 	mov	a,sp
+      000F43 24 E8            [12] 2657 	add	a,#0xe8
+      000F45 F8               [12] 2658 	mov	r0,a
+      000F46 86 82            [24] 2659 	mov	dpl,@r0
+      000F48 08               [12] 2660 	inc	r0
+      000F49 86 83            [24] 2661 	mov	dph,@r0
+      000F4B 08               [12] 2662 	inc	r0
+      000F4C 86 F0            [24] 2663 	mov	b,@r0
+      000F4E D0 02            [24] 2664 	pop	ar2
+      000F50 D0 01            [24] 2665 	pop	ar1
+      000F52 D0 00            [24] 2666 	pop	ar0
+      000F54 12r00r00         [24] 2667 	lcall	__sdcc_banked_call
+      000F57 E5 81            [12] 2668 	mov	a,sp
+      000F59 24 FC            [12] 2669 	add	a,#0xfc
+      000F5B F5 81            [12] 2670 	mov	sp,a
+      000F5D                       2671 00136$:
+      000F5D E5 81            [12] 2672 	mov	a,sp
+      000F5F 24 F4            [12] 2673 	add	a,#0xF4
+      000F61 F5 81            [12] 2674 	mov	sp,a
+      000F63 02r00r00         [24] 2675 	ljmp	__sdcc_banked_ret
+                                   2676 ;------------------------------------------------------------
+                                   2677 ;Allocation info for local variables in function 'input_packet'
+                                   2678 ;------------------------------------------------------------
+                                   2679 ;	../../../../core/net/mac/csma.c:393: input_packet(void)
+                                   2680 ;	-----------------------------------------
+                                   2681 ;	 function input_packet
+                                   2682 ;	-----------------------------------------
+      000F66                       2683 _input_packet:
+                                   2684 ;	../../../../core/net/mac/csma.c:395: NETSTACK_NETWORK.input();
+      000F66 90r00r06         [24] 2685 	mov	dptr,#(_sicslowpan_driver + 0x0006)
+      000F69 E4               [12] 2686 	clr	a
+      000F6A 93               [24] 2687 	movc	a,@a+dptr
+      000F6B FD               [12] 2688 	mov	r5,a
+      000F6C A3               [24] 2689 	inc	dptr
+      000F6D E4               [12] 2690 	clr	a
+      000F6E 93               [24] 2691 	movc	a,@a+dptr
+      000F6F FE               [12] 2692 	mov	r6,a
+      000F70 A3               [24] 2693 	inc	dptr
+      000F71 E4               [12] 2694 	clr	a
+      000F72 93               [24] 2695 	movc	a,@a+dptr
+      000F73 FF               [12] 2696 	mov	r7,a
+      000F74 C0 07            [24] 2697 	push	ar7
+      000F76 C0 06            [24] 2698 	push	ar6
+      000F78 C0 05            [24] 2699 	push	ar5
+      000F7A C0 05            [24] 2700 	push	ar5
+      000F7C C0 06            [24] 2701 	push	ar6
+      000F7E C0 07            [24] 2702 	push	ar7
+      000F80 D0 02            [24] 2703 	pop	ar2
+      000F82 D0 01            [24] 2704 	pop	ar1
+      000F84 D0 00            [24] 2705 	pop	ar0
+      000F86 12r00r00         [24] 2706 	lcall	__sdcc_banked_call
+      000F89 D0 05            [24] 2707 	pop	ar5
+      000F8B D0 06            [24] 2708 	pop	ar6
+      000F8D D0 07            [24] 2709 	pop	ar7
+      000F8F 02r00r00         [24] 2710 	ljmp	__sdcc_banked_ret
+                                   2711 ;------------------------------------------------------------
+                                   2712 ;Allocation info for local variables in function 'on'
+                                   2713 ;------------------------------------------------------------
+                                   2714 ;	../../../../core/net/mac/csma.c:399: on(void)
+                                   2715 ;	-----------------------------------------
+                                   2716 ;	 function on
+                                   2717 ;	-----------------------------------------
+      000F92                       2718 _on:
+                                   2719 ;	../../../../core/net/mac/csma.c:401: return NETSTACK_RDC.on();
+      000F92 90r00r0F         [24] 2720 	mov	dptr,#(_nullrdc_driver + 0x000f)
+      000F95 E4               [12] 2721 	clr	a
+      000F96 93               [24] 2722 	movc	a,@a+dptr
+      000F97 FD               [12] 2723 	mov	r5,a
+      000F98 A3               [24] 2724 	inc	dptr
+      000F99 E4               [12] 2725 	clr	a
+      000F9A 93               [24] 2726 	movc	a,@a+dptr
+      000F9B FE               [12] 2727 	mov	r6,a
+      000F9C A3               [24] 2728 	inc	dptr
+      000F9D E4               [12] 2729 	clr	a
+      000F9E 93               [24] 2730 	movc	a,@a+dptr
+      000F9F FF               [12] 2731 	mov	r7,a
+      000FA0 C0 07            [24] 2732 	push	ar7
+      000FA2 C0 05            [24] 2733 	push	ar5
+      000FA4 C0 06            [24] 2734 	push	ar6
+      000FA6 C0 07            [24] 2735 	push	ar7
+      000FA8 D0 02            [24] 2736 	pop	ar2
+      000FAA D0 01            [24] 2737 	pop	ar1
+      000FAC D0 00            [24] 2738 	pop	ar0
+      000FAE 12r00r00         [24] 2739 	lcall	__sdcc_banked_call
+      000FB1 AD 82            [24] 2740 	mov	r5,dpl
+      000FB3 AE 83            [24] 2741 	mov	r6,dph
+      000FB5 D0 07            [24] 2742 	pop	ar7
+      000FB7 8D 82            [24] 2743 	mov	dpl,r5
+      000FB9 8E 83            [24] 2744 	mov	dph,r6
+      000FBB 02r00r00         [24] 2745 	ljmp	__sdcc_banked_ret
+                                   2746 ;------------------------------------------------------------
+                                   2747 ;Allocation info for local variables in function 'off'
+                                   2748 ;------------------------------------------------------------
+                                   2749 ;keep_radio_on             Allocated to registers r6 r7 
+                                   2750 ;------------------------------------------------------------
+                                   2751 ;	../../../../core/net/mac/csma.c:405: off(int keep_radio_on)
+                                   2752 ;	-----------------------------------------
+                                   2753 ;	 function off
+                                   2754 ;	-----------------------------------------
+      000FBE                       2755 _off:
+      000FBE AE 82            [24] 2756 	mov	r6,dpl
+      000FC0 AF 83            [24] 2757 	mov	r7,dph
+                                   2758 ;	../../../../core/net/mac/csma.c:407: return NETSTACK_RDC.off(keep_radio_on);
+      000FC2 90r00r12         [24] 2759 	mov	dptr,#(_nullrdc_driver + 0x0012)
+      000FC5 E4               [12] 2760 	clr	a
+      000FC6 93               [24] 2761 	movc	a,@a+dptr
+      000FC7 FB               [12] 2762 	mov	r3,a
+      000FC8 A3               [24] 2763 	inc	dptr
+      000FC9 E4               [12] 2764 	clr	a
+      000FCA 93               [24] 2765 	movc	a,@a+dptr
+      000FCB FC               [12] 2766 	mov	r4,a
+      000FCC A3               [24] 2767 	inc	dptr
+      000FCD E4               [12] 2768 	clr	a
+      000FCE 93               [24] 2769 	movc	a,@a+dptr
+      000FCF FD               [12] 2770 	mov	r5,a
+      000FD0 C0 05            [24] 2771 	push	ar5
+      000FD2 C0 03            [24] 2772 	push	ar3
+      000FD4 C0 04            [24] 2773 	push	ar4
+      000FD6 C0 05            [24] 2774 	push	ar5
+      000FD8 8E 82            [24] 2775 	mov	dpl,r6
+      000FDA 8F 83            [24] 2776 	mov	dph,r7
+      000FDC D0 02            [24] 2777 	pop	ar2
+      000FDE D0 01            [24] 2778 	pop	ar1
+      000FE0 D0 00            [24] 2779 	pop	ar0
+      000FE2 12r00r00         [24] 2780 	lcall	__sdcc_banked_call
+      000FE5 AB 82            [24] 2781 	mov	r3,dpl
+      000FE7 AC 83            [24] 2782 	mov	r4,dph
+      000FE9 D0 05            [24] 2783 	pop	ar5
+      000FEB 8B 82            [24] 2784 	mov	dpl,r3
+      000FED 8C 83            [24] 2785 	mov	dph,r4
+      000FEF 02r00r00         [24] 2786 	ljmp	__sdcc_banked_ret
+                                   2787 ;------------------------------------------------------------
+                                   2788 ;Allocation info for local variables in function 'channel_check_interval'
+                                   2789 ;------------------------------------------------------------
+                                   2790 ;	../../../../core/net/mac/csma.c:411: channel_check_interval(void)
+                                   2791 ;	-----------------------------------------
+                                   2792 ;	 function channel_check_interval
+                                   2793 ;	-----------------------------------------
+      000FF2                       2794 _channel_check_interval:
+                                   2795 ;	../../../../core/net/mac/csma.c:413: if(NETSTACK_RDC.channel_check_interval) {
+      000FF2 90r00r15         [24] 2796 	mov	dptr,#(_nullrdc_driver + 0x0015)
+      000FF5 E4               [12] 2797 	clr	a
+      000FF6 93               [24] 2798 	movc	a,@a+dptr
+      000FF7 FD               [12] 2799 	mov	r5,a
+      000FF8 A3               [24] 2800 	inc	dptr
+      000FF9 E4               [12] 2801 	clr	a
+      000FFA 93               [24] 2802 	movc	a,@a+dptr
+      000FFB FE               [12] 2803 	mov	r6,a
+      000FFC A3               [24] 2804 	inc	dptr
+      000FFD E4               [12] 2805 	clr	a
+      000FFE 93               [24] 2806 	movc	a,@a+dptr
+      000FFF FF               [12] 2807 	mov	r7,a
+      001000 ED               [12] 2808 	mov	a,r5
+      001001 4E               [12] 2809 	orl	a,r6
+      001002 60 1D            [24] 2810 	jz	00102$
+                                   2811 ;	../../../../core/net/mac/csma.c:414: return NETSTACK_RDC.channel_check_interval();
+      001004 C0 07            [24] 2812 	push	ar7
+      001006 C0 05            [24] 2813 	push	ar5
+      001008 C0 06            [24] 2814 	push	ar6
+      00100A C0 07            [24] 2815 	push	ar7
+      00100C D0 02            [24] 2816 	pop	ar2
+      00100E D0 01            [24] 2817 	pop	ar1
+      001010 D0 00            [24] 2818 	pop	ar0
+      001012 12r00r00         [24] 2819 	lcall	__sdcc_banked_call
+      001015 AD 82            [24] 2820 	mov	r5,dpl
+      001017 AE 83            [24] 2821 	mov	r6,dph
+      001019 D0 07            [24] 2822 	pop	ar7
+      00101B 8D 82            [24] 2823 	mov	dpl,r5
+      00101D 8E 83            [24] 2824 	mov	dph,r6
+      00101F 80 03            [24] 2825 	sjmp	00103$
+      001021                       2826 00102$:
+                                   2827 ;	../../../../core/net/mac/csma.c:416: return 0;
+      001021 90 00 00         [24] 2828 	mov	dptr,#0x0000
+      001024                       2829 00103$:
+      001024 02r00r00         [24] 2830 	ljmp	__sdcc_banked_ret
+                                   2831 ;------------------------------------------------------------
+                                   2832 ;Allocation info for local variables in function 'init'
+                                   2833 ;------------------------------------------------------------
+                                   2834 ;	../../../../core/net/mac/csma.c:420: init(void)
+                                   2835 ;	-----------------------------------------
+                                   2836 ;	 function init
+                                   2837 ;	-----------------------------------------
+      001027                       2838 _init:
+                                   2839 ;	../../../../core/net/mac/csma.c:422: memb_init(&packet_memb);
+      001027 90r00r0A         [24] 2840 	mov	dptr,#_packet_memb
+      00102A 75 F0 00         [24] 2841 	mov	b,#0x00
+      00102D 78r00            [12] 2842 	mov	r0,#_memb_init
+      00102F 79s00            [12] 2843 	mov	r1,#(_memb_init >> 8)
+      001031 7As00            [12] 2844 	mov	r2,#(_memb_init >> 16)
+      001033 12r00r00         [24] 2845 	lcall	__sdcc_banked_call
+                                   2846 ;	../../../../core/net/mac/csma.c:423: memb_init(&metadata_memb);
+      001036 90r00r14         [24] 2847 	mov	dptr,#_metadata_memb
+      001039 75 F0 00         [24] 2848 	mov	b,#0x00
+      00103C 78r00            [12] 2849 	mov	r0,#_memb_init
+      00103E 79s00            [12] 2850 	mov	r1,#(_memb_init >> 8)
+      001040 7As00            [12] 2851 	mov	r2,#(_memb_init >> 16)
+      001042 12r00r00         [24] 2852 	lcall	__sdcc_banked_call
+                                   2853 ;	../../../../core/net/mac/csma.c:424: memb_init(&neighbor_memb);
+      001045 90r00r00         [24] 2854 	mov	dptr,#_neighbor_memb
+      001048 75 F0 00         [24] 2855 	mov	b,#0x00
+      00104B 78r00            [12] 2856 	mov	r0,#_memb_init
+      00104D 79s00            [12] 2857 	mov	r1,#(_memb_init >> 8)
+      00104F 7As00            [12] 2858 	mov	r2,#(_memb_init >> 16)
+      001051 12r00r00         [24] 2859 	lcall	__sdcc_banked_call
+      001054 02r00r00         [24] 2860 	ljmp	__sdcc_banked_ret
+                                   2861 	.area CSEG    (CODE)
+                                   2862 	.area CONST   (CODE)
+      000000                       2863 _csma_driver:
+      000000r15s00 80              2864 	.byte _str_0,(_str_0 >> 8),#0x80
+      000003r27s10s00              2865 	.byte _init,(_init >> 8),(_init >> 16)
+      000006rCDs08s00              2866 	.byte _send_packet,(_send_packet >> 8),(_send_packet >> 16)
+      000009r66s0Fs00              2867 	.byte _input_packet,(_input_packet >> 8),(_input_packet >> 16)
+      00000Cr92s0Fs00              2868 	.byte _on,(_on >> 8),(_on >> 16)
+      00000FrBEs0Fs00              2869 	.byte _off,(_off >> 8),(_off >> 16)
+      000012rF2s0Fs00              2870 	.byte _channel_check_interval,(_channel_check_interval >> 8),(_channel_check_interval >> 16)
+      000015                       2871 _str_0:
+      000015 43 53 4D 41           2872 	.ascii "CSMA"
+      000019 00                    2873 	.db 0x00
+                                   2874 	.area XINIT   (CODE)
+      000000                       2875 __xinit__neighbor_memb:
+      000000 2A 00                 2876 	.byte #0x2A,#0x00	; 42
+      000002 02 00                 2877 	.byte #0x02,#0x00	; 2
+      000004r00s00 00              2878 	.byte _neighbor_memb_memb_count,(_neighbor_memb_memb_count >> 8),#0x00
+      000007r02s00 00              2879 	.byte _neighbor_memb_memb_mem,(_neighbor_memb_memb_mem >> 8),#0x00
+      00000A                       2880 __xinit__packet_memb:
+      00000A 09 00                 2881 	.byte #0x09,#0x00	; 9
+      00000C 06 00                 2882 	.byte #0x06,#0x00	; 6
+      00000Er56s00 00              2883 	.byte _packet_memb_memb_count,(_packet_memb_memb_count >> 8),#0x00
+      000011r5Cs00 00              2884 	.byte _packet_memb_memb_mem,(_packet_memb_memb_mem >> 8),#0x00
+      000014                       2885 __xinit__metadata_memb:
+      000014 07 00                 2886 	.byte #0x07,#0x00	; 7
+      000016 06 00                 2887 	.byte #0x06,#0x00	; 6
+      000018r92s00 00              2888 	.byte _metadata_memb_memb_count,(_metadata_memb_memb_count >> 8),#0x00
+      00001Br98s00 00              2889 	.byte _metadata_memb_memb_mem,(_metadata_memb_memb_mem >> 8),#0x00
+      00001E                       2890 __xinit__neighbor_list_list:
+                                   2891 ; generic printIvalPtr
+      00001E 00 00 00              2892 	.byte #0x00,#0x00,#0x00
+      000021                       2893 __xinit__neighbor_list:
+      000021r1Es00 00              2894 	.byte _neighbor_list_list,(_neighbor_list_list >> 8),#0x00
+                                   2895 	.area CABS    (ABS,CODE)

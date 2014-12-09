@@ -1,0 +1,2033 @@
+                                      1 ;--------------------------------------------------------
+                                      2 ; File Created by SDCC : free open source ANSI-C Compiler
+                                      3 ; Version 3.3.1 #8804 (Aug  6 2013) (Linux)
+                                      4 ; This file was generated Mon Aug 25 04:16:26 2014
+                                      5 ;--------------------------------------------------------
+                                      6 	.module process
+                                      7 	.optsdcc -mmcs51 --model-huge
+                                      8 	
+                                      9 ;--------------------------------------------------------
+                                     10 ; Public variables in this module
+                                     11 ;--------------------------------------------------------
+                                     12 	.globl _process_current
+                                     13 	.globl _process_list
+                                     14 	.globl _process_alloc_event
+                                     15 	.globl _process_start
+                                     16 	.globl _process_exit
+                                     17 	.globl _process_init
+                                     18 	.globl _process_run
+                                     19 	.globl _process_nevents
+                                     20 	.globl _process_post
+                                     21 	.globl _process_post_synch
+                                     22 	.globl _process_poll
+                                     23 	.globl _process_is_running
+                                     24 ;--------------------------------------------------------
+                                     25 ; special function registers
+                                     26 ;--------------------------------------------------------
+                                     27 	.area RSEG    (ABS,DATA)
+      000000                         28 	.org 0x0000
+                                     29 ;--------------------------------------------------------
+                                     30 ; special function bits
+                                     31 ;--------------------------------------------------------
+                                     32 	.area RSEG    (ABS,DATA)
+      000000                         33 	.org 0x0000
+                                     34 ;--------------------------------------------------------
+                                     35 ; overlayable register banks
+                                     36 ;--------------------------------------------------------
+                                     37 	.area REG_BANK_0	(REL,OVR,DATA)
+      000000                         38 	.ds 8
+                                     39 ;--------------------------------------------------------
+                                     40 ; internal ram data
+                                     41 ;--------------------------------------------------------
+                                     42 	.area DSEG    (DATA)
+                                     43 ;--------------------------------------------------------
+                                     44 ; overlayable items in internal ram 
+                                     45 ;--------------------------------------------------------
+                                     46 ;--------------------------------------------------------
+                                     47 ; indirectly addressable internal ram data
+                                     48 ;--------------------------------------------------------
+                                     49 	.area ISEG    (DATA)
+                                     50 ;--------------------------------------------------------
+                                     51 ; absolute internal ram data
+                                     52 ;--------------------------------------------------------
+                                     53 	.area IABS    (ABS,DATA)
+                                     54 	.area IABS    (ABS,DATA)
+                                     55 ;--------------------------------------------------------
+                                     56 ; bit data
+                                     57 ;--------------------------------------------------------
+                                     58 	.area BSEG    (BIT)
+                                     59 ;--------------------------------------------------------
+                                     60 ; paged external ram data
+                                     61 ;--------------------------------------------------------
+                                     62 	.area PSEG    (PAG,XDATA)
+                                     63 ;--------------------------------------------------------
+                                     64 ; external ram data
+                                     65 ;--------------------------------------------------------
+                                     66 	.area XSEG    (XDATA)
+      000000                         67 _lastevent:
+      000000                         68 	.ds 1
+      000001                         69 _nevents:
+      000001                         70 	.ds 1
+      000002                         71 _fevent:
+      000002                         72 	.ds 1
+      000003                         73 _events:
+      000003                         74 	.ds 224
+      0000E3                         75 _poll_requested:
+      0000E3                         76 	.ds 1
+      0000E4                         77 _do_event_ev_1_82:
+      0000E4                         78 	.ds 1
+      0000E5                         79 _do_event_data_1_82:
+      0000E5                         80 	.ds 3
+      0000E8                         81 _do_event_receiver_1_82:
+      0000E8                         82 	.ds 3
+      0000EB                         83 _do_event_p_1_82:
+      0000EB                         84 	.ds 3
+      0000EE                         85 _process_post_snum_1_95:
+      0000EE                         86 	.ds 1
+                                     87 ;--------------------------------------------------------
+                                     88 ; absolute external ram data
+                                     89 ;--------------------------------------------------------
+                                     90 	.area XABS    (ABS,XDATA)
+                                     91 ;--------------------------------------------------------
+                                     92 ; external initialized ram data
+                                     93 ;--------------------------------------------------------
+                                     94 	.area XISEG   (XDATA)
+      000000                         95 _process_list::
+      000000                         96 	.ds 3
+      000003                         97 _process_current::
+      000003                         98 	.ds 3
+                                     99 	.area HOME    (CODE)
+                                    100 	.area GSINIT0 (CODE)
+                                    101 	.area GSINIT1 (CODE)
+                                    102 	.area GSINIT2 (CODE)
+                                    103 	.area GSINIT3 (CODE)
+                                    104 	.area GSINIT4 (CODE)
+                                    105 	.area GSINIT5 (CODE)
+                                    106 	.area GSINIT  (CODE)
+                                    107 	.area GSFINAL (CODE)
+                                    108 	.area CSEG    (CODE)
+                                    109 ;--------------------------------------------------------
+                                    110 ; global & static initialisations
+                                    111 ;--------------------------------------------------------
+                                    112 	.area HOME    (CODE)
+                                    113 	.area GSINIT  (CODE)
+                                    114 	.area GSFINAL (CODE)
+                                    115 	.area GSINIT  (CODE)
+                                    116 ;--------------------------------------------------------
+                                    117 ; Home
+                                    118 ;--------------------------------------------------------
+                                    119 	.area HOME    (CODE)
+                                    120 	.area HOME    (CODE)
+                                    121 ;--------------------------------------------------------
+                                    122 ; code
+                                    123 ;--------------------------------------------------------
+                                    124 	.area BANK1   (CODE)
+                                    125 ;------------------------------------------------------------
+                                    126 ;Allocation info for local variables in function 'process_alloc_event'
+                                    127 ;------------------------------------------------------------
+                                    128 ;	../../../../core/sys/process.c:93: process_alloc_event(void)
+                                    129 ;	-----------------------------------------
+                                    130 ;	 function process_alloc_event
+                                    131 ;	-----------------------------------------
+      000000                        132 _process_alloc_event:
+                           000007   133 	ar7 = 0x07
+                           000006   134 	ar6 = 0x06
+                           000005   135 	ar5 = 0x05
+                           000004   136 	ar4 = 0x04
+                           000003   137 	ar3 = 0x03
+                           000002   138 	ar2 = 0x02
+                           000001   139 	ar1 = 0x01
+                           000000   140 	ar0 = 0x00
+                                    141 ;	../../../../core/sys/process.c:95: return lastevent++;
+      000000 90r00r00         [24]  142 	mov	dptr,#_lastevent
+      000003 E0               [24]  143 	movx	a,@dptr
+      000004 FF               [12]  144 	mov	r7,a
+      000005 90r00r00         [24]  145 	mov	dptr,#_lastevent
+      000008 04               [12]  146 	inc	a
+      000009 F0               [24]  147 	movx	@dptr,a
+      00000A 8F 82            [24]  148 	mov	dpl,r7
+      00000C 02r00r00         [24]  149 	ljmp	__sdcc_banked_ret
+                                    150 ;------------------------------------------------------------
+                                    151 ;Allocation info for local variables in function 'process_start'
+                                    152 ;------------------------------------------------------------
+                                    153 ;arg                       Allocated to stack - sp -8
+                                    154 ;p                         Allocated to stack - sp -2
+                                    155 ;q                         Allocated to registers r5 r6 r7 
+                                    156 ;------------------------------------------------------------
+                                    157 ;	../../../../core/sys/process.c:99: process_start(struct process *p, const char *arg)
+                                    158 ;	-----------------------------------------
+                                    159 ;	 function process_start
+                                    160 ;	-----------------------------------------
+      00000F                        161 _process_start:
+      00000F C0 82            [24]  162 	push	dpl
+      000011 C0 83            [24]  163 	push	dph
+      000013 C0 F0            [24]  164 	push	b
+                                    165 ;	../../../../core/sys/process.c:105: for(q = process_list; q != p && q != NULL; q = q->next);
+      000015 90r00r00         [24]  166 	mov	dptr,#_process_list
+      000018 E0               [24]  167 	movx	a,@dptr
+      000019 FA               [12]  168 	mov	r2,a
+      00001A A3               [24]  169 	inc	dptr
+      00001B E0               [24]  170 	movx	a,@dptr
+      00001C FB               [12]  171 	mov	r3,a
+      00001D A3               [24]  172 	inc	dptr
+      00001E E0               [24]  173 	movx	a,@dptr
+      00001F FC               [12]  174 	mov	r4,a
+      000020 8A 05            [24]  175 	mov	ar5,r2
+      000022 8B 06            [24]  176 	mov	ar6,r3
+      000024 8C 07            [24]  177 	mov	ar7,r4
+      000026                        178 00106$:
+      000026 A8 81            [24]  179 	mov	r0,sp
+      000028 18               [12]  180 	dec	r0
+      000029 18               [12]  181 	dec	r0
+      00002A C0 05            [24]  182 	push	ar5
+      00002C C0 06            [24]  183 	push	ar6
+      00002E C0 07            [24]  184 	push	ar7
+      000030 86 82            [24]  185 	mov	dpl,@r0
+      000032 08               [12]  186 	inc	r0
+      000033 86 83            [24]  187 	mov	dph,@r0
+      000035 08               [12]  188 	inc	r0
+      000036 86 F0            [24]  189 	mov	b,@r0
+      000038 12r00r00         [24]  190 	lcall	___gptr_cmp
+      00003B 15 81            [12]  191 	dec	sp
+      00003D 15 81            [12]  192 	dec	sp
+      00003F 15 81            [12]  193 	dec	sp
+      000041 60 30            [24]  194 	jz	00101$
+      000043 E4               [12]  195 	clr	a
+      000044 C0 E0            [24]  196 	push	acc
+      000046 E4               [12]  197 	clr	a
+      000047 C0 E0            [24]  198 	push	acc
+      000049 E4               [12]  199 	clr	a
+      00004A C0 E0            [24]  200 	push	acc
+      00004C 8D 82            [24]  201 	mov	dpl,r5
+      00004E 8E 83            [24]  202 	mov	dph,r6
+      000050 8F F0            [24]  203 	mov	b,r7
+      000052 12r00r00         [24]  204 	lcall	___gptr_cmp
+      000055 15 81            [12]  205 	dec	sp
+      000057 15 81            [12]  206 	dec	sp
+      000059 15 81            [12]  207 	dec	sp
+      00005B 60 16            [24]  208 	jz	00101$
+      00005D 8D 82            [24]  209 	mov	dpl,r5
+      00005F 8E 83            [24]  210 	mov	dph,r6
+      000061 8F F0            [24]  211 	mov	b,r7
+      000063 12r00r00         [24]  212 	lcall	__gptrget
+      000066 FD               [12]  213 	mov	r5,a
+      000067 A3               [24]  214 	inc	dptr
+      000068 12r00r00         [24]  215 	lcall	__gptrget
+      00006B FE               [12]  216 	mov	r6,a
+      00006C A3               [24]  217 	inc	dptr
+      00006D 12r00r00         [24]  218 	lcall	__gptrget
+      000070 FF               [12]  219 	mov	r7,a
+      000071 80 B3            [24]  220 	sjmp	00106$
+      000073                        221 00101$:
+                                    222 ;	../../../../core/sys/process.c:108: if(q == p) {
+      000073 A8 81            [24]  223 	mov	r0,sp
+      000075 18               [12]  224 	dec	r0
+      000076 18               [12]  225 	dec	r0
+      000077 C0 05            [24]  226 	push	ar5
+      000079 C0 06            [24]  227 	push	ar6
+      00007B C0 07            [24]  228 	push	ar7
+      00007D 86 82            [24]  229 	mov	dpl,@r0
+      00007F 08               [12]  230 	inc	r0
+      000080 86 83            [24]  231 	mov	dph,@r0
+      000082 08               [12]  232 	inc	r0
+      000083 86 F0            [24]  233 	mov	b,@r0
+      000085 12r00r00         [24]  234 	lcall	___gptr_cmp
+      000088 15 81            [12]  235 	dec	sp
+      00008A 15 81            [12]  236 	dec	sp
+      00008C 15 81            [12]  237 	dec	sp
+      00008E 60 02            [24]  238 	jz	00125$
+      000090 80 03            [24]  239 	sjmp	00103$
+      000092                        240 00125$:
+                                    241 ;	../../../../core/sys/process.c:109: return;
+      000092 02r01r2B         [24]  242 	ljmp	00108$
+      000095                        243 00103$:
+                                    244 ;	../../../../core/sys/process.c:112: p->next = process_list;
+      000095 A8 81            [24]  245 	mov	r0,sp
+      000097 18               [12]  246 	dec	r0
+      000098 18               [12]  247 	dec	r0
+      000099 86 82            [24]  248 	mov	dpl,@r0
+      00009B 08               [12]  249 	inc	r0
+      00009C 86 83            [24]  250 	mov	dph,@r0
+      00009E 08               [12]  251 	inc	r0
+      00009F 86 F0            [24]  252 	mov	b,@r0
+      0000A1 EA               [12]  253 	mov	a,r2
+      0000A2 12r00r00         [24]  254 	lcall	__gptrput
+      0000A5 A3               [24]  255 	inc	dptr
+      0000A6 EB               [12]  256 	mov	a,r3
+      0000A7 12r00r00         [24]  257 	lcall	__gptrput
+      0000AA A3               [24]  258 	inc	dptr
+      0000AB EC               [12]  259 	mov	a,r4
+      0000AC 12r00r00         [24]  260 	lcall	__gptrput
+                                    261 ;	../../../../core/sys/process.c:113: process_list = p;
+      0000AF A8 81            [24]  262 	mov	r0,sp
+      0000B1 18               [12]  263 	dec	r0
+      0000B2 18               [12]  264 	dec	r0
+      0000B3 90r00r00         [24]  265 	mov	dptr,#_process_list
+      0000B6 E6               [12]  266 	mov	a,@r0
+      0000B7 F0               [24]  267 	movx	@dptr,a
+      0000B8 08               [12]  268 	inc	r0
+      0000B9 E6               [12]  269 	mov	a,@r0
+      0000BA A3               [24]  270 	inc	dptr
+      0000BB F0               [24]  271 	movx	@dptr,a
+      0000BC 08               [12]  272 	inc	r0
+      0000BD E6               [12]  273 	mov	a,@r0
+      0000BE A3               [24]  274 	inc	dptr
+      0000BF F0               [24]  275 	movx	@dptr,a
+                                    276 ;	../../../../core/sys/process.c:114: p->state = PROCESS_STATE_RUNNING;
+      0000C0 A8 81            [24]  277 	mov	r0,sp
+      0000C2 18               [12]  278 	dec	r0
+      0000C3 18               [12]  279 	dec	r0
+      0000C4 74 08            [12]  280 	mov	a,#0x08
+      0000C6 26               [12]  281 	add	a,@r0
+      0000C7 FD               [12]  282 	mov	r5,a
+      0000C8 E4               [12]  283 	clr	a
+      0000C9 08               [12]  284 	inc	r0
+      0000CA 36               [12]  285 	addc	a,@r0
+      0000CB FE               [12]  286 	mov	r6,a
+      0000CC 08               [12]  287 	inc	r0
+      0000CD 86 07            [24]  288 	mov	ar7,@r0
+      0000CF 8D 82            [24]  289 	mov	dpl,r5
+      0000D1 8E 83            [24]  290 	mov	dph,r6
+      0000D3 8F F0            [24]  291 	mov	b,r7
+      0000D5 74 01            [12]  292 	mov	a,#0x01
+      0000D7 12r00r00         [24]  293 	lcall	__gptrput
+                                    294 ;	../../../../core/sys/process.c:115: PT_INIT(&p->pt);
+      0000DA A8 81            [24]  295 	mov	r0,sp
+      0000DC 18               [12]  296 	dec	r0
+      0000DD 18               [12]  297 	dec	r0
+      0000DE 74 06            [12]  298 	mov	a,#0x06
+      0000E0 26               [12]  299 	add	a,@r0
+      0000E1 FD               [12]  300 	mov	r5,a
+      0000E2 E4               [12]  301 	clr	a
+      0000E3 08               [12]  302 	inc	r0
+      0000E4 36               [12]  303 	addc	a,@r0
+      0000E5 FE               [12]  304 	mov	r6,a
+      0000E6 08               [12]  305 	inc	r0
+      0000E7 86 07            [24]  306 	mov	ar7,@r0
+      0000E9 8D 82            [24]  307 	mov	dpl,r5
+      0000EB 8E 83            [24]  308 	mov	dph,r6
+      0000ED 8F F0            [24]  309 	mov	b,r7
+      0000EF E4               [12]  310 	clr	a
+      0000F0 12r00r00         [24]  311 	lcall	__gptrput
+      0000F3 A3               [24]  312 	inc	dptr
+      0000F4 E4               [12]  313 	clr	a
+      0000F5 12r00r00         [24]  314 	lcall	__gptrput
+                                    315 ;	../../../../core/sys/process.c:120: process_post_synch(p, PROCESS_EVENT_INIT, (process_data_t)arg);
+      0000F8 E5 81            [12]  316 	mov	a,sp
+      0000FA 24 F8            [12]  317 	add	a,#0xf8
+      0000FC F8               [12]  318 	mov	r0,a
+      0000FD 86 05            [24]  319 	mov	ar5,@r0
+      0000FF 08               [12]  320 	inc	r0
+      000100 86 06            [24]  321 	mov	ar6,@r0
+      000102 08               [12]  322 	inc	r0
+      000103 86 07            [24]  323 	mov	ar7,@r0
+      000105 C0 05            [24]  324 	push	ar5
+      000107 C0 06            [24]  325 	push	ar6
+      000109 C0 07            [24]  326 	push	ar7
+      00010B 74 81            [12]  327 	mov	a,#0x81
+      00010D C0 E0            [24]  328 	push	acc
+      00010F E5 81            [12]  329 	mov	a,sp
+      000111 24 FA            [12]  330 	add	a,#0xfa
+      000113 F8               [12]  331 	mov	r0,a
+      000114 86 82            [24]  332 	mov	dpl,@r0
+      000116 08               [12]  333 	inc	r0
+      000117 86 83            [24]  334 	mov	dph,@r0
+      000119 08               [12]  335 	inc	r0
+      00011A 86 F0            [24]  336 	mov	b,@r0
+      00011C 78r94            [12]  337 	mov	r0,#_process_post_synch
+      00011E 79s09            [12]  338 	mov	r1,#(_process_post_synch >> 8)
+      000120 7As00            [12]  339 	mov	r2,#(_process_post_synch >> 16)
+      000122 12r00r00         [24]  340 	lcall	__sdcc_banked_call
+      000125 E5 81            [12]  341 	mov	a,sp
+      000127 24 FC            [12]  342 	add	a,#0xfc
+      000129 F5 81            [12]  343 	mov	sp,a
+      00012B                        344 00108$:
+      00012B 15 81            [12]  345 	dec	sp
+      00012D 15 81            [12]  346 	dec	sp
+      00012F 15 81            [12]  347 	dec	sp
+      000131 02r00r00         [24]  348 	ljmp	__sdcc_banked_ret
+                                    349 ;------------------------------------------------------------
+                                    350 ;Allocation info for local variables in function 'exit_process'
+                                    351 ;------------------------------------------------------------
+                                    352 ;fromprocess               Allocated to stack - sp -14
+                                    353 ;p                         Allocated to stack - sp -8
+                                    354 ;q                         Allocated to stack - sp -5
+                                    355 ;old_current               Allocated to stack - sp -2
+                                    356 ;sloc0                     Allocated to stack - sp +1
+                                    357 ;------------------------------------------------------------
+                                    358 ;	../../../../core/sys/process.c:124: exit_process(struct process *p, struct process *fromprocess)
+                                    359 ;	-----------------------------------------
+                                    360 ;	 function exit_process
+                                    361 ;	-----------------------------------------
+      000134                        362 _exit_process:
+      000134 C0 82            [24]  363 	push	dpl
+      000136 C0 83            [24]  364 	push	dph
+      000138 C0 F0            [24]  365 	push	b
+      00013A E5 81            [12]  366 	mov	a,sp
+      00013C 24 06            [12]  367 	add	a,#0x06
+      00013E F5 81            [12]  368 	mov	sp,a
+                                    369 ;	../../../../core/sys/process.c:127: struct process *old_current = process_current;
+      000140 90r00r03         [24]  370 	mov	dptr,#_process_current
+      000143 E0               [24]  371 	movx	a,@dptr
+      000144 FA               [12]  372 	mov	r2,a
+      000145 A3               [24]  373 	inc	dptr
+      000146 E0               [24]  374 	movx	a,@dptr
+      000147 FB               [12]  375 	mov	r3,a
+      000148 A3               [24]  376 	inc	dptr
+      000149 E0               [24]  377 	movx	a,@dptr
+      00014A FC               [12]  378 	mov	r4,a
+      00014B A8 81            [24]  379 	mov	r0,sp
+      00014D 18               [12]  380 	dec	r0
+      00014E 18               [12]  381 	dec	r0
+      00014F A6 02            [24]  382 	mov	@r0,ar2
+      000151 08               [12]  383 	inc	r0
+      000152 A6 03            [24]  384 	mov	@r0,ar3
+      000154 08               [12]  385 	inc	r0
+      000155 A6 04            [24]  386 	mov	@r0,ar4
+                                    387 ;	../../../../core/sys/process.c:133: for(q = process_list; q != p && q != NULL; q = q->next);
+      000157 90r00r00         [24]  388 	mov	dptr,#_process_list
+      00015A E0               [24]  389 	movx	a,@dptr
+      00015B FA               [12]  390 	mov	r2,a
+      00015C A3               [24]  391 	inc	dptr
+      00015D E0               [24]  392 	movx	a,@dptr
+      00015E FB               [12]  393 	mov	r3,a
+      00015F A3               [24]  394 	inc	dptr
+      000160 E0               [24]  395 	movx	a,@dptr
+      000161 FC               [12]  396 	mov	r4,a
+      000162 E5 81            [12]  397 	mov	a,sp
+      000164 24 FB            [12]  398 	add	a,#0xfb
+      000166 F8               [12]  399 	mov	r0,a
+      000167 A6 02            [24]  400 	mov	@r0,ar2
+      000169 08               [12]  401 	inc	r0
+      00016A A6 03            [24]  402 	mov	@r0,ar3
+      00016C 08               [12]  403 	inc	r0
+      00016D A6 04            [24]  404 	mov	@r0,ar4
+      00016F                        405 00120$:
+      00016F E5 81            [12]  406 	mov	a,sp
+      000171 24 FB            [12]  407 	add	a,#0xfb
+      000173 F8               [12]  408 	mov	r0,a
+      000174 E5 81            [12]  409 	mov	a,sp
+      000176 24 F8            [12]  410 	add	a,#0xf8
+      000178 F9               [12]  411 	mov	r1,a
+      000179 E7               [12]  412 	mov	a,@r1
+      00017A C0 E0            [24]  413 	push	acc
+      00017C 09               [12]  414 	inc	r1
+      00017D E7               [12]  415 	mov	a,@r1
+      00017E C0 E0            [24]  416 	push	acc
+      000180 09               [12]  417 	inc	r1
+      000181 E7               [12]  418 	mov	a,@r1
+      000182 C0 E0            [24]  419 	push	acc
+      000184 86 82            [24]  420 	mov	dpl,@r0
+      000186 08               [12]  421 	inc	r0
+      000187 86 83            [24]  422 	mov	dph,@r0
+      000189 08               [12]  423 	inc	r0
+      00018A 86 F0            [24]  424 	mov	b,@r0
+      00018C 12r00r00         [24]  425 	lcall	___gptr_cmp
+      00018F 15 81            [12]  426 	dec	sp
+      000191 15 81            [12]  427 	dec	sp
+      000193 15 81            [12]  428 	dec	sp
+      000195 60 42            [24]  429 	jz	00101$
+      000197 E5 81            [12]  430 	mov	a,sp
+      000199 24 FB            [12]  431 	add	a,#0xfb
+      00019B F8               [12]  432 	mov	r0,a
+      00019C E4               [12]  433 	clr	a
+      00019D C0 E0            [24]  434 	push	acc
+      00019F E4               [12]  435 	clr	a
+      0001A0 C0 E0            [24]  436 	push	acc
+      0001A2 E4               [12]  437 	clr	a
+      0001A3 C0 E0            [24]  438 	push	acc
+      0001A5 86 82            [24]  439 	mov	dpl,@r0
+      0001A7 08               [12]  440 	inc	r0
+      0001A8 86 83            [24]  441 	mov	dph,@r0
+      0001AA 08               [12]  442 	inc	r0
+      0001AB 86 F0            [24]  443 	mov	b,@r0
+      0001AD 12r00r00         [24]  444 	lcall	___gptr_cmp
+      0001B0 15 81            [12]  445 	dec	sp
+      0001B2 15 81            [12]  446 	dec	sp
+      0001B4 15 81            [12]  447 	dec	sp
+      0001B6 60 21            [24]  448 	jz	00101$
+      0001B8 E5 81            [12]  449 	mov	a,sp
+      0001BA 24 FB            [12]  450 	add	a,#0xfb
+      0001BC F8               [12]  451 	mov	r0,a
+      0001BD 86 82            [24]  452 	mov	dpl,@r0
+      0001BF 08               [12]  453 	inc	r0
+      0001C0 86 83            [24]  454 	mov	dph,@r0
+      0001C2 08               [12]  455 	inc	r0
+      0001C3 86 F0            [24]  456 	mov	b,@r0
+      0001C5 12r00r00         [24]  457 	lcall	__gptrget
+      0001C8 18               [12]  458 	dec	r0
+      0001C9 18               [12]  459 	dec	r0
+      0001CA F6               [12]  460 	mov	@r0,a
+      0001CB A3               [24]  461 	inc	dptr
+      0001CC 12r00r00         [24]  462 	lcall	__gptrget
+      0001CF 08               [12]  463 	inc	r0
+      0001D0 F6               [12]  464 	mov	@r0,a
+      0001D1 A3               [24]  465 	inc	dptr
+      0001D2 12r00r00         [24]  466 	lcall	__gptrget
+      0001D5 08               [12]  467 	inc	r0
+      0001D6 F6               [12]  468 	mov	@r0,a
+      0001D7 80 96            [24]  469 	sjmp	00120$
+      0001D9                        470 00101$:
+                                    471 ;	../../../../core/sys/process.c:134: if(q == NULL) {
+      0001D9 E5 81            [12]  472 	mov	a,sp
+      0001DB 24 FB            [12]  473 	add	a,#0xfb
+      0001DD F8               [12]  474 	mov	r0,a
+      0001DE E6               [12]  475 	mov	a,@r0
+      0001DF 08               [12]  476 	inc	r0
+      0001E0 46               [12]  477 	orl	a,@r0
+      0001E1 70 03            [24]  478 	jnz	00103$
+                                    479 ;	../../../../core/sys/process.c:135: return;
+      0001E3 02r04rAE         [24]  480 	ljmp	00128$
+      0001E6                        481 00103$:
+                                    482 ;	../../../../core/sys/process.c:138: if(process_is_running(p)) {
+      0001E6 E5 81            [12]  483 	mov	a,sp
+      0001E8 24 F8            [12]  484 	add	a,#0xf8
+      0001EA F8               [12]  485 	mov	r0,a
+      0001EB 86 82            [24]  486 	mov	dpl,@r0
+      0001ED 08               [12]  487 	inc	r0
+      0001EE 86 83            [24]  488 	mov	dph,@r0
+      0001F0 08               [12]  489 	inc	r0
+      0001F1 86 F0            [24]  490 	mov	b,@r0
+      0001F3 78r2C            [12]  491 	mov	r0,#_process_is_running
+      0001F5 79s0A            [12]  492 	mov	r1,#(_process_is_running >> 8)
+      0001F7 7As00            [12]  493 	mov	r2,#(_process_is_running >> 16)
+      0001F9 12r00r00         [24]  494 	lcall	__sdcc_banked_call
+      0001FC E5 82            [12]  495 	mov	a,dpl
+      0001FE 85 83 F0         [24]  496 	mov	b,dph
+      000201 45 F0            [12]  497 	orl	a,b
+      000203 70 03            [24]  498 	jnz	00175$
+      000205 02r03r96         [24]  499 	ljmp	00111$
+      000208                        500 00175$:
+                                    501 ;	../../../../core/sys/process.c:140: p->state = PROCESS_STATE_NONE;
+      000208 E5 81            [12]  502 	mov	a,sp
+      00020A 24 F8            [12]  503 	add	a,#0xf8
+      00020C F8               [12]  504 	mov	r0,a
+      00020D 74 08            [12]  505 	mov	a,#0x08
+      00020F 26               [12]  506 	add	a,@r0
+      000210 FD               [12]  507 	mov	r5,a
+      000211 E4               [12]  508 	clr	a
+      000212 08               [12]  509 	inc	r0
+      000213 36               [12]  510 	addc	a,@r0
+      000214 FE               [12]  511 	mov	r6,a
+      000215 08               [12]  512 	inc	r0
+      000216 86 07            [24]  513 	mov	ar7,@r0
+      000218 8D 82            [24]  514 	mov	dpl,r5
+      00021A 8E 83            [24]  515 	mov	dph,r6
+      00021C 8F F0            [24]  516 	mov	b,r7
+      00021E E4               [12]  517 	clr	a
+      00021F 12r00r00         [24]  518 	lcall	__gptrput
+                                    519 ;	../../../../core/sys/process.c:147: for(q = process_list; q != NULL; q = q->next) {
+      000222 90r00r00         [24]  520 	mov	dptr,#_process_list
+      000225 E0               [24]  521 	movx	a,@dptr
+      000226 FD               [12]  522 	mov	r5,a
+      000227 A3               [24]  523 	inc	dptr
+      000228 E0               [24]  524 	movx	a,@dptr
+      000229 FE               [12]  525 	mov	r6,a
+      00022A A3               [24]  526 	inc	dptr
+      00022B E0               [24]  527 	movx	a,@dptr
+      00022C FF               [12]  528 	mov	r7,a
+      00022D E5 81            [12]  529 	mov	a,sp
+      00022F 24 FB            [12]  530 	add	a,#0xfb
+      000231 F8               [12]  531 	mov	r0,a
+      000232 A6 05            [24]  532 	mov	@r0,ar5
+      000234 08               [12]  533 	inc	r0
+      000235 A6 06            [24]  534 	mov	@r0,ar6
+      000237 08               [12]  535 	inc	r0
+      000238 A6 07            [24]  536 	mov	@r0,ar7
+      00023A                        537 00123$:
+      00023A E5 81            [12]  538 	mov	a,sp
+      00023C 24 FB            [12]  539 	add	a,#0xfb
+      00023E F8               [12]  540 	mov	r0,a
+      00023F E4               [12]  541 	clr	a
+      000240 C0 E0            [24]  542 	push	acc
+      000242 E4               [12]  543 	clr	a
+      000243 C0 E0            [24]  544 	push	acc
+      000245 E4               [12]  545 	clr	a
+      000246 C0 E0            [24]  546 	push	acc
+      000248 86 82            [24]  547 	mov	dpl,@r0
+      00024A 08               [12]  548 	inc	r0
+      00024B 86 83            [24]  549 	mov	dph,@r0
+      00024D 08               [12]  550 	inc	r0
+      00024E 86 F0            [24]  551 	mov	b,@r0
+      000250 12r00r00         [24]  552 	lcall	___gptr_cmp
+      000253 15 81            [12]  553 	dec	sp
+      000255 15 81            [12]  554 	dec	sp
+      000257 15 81            [12]  555 	dec	sp
+      000259 70 03            [24]  556 	jnz	00176$
+      00025B 02r02rDB         [24]  557 	ljmp	00106$
+      00025E                        558 00176$:
+                                    559 ;	../../../../core/sys/process.c:148: if(p != q) {
+      00025E E5 81            [12]  560 	mov	a,sp
+      000260 24 F8            [12]  561 	add	a,#0xf8
+      000262 F8               [12]  562 	mov	r0,a
+      000263 E5 81            [12]  563 	mov	a,sp
+      000265 24 FB            [12]  564 	add	a,#0xfb
+      000267 F9               [12]  565 	mov	r1,a
+      000268 E7               [12]  566 	mov	a,@r1
+      000269 C0 E0            [24]  567 	push	acc
+      00026B 09               [12]  568 	inc	r1
+      00026C E7               [12]  569 	mov	a,@r1
+      00026D C0 E0            [24]  570 	push	acc
+      00026F 09               [12]  571 	inc	r1
+      000270 E7               [12]  572 	mov	a,@r1
+      000271 C0 E0            [24]  573 	push	acc
+      000273 86 82            [24]  574 	mov	dpl,@r0
+      000275 08               [12]  575 	inc	r0
+      000276 86 83            [24]  576 	mov	dph,@r0
+      000278 08               [12]  577 	inc	r0
+      000279 86 F0            [24]  578 	mov	b,@r0
+      00027B 12r00r00         [24]  579 	lcall	___gptr_cmp
+      00027E 15 81            [12]  580 	dec	sp
+      000280 15 81            [12]  581 	dec	sp
+      000282 15 81            [12]  582 	dec	sp
+      000284 60 33            [24]  583 	jz	00124$
+                                    584 ;	../../../../core/sys/process.c:149: call_process(q, PROCESS_EVENT_EXITED, (process_data_t)p);
+      000286 E5 81            [12]  585 	mov	a,sp
+      000288 24 F8            [12]  586 	add	a,#0xf8
+      00028A F8               [12]  587 	mov	r0,a
+      00028B 86 05            [24]  588 	mov	ar5,@r0
+      00028D 08               [12]  589 	inc	r0
+      00028E 86 06            [24]  590 	mov	ar6,@r0
+      000290 08               [12]  591 	inc	r0
+      000291 86 07            [24]  592 	mov	ar7,@r0
+      000293 C0 05            [24]  593 	push	ar5
+      000295 C0 06            [24]  594 	push	ar6
+      000297 C0 07            [24]  595 	push	ar7
+      000299 74 87            [12]  596 	mov	a,#0x87
+      00029B C0 E0            [24]  597 	push	acc
+      00029D E5 81            [12]  598 	mov	a,sp
+      00029F 24 F7            [12]  599 	add	a,#0xf7
+      0002A1 F8               [12]  600 	mov	r0,a
+      0002A2 86 82            [24]  601 	mov	dpl,@r0
+      0002A4 08               [12]  602 	inc	r0
+      0002A5 86 83            [24]  603 	mov	dph,@r0
+      0002A7 08               [12]  604 	inc	r0
+      0002A8 86 F0            [24]  605 	mov	b,@r0
+      0002AA 78rB7            [12]  606 	mov	r0,#_call_process
+      0002AC 79s04            [12]  607 	mov	r1,#(_call_process >> 8)
+      0002AE 7As00            [12]  608 	mov	r2,#(_call_process >> 16)
+      0002B0 12r00r00         [24]  609 	lcall	__sdcc_banked_call
+      0002B3 E5 81            [12]  610 	mov	a,sp
+      0002B5 24 FC            [12]  611 	add	a,#0xfc
+      0002B7 F5 81            [12]  612 	mov	sp,a
+      0002B9                        613 00124$:
+                                    614 ;	../../../../core/sys/process.c:147: for(q = process_list; q != NULL; q = q->next) {
+      0002B9 E5 81            [12]  615 	mov	a,sp
+      0002BB 24 FB            [12]  616 	add	a,#0xfb
+      0002BD F8               [12]  617 	mov	r0,a
+      0002BE 86 82            [24]  618 	mov	dpl,@r0
+      0002C0 08               [12]  619 	inc	r0
+      0002C1 86 83            [24]  620 	mov	dph,@r0
+      0002C3 08               [12]  621 	inc	r0
+      0002C4 86 F0            [24]  622 	mov	b,@r0
+      0002C6 12r00r00         [24]  623 	lcall	__gptrget
+      0002C9 18               [12]  624 	dec	r0
+      0002CA 18               [12]  625 	dec	r0
+      0002CB F6               [12]  626 	mov	@r0,a
+      0002CC A3               [24]  627 	inc	dptr
+      0002CD 12r00r00         [24]  628 	lcall	__gptrget
+      0002D0 08               [12]  629 	inc	r0
+      0002D1 F6               [12]  630 	mov	@r0,a
+      0002D2 A3               [24]  631 	inc	dptr
+      0002D3 12r00r00         [24]  632 	lcall	__gptrget
+      0002D6 08               [12]  633 	inc	r0
+      0002D7 F6               [12]  634 	mov	@r0,a
+      0002D8 02r02r3A         [24]  635 	ljmp	00123$
+      0002DB                        636 00106$:
+                                    637 ;	../../../../core/sys/process.c:153: if(p->thread != NULL && p != fromprocess) {
+      0002DB E5 81            [12]  638 	mov	a,sp
+      0002DD 24 F8            [12]  639 	add	a,#0xf8
+      0002DF F8               [12]  640 	mov	r0,a
+      0002E0 74 03            [12]  641 	mov	a,#0x03
+      0002E2 26               [12]  642 	add	a,@r0
+      0002E3 FC               [12]  643 	mov	r4,a
+      0002E4 E4               [12]  644 	clr	a
+      0002E5 08               [12]  645 	inc	r0
+      0002E6 36               [12]  646 	addc	a,@r0
+      0002E7 FB               [12]  647 	mov	r3,a
+      0002E8 08               [12]  648 	inc	r0
+      0002E9 86 02            [24]  649 	mov	ar2,@r0
+      0002EB 8C 82            [24]  650 	mov	dpl,r4
+      0002ED 8B 83            [24]  651 	mov	dph,r3
+      0002EF 8A F0            [24]  652 	mov	b,r2
+      0002F1 12r00r00         [24]  653 	lcall	__gptrget
+      0002F4 FD               [12]  654 	mov	r5,a
+      0002F5 A3               [24]  655 	inc	dptr
+      0002F6 12r00r00         [24]  656 	lcall	__gptrget
+      0002F9 FE               [12]  657 	mov	r6,a
+      0002FA A3               [24]  658 	inc	dptr
+      0002FB 12r00r00         [24]  659 	lcall	__gptrget
+      0002FE FF               [12]  660 	mov	r7,a
+      0002FF ED               [12]  661 	mov	a,r5
+      000300 4E               [12]  662 	orl	a,r6
+      000301 70 03            [24]  663 	jnz	00178$
+      000303 02r03r96         [24]  664 	ljmp	00111$
+      000306                        665 00178$:
+      000306 E5 81            [12]  666 	mov	a,sp
+      000308 24 F8            [12]  667 	add	a,#0xf8
+      00030A F8               [12]  668 	mov	r0,a
+      00030B E5 81            [12]  669 	mov	a,sp
+      00030D 24 F2            [12]  670 	add	a,#0xf2
+      00030F F9               [12]  671 	mov	r1,a
+      000310 E7               [12]  672 	mov	a,@r1
+      000311 C0 E0            [24]  673 	push	acc
+      000313 09               [12]  674 	inc	r1
+      000314 E7               [12]  675 	mov	a,@r1
+      000315 C0 E0            [24]  676 	push	acc
+      000317 09               [12]  677 	inc	r1
+      000318 E7               [12]  678 	mov	a,@r1
+      000319 C0 E0            [24]  679 	push	acc
+      00031B 86 82            [24]  680 	mov	dpl,@r0
+      00031D 08               [12]  681 	inc	r0
+      00031E 86 83            [24]  682 	mov	dph,@r0
+      000320 08               [12]  683 	inc	r0
+      000321 86 F0            [24]  684 	mov	b,@r0
+      000323 12r00r00         [24]  685 	lcall	___gptr_cmp
+      000326 15 81            [12]  686 	dec	sp
+      000328 15 81            [12]  687 	dec	sp
+      00032A 15 81            [12]  688 	dec	sp
+      00032C 60 68            [24]  689 	jz	00111$
+                                    690 ;	../../../../core/sys/process.c:155: process_current = p;
+      00032E E5 81            [12]  691 	mov	a,sp
+      000330 24 F8            [12]  692 	add	a,#0xf8
+      000332 F8               [12]  693 	mov	r0,a
+      000333 90r00r03         [24]  694 	mov	dptr,#_process_current
+      000336 E6               [12]  695 	mov	a,@r0
+      000337 F0               [24]  696 	movx	@dptr,a
+      000338 08               [12]  697 	inc	r0
+      000339 E6               [12]  698 	mov	a,@r0
+      00033A A3               [24]  699 	inc	dptr
+      00033B F0               [24]  700 	movx	@dptr,a
+      00033C 08               [12]  701 	inc	r0
+      00033D E6               [12]  702 	mov	a,@r0
+      00033E A3               [24]  703 	inc	dptr
+      00033F F0               [24]  704 	movx	@dptr,a
+                                    705 ;	../../../../core/sys/process.c:156: p->thread(&p->pt, PROCESS_EVENT_EXIT, NULL);
+      000340 8C 82            [24]  706 	mov	dpl,r4
+      000342 8B 83            [24]  707 	mov	dph,r3
+      000344 8A F0            [24]  708 	mov	b,r2
+      000346 12r00r00         [24]  709 	lcall	__gptrget
+      000349 FC               [12]  710 	mov	r4,a
+      00034A A3               [24]  711 	inc	dptr
+      00034B 12r00r00         [24]  712 	lcall	__gptrget
+      00034E FB               [12]  713 	mov	r3,a
+      00034F A3               [24]  714 	inc	dptr
+      000350 12r00r00         [24]  715 	lcall	__gptrget
+      000353 FA               [12]  716 	mov	r2,a
+      000354 E5 81            [12]  717 	mov	a,sp
+      000356 24 F8            [12]  718 	add	a,#0xf8
+      000358 F8               [12]  719 	mov	r0,a
+      000359 74 06            [12]  720 	mov	a,#0x06
+      00035B 26               [12]  721 	add	a,@r0
+      00035C FD               [12]  722 	mov	r5,a
+      00035D E4               [12]  723 	clr	a
+      00035E 08               [12]  724 	inc	r0
+      00035F 36               [12]  725 	addc	a,@r0
+      000360 FE               [12]  726 	mov	r6,a
+      000361 08               [12]  727 	inc	r0
+      000362 86 07            [24]  728 	mov	ar7,@r0
+      000364 C0 04            [24]  729 	push	ar4
+      000366 C0 03            [24]  730 	push	ar3
+      000368 C0 02            [24]  731 	push	ar2
+      00036A E4               [12]  732 	clr	a
+      00036B C0 E0            [24]  733 	push	acc
+      00036D C0 E0            [24]  734 	push	acc
+      00036F C0 E0            [24]  735 	push	acc
+      000371 74 83            [12]  736 	mov	a,#0x83
+      000373 C0 E0            [24]  737 	push	acc
+      000375 C0 04            [24]  738 	push	ar4
+      000377 C0 03            [24]  739 	push	ar3
+      000379 C0 02            [24]  740 	push	ar2
+      00037B 8D 82            [24]  741 	mov	dpl,r5
+      00037D 8E 83            [24]  742 	mov	dph,r6
+      00037F 8F F0            [24]  743 	mov	b,r7
+      000381 D0 02            [24]  744 	pop	ar2
+      000383 D0 01            [24]  745 	pop	ar1
+      000385 D0 00            [24]  746 	pop	ar0
+      000387 12r00r00         [24]  747 	lcall	__sdcc_banked_call
+      00038A E5 81            [12]  748 	mov	a,sp
+      00038C 24 FC            [12]  749 	add	a,#0xfc
+      00038E F5 81            [12]  750 	mov	sp,a
+      000390 D0 02            [24]  751 	pop	ar2
+      000392 D0 03            [24]  752 	pop	ar3
+      000394 D0 04            [24]  753 	pop	ar4
+      000396                        754 00111$:
+                                    755 ;	../../../../core/sys/process.c:160: if(p == process_list) {
+      000396 90r00r00         [24]  756 	mov	dptr,#_process_list
+      000399 E0               [24]  757 	movx	a,@dptr
+      00039A FC               [12]  758 	mov	r4,a
+      00039B A3               [24]  759 	inc	dptr
+      00039C E0               [24]  760 	movx	a,@dptr
+      00039D FB               [12]  761 	mov	r3,a
+      00039E A3               [24]  762 	inc	dptr
+      00039F E0               [24]  763 	movx	a,@dptr
+      0003A0 FA               [12]  764 	mov	r2,a
+      0003A1 E5 81            [12]  765 	mov	a,sp
+      0003A3 24 F8            [12]  766 	add	a,#0xf8
+      0003A5 F8               [12]  767 	mov	r0,a
+      0003A6 C0 04            [24]  768 	push	ar4
+      0003A8 C0 03            [24]  769 	push	ar3
+      0003AA C0 02            [24]  770 	push	ar2
+      0003AC 86 82            [24]  771 	mov	dpl,@r0
+      0003AE 08               [12]  772 	inc	r0
+      0003AF 86 83            [24]  773 	mov	dph,@r0
+      0003B1 08               [12]  774 	inc	r0
+      0003B2 86 F0            [24]  775 	mov	b,@r0
+      0003B4 12r00r00         [24]  776 	lcall	___gptr_cmp
+      0003B7 15 81            [12]  777 	dec	sp
+      0003B9 15 81            [12]  778 	dec	sp
+      0003BB 15 81            [12]  779 	dec	sp
+      0003BD 60 02            [24]  780 	jz	00181$
+      0003BF 80 22            [24]  781 	sjmp	00116$
+      0003C1                        782 00181$:
+                                    783 ;	../../../../core/sys/process.c:161: process_list = process_list->next;
+      0003C1 8C 82            [24]  784 	mov	dpl,r4
+      0003C3 8B 83            [24]  785 	mov	dph,r3
+      0003C5 8A F0            [24]  786 	mov	b,r2
+      0003C7 12r00r00         [24]  787 	lcall	__gptrget
+      0003CA FD               [12]  788 	mov	r5,a
+      0003CB A3               [24]  789 	inc	dptr
+      0003CC 12r00r00         [24]  790 	lcall	__gptrget
+      0003CF FE               [12]  791 	mov	r6,a
+      0003D0 A3               [24]  792 	inc	dptr
+      0003D1 12r00r00         [24]  793 	lcall	__gptrget
+      0003D4 FF               [12]  794 	mov	r7,a
+      0003D5 90r00r00         [24]  795 	mov	dptr,#_process_list
+      0003D8 ED               [12]  796 	mov	a,r5
+      0003D9 F0               [24]  797 	movx	@dptr,a
+      0003DA EE               [12]  798 	mov	a,r6
+      0003DB A3               [24]  799 	inc	dptr
+      0003DC F0               [24]  800 	movx	@dptr,a
+      0003DD EF               [12]  801 	mov	a,r7
+      0003DE A3               [24]  802 	inc	dptr
+      0003DF F0               [24]  803 	movx	@dptr,a
+      0003E0 02r04r9D         [24]  804 	ljmp	00117$
+      0003E3                        805 00116$:
+                                    806 ;	../../../../core/sys/process.c:163: for(q = process_list; q != NULL; q = q->next) {
+      0003E3 8C 05            [24]  807 	mov	ar5,r4
+      0003E5 8B 06            [24]  808 	mov	ar6,r3
+      0003E7 8A 07            [24]  809 	mov	ar7,r2
+      0003E9 E5 81            [12]  810 	mov	a,sp
+      0003EB 24 FB            [12]  811 	add	a,#0xfb
+      0003ED F8               [12]  812 	mov	r0,a
+      0003EE A6 05            [24]  813 	mov	@r0,ar5
+      0003F0 08               [12]  814 	inc	r0
+      0003F1 A6 06            [24]  815 	mov	@r0,ar6
+      0003F3 08               [12]  816 	inc	r0
+      0003F4 A6 07            [24]  817 	mov	@r0,ar7
+      0003F6                        818 00126$:
+      0003F6 E5 81            [12]  819 	mov	a,sp
+      0003F8 24 FB            [12]  820 	add	a,#0xfb
+      0003FA F8               [12]  821 	mov	r0,a
+      0003FB E4               [12]  822 	clr	a
+      0003FC C0 E0            [24]  823 	push	acc
+      0003FE E4               [12]  824 	clr	a
+      0003FF C0 E0            [24]  825 	push	acc
+      000401 E4               [12]  826 	clr	a
+      000402 C0 E0            [24]  827 	push	acc
+      000404 86 82            [24]  828 	mov	dpl,@r0
+      000406 08               [12]  829 	inc	r0
+      000407 86 83            [24]  830 	mov	dph,@r0
+      000409 08               [12]  831 	inc	r0
+      00040A 86 F0            [24]  832 	mov	b,@r0
+      00040C 12r00r00         [24]  833 	lcall	___gptr_cmp
+      00040F 15 81            [12]  834 	dec	sp
+      000411 15 81            [12]  835 	dec	sp
+      000413 15 81            [12]  836 	dec	sp
+      000415 70 03            [24]  837 	jnz	00182$
+      000417 02r04r9D         [24]  838 	ljmp	00117$
+      00041A                        839 00182$:
+                                    840 ;	../../../../core/sys/process.c:164: if(q->next == p) {
+      00041A E5 81            [12]  841 	mov	a,sp
+      00041C 24 FB            [12]  842 	add	a,#0xfb
+      00041E F8               [12]  843 	mov	r0,a
+      00041F 86 82            [24]  844 	mov	dpl,@r0
+      000421 08               [12]  845 	inc	r0
+      000422 86 83            [24]  846 	mov	dph,@r0
+      000424 08               [12]  847 	inc	r0
+      000425 86 F0            [24]  848 	mov	b,@r0
+      000427 12r00r00         [24]  849 	lcall	__gptrget
+      00042A FD               [12]  850 	mov	r5,a
+      00042B A3               [24]  851 	inc	dptr
+      00042C 12r00r00         [24]  852 	lcall	__gptrget
+      00042F FE               [12]  853 	mov	r6,a
+      000430 A3               [24]  854 	inc	dptr
+      000431 12r00r00         [24]  855 	lcall	__gptrget
+      000434 FF               [12]  856 	mov	r7,a
+      000435 E5 81            [12]  857 	mov	a,sp
+      000437 24 F8            [12]  858 	add	a,#0xf8
+      000439 F8               [12]  859 	mov	r0,a
+      00043A C0 05            [24]  860 	push	ar5
+      00043C C0 06            [24]  861 	push	ar6
+      00043E C0 07            [24]  862 	push	ar7
+      000440 86 82            [24]  863 	mov	dpl,@r0
+      000442 08               [12]  864 	inc	r0
+      000443 86 83            [24]  865 	mov	dph,@r0
+      000445 08               [12]  866 	inc	r0
+      000446 86 F0            [24]  867 	mov	b,@r0
+      000448 12r00r00         [24]  868 	lcall	___gptr_cmp
+      00044B 15 81            [12]  869 	dec	sp
+      00044D 15 81            [12]  870 	dec	sp
+      00044F 15 81            [12]  871 	dec	sp
+      000451 60 02            [24]  872 	jz	00184$
+      000453 80 38            [24]  873 	sjmp	00127$
+      000455                        874 00184$:
+                                    875 ;	../../../../core/sys/process.c:165: q->next = p->next;
+      000455 E5 81            [12]  876 	mov	a,sp
+      000457 24 F8            [12]  877 	add	a,#0xf8
+      000459 F8               [12]  878 	mov	r0,a
+      00045A 86 82            [24]  879 	mov	dpl,@r0
+      00045C 08               [12]  880 	inc	r0
+      00045D 86 83            [24]  881 	mov	dph,@r0
+      00045F 08               [12]  882 	inc	r0
+      000460 86 F0            [24]  883 	mov	b,@r0
+      000462 12r00r00         [24]  884 	lcall	__gptrget
+      000465 FA               [12]  885 	mov	r2,a
+      000466 A3               [24]  886 	inc	dptr
+      000467 12r00r00         [24]  887 	lcall	__gptrget
+      00046A FB               [12]  888 	mov	r3,a
+      00046B A3               [24]  889 	inc	dptr
+      00046C 12r00r00         [24]  890 	lcall	__gptrget
+      00046F FC               [12]  891 	mov	r4,a
+      000470 E5 81            [12]  892 	mov	a,sp
+      000472 24 FB            [12]  893 	add	a,#0xfb
+      000474 F8               [12]  894 	mov	r0,a
+      000475 86 82            [24]  895 	mov	dpl,@r0
+      000477 08               [12]  896 	inc	r0
+      000478 86 83            [24]  897 	mov	dph,@r0
+      00047A 08               [12]  898 	inc	r0
+      00047B 86 F0            [24]  899 	mov	b,@r0
+      00047D EA               [12]  900 	mov	a,r2
+      00047E 12r00r00         [24]  901 	lcall	__gptrput
+      000481 A3               [24]  902 	inc	dptr
+      000482 EB               [12]  903 	mov	a,r3
+      000483 12r00r00         [24]  904 	lcall	__gptrput
+      000486 A3               [24]  905 	inc	dptr
+      000487 EC               [12]  906 	mov	a,r4
+      000488 12r00r00         [24]  907 	lcall	__gptrput
+                                    908 ;	../../../../core/sys/process.c:166: break;
+      00048B 80 10            [24]  909 	sjmp	00117$
+      00048D                        910 00127$:
+                                    911 ;	../../../../core/sys/process.c:163: for(q = process_list; q != NULL; q = q->next) {
+      00048D E5 81            [12]  912 	mov	a,sp
+      00048F 24 FB            [12]  913 	add	a,#0xfb
+      000491 F8               [12]  914 	mov	r0,a
+      000492 A6 05            [24]  915 	mov	@r0,ar5
+      000494 08               [12]  916 	inc	r0
+      000495 A6 06            [24]  917 	mov	@r0,ar6
+      000497 08               [12]  918 	inc	r0
+      000498 A6 07            [24]  919 	mov	@r0,ar7
+      00049A 02r03rF6         [24]  920 	ljmp	00126$
+      00049D                        921 00117$:
+                                    922 ;	../../../../core/sys/process.c:171: process_current = old_current;
+      00049D A8 81            [24]  923 	mov	r0,sp
+      00049F 18               [12]  924 	dec	r0
+      0004A0 18               [12]  925 	dec	r0
+      0004A1 90r00r03         [24]  926 	mov	dptr,#_process_current
+      0004A4 E6               [12]  927 	mov	a,@r0
+      0004A5 F0               [24]  928 	movx	@dptr,a
+      0004A6 08               [12]  929 	inc	r0
+      0004A7 E6               [12]  930 	mov	a,@r0
+      0004A8 A3               [24]  931 	inc	dptr
+      0004A9 F0               [24]  932 	movx	@dptr,a
+      0004AA 08               [12]  933 	inc	r0
+      0004AB E6               [12]  934 	mov	a,@r0
+      0004AC A3               [24]  935 	inc	dptr
+      0004AD F0               [24]  936 	movx	@dptr,a
+      0004AE                        937 00128$:
+      0004AE E5 81            [12]  938 	mov	a,sp
+      0004B0 24 F7            [12]  939 	add	a,#0xF7
+      0004B2 F5 81            [12]  940 	mov	sp,a
+      0004B4 02r00r00         [24]  941 	ljmp	__sdcc_banked_ret
+                                    942 ;------------------------------------------------------------
+                                    943 ;Allocation info for local variables in function 'call_process'
+                                    944 ;------------------------------------------------------------
+                                    945 ;ev                        Allocated to stack - sp -9
+                                    946 ;data                      Allocated to stack - sp -12
+                                    947 ;p                         Allocated to stack - sp -5
+                                    948 ;ret                       Allocated to registers r5 r7 
+                                    949 ;sloc0                     Allocated to stack - sp -2
+                                    950 ;------------------------------------------------------------
+                                    951 ;	../../../../core/sys/process.c:175: call_process(struct process *p, process_event_t ev, process_data_t data)
+                                    952 ;	-----------------------------------------
+                                    953 ;	 function call_process
+                                    954 ;	-----------------------------------------
+      0004B7                        955 _call_process:
+      0004B7 C0 82            [24]  956 	push	dpl
+      0004B9 C0 83            [24]  957 	push	dph
+      0004BB C0 F0            [24]  958 	push	b
+      0004BD 05 81            [12]  959 	inc	sp
+      0004BF 05 81            [12]  960 	inc	sp
+      0004C1 05 81            [12]  961 	inc	sp
+                                    962 ;	../../../../core/sys/process.c:185: if((p->state & PROCESS_STATE_RUNNING) &&
+      0004C3 E5 81            [12]  963 	mov	a,sp
+      0004C5 24 FB            [12]  964 	add	a,#0xfb
+      0004C7 F8               [12]  965 	mov	r0,a
+      0004C8 74 08            [12]  966 	mov	a,#0x08
+      0004CA 26               [12]  967 	add	a,@r0
+      0004CB FA               [12]  968 	mov	r2,a
+      0004CC E4               [12]  969 	clr	a
+      0004CD 08               [12]  970 	inc	r0
+      0004CE 36               [12]  971 	addc	a,@r0
+      0004CF FB               [12]  972 	mov	r3,a
+      0004D0 08               [12]  973 	inc	r0
+      0004D1 86 04            [24]  974 	mov	ar4,@r0
+      0004D3 8A 82            [24]  975 	mov	dpl,r2
+      0004D5 8B 83            [24]  976 	mov	dph,r3
+      0004D7 8C F0            [24]  977 	mov	b,r4
+      0004D9 12r00r00         [24]  978 	lcall	__gptrget
+      0004DC FF               [12]  979 	mov	r7,a
+      0004DD 20 E0 03         [24]  980 	jb	acc.0,00123$
+      0004E0 02r06r12         [24]  981 	ljmp	00109$
+      0004E3                        982 00123$:
+                                    983 ;	../../../../core/sys/process.c:186: p->thread != NULL) {
+      0004E3 E5 81            [12]  984 	mov	a,sp
+      0004E5 24 FB            [12]  985 	add	a,#0xfb
+      0004E7 F8               [12]  986 	mov	r0,a
+      0004E8 A9 81            [24]  987 	mov	r1,sp
+      0004EA 19               [12]  988 	dec	r1
+      0004EB 19               [12]  989 	dec	r1
+      0004EC 74 03            [12]  990 	mov	a,#0x03
+      0004EE 26               [12]  991 	add	a,@r0
+      0004EF F7               [12]  992 	mov	@r1,a
+      0004F0 E4               [12]  993 	clr	a
+      0004F1 08               [12]  994 	inc	r0
+      0004F2 36               [12]  995 	addc	a,@r0
+      0004F3 09               [12]  996 	inc	r1
+      0004F4 F7               [12]  997 	mov	@r1,a
+      0004F5 08               [12]  998 	inc	r0
+      0004F6 09               [12]  999 	inc	r1
+      0004F7 E6               [12] 1000 	mov	a,@r0
+      0004F8 F7               [12] 1001 	mov	@r1,a
+      0004F9 A8 81            [24] 1002 	mov	r0,sp
+      0004FB 18               [12] 1003 	dec	r0
+      0004FC 18               [12] 1004 	dec	r0
+      0004FD 86 82            [24] 1005 	mov	dpl,@r0
+      0004FF 08               [12] 1006 	inc	r0
+      000500 86 83            [24] 1007 	mov	dph,@r0
+      000502 08               [12] 1008 	inc	r0
+      000503 86 F0            [24] 1009 	mov	b,@r0
+      000505 12r00r00         [24] 1010 	lcall	__gptrget
+      000508 FD               [12] 1011 	mov	r5,a
+      000509 A3               [24] 1012 	inc	dptr
+      00050A 12r00r00         [24] 1013 	lcall	__gptrget
+      00050D FE               [12] 1014 	mov	r6,a
+      00050E A3               [24] 1015 	inc	dptr
+      00050F 12r00r00         [24] 1016 	lcall	__gptrget
+      000512 FF               [12] 1017 	mov	r7,a
+      000513 ED               [12] 1018 	mov	a,r5
+      000514 4E               [12] 1019 	orl	a,r6
+      000515 70 03            [24] 1020 	jnz	00124$
+      000517 02r06r12         [24] 1021 	ljmp	00109$
+      00051A                       1022 00124$:
+                                   1023 ;	../../../../core/sys/process.c:188: process_current = p;
+      00051A E5 81            [12] 1024 	mov	a,sp
+      00051C 24 FB            [12] 1025 	add	a,#0xfb
+      00051E F8               [12] 1026 	mov	r0,a
+      00051F 90r00r03         [24] 1027 	mov	dptr,#_process_current
+      000522 E6               [12] 1028 	mov	a,@r0
+      000523 F0               [24] 1029 	movx	@dptr,a
+      000524 08               [12] 1030 	inc	r0
+      000525 E6               [12] 1031 	mov	a,@r0
+      000526 A3               [24] 1032 	inc	dptr
+      000527 F0               [24] 1033 	movx	@dptr,a
+      000528 08               [12] 1034 	inc	r0
+      000529 E6               [12] 1035 	mov	a,@r0
+      00052A A3               [24] 1036 	inc	dptr
+      00052B F0               [24] 1037 	movx	@dptr,a
+                                   1038 ;	../../../../core/sys/process.c:189: p->state = PROCESS_STATE_CALLED;
+      00052C 8A 82            [24] 1039 	mov	dpl,r2
+      00052E 8B 83            [24] 1040 	mov	dph,r3
+      000530 8C F0            [24] 1041 	mov	b,r4
+      000532 74 02            [12] 1042 	mov	a,#0x02
+      000534 12r00r00         [24] 1043 	lcall	__gptrput
+                                   1044 ;	../../../../core/sys/process.c:190: ret = p->thread(&p->pt, ev, data);
+      000537 A8 81            [24] 1045 	mov	r0,sp
+      000539 18               [12] 1046 	dec	r0
+      00053A 18               [12] 1047 	dec	r0
+      00053B 86 82            [24] 1048 	mov	dpl,@r0
+      00053D 08               [12] 1049 	inc	r0
+      00053E 86 83            [24] 1050 	mov	dph,@r0
+      000540 08               [12] 1051 	inc	r0
+      000541 86 F0            [24] 1052 	mov	b,@r0
+      000543 12r00r00         [24] 1053 	lcall	__gptrget
+      000546 FD               [12] 1054 	mov	r5,a
+      000547 A3               [24] 1055 	inc	dptr
+      000548 12r00r00         [24] 1056 	lcall	__gptrget
+      00054B FE               [12] 1057 	mov	r6,a
+      00054C A3               [24] 1058 	inc	dptr
+      00054D 12r00r00         [24] 1059 	lcall	__gptrget
+      000550 FF               [12] 1060 	mov	r7,a
+      000551 C0 02            [24] 1061 	push	ar2
+      000553 C0 03            [24] 1062 	push	ar3
+      000555 C0 04            [24] 1063 	push	ar4
+      000557 E5 81            [12] 1064 	mov	a,sp
+      000559 24 F8            [12] 1065 	add	a,#0xf8
+      00055B F8               [12] 1066 	mov	r0,a
+      00055C 74 06            [12] 1067 	mov	a,#0x06
+      00055E 26               [12] 1068 	add	a,@r0
+      00055F FA               [12] 1069 	mov	r2,a
+      000560 E4               [12] 1070 	clr	a
+      000561 08               [12] 1071 	inc	r0
+      000562 36               [12] 1072 	addc	a,@r0
+      000563 FB               [12] 1073 	mov	r3,a
+      000564 08               [12] 1074 	inc	r0
+      000565 86 04            [24] 1075 	mov	ar4,@r0
+      000567 C0 07            [24] 1076 	push	ar7
+      000569 C0 06            [24] 1077 	push	ar6
+      00056B C0 04            [24] 1078 	push	ar4
+      00056D C0 03            [24] 1079 	push	ar3
+      00056F C0 02            [24] 1080 	push	ar2
+      000571 E5 81            [12] 1081 	mov	a,sp
+      000573 24 EC            [12] 1082 	add	a,#0xec
+      000575 F8               [12] 1083 	mov	r0,a
+      000576 E6               [12] 1084 	mov	a,@r0
+      000577 C0 E0            [24] 1085 	push	acc
+      000579 08               [12] 1086 	inc	r0
+      00057A E6               [12] 1087 	mov	a,@r0
+      00057B C0 E0            [24] 1088 	push	acc
+      00057D 08               [12] 1089 	inc	r0
+      00057E E6               [12] 1090 	mov	a,@r0
+      00057F C0 E0            [24] 1091 	push	acc
+      000581 E5 81            [12] 1092 	mov	a,sp
+      000583 24 EC            [12] 1093 	add	a,#0xec
+      000585 F8               [12] 1094 	mov	r0,a
+      000586 E6               [12] 1095 	mov	a,@r0
+      000587 C0 E0            [24] 1096 	push	acc
+      000589 C0 05            [24] 1097 	push	ar5
+      00058B C0 06            [24] 1098 	push	ar6
+      00058D C0 07            [24] 1099 	push	ar7
+      00058F 8A 82            [24] 1100 	mov	dpl,r2
+      000591 8B 83            [24] 1101 	mov	dph,r3
+      000593 8C F0            [24] 1102 	mov	b,r4
+      000595 D0 02            [24] 1103 	pop	ar2
+      000597 D0 01            [24] 1104 	pop	ar1
+      000599 D0 00            [24] 1105 	pop	ar0
+      00059B 12r00r00         [24] 1106 	lcall	__sdcc_banked_call
+      00059E AD 82            [24] 1107 	mov	r5,dpl
+      0005A0 E5 81            [12] 1108 	mov	a,sp
+      0005A2 24 FC            [12] 1109 	add	a,#0xfc
+      0005A4 F5 81            [12] 1110 	mov	sp,a
+      0005A6 D0 02            [24] 1111 	pop	ar2
+      0005A8 D0 03            [24] 1112 	pop	ar3
+      0005AA D0 04            [24] 1113 	pop	ar4
+      0005AC D0 06            [24] 1114 	pop	ar6
+      0005AE D0 07            [24] 1115 	pop	ar7
+      0005B0 ED               [12] 1116 	mov	a,r5
+      0005B1 33               [12] 1117 	rlc	a
+      0005B2 95 E0            [12] 1118 	subb	a,acc
+      0005B4 FF               [12] 1119 	mov	r7,a
+                                   1120 ;	../../../../core/sys/process.c:191: if(ret == PT_EXITED ||
+      0005B5 BD 02 0B         [24] 1121 	cjne	r5,#0x02,00125$
+      0005B8 BF 00 08         [24] 1122 	cjne	r7,#0x00,00125$
+      0005BB D0 04            [24] 1123 	pop	ar4
+      0005BD D0 03            [24] 1124 	pop	ar3
+      0005BF D0 02            [24] 1125 	pop	ar2
+      0005C1 80 16            [24] 1126 	sjmp	00101$
+      0005C3                       1127 00125$:
+      0005C3 D0 04            [24] 1128 	pop	ar4
+      0005C5 D0 03            [24] 1129 	pop	ar3
+      0005C7 D0 02            [24] 1130 	pop	ar2
+                                   1131 ;	../../../../core/sys/process.c:192: ret == PT_ENDED ||
+      0005C9 BD 03 05         [24] 1132 	cjne	r5,#0x03,00126$
+      0005CC BF 00 02         [24] 1133 	cjne	r7,#0x00,00126$
+      0005CF 80 08            [24] 1134 	sjmp	00101$
+      0005D1                       1135 00126$:
+                                   1136 ;	../../../../core/sys/process.c:193: ev == PROCESS_EVENT_EXIT) {
+      0005D1 E5 81            [12] 1137 	mov	a,sp
+      0005D3 24 F7            [12] 1138 	add	a,#0xf7
+      0005D5 F8               [12] 1139 	mov	r0,a
+      0005D6 B6 83 2E         [24] 1140 	cjne	@r0,#0x83,00102$
+      0005D9                       1141 00101$:
+                                   1142 ;	../../../../core/sys/process.c:194: exit_process(p, p);
+      0005D9 E5 81            [12] 1143 	mov	a,sp
+      0005DB 24 FB            [12] 1144 	add	a,#0xfb
+      0005DD F8               [12] 1145 	mov	r0,a
+      0005DE E6               [12] 1146 	mov	a,@r0
+      0005DF C0 E0            [24] 1147 	push	acc
+      0005E1 08               [12] 1148 	inc	r0
+      0005E2 E6               [12] 1149 	mov	a,@r0
+      0005E3 C0 E0            [24] 1150 	push	acc
+      0005E5 08               [12] 1151 	inc	r0
+      0005E6 E6               [12] 1152 	mov	a,@r0
+      0005E7 C0 E0            [24] 1153 	push	acc
+      0005E9 E5 81            [12] 1154 	mov	a,sp
+      0005EB 24 F8            [12] 1155 	add	a,#0xf8
+      0005ED F8               [12] 1156 	mov	r0,a
+      0005EE 86 82            [24] 1157 	mov	dpl,@r0
+      0005F0 08               [12] 1158 	inc	r0
+      0005F1 86 83            [24] 1159 	mov	dph,@r0
+      0005F3 08               [12] 1160 	inc	r0
+      0005F4 86 F0            [24] 1161 	mov	b,@r0
+      0005F6 78r34            [12] 1162 	mov	r0,#_exit_process
+      0005F8 79s01            [12] 1163 	mov	r1,#(_exit_process >> 8)
+      0005FA 7As00            [12] 1164 	mov	r2,#(_exit_process >> 16)
+      0005FC 12r00r00         [24] 1165 	lcall	__sdcc_banked_call
+      0005FF 15 81            [12] 1166 	dec	sp
+      000601 15 81            [12] 1167 	dec	sp
+      000603 15 81            [12] 1168 	dec	sp
+      000605 80 0B            [24] 1169 	sjmp	00109$
+      000607                       1170 00102$:
+                                   1171 ;	../../../../core/sys/process.c:196: p->state = PROCESS_STATE_RUNNING;
+      000607 8A 82            [24] 1172 	mov	dpl,r2
+      000609 8B 83            [24] 1173 	mov	dph,r3
+      00060B 8C F0            [24] 1174 	mov	b,r4
+      00060D 74 01            [12] 1175 	mov	a,#0x01
+      00060F 12r00r00         [24] 1176 	lcall	__gptrput
+      000612                       1177 00109$:
+      000612 E5 81            [12] 1178 	mov	a,sp
+      000614 24 FA            [12] 1179 	add	a,#0xFA
+      000616 F5 81            [12] 1180 	mov	sp,a
+      000618 02r00r00         [24] 1181 	ljmp	__sdcc_banked_ret
+                                   1182 ;------------------------------------------------------------
+                                   1183 ;Allocation info for local variables in function 'process_exit'
+                                   1184 ;------------------------------------------------------------
+                                   1185 ;p                         Allocated to registers r5 r6 r7 
+                                   1186 ;------------------------------------------------------------
+                                   1187 ;	../../../../core/sys/process.c:202: process_exit(struct process *p)
+                                   1188 ;	-----------------------------------------
+                                   1189 ;	 function process_exit
+                                   1190 ;	-----------------------------------------
+      00061B                       1191 _process_exit:
+      00061B AD 82            [24] 1192 	mov	r5,dpl
+      00061D AE 83            [24] 1193 	mov	r6,dph
+      00061F AF F0            [24] 1194 	mov	r7,b
+                                   1195 ;	../../../../core/sys/process.c:204: exit_process(p, PROCESS_CURRENT());
+      000621 90r00r03         [24] 1196 	mov	dptr,#_process_current
+      000624 E0               [24] 1197 	movx	a,@dptr
+      000625 C0 E0            [24] 1198 	push	acc
+      000627 A3               [24] 1199 	inc	dptr
+      000628 E0               [24] 1200 	movx	a,@dptr
+      000629 C0 E0            [24] 1201 	push	acc
+      00062B A3               [24] 1202 	inc	dptr
+      00062C E0               [24] 1203 	movx	a,@dptr
+      00062D C0 E0            [24] 1204 	push	acc
+      00062F 8D 82            [24] 1205 	mov	dpl,r5
+      000631 8E 83            [24] 1206 	mov	dph,r6
+      000633 8F F0            [24] 1207 	mov	b,r7
+      000635 78r34            [12] 1208 	mov	r0,#_exit_process
+      000637 79s01            [12] 1209 	mov	r1,#(_exit_process >> 8)
+      000639 7As00            [12] 1210 	mov	r2,#(_exit_process >> 16)
+      00063B 12r00r00         [24] 1211 	lcall	__sdcc_banked_call
+      00063E 15 81            [12] 1212 	dec	sp
+      000640 15 81            [12] 1213 	dec	sp
+      000642 15 81            [12] 1214 	dec	sp
+      000644 02r00r00         [24] 1215 	ljmp	__sdcc_banked_ret
+                                   1216 ;------------------------------------------------------------
+                                   1217 ;Allocation info for local variables in function 'process_init'
+                                   1218 ;------------------------------------------------------------
+                                   1219 ;	../../../../core/sys/process.c:208: process_init(void)
+                                   1220 ;	-----------------------------------------
+                                   1221 ;	 function process_init
+                                   1222 ;	-----------------------------------------
+      000647                       1223 _process_init:
+                                   1224 ;	../../../../core/sys/process.c:210: lastevent = PROCESS_EVENT_MAX;
+      000647 90r00r00         [24] 1225 	mov	dptr,#_lastevent
+      00064A 74 8A            [12] 1226 	mov	a,#0x8A
+      00064C F0               [24] 1227 	movx	@dptr,a
+                                   1228 ;	../../../../core/sys/process.c:212: nevents = fevent = 0;
+      00064D 90r00r02         [24] 1229 	mov	dptr,#_fevent
+                                   1230 ;	../../../../core/sys/process.c:217: process_current = process_list = NULL;
+      000650 E4               [12] 1231 	clr	a
+      000651 F0               [24] 1232 	movx	@dptr,a
+      000652 90r00r01         [24] 1233 	mov	dptr,#_nevents
+      000655 F0               [24] 1234 	movx	@dptr,a
+      000656 90r00r00         [24] 1235 	mov	dptr,#_process_list
+      000659 F0               [24] 1236 	movx	@dptr,a
+      00065A E4               [12] 1237 	clr	a
+      00065B A3               [24] 1238 	inc	dptr
+      00065C F0               [24] 1239 	movx	@dptr,a
+      00065D E4               [12] 1240 	clr	a
+      00065E A3               [24] 1241 	inc	dptr
+      00065F F0               [24] 1242 	movx	@dptr,a
+      000660 90r00r03         [24] 1243 	mov	dptr,#_process_current
+      000663 E4               [12] 1244 	clr	a
+      000664 F0               [24] 1245 	movx	@dptr,a
+      000665 E4               [12] 1246 	clr	a
+      000666 A3               [24] 1247 	inc	dptr
+      000667 F0               [24] 1248 	movx	@dptr,a
+      000668 E4               [12] 1249 	clr	a
+      000669 A3               [24] 1250 	inc	dptr
+      00066A F0               [24] 1251 	movx	@dptr,a
+      00066B 02r00r00         [24] 1252 	ljmp	__sdcc_banked_ret
+                                   1253 ;------------------------------------------------------------
+                                   1254 ;Allocation info for local variables in function 'do_poll'
+                                   1255 ;------------------------------------------------------------
+                                   1256 ;p                         Allocated to stack - sp -2
+                                   1257 ;------------------------------------------------------------
+                                   1258 ;	../../../../core/sys/process.c:225: do_poll(void)
+                                   1259 ;	-----------------------------------------
+                                   1260 ;	 function do_poll
+                                   1261 ;	-----------------------------------------
+      00066E                       1262 _do_poll:
+      00066E 05 81            [12] 1263 	inc	sp
+      000670 05 81            [12] 1264 	inc	sp
+      000672 05 81            [12] 1265 	inc	sp
+                                   1266 ;	../../../../core/sys/process.c:229: poll_requested = 0;
+      000674 90r00rE3         [24] 1267 	mov	dptr,#_poll_requested
+      000677 E4               [12] 1268 	clr	a
+      000678 F0               [24] 1269 	movx	@dptr,a
+                                   1270 ;	../../../../core/sys/process.c:231: for(p = process_list; p != NULL; p = p->next) {
+      000679 90r00r00         [24] 1271 	mov	dptr,#_process_list
+      00067C E0               [24] 1272 	movx	a,@dptr
+      00067D FD               [12] 1273 	mov	r5,a
+      00067E A3               [24] 1274 	inc	dptr
+      00067F E0               [24] 1275 	movx	a,@dptr
+      000680 FE               [12] 1276 	mov	r6,a
+      000681 A3               [24] 1277 	inc	dptr
+      000682 E0               [24] 1278 	movx	a,@dptr
+      000683 FF               [12] 1279 	mov	r7,a
+      000684 A8 81            [24] 1280 	mov	r0,sp
+      000686 18               [12] 1281 	dec	r0
+      000687 18               [12] 1282 	dec	r0
+      000688 A6 05            [24] 1283 	mov	@r0,ar5
+      00068A 08               [12] 1284 	inc	r0
+      00068B A6 06            [24] 1285 	mov	@r0,ar6
+      00068D 08               [12] 1286 	inc	r0
+      00068E A6 07            [24] 1287 	mov	@r0,ar7
+      000690                       1288 00105$:
+      000690 A8 81            [24] 1289 	mov	r0,sp
+      000692 18               [12] 1290 	dec	r0
+      000693 18               [12] 1291 	dec	r0
+      000694 E4               [12] 1292 	clr	a
+      000695 C0 E0            [24] 1293 	push	acc
+      000697 E4               [12] 1294 	clr	a
+      000698 C0 E0            [24] 1295 	push	acc
+      00069A E4               [12] 1296 	clr	a
+      00069B C0 E0            [24] 1297 	push	acc
+      00069D 86 82            [24] 1298 	mov	dpl,@r0
+      00069F 08               [12] 1299 	inc	r0
+      0006A0 86 83            [24] 1300 	mov	dph,@r0
+      0006A2 08               [12] 1301 	inc	r0
+      0006A3 86 F0            [24] 1302 	mov	b,@r0
+      0006A5 12r00r00         [24] 1303 	lcall	___gptr_cmp
+      0006A8 15 81            [12] 1304 	dec	sp
+      0006AA 15 81            [12] 1305 	dec	sp
+      0006AC 15 81            [12] 1306 	dec	sp
+      0006AE 70 03            [24] 1307 	jnz	00118$
+      0006B0 02r07r39         [24] 1308 	ljmp	00107$
+      0006B3                       1309 00118$:
+                                   1310 ;	../../../../core/sys/process.c:232: if(p->needspoll) {
+      0006B3 A8 81            [24] 1311 	mov	r0,sp
+      0006B5 18               [12] 1312 	dec	r0
+      0006B6 18               [12] 1313 	dec	r0
+      0006B7 74 09            [12] 1314 	mov	a,#0x09
+      0006B9 26               [12] 1315 	add	a,@r0
+      0006BA FA               [12] 1316 	mov	r2,a
+      0006BB E4               [12] 1317 	clr	a
+      0006BC 08               [12] 1318 	inc	r0
+      0006BD 36               [12] 1319 	addc	a,@r0
+      0006BE FB               [12] 1320 	mov	r3,a
+      0006BF 08               [12] 1321 	inc	r0
+      0006C0 86 04            [24] 1322 	mov	ar4,@r0
+      0006C2 8A 82            [24] 1323 	mov	dpl,r2
+      0006C4 8B 83            [24] 1324 	mov	dph,r3
+      0006C6 8C F0            [24] 1325 	mov	b,r4
+      0006C8 12r00r00         [24] 1326 	lcall	__gptrget
+      0006CB 60 4B            [24] 1327 	jz	00106$
+                                   1328 ;	../../../../core/sys/process.c:233: p->state = PROCESS_STATE_RUNNING;
+      0006CD A8 81            [24] 1329 	mov	r0,sp
+      0006CF 18               [12] 1330 	dec	r0
+      0006D0 18               [12] 1331 	dec	r0
+      0006D1 74 08            [12] 1332 	mov	a,#0x08
+      0006D3 26               [12] 1333 	add	a,@r0
+      0006D4 FD               [12] 1334 	mov	r5,a
+      0006D5 E4               [12] 1335 	clr	a
+      0006D6 08               [12] 1336 	inc	r0
+      0006D7 36               [12] 1337 	addc	a,@r0
+      0006D8 FE               [12] 1338 	mov	r6,a
+      0006D9 08               [12] 1339 	inc	r0
+      0006DA 86 07            [24] 1340 	mov	ar7,@r0
+      0006DC 8D 82            [24] 1341 	mov	dpl,r5
+      0006DE 8E 83            [24] 1342 	mov	dph,r6
+      0006E0 8F F0            [24] 1343 	mov	b,r7
+      0006E2 74 01            [12] 1344 	mov	a,#0x01
+      0006E4 12r00r00         [24] 1345 	lcall	__gptrput
+                                   1346 ;	../../../../core/sys/process.c:234: p->needspoll = 0;
+      0006E7 8A 82            [24] 1347 	mov	dpl,r2
+      0006E9 8B 83            [24] 1348 	mov	dph,r3
+      0006EB 8C F0            [24] 1349 	mov	b,r4
+      0006ED E4               [12] 1350 	clr	a
+      0006EE 12r00r00         [24] 1351 	lcall	__gptrput
+                                   1352 ;	../../../../core/sys/process.c:235: call_process(p, PROCESS_EVENT_POLL, NULL);
+      0006F1 E4               [12] 1353 	clr	a
+      0006F2 C0 E0            [24] 1354 	push	acc
+      0006F4 C0 E0            [24] 1355 	push	acc
+      0006F6 C0 E0            [24] 1356 	push	acc
+      0006F8 74 82            [12] 1357 	mov	a,#0x82
+      0006FA C0 E0            [24] 1358 	push	acc
+      0006FC E5 81            [12] 1359 	mov	a,sp
+      0006FE 24 FA            [12] 1360 	add	a,#0xfa
+      000700 F8               [12] 1361 	mov	r0,a
+      000701 86 82            [24] 1362 	mov	dpl,@r0
+      000703 08               [12] 1363 	inc	r0
+      000704 86 83            [24] 1364 	mov	dph,@r0
+      000706 08               [12] 1365 	inc	r0
+      000707 86 F0            [24] 1366 	mov	b,@r0
+      000709 78rB7            [12] 1367 	mov	r0,#_call_process
+      00070B 79s04            [12] 1368 	mov	r1,#(_call_process >> 8)
+      00070D 7As00            [12] 1369 	mov	r2,#(_call_process >> 16)
+      00070F 12r00r00         [24] 1370 	lcall	__sdcc_banked_call
+      000712 E5 81            [12] 1371 	mov	a,sp
+      000714 24 FC            [12] 1372 	add	a,#0xfc
+      000716 F5 81            [12] 1373 	mov	sp,a
+      000718                       1374 00106$:
+                                   1375 ;	../../../../core/sys/process.c:231: for(p = process_list; p != NULL; p = p->next) {
+      000718 A8 81            [24] 1376 	mov	r0,sp
+      00071A 18               [12] 1377 	dec	r0
+      00071B 18               [12] 1378 	dec	r0
+      00071C 86 82            [24] 1379 	mov	dpl,@r0
+      00071E 08               [12] 1380 	inc	r0
+      00071F 86 83            [24] 1381 	mov	dph,@r0
+      000721 08               [12] 1382 	inc	r0
+      000722 86 F0            [24] 1383 	mov	b,@r0
+      000724 12r00r00         [24] 1384 	lcall	__gptrget
+      000727 18               [12] 1385 	dec	r0
+      000728 18               [12] 1386 	dec	r0
+      000729 F6               [12] 1387 	mov	@r0,a
+      00072A A3               [24] 1388 	inc	dptr
+      00072B 12r00r00         [24] 1389 	lcall	__gptrget
+      00072E 08               [12] 1390 	inc	r0
+      00072F F6               [12] 1391 	mov	@r0,a
+      000730 A3               [24] 1392 	inc	dptr
+      000731 12r00r00         [24] 1393 	lcall	__gptrget
+      000734 08               [12] 1394 	inc	r0
+      000735 F6               [12] 1395 	mov	@r0,a
+      000736 02r06r90         [24] 1396 	ljmp	00105$
+      000739                       1397 00107$:
+      000739 15 81            [12] 1398 	dec	sp
+      00073B 15 81            [12] 1399 	dec	sp
+      00073D 15 81            [12] 1400 	dec	sp
+      00073F 02r00r00         [24] 1401 	ljmp	__sdcc_banked_ret
+                                   1402 ;------------------------------------------------------------
+                                   1403 ;Allocation info for local variables in function 'do_event'
+                                   1404 ;------------------------------------------------------------
+                                   1405 ;ev                        Allocated with name '_do_event_ev_1_82'
+                                   1406 ;data                      Allocated with name '_do_event_data_1_82'
+                                   1407 ;receiver                  Allocated with name '_do_event_receiver_1_82'
+                                   1408 ;p                         Allocated with name '_do_event_p_1_82'
+                                   1409 ;------------------------------------------------------------
+                                   1410 ;	../../../../core/sys/process.c:246: do_event(void)
+                                   1411 ;	-----------------------------------------
+                                   1412 ;	 function do_event
+                                   1413 ;	-----------------------------------------
+      000742                       1414 _do_event:
+                                   1415 ;	../../../../core/sys/process.c:261: if(nevents > 0) {
+      000742 90r00r01         [24] 1416 	mov	dptr,#_nevents
+      000745 E0               [24] 1417 	movx	a,@dptr
+      000746 FF               [12] 1418 	mov	r7,a
+      000747 70 03            [24] 1419 	jnz	00134$
+      000749 02r08rBE         [24] 1420 	ljmp	00114$
+      00074C                       1421 00134$:
+                                   1422 ;	../../../../core/sys/process.c:264: ev = events[fevent].ev;
+      00074C 90r00r02         [24] 1423 	mov	dptr,#_fevent
+      00074F E0               [24] 1424 	movx	a,@dptr
+      000750 FE               [12] 1425 	mov	r6,a
+      000751 75 F0 07         [24] 1426 	mov	b,#0x07
+      000754 A4               [48] 1427 	mul	ab
+      000755 FC               [12] 1428 	mov	r4,a
+      000756 AD F0            [24] 1429 	mov	r5,b
+      000758 24r03            [12] 1430 	add	a,#_events
+      00075A F5 82            [12] 1431 	mov	dpl,a
+      00075C ED               [12] 1432 	mov	a,r5
+      00075D 34s00            [12] 1433 	addc	a,#(_events >> 8)
+      00075F F5 83            [12] 1434 	mov	dph,a
+      000761 E0               [24] 1435 	movx	a,@dptr
+      000762 90r00rE4         [24] 1436 	mov	dptr,#_do_event_ev_1_82
+      000765 F0               [24] 1437 	movx	@dptr,a
+                                   1438 ;	../../../../core/sys/process.c:266: data = events[fevent].data;
+      000766 EC               [12] 1439 	mov	a,r4
+      000767 24r03            [12] 1440 	add	a,#_events
+      000769 FC               [12] 1441 	mov	r4,a
+      00076A ED               [12] 1442 	mov	a,r5
+      00076B 34s00            [12] 1443 	addc	a,#(_events >> 8)
+      00076D FD               [12] 1444 	mov	r5,a
+      00076E 8C 82            [24] 1445 	mov	dpl,r4
+      000770 8D 83            [24] 1446 	mov	dph,r5
+      000772 A3               [24] 1447 	inc	dptr
+      000773 E0               [24] 1448 	movx	a,@dptr
+      000774 F9               [12] 1449 	mov	r1,a
+      000775 A3               [24] 1450 	inc	dptr
+      000776 E0               [24] 1451 	movx	a,@dptr
+      000777 FA               [12] 1452 	mov	r2,a
+      000778 A3               [24] 1453 	inc	dptr
+      000779 E0               [24] 1454 	movx	a,@dptr
+      00077A FB               [12] 1455 	mov	r3,a
+      00077B 90r00rE5         [24] 1456 	mov	dptr,#_do_event_data_1_82
+      00077E E9               [12] 1457 	mov	a,r1
+      00077F F0               [24] 1458 	movx	@dptr,a
+      000780 EA               [12] 1459 	mov	a,r2
+      000781 A3               [24] 1460 	inc	dptr
+      000782 F0               [24] 1461 	movx	@dptr,a
+      000783 EB               [12] 1462 	mov	a,r3
+      000784 A3               [24] 1463 	inc	dptr
+      000785 F0               [24] 1464 	movx	@dptr,a
+                                   1465 ;	../../../../core/sys/process.c:267: receiver = events[fevent].p;
+      000786 8C 82            [24] 1466 	mov	dpl,r4
+      000788 8D 83            [24] 1467 	mov	dph,r5
+      00078A A3               [24] 1468 	inc	dptr
+      00078B A3               [24] 1469 	inc	dptr
+      00078C A3               [24] 1470 	inc	dptr
+      00078D A3               [24] 1471 	inc	dptr
+      00078E E0               [24] 1472 	movx	a,@dptr
+      00078F FB               [12] 1473 	mov	r3,a
+      000790 A3               [24] 1474 	inc	dptr
+      000791 E0               [24] 1475 	movx	a,@dptr
+      000792 FC               [12] 1476 	mov	r4,a
+      000793 A3               [24] 1477 	inc	dptr
+      000794 E0               [24] 1478 	movx	a,@dptr
+      000795 FD               [12] 1479 	mov	r5,a
+      000796 90r00rE8         [24] 1480 	mov	dptr,#_do_event_receiver_1_82
+      000799 EB               [12] 1481 	mov	a,r3
+      00079A F0               [24] 1482 	movx	@dptr,a
+      00079B EC               [12] 1483 	mov	a,r4
+      00079C A3               [24] 1484 	inc	dptr
+      00079D F0               [24] 1485 	movx	@dptr,a
+      00079E ED               [12] 1486 	mov	a,r5
+      00079F A3               [24] 1487 	inc	dptr
+      0007A0 F0               [24] 1488 	movx	@dptr,a
+                                   1489 ;	../../../../core/sys/process.c:271: fevent = (process_num_events_t) (fevent + 1) % PROCESS_CONF_NUMEVENTS;
+      0007A1 EE               [12] 1490 	mov	a,r6
+      0007A2 04               [12] 1491 	inc	a
+      0007A3 90r00r02         [24] 1492 	mov	dptr,#_fevent
+      0007A6 54 1F            [12] 1493 	anl	a,#0x1F
+      0007A8 F0               [24] 1494 	movx	@dptr,a
+                                   1495 ;	../../../../core/sys/process.c:272: --nevents;
+      0007A9 EF               [12] 1496 	mov	a,r7
+      0007AA 14               [12] 1497 	dec	a
+      0007AB 90r00r01         [24] 1498 	mov	dptr,#_nevents
+      0007AE F0               [24] 1499 	movx	@dptr,a
+                                   1500 ;	../../../../core/sys/process.c:276: if(receiver == PROCESS_BROADCAST) {
+      0007AF 90r00rE8         [24] 1501 	mov	dptr,#_do_event_receiver_1_82
+      0007B2 E0               [24] 1502 	movx	a,@dptr
+      0007B3 FD               [12] 1503 	mov	r5,a
+      0007B4 A3               [24] 1504 	inc	dptr
+      0007B5 E0               [24] 1505 	movx	a,@dptr
+      0007B6 FE               [12] 1506 	mov	r6,a
+      0007B7 A3               [24] 1507 	inc	dptr
+      0007B8 E0               [24] 1508 	movx	a,@dptr
+      0007B9 FF               [12] 1509 	mov	r7,a
+      0007BA ED               [12] 1510 	mov	a,r5
+      0007BB 4E               [12] 1511 	orl	a,r6
+      0007BC 60 03            [24] 1512 	jz	00135$
+      0007BE 02r08r70         [24] 1513 	ljmp	00107$
+      0007C1                       1514 00135$:
+                                   1515 ;	../../../../core/sys/process.c:277: for(p = process_list; p != NULL; p = p->next) {
+      0007C1 90r00r00         [24] 1516 	mov	dptr,#_process_list
+      0007C4 E0               [24] 1517 	movx	a,@dptr
+      0007C5 FA               [12] 1518 	mov	r2,a
+      0007C6 A3               [24] 1519 	inc	dptr
+      0007C7 E0               [24] 1520 	movx	a,@dptr
+      0007C8 FB               [12] 1521 	mov	r3,a
+      0007C9 A3               [24] 1522 	inc	dptr
+      0007CA E0               [24] 1523 	movx	a,@dptr
+      0007CB FC               [12] 1524 	mov	r4,a
+      0007CC 90r00rEB         [24] 1525 	mov	dptr,#_do_event_p_1_82
+      0007CF EA               [12] 1526 	mov	a,r2
+      0007D0 F0               [24] 1527 	movx	@dptr,a
+      0007D1 EB               [12] 1528 	mov	a,r3
+      0007D2 A3               [24] 1529 	inc	dptr
+      0007D3 F0               [24] 1530 	movx	@dptr,a
+      0007D4 EC               [12] 1531 	mov	a,r4
+      0007D5 A3               [24] 1532 	inc	dptr
+      0007D6 F0               [24] 1533 	movx	@dptr,a
+      0007D7                       1534 00112$:
+      0007D7 90r00rEB         [24] 1535 	mov	dptr,#_do_event_p_1_82
+      0007DA E0               [24] 1536 	movx	a,@dptr
+      0007DB FA               [12] 1537 	mov	r2,a
+      0007DC A3               [24] 1538 	inc	dptr
+      0007DD E0               [24] 1539 	movx	a,@dptr
+      0007DE FB               [12] 1540 	mov	r3,a
+      0007DF A3               [24] 1541 	inc	dptr
+      0007E0 E0               [24] 1542 	movx	a,@dptr
+      0007E1 FC               [12] 1543 	mov	r4,a
+      0007E2 E4               [12] 1544 	clr	a
+      0007E3 C0 E0            [24] 1545 	push	acc
+      0007E5 E4               [12] 1546 	clr	a
+      0007E6 C0 E0            [24] 1547 	push	acc
+      0007E8 E4               [12] 1548 	clr	a
+      0007E9 C0 E0            [24] 1549 	push	acc
+      0007EB 8A 82            [24] 1550 	mov	dpl,r2
+      0007ED 8B 83            [24] 1551 	mov	dph,r3
+      0007EF 8C F0            [24] 1552 	mov	b,r4
+      0007F1 12r00r00         [24] 1553 	lcall	___gptr_cmp
+      0007F4 15 81            [12] 1554 	dec	sp
+      0007F6 15 81            [12] 1555 	dec	sp
+      0007F8 15 81            [12] 1556 	dec	sp
+      0007FA 70 03            [24] 1557 	jnz	00136$
+      0007FC 02r08rBE         [24] 1558 	ljmp	00114$
+      0007FF                       1559 00136$:
+                                   1560 ;	../../../../core/sys/process.c:281: if(poll_requested) {
+      0007FF 90r00rE3         [24] 1561 	mov	dptr,#_poll_requested
+      000802 E0               [24] 1562 	movx	a,@dptr
+      000803 FC               [12] 1563 	mov	r4,a
+      000804 60 09            [24] 1564 	jz	00102$
+                                   1565 ;	../../../../core/sys/process.c:282: do_poll();
+      000806 78r6E            [12] 1566 	mov	r0,#_do_poll
+      000808 79s06            [12] 1567 	mov	r1,#(_do_poll >> 8)
+      00080A 7As00            [12] 1568 	mov	r2,#(_do_poll >> 16)
+      00080C 12r00r00         [24] 1569 	lcall	__sdcc_banked_call
+      00080F                       1570 00102$:
+                                   1571 ;	../../../../core/sys/process.c:284: call_process(p, ev, data);
+      00080F 90r00rEB         [24] 1572 	mov	dptr,#_do_event_p_1_82
+      000812 E0               [24] 1573 	movx	a,@dptr
+      000813 FA               [12] 1574 	mov	r2,a
+      000814 A3               [24] 1575 	inc	dptr
+      000815 E0               [24] 1576 	movx	a,@dptr
+      000816 FB               [12] 1577 	mov	r3,a
+      000817 A3               [24] 1578 	inc	dptr
+      000818 E0               [24] 1579 	movx	a,@dptr
+      000819 FC               [12] 1580 	mov	r4,a
+      00081A 90r00rE5         [24] 1581 	mov	dptr,#_do_event_data_1_82
+      00081D E0               [24] 1582 	movx	a,@dptr
+      00081E C0 E0            [24] 1583 	push	acc
+      000820 A3               [24] 1584 	inc	dptr
+      000821 E0               [24] 1585 	movx	a,@dptr
+      000822 C0 E0            [24] 1586 	push	acc
+      000824 A3               [24] 1587 	inc	dptr
+      000825 E0               [24] 1588 	movx	a,@dptr
+      000826 C0 E0            [24] 1589 	push	acc
+      000828 90r00rE4         [24] 1590 	mov	dptr,#_do_event_ev_1_82
+      00082B E0               [24] 1591 	movx	a,@dptr
+      00082C C0 E0            [24] 1592 	push	acc
+      00082E 8A 82            [24] 1593 	mov	dpl,r2
+      000830 8B 83            [24] 1594 	mov	dph,r3
+      000832 8C F0            [24] 1595 	mov	b,r4
+      000834 78rB7            [12] 1596 	mov	r0,#_call_process
+      000836 79s04            [12] 1597 	mov	r1,#(_call_process >> 8)
+      000838 7As00            [12] 1598 	mov	r2,#(_call_process >> 16)
+      00083A 12r00r00         [24] 1599 	lcall	__sdcc_banked_call
+      00083D E5 81            [12] 1600 	mov	a,sp
+      00083F 24 FC            [12] 1601 	add	a,#0xfc
+      000841 F5 81            [12] 1602 	mov	sp,a
+                                   1603 ;	../../../../core/sys/process.c:277: for(p = process_list; p != NULL; p = p->next) {
+      000843 90r00rEB         [24] 1604 	mov	dptr,#_do_event_p_1_82
+      000846 E0               [24] 1605 	movx	a,@dptr
+      000847 FA               [12] 1606 	mov	r2,a
+      000848 A3               [24] 1607 	inc	dptr
+      000849 E0               [24] 1608 	movx	a,@dptr
+      00084A FB               [12] 1609 	mov	r3,a
+      00084B A3               [24] 1610 	inc	dptr
+      00084C E0               [24] 1611 	movx	a,@dptr
+      00084D FC               [12] 1612 	mov	r4,a
+      00084E 8A 82            [24] 1613 	mov	dpl,r2
+      000850 8B 83            [24] 1614 	mov	dph,r3
+      000852 8C F0            [24] 1615 	mov	b,r4
+      000854 12r00r00         [24] 1616 	lcall	__gptrget
+      000857 FA               [12] 1617 	mov	r2,a
+      000858 A3               [24] 1618 	inc	dptr
+      000859 12r00r00         [24] 1619 	lcall	__gptrget
+      00085C FB               [12] 1620 	mov	r3,a
+      00085D A3               [24] 1621 	inc	dptr
+      00085E 12r00r00         [24] 1622 	lcall	__gptrget
+      000861 FC               [12] 1623 	mov	r4,a
+      000862 90r00rEB         [24] 1624 	mov	dptr,#_do_event_p_1_82
+      000865 EA               [12] 1625 	mov	a,r2
+      000866 F0               [24] 1626 	movx	@dptr,a
+      000867 EB               [12] 1627 	mov	a,r3
+      000868 A3               [24] 1628 	inc	dptr
+      000869 F0               [24] 1629 	movx	@dptr,a
+      00086A EC               [12] 1630 	mov	a,r4
+      00086B A3               [24] 1631 	inc	dptr
+      00086C F0               [24] 1632 	movx	@dptr,a
+      00086D 02r07rD7         [24] 1633 	ljmp	00112$
+      000870                       1634 00107$:
+                                   1635 ;	../../../../core/sys/process.c:291: if(ev == PROCESS_EVENT_INIT) {
+      000870 90r00rE4         [24] 1636 	mov	dptr,#_do_event_ev_1_82
+      000873 E0               [24] 1637 	movx	a,@dptr
+      000874 FC               [12] 1638 	mov	r4,a
+      000875 BC 81 12         [24] 1639 	cjne	r4,#0x81,00105$
+                                   1640 ;	../../../../core/sys/process.c:292: receiver->state = PROCESS_STATE_RUNNING;
+      000878 74 08            [12] 1641 	mov	a,#0x08
+      00087A 2D               [12] 1642 	add	a,r5
+      00087B FD               [12] 1643 	mov	r5,a
+      00087C E4               [12] 1644 	clr	a
+      00087D 3E               [12] 1645 	addc	a,r6
+      00087E FE               [12] 1646 	mov	r6,a
+      00087F 8D 82            [24] 1647 	mov	dpl,r5
+      000881 8E 83            [24] 1648 	mov	dph,r6
+      000883 8F F0            [24] 1649 	mov	b,r7
+      000885 74 01            [12] 1650 	mov	a,#0x01
+      000887 12r00r00         [24] 1651 	lcall	__gptrput
+      00088A                       1652 00105$:
+                                   1653 ;	../../../../core/sys/process.c:296: call_process(receiver, ev, data);
+      00088A 90r00rE8         [24] 1654 	mov	dptr,#_do_event_receiver_1_82
+      00088D E0               [24] 1655 	movx	a,@dptr
+      00088E FD               [12] 1656 	mov	r5,a
+      00088F A3               [24] 1657 	inc	dptr
+      000890 E0               [24] 1658 	movx	a,@dptr
+      000891 FE               [12] 1659 	mov	r6,a
+      000892 A3               [24] 1660 	inc	dptr
+      000893 E0               [24] 1661 	movx	a,@dptr
+      000894 FF               [12] 1662 	mov	r7,a
+      000895 90r00rE5         [24] 1663 	mov	dptr,#_do_event_data_1_82
+      000898 E0               [24] 1664 	movx	a,@dptr
+      000899 C0 E0            [24] 1665 	push	acc
+      00089B A3               [24] 1666 	inc	dptr
+      00089C E0               [24] 1667 	movx	a,@dptr
+      00089D C0 E0            [24] 1668 	push	acc
+      00089F A3               [24] 1669 	inc	dptr
+      0008A0 E0               [24] 1670 	movx	a,@dptr
+      0008A1 C0 E0            [24] 1671 	push	acc
+      0008A3 90r00rE4         [24] 1672 	mov	dptr,#_do_event_ev_1_82
+      0008A6 E0               [24] 1673 	movx	a,@dptr
+      0008A7 C0 E0            [24] 1674 	push	acc
+      0008A9 8D 82            [24] 1675 	mov	dpl,r5
+      0008AB 8E 83            [24] 1676 	mov	dph,r6
+      0008AD 8F F0            [24] 1677 	mov	b,r7
+      0008AF 78rB7            [12] 1678 	mov	r0,#_call_process
+      0008B1 79s04            [12] 1679 	mov	r1,#(_call_process >> 8)
+      0008B3 7As00            [12] 1680 	mov	r2,#(_call_process >> 16)
+      0008B5 12r00r00         [24] 1681 	lcall	__sdcc_banked_call
+      0008B8 E5 81            [12] 1682 	mov	a,sp
+      0008BA 24 FC            [12] 1683 	add	a,#0xfc
+      0008BC F5 81            [12] 1684 	mov	sp,a
+      0008BE                       1685 00114$:
+      0008BE 02r00r00         [24] 1686 	ljmp	__sdcc_banked_ret
+                                   1687 ;------------------------------------------------------------
+                                   1688 ;Allocation info for local variables in function 'process_run'
+                                   1689 ;------------------------------------------------------------
+                                   1690 ;	../../../../core/sys/process.c:302: process_run(void)
+                                   1691 ;	-----------------------------------------
+                                   1692 ;	 function process_run
+                                   1693 ;	-----------------------------------------
+      0008C1                       1694 _process_run:
+                                   1695 ;	../../../../core/sys/process.c:305: if(poll_requested) {
+      0008C1 90r00rE3         [24] 1696 	mov	dptr,#_poll_requested
+      0008C4 E0               [24] 1697 	movx	a,@dptr
+      0008C5 FF               [12] 1698 	mov	r7,a
+      0008C6 60 09            [24] 1699 	jz	00102$
+                                   1700 ;	../../../../core/sys/process.c:306: do_poll();
+      0008C8 78r6E            [12] 1701 	mov	r0,#_do_poll
+      0008CA 79s06            [12] 1702 	mov	r1,#(_do_poll >> 8)
+      0008CC 7As00            [12] 1703 	mov	r2,#(_do_poll >> 16)
+      0008CE 12r00r00         [24] 1704 	lcall	__sdcc_banked_call
+      0008D1                       1705 00102$:
+                                   1706 ;	../../../../core/sys/process.c:310: do_event();
+      0008D1 78r42            [12] 1707 	mov	r0,#_do_event
+      0008D3 79s07            [12] 1708 	mov	r1,#(_do_event >> 8)
+      0008D5 7As00            [12] 1709 	mov	r2,#(_do_event >> 16)
+      0008D7 12r00r00         [24] 1710 	lcall	__sdcc_banked_call
+                                   1711 ;	../../../../core/sys/process.c:312: return nevents + poll_requested;
+      0008DA 90r00r01         [24] 1712 	mov	dptr,#_nevents
+      0008DD E0               [24] 1713 	movx	a,@dptr
+      0008DE FF               [12] 1714 	mov	r7,a
+      0008DF 7E 00            [12] 1715 	mov	r6,#0x00
+      0008E1 90r00rE3         [24] 1716 	mov	dptr,#_poll_requested
+      0008E4 E0               [24] 1717 	movx	a,@dptr
+      0008E5 FD               [12] 1718 	mov	r5,a
+      0008E6 7C 00            [12] 1719 	mov	r4,#0x00
+      0008E8 2F               [12] 1720 	add	a,r7
+      0008E9 FF               [12] 1721 	mov	r7,a
+      0008EA EC               [12] 1722 	mov	a,r4
+      0008EB 3E               [12] 1723 	addc	a,r6
+      0008EC FE               [12] 1724 	mov	r6,a
+      0008ED 8F 82            [24] 1725 	mov	dpl,r7
+      0008EF 8E 83            [24] 1726 	mov	dph,r6
+      0008F1 02r00r00         [24] 1727 	ljmp	__sdcc_banked_ret
+                                   1728 ;------------------------------------------------------------
+                                   1729 ;Allocation info for local variables in function 'process_nevents'
+                                   1730 ;------------------------------------------------------------
+                                   1731 ;	../../../../core/sys/process.c:316: process_nevents(void)
+                                   1732 ;	-----------------------------------------
+                                   1733 ;	 function process_nevents
+                                   1734 ;	-----------------------------------------
+      0008F4                       1735 _process_nevents:
+                                   1736 ;	../../../../core/sys/process.c:318: return nevents + poll_requested;
+      0008F4 90r00r01         [24] 1737 	mov	dptr,#_nevents
+      0008F7 E0               [24] 1738 	movx	a,@dptr
+      0008F8 FF               [12] 1739 	mov	r7,a
+      0008F9 7E 00            [12] 1740 	mov	r6,#0x00
+      0008FB 90r00rE3         [24] 1741 	mov	dptr,#_poll_requested
+      0008FE E0               [24] 1742 	movx	a,@dptr
+      0008FF FD               [12] 1743 	mov	r5,a
+      000900 7C 00            [12] 1744 	mov	r4,#0x00
+      000902 2F               [12] 1745 	add	a,r7
+      000903 FF               [12] 1746 	mov	r7,a
+      000904 EC               [12] 1747 	mov	a,r4
+      000905 3E               [12] 1748 	addc	a,r6
+      000906 FE               [12] 1749 	mov	r6,a
+      000907 8F 82            [24] 1750 	mov	dpl,r7
+      000909 8E 83            [24] 1751 	mov	dph,r6
+      00090B 02r00r00         [24] 1752 	ljmp	__sdcc_banked_ret
+                                   1753 ;------------------------------------------------------------
+                                   1754 ;Allocation info for local variables in function 'process_post'
+                                   1755 ;------------------------------------------------------------
+                                   1756 ;ev                        Allocated to stack - sp -3
+                                   1757 ;data                      Allocated to stack - sp -6
+                                   1758 ;p                         Allocated to registers r5 r6 r7 
+                                   1759 ;snum                      Allocated with name '_process_post_snum_1_95'
+                                   1760 ;------------------------------------------------------------
+                                   1761 ;	../../../../core/sys/process.c:322: process_post(struct process *p, process_event_t ev, process_data_t data)
+                                   1762 ;	-----------------------------------------
+                                   1763 ;	 function process_post
+                                   1764 ;	-----------------------------------------
+      00090E                       1765 _process_post:
+      00090E AD 82            [24] 1766 	mov	r5,dpl
+      000910 AE 83            [24] 1767 	mov	r6,dph
+      000912 AF F0            [24] 1768 	mov	r7,b
+                                   1769 ;	../../../../core/sys/process.c:335: if(nevents == PROCESS_CONF_NUMEVENTS) {
+      000914 90r00r01         [24] 1770 	mov	dptr,#_nevents
+      000917 E0               [24] 1771 	movx	a,@dptr
+      000918 FC               [12] 1772 	mov	r4,a
+      000919 BC 20 05         [24] 1773 	cjne	r4,#0x20,00102$
+                                   1774 ;	../../../../core/sys/process.c:343: return PROCESS_ERR_FULL;
+      00091C 90 00 01         [24] 1775 	mov	dptr,#0x0001
+      00091F 80 70            [24] 1776 	sjmp	00103$
+      000921                       1777 00102$:
+                                   1778 ;	../../../../core/sys/process.c:346: snum = (process_num_events_t)(fevent + nevents) % PROCESS_CONF_NUMEVENTS;
+      000921 90r00r02         [24] 1779 	mov	dptr,#_fevent
+      000924 E0               [24] 1780 	movx	a,@dptr
+      000925 2C               [12] 1781 	add	a,r4
+      000926 54 1F            [12] 1782 	anl	a,#0x1F
+      000928 FC               [12] 1783 	mov	r4,a
+      000929 90r00rEE         [24] 1784 	mov	dptr,#_process_post_snum_1_95
+      00092C F0               [24] 1785 	movx	@dptr,a
+                                   1786 ;	../../../../core/sys/process.c:347: events[snum].ev = ev;
+      00092D EC               [12] 1787 	mov	a,r4
+      00092E 75 F0 07         [24] 1788 	mov	b,#0x07
+      000931 A4               [48] 1789 	mul	ab
+      000932 24r03            [12] 1790 	add	a,#_events
+      000934 F5 82            [12] 1791 	mov	dpl,a
+      000936 74s00            [12] 1792 	mov	a,#(_events >> 8)
+      000938 35 F0            [12] 1793 	addc	a,b
+      00093A F5 83            [12] 1794 	mov	dph,a
+      00093C E5 81            [12] 1795 	mov	a,sp
+      00093E 24 FD            [12] 1796 	add	a,#0xfd
+      000940 F8               [12] 1797 	mov	r0,a
+      000941 E6               [12] 1798 	mov	a,@r0
+      000942 F0               [24] 1799 	movx	@dptr,a
+                                   1800 ;	../../../../core/sys/process.c:348: events[snum].data = data;
+      000943 90r00rEE         [24] 1801 	mov	dptr,#_process_post_snum_1_95
+      000946 E0               [24] 1802 	movx	a,@dptr
+      000947 75 F0 07         [24] 1803 	mov	b,#0x07
+      00094A A4               [48] 1804 	mul	ab
+      00094B 24r03            [12] 1805 	add	a,#_events
+      00094D FB               [12] 1806 	mov	r3,a
+      00094E 74s00            [12] 1807 	mov	a,#(_events >> 8)
+      000950 35 F0            [12] 1808 	addc	a,b
+      000952 FC               [12] 1809 	mov	r4,a
+      000953 8B 82            [24] 1810 	mov	dpl,r3
+      000955 8C 83            [24] 1811 	mov	dph,r4
+      000957 A3               [24] 1812 	inc	dptr
+      000958 E5 81            [12] 1813 	mov	a,sp
+      00095A 24 FA            [12] 1814 	add	a,#0xfa
+      00095C F8               [12] 1815 	mov	r0,a
+      00095D E6               [12] 1816 	mov	a,@r0
+      00095E F0               [24] 1817 	movx	@dptr,a
+      00095F 08               [12] 1818 	inc	r0
+      000960 E6               [12] 1819 	mov	a,@r0
+      000961 A3               [24] 1820 	inc	dptr
+      000962 F0               [24] 1821 	movx	@dptr,a
+      000963 08               [12] 1822 	inc	r0
+      000964 E6               [12] 1823 	mov	a,@r0
+      000965 A3               [24] 1824 	inc	dptr
+      000966 F0               [24] 1825 	movx	@dptr,a
+                                   1826 ;	../../../../core/sys/process.c:349: events[snum].p = p;
+      000967 90r00rEE         [24] 1827 	mov	dptr,#_process_post_snum_1_95
+      00096A E0               [24] 1828 	movx	a,@dptr
+      00096B 75 F0 07         [24] 1829 	mov	b,#0x07
+      00096E A4               [48] 1830 	mul	ab
+      00096F 24r03            [12] 1831 	add	a,#_events
+      000971 FB               [12] 1832 	mov	r3,a
+      000972 74s00            [12] 1833 	mov	a,#(_events >> 8)
+      000974 35 F0            [12] 1834 	addc	a,b
+      000976 FC               [12] 1835 	mov	r4,a
+      000977 8B 82            [24] 1836 	mov	dpl,r3
+      000979 8C 83            [24] 1837 	mov	dph,r4
+      00097B A3               [24] 1838 	inc	dptr
+      00097C A3               [24] 1839 	inc	dptr
+      00097D A3               [24] 1840 	inc	dptr
+      00097E A3               [24] 1841 	inc	dptr
+      00097F ED               [12] 1842 	mov	a,r5
+      000980 F0               [24] 1843 	movx	@dptr,a
+      000981 EE               [12] 1844 	mov	a,r6
+      000982 A3               [24] 1845 	inc	dptr
+      000983 F0               [24] 1846 	movx	@dptr,a
+      000984 EF               [12] 1847 	mov	a,r7
+      000985 A3               [24] 1848 	inc	dptr
+      000986 F0               [24] 1849 	movx	@dptr,a
+                                   1850 ;	../../../../core/sys/process.c:350: ++nevents;
+      000987 90r00r01         [24] 1851 	mov	dptr,#_nevents
+      00098A E0               [24] 1852 	movx	a,@dptr
+      00098B 24 01            [12] 1853 	add	a,#0x01
+      00098D F0               [24] 1854 	movx	@dptr,a
+                                   1855 ;	../../../../core/sys/process.c:358: return PROCESS_ERR_OK;
+      00098E 90 00 00         [24] 1856 	mov	dptr,#0x0000
+      000991                       1857 00103$:
+      000991 02r00r00         [24] 1858 	ljmp	__sdcc_banked_ret
+                                   1859 ;------------------------------------------------------------
+                                   1860 ;Allocation info for local variables in function 'process_post_synch'
+                                   1861 ;------------------------------------------------------------
+                                   1862 ;ev                        Allocated to stack - sp -3
+                                   1863 ;data                      Allocated to stack - sp -6
+                                   1864 ;p                         Allocated to registers r5 r6 r7 
+                                   1865 ;caller                    Allocated to registers r2 r3 r4 
+                                   1866 ;------------------------------------------------------------
+                                   1867 ;	../../../../core/sys/process.c:362: process_post_synch(struct process *p, process_event_t ev, process_data_t data)
+                                   1868 ;	-----------------------------------------
+                                   1869 ;	 function process_post_synch
+                                   1870 ;	-----------------------------------------
+      000994                       1871 _process_post_synch:
+      000994 AD 82            [24] 1872 	mov	r5,dpl
+      000996 AE 83            [24] 1873 	mov	r6,dph
+      000998 AF F0            [24] 1874 	mov	r7,b
+                                   1875 ;	../../../../core/sys/process.c:364: struct process *caller = process_current;
+      00099A 90r00r03         [24] 1876 	mov	dptr,#_process_current
+      00099D E0               [24] 1877 	movx	a,@dptr
+      00099E FA               [12] 1878 	mov	r2,a
+      00099F A3               [24] 1879 	inc	dptr
+      0009A0 E0               [24] 1880 	movx	a,@dptr
+      0009A1 FB               [12] 1881 	mov	r3,a
+      0009A2 A3               [24] 1882 	inc	dptr
+      0009A3 E0               [24] 1883 	movx	a,@dptr
+      0009A4 FC               [12] 1884 	mov	r4,a
+                                   1885 ;	../../../../core/sys/process.c:366: call_process(p, ev, data);
+      0009A5 C0 04            [24] 1886 	push	ar4
+      0009A7 C0 03            [24] 1887 	push	ar3
+      0009A9 C0 02            [24] 1888 	push	ar2
+      0009AB E5 81            [12] 1889 	mov	a,sp
+      0009AD 24 F7            [12] 1890 	add	a,#0xf7
+      0009AF F8               [12] 1891 	mov	r0,a
+      0009B0 E6               [12] 1892 	mov	a,@r0
+      0009B1 C0 E0            [24] 1893 	push	acc
+      0009B3 08               [12] 1894 	inc	r0
+      0009B4 E6               [12] 1895 	mov	a,@r0
+      0009B5 C0 E0            [24] 1896 	push	acc
+      0009B7 08               [12] 1897 	inc	r0
+      0009B8 E6               [12] 1898 	mov	a,@r0
+      0009B9 C0 E0            [24] 1899 	push	acc
+      0009BB E5 81            [12] 1900 	mov	a,sp
+      0009BD 24 F7            [12] 1901 	add	a,#0xf7
+      0009BF F8               [12] 1902 	mov	r0,a
+      0009C0 E6               [12] 1903 	mov	a,@r0
+      0009C1 C0 E0            [24] 1904 	push	acc
+      0009C3 8D 82            [24] 1905 	mov	dpl,r5
+      0009C5 8E 83            [24] 1906 	mov	dph,r6
+      0009C7 8F F0            [24] 1907 	mov	b,r7
+      0009C9 78rB7            [12] 1908 	mov	r0,#_call_process
+      0009CB 79s04            [12] 1909 	mov	r1,#(_call_process >> 8)
+      0009CD 7As00            [12] 1910 	mov	r2,#(_call_process >> 16)
+      0009CF 12r00r00         [24] 1911 	lcall	__sdcc_banked_call
+      0009D2 E5 81            [12] 1912 	mov	a,sp
+      0009D4 24 FC            [12] 1913 	add	a,#0xfc
+      0009D6 F5 81            [12] 1914 	mov	sp,a
+      0009D8 D0 02            [24] 1915 	pop	ar2
+      0009DA D0 03            [24] 1916 	pop	ar3
+      0009DC D0 04            [24] 1917 	pop	ar4
+                                   1918 ;	../../../../core/sys/process.c:367: process_current = caller;
+      0009DE 90r00r03         [24] 1919 	mov	dptr,#_process_current
+      0009E1 EA               [12] 1920 	mov	a,r2
+      0009E2 F0               [24] 1921 	movx	@dptr,a
+      0009E3 EB               [12] 1922 	mov	a,r3
+      0009E4 A3               [24] 1923 	inc	dptr
+      0009E5 F0               [24] 1924 	movx	@dptr,a
+      0009E6 EC               [12] 1925 	mov	a,r4
+      0009E7 A3               [24] 1926 	inc	dptr
+      0009E8 F0               [24] 1927 	movx	@dptr,a
+      0009E9 02r00r00         [24] 1928 	ljmp	__sdcc_banked_ret
+                                   1929 ;------------------------------------------------------------
+                                   1930 ;Allocation info for local variables in function 'process_poll'
+                                   1931 ;------------------------------------------------------------
+                                   1932 ;p                         Allocated to registers r5 r6 r7 
+                                   1933 ;------------------------------------------------------------
+                                   1934 ;	../../../../core/sys/process.c:371: process_poll(struct process *p)
+                                   1935 ;	-----------------------------------------
+                                   1936 ;	 function process_poll
+                                   1937 ;	-----------------------------------------
+      0009EC                       1938 _process_poll:
+      0009EC AD 82            [24] 1939 	mov	r5,dpl
+      0009EE AE 83            [24] 1940 	mov	r6,dph
+      0009F0 AF F0            [24] 1941 	mov	r7,b
+                                   1942 ;	../../../../core/sys/process.c:373: if(p != NULL) {
+      0009F2 ED               [12] 1943 	mov	a,r5
+      0009F3 4E               [12] 1944 	orl	a,r6
+      0009F4 60 33            [24] 1945 	jz	00106$
+                                   1946 ;	../../../../core/sys/process.c:374: if(p->state == PROCESS_STATE_RUNNING ||
+      0009F6 74 08            [12] 1947 	mov	a,#0x08
+      0009F8 2D               [12] 1948 	add	a,r5
+      0009F9 FA               [12] 1949 	mov	r2,a
+      0009FA E4               [12] 1950 	clr	a
+      0009FB 3E               [12] 1951 	addc	a,r6
+      0009FC FB               [12] 1952 	mov	r3,a
+      0009FD 8F 04            [24] 1953 	mov	ar4,r7
+      0009FF 8A 82            [24] 1954 	mov	dpl,r2
+      000A01 8B 83            [24] 1955 	mov	dph,r3
+      000A03 8C F0            [24] 1956 	mov	b,r4
+      000A05 12r00r00         [24] 1957 	lcall	__gptrget
+      000A08 FC               [12] 1958 	mov	r4,a
+      000A09 BC 01 02         [24] 1959 	cjne	r4,#0x01,00115$
+      000A0C 80 03            [24] 1960 	sjmp	00101$
+      000A0E                       1961 00115$:
+                                   1962 ;	../../../../core/sys/process.c:375: p->state == PROCESS_STATE_CALLED) {
+      000A0E BC 02 18         [24] 1963 	cjne	r4,#0x02,00106$
+      000A11                       1964 00101$:
+                                   1965 ;	../../../../core/sys/process.c:376: p->needspoll = 1;
+      000A11 74 09            [12] 1966 	mov	a,#0x09
+      000A13 2D               [12] 1967 	add	a,r5
+      000A14 FD               [12] 1968 	mov	r5,a
+      000A15 E4               [12] 1969 	clr	a
+      000A16 3E               [12] 1970 	addc	a,r6
+      000A17 FE               [12] 1971 	mov	r6,a
+      000A18 8D 82            [24] 1972 	mov	dpl,r5
+      000A1A 8E 83            [24] 1973 	mov	dph,r6
+      000A1C 8F F0            [24] 1974 	mov	b,r7
+      000A1E 74 01            [12] 1975 	mov	a,#0x01
+      000A20 12r00r00         [24] 1976 	lcall	__gptrput
+                                   1977 ;	../../../../core/sys/process.c:377: poll_requested = 1;
+      000A23 90r00rE3         [24] 1978 	mov	dptr,#_poll_requested
+      000A26 74 01            [12] 1979 	mov	a,#0x01
+      000A28 F0               [24] 1980 	movx	@dptr,a
+      000A29                       1981 00106$:
+      000A29 02r00r00         [24] 1982 	ljmp	__sdcc_banked_ret
+                                   1983 ;------------------------------------------------------------
+                                   1984 ;Allocation info for local variables in function 'process_is_running'
+                                   1985 ;------------------------------------------------------------
+                                   1986 ;p                         Allocated to registers r5 r6 r7 
+                                   1987 ;------------------------------------------------------------
+                                   1988 ;	../../../../core/sys/process.c:383: process_is_running(struct process *p)
+                                   1989 ;	-----------------------------------------
+                                   1990 ;	 function process_is_running
+                                   1991 ;	-----------------------------------------
+      000A2C                       1992 _process_is_running:
+      000A2C AD 82            [24] 1993 	mov	r5,dpl
+      000A2E AE 83            [24] 1994 	mov	r6,dph
+      000A30 AF F0            [24] 1995 	mov	r7,b
+                                   1996 ;	../../../../core/sys/process.c:385: return p->state != PROCESS_STATE_NONE;
+      000A32 74 08            [12] 1997 	mov	a,#0x08
+      000A34 2D               [12] 1998 	add	a,r5
+      000A35 FD               [12] 1999 	mov	r5,a
+      000A36 E4               [12] 2000 	clr	a
+      000A37 3E               [12] 2001 	addc	a,r6
+      000A38 FE               [12] 2002 	mov	r6,a
+      000A39 8D 82            [24] 2003 	mov	dpl,r5
+      000A3B 8E 83            [24] 2004 	mov	dph,r6
+      000A3D 8F F0            [24] 2005 	mov	b,r7
+      000A3F 12r00r00         [24] 2006 	lcall	__gptrget
+      000A42 FD               [12] 2007 	mov	r5,a
+      000A43 E4               [12] 2008 	clr	a
+      000A44 BD 00 01         [24] 2009 	cjne	r5,#0x00,00103$
+      000A47 04               [12] 2010 	inc	a
+      000A48                       2011 00103$:
+      000A48 FD               [12] 2012 	mov	r5,a
+      000A49 B4 01 00         [24] 2013 	cjne	a,#0x01,00105$
+      000A4C                       2014 00105$:
+      000A4C E4               [12] 2015 	clr	a
+      000A4D 33               [12] 2016 	rlc	a
+      000A4E FD               [12] 2017 	mov	r5,a
+      000A4F 33               [12] 2018 	rlc	a
+      000A50 95 E0            [12] 2019 	subb	a,acc
+      000A52 FF               [12] 2020 	mov	r7,a
+      000A53 8D 82            [24] 2021 	mov	dpl,r5
+      000A55 8F 83            [24] 2022 	mov	dph,r7
+      000A57 02r00r00         [24] 2023 	ljmp	__sdcc_banked_ret
+                                   2024 	.area CSEG    (CODE)
+                                   2025 	.area CONST   (CODE)
+                                   2026 	.area XINIT   (CODE)
+      000000                       2027 __xinit__process_list:
+                                   2028 ; generic printIvalPtr
+      000000 00 00 00              2029 	.byte #0x00,#0x00,#0x00
+      000003                       2030 __xinit__process_current:
+                                   2031 ; generic printIvalPtr
+      000003 00 00 00              2032 	.byte #0x00,#0x00,#0x00
+                                   2033 	.area CABS    (ABS,CODE)

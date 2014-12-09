@@ -1,0 +1,2910 @@
+                                      1 ;--------------------------------------------------------
+                                      2 ; File Created by SDCC : free open source ANSI-C Compiler
+                                      3 ; Version 3.3.1 #8804 (Aug  6 2013) (Linux)
+                                      4 ; This file was generated Mon Aug 25 04:16:26 2014
+                                      5 ;--------------------------------------------------------
+                                      6 	.module rpl_ext_header
+                                      7 	.optsdcc -mmcs51 --model-huge
+                                      8 	
+                                      9 ;--------------------------------------------------------
+                                     10 ; Public variables in this module
+                                     11 ;--------------------------------------------------------
+                                     12 	.globl _rpl_find_parent
+                                     13 	.globl _rpl_get_instance
+                                     14 	.globl _uip_ds6_route_lookup
+                                     15 	.globl _memset
+                                     16 	.globl _memmove
+                                     17 	.globl _ACTIVE
+                                     18 	.globl _TX_BYTE
+                                     19 	.globl _RX_BYTE
+                                     20 	.globl _ERR
+                                     21 	.globl _FE
+                                     22 	.globl _SLAVE
+                                     23 	.globl _RE
+                                     24 	.globl _MODE
+                                     25 	.globl _T3OVFIF
+                                     26 	.globl _T3CH0IF
+                                     27 	.globl _T3CH1IF
+                                     28 	.globl _T4OVFIF
+                                     29 	.globl _T4CH0IF
+                                     30 	.globl _T4CH1IF
+                                     31 	.globl _OVFIM
+                                     32 	.globl _B_0
+                                     33 	.globl _B_1
+                                     34 	.globl _B_2
+                                     35 	.globl _B_3
+                                     36 	.globl _B_4
+                                     37 	.globl _B_5
+                                     38 	.globl _B_6
+                                     39 	.globl _B_7
+                                     40 	.globl _P2IF
+                                     41 	.globl _UTX0IF
+                                     42 	.globl _UTX1IF
+                                     43 	.globl _P1IF
+                                     44 	.globl _WDTIF
+                                     45 	.globl _ACC_0
+                                     46 	.globl _ACC_1
+                                     47 	.globl _ACC_2
+                                     48 	.globl _ACC_3
+                                     49 	.globl _ACC_4
+                                     50 	.globl _ACC_5
+                                     51 	.globl _ACC_6
+                                     52 	.globl _ACC_7
+                                     53 	.globl _P
+                                     54 	.globl _F1
+                                     55 	.globl _OV
+                                     56 	.globl _RS0
+                                     57 	.globl _RS1
+                                     58 	.globl _F0
+                                     59 	.globl _AC
+                                     60 	.globl _CY
+                                     61 	.globl _DMAIF
+                                     62 	.globl _T1IF
+                                     63 	.globl _T2IF
+                                     64 	.globl _T3IF
+                                     65 	.globl _T4IF
+                                     66 	.globl _P0IF
+                                     67 	.globl _STIF
+                                     68 	.globl _DMAIE
+                                     69 	.globl _T1IE
+                                     70 	.globl _T2IE
+                                     71 	.globl _T3IE
+                                     72 	.globl _T4IE
+                                     73 	.globl _P0IE
+                                     74 	.globl _RFERRIE
+                                     75 	.globl _ADCIE
+                                     76 	.globl _URX0IE
+                                     77 	.globl _URX1IE
+                                     78 	.globl _ENCIE
+                                     79 	.globl _STIE
+                                     80 	.globl _EA
+                                     81 	.globl _P2_0
+                                     82 	.globl _P2_1
+                                     83 	.globl _P2_2
+                                     84 	.globl _P2_3
+                                     85 	.globl _P2_4
+                                     86 	.globl _P2_5
+                                     87 	.globl _P2_6
+                                     88 	.globl _P2_7
+                                     89 	.globl _ENCIF_0
+                                     90 	.globl _ENCIF_1
+                                     91 	.globl _P1_0
+                                     92 	.globl _P1_1
+                                     93 	.globl _P1_2
+                                     94 	.globl _P1_3
+                                     95 	.globl _P1_4
+                                     96 	.globl _P1_5
+                                     97 	.globl _P1_6
+                                     98 	.globl _P1_7
+                                     99 	.globl _IT0
+                                    100 	.globl _RFERRIF
+                                    101 	.globl _IT1
+                                    102 	.globl _URX0IF
+                                    103 	.globl _ADCIF
+                                    104 	.globl _URX1IF
+                                    105 	.globl _P0_0
+                                    106 	.globl _P0_1
+                                    107 	.globl _P0_2
+                                    108 	.globl _P0_3
+                                    109 	.globl _P0_4
+                                    110 	.globl _P0_5
+                                    111 	.globl _P0_6
+                                    112 	.globl _P0_7
+                                    113 	.globl _WDCTL
+                                    114 	.globl _U1GCR
+                                    115 	.globl _U1UCR
+                                    116 	.globl _U1BAUD
+                                    117 	.globl _U1DBUF
+                                    118 	.globl _U1CSR
+                                    119 	.globl _U0GCR
+                                    120 	.globl _U0UCR
+                                    121 	.globl _U0BAUD
+                                    122 	.globl _U0DBUF
+                                    123 	.globl _U0CSR
+                                    124 	.globl _TIMIF
+                                    125 	.globl _T4CC1
+                                    126 	.globl _T4CCTL1
+                                    127 	.globl _T4CC0
+                                    128 	.globl _T4CCTL0
+                                    129 	.globl _T4CTL
+                                    130 	.globl _T4CNT
+                                    131 	.globl _T3CC1
+                                    132 	.globl _T3CCTL1
+                                    133 	.globl _T3CC0
+                                    134 	.globl _T3CCTL0
+                                    135 	.globl _T3CTL
+                                    136 	.globl _T3CNT
+                                    137 	.globl _T2MSEL
+                                    138 	.globl _T2IRQM
+                                    139 	.globl _T2MOVF2
+                                    140 	.globl _T2MOVF1
+                                    141 	.globl _T2MOVF0
+                                    142 	.globl _T2M1
+                                    143 	.globl _T2M0
+                                    144 	.globl _T2IRQF
+                                    145 	.globl _T2EVTCFG
+                                    146 	.globl _T2CTRL
+                                    147 	.globl _T1STAT
+                                    148 	.globl _T1CCTL2
+                                    149 	.globl _T1CCTL1
+                                    150 	.globl _T1CCTL0
+                                    151 	.globl _T1CTL
+                                    152 	.globl _T1CNTH
+                                    153 	.globl _T1CNTL
+                                    154 	.globl _T1CC2H
+                                    155 	.globl _T1CC2L
+                                    156 	.globl _T1CC1H
+                                    157 	.globl _T1CC1L
+                                    158 	.globl _T1CC0H
+                                    159 	.globl _T1CC0L
+                                    160 	.globl _CLKCONSTA
+                                    161 	.globl _CLKCONCMD
+                                    162 	.globl _SLEEPSTA
+                                    163 	.globl _SLEEPCMD
+                                    164 	.globl _STLOAD
+                                    165 	.globl _ST2
+                                    166 	.globl _ST1
+                                    167 	.globl _ST0
+                                    168 	.globl _RFERRF
+                                    169 	.globl _RFIRQF0
+                                    170 	.globl _RFST
+                                    171 	.globl _RFD
+                                    172 	.globl _RFIRQF1
+                                    173 	.globl _PSBANK
+                                    174 	.globl _FMAP
+                                    175 	.globl _MEMCTR
+                                    176 	.globl __XPAGE
+                                    177 	.globl _MPAGE
+                                    178 	.globl _PMUX
+                                    179 	.globl _P2DIR
+                                    180 	.globl _P1DIR
+                                    181 	.globl _P0DIR
+                                    182 	.globl _P2INP
+                                    183 	.globl _P1INP
+                                    184 	.globl _P2SEL
+                                    185 	.globl _P1SEL
+                                    186 	.globl _P0SEL
+                                    187 	.globl _APCFG
+                                    188 	.globl _PERCFG
+                                    189 	.globl _P0INP
+                                    190 	.globl _P2IEN
+                                    191 	.globl _P1IEN
+                                    192 	.globl _P0IEN
+                                    193 	.globl _PICTL
+                                    194 	.globl _P2IFG
+                                    195 	.globl _P1IFG
+                                    196 	.globl _P0IFG
+                                    197 	.globl _DMAREQ
+                                    198 	.globl _DMAARM
+                                    199 	.globl _DMA0CFGH
+                                    200 	.globl _DMA0CFGL
+                                    201 	.globl _DMA1CFGH
+                                    202 	.globl _DMA1CFGL
+                                    203 	.globl _DMAIRQ
+                                    204 	.globl _ENCCS
+                                    205 	.globl _ENCDO
+                                    206 	.globl _ENCDI
+                                    207 	.globl _RNDH
+                                    208 	.globl _RNDL
+                                    209 	.globl _ADCH
+                                    210 	.globl _ADCL
+                                    211 	.globl _ADCCON3
+                                    212 	.globl _ADCCON2
+                                    213 	.globl _ADCCON1
+                                    214 	.globl _B
+                                    215 	.globl _IRCON2
+                                    216 	.globl _ACC
+                                    217 	.globl _PSW
+                                    218 	.globl _IRCON
+                                    219 	.globl _IP1
+                                    220 	.globl _IEN1
+                                    221 	.globl _IP0
+                                    222 	.globl _IEN0
+                                    223 	.globl _P2
+                                    224 	.globl _S1CON
+                                    225 	.globl _IEN2
+                                    226 	.globl _S0CON
+                                    227 	.globl _DPS
+                                    228 	.globl _P1
+                                    229 	.globl _TCON
+                                    230 	.globl _PCON
+                                    231 	.globl _DPH1
+                                    232 	.globl _DPL1
+                                    233 	.globl _DPH0
+                                    234 	.globl _DPL0
+                                    235 	.globl _SP
+                                    236 	.globl _P0
+                                    237 	.globl _X_IEEE_ADDR
+                                    238 	.globl _X_INFOPAGE
+                                    239 	.globl _X_P2DIR
+                                    240 	.globl _X_P1DIR
+                                    241 	.globl _X_P0DIR
+                                    242 	.globl _X_U1GCR
+                                    243 	.globl _X_U1UCR
+                                    244 	.globl _X_U1BAUD
+                                    245 	.globl _X_U1DBUF
+                                    246 	.globl _X_U1CSR
+                                    247 	.globl _X_P2INP
+                                    248 	.globl _X_P1INP
+                                    249 	.globl _X_P2SEL
+                                    250 	.globl _X_P1SEL
+                                    251 	.globl _X_P0SEL
+                                    252 	.globl _X_APCFG
+                                    253 	.globl _X_PERCFG
+                                    254 	.globl _X_T4CC1
+                                    255 	.globl _X_T4CCTL1
+                                    256 	.globl _X_T4CC0
+                                    257 	.globl _X_T4CCTL0
+                                    258 	.globl _X_T4CTL
+                                    259 	.globl _X_T4CNT
+                                    260 	.globl _X_RFIRQF0
+                                    261 	.globl _X_T1CCTL2
+                                    262 	.globl _X_T1CCTL1
+                                    263 	.globl _X_T1CCTL0
+                                    264 	.globl _X_T1CTL
+                                    265 	.globl _X_T1CNTH
+                                    266 	.globl _X_T1CNTL
+                                    267 	.globl _X_RFST
+                                    268 	.globl _X_T1CC2H
+                                    269 	.globl _X_T1CC2L
+                                    270 	.globl _X_T1CC1H
+                                    271 	.globl _X_T1CC1L
+                                    272 	.globl _X_T1CC0H
+                                    273 	.globl _X_T1CC0L
+                                    274 	.globl _X_RFD
+                                    275 	.globl _X_TIMIF
+                                    276 	.globl _X_DMAREQ
+                                    277 	.globl _X_DMAARM
+                                    278 	.globl _X_DMA0CFGH
+                                    279 	.globl _X_DMA0CFGL
+                                    280 	.globl _X_DMA1CFGH
+                                    281 	.globl _X_DMA1CFGL
+                                    282 	.globl _X_DMAIRQ
+                                    283 	.globl _X_T3CC1
+                                    284 	.globl _X_T3CCTL1
+                                    285 	.globl _X_T3CC0
+                                    286 	.globl _X_T3CCTL0
+                                    287 	.globl _X_T3CTL
+                                    288 	.globl _X_T3CNT
+                                    289 	.globl _X_WDCTL
+                                    290 	.globl _X_MEMCTR
+                                    291 	.globl _X_CLKCONCMD
+                                    292 	.globl _X_U0GCR
+                                    293 	.globl _X_U0UCR
+                                    294 	.globl _X_T2MSEL
+                                    295 	.globl _X_U0BAUD
+                                    296 	.globl _X_U0DBUF
+                                    297 	.globl _X_RFERRF
+                                    298 	.globl _X_SLEEPCMD
+                                    299 	.globl _X_RNDH
+                                    300 	.globl _X_RNDL
+                                    301 	.globl _X_ADCH
+                                    302 	.globl _X_ADCL
+                                    303 	.globl _X_ADCCON3
+                                    304 	.globl _X_ADCCON2
+                                    305 	.globl _X_ADCCON1
+                                    306 	.globl _X_ENCCS
+                                    307 	.globl _X_ENCDO
+                                    308 	.globl _X_ENCDI
+                                    309 	.globl _X_T1STAT
+                                    310 	.globl _X_PMUX
+                                    311 	.globl _X_STLOAD
+                                    312 	.globl _X_P2IEN
+                                    313 	.globl _X_P0IEN
+                                    314 	.globl _X_T2IRQM
+                                    315 	.globl _X_T2MOVF2
+                                    316 	.globl _X_T2MOVF1
+                                    317 	.globl _X_T2MOVF0
+                                    318 	.globl _X_T2M1
+                                    319 	.globl _X_T2M0
+                                    320 	.globl _X_T2IRQF
+                                    321 	.globl _X_P2
+                                    322 	.globl _X_PSBANK
+                                    323 	.globl _X_FMAP
+                                    324 	.globl _X_CLKCONSTA
+                                    325 	.globl _X_SLEEPSTA
+                                    326 	.globl _X_T2EVTCFG
+                                    327 	.globl _X_ST2
+                                    328 	.globl _X_ST1
+                                    329 	.globl _X_ST0
+                                    330 	.globl _X_T2CTRL
+                                    331 	.globl _X__XPAGE
+                                    332 	.globl _X_MPAGE
+                                    333 	.globl _X_RFIRQF1
+                                    334 	.globl _X_P1
+                                    335 	.globl _X_P0INP
+                                    336 	.globl _X_P1IEN
+                                    337 	.globl _X_PICTL
+                                    338 	.globl _X_P2IFG
+                                    339 	.globl _X_P1IFG
+                                    340 	.globl _X_P0IFG
+                                    341 	.globl _X_U0CSR
+                                    342 	.globl _X_P0
+                                    343 	.globl _USBF5
+                                    344 	.globl _USBF4
+                                    345 	.globl _USBF3
+                                    346 	.globl _USBF2
+                                    347 	.globl _USBF1
+                                    348 	.globl _USBF0
+                                    349 	.globl _USBCNTH
+                                    350 	.globl _USBCNTL
+                                    351 	.globl _USBCNT0
+                                    352 	.globl _USBCSOH
+                                    353 	.globl _USBCSOL
+                                    354 	.globl _USBMAXO
+                                    355 	.globl _USBCSIH
+                                    356 	.globl _USBCSIL
+                                    357 	.globl _USBCS0
+                                    358 	.globl _USBMAXI
+                                    359 	.globl _USBCTRL
+                                    360 	.globl _USBINDEX
+                                    361 	.globl _USBFRMH
+                                    362 	.globl _USBFRML
+                                    363 	.globl _USBCIE
+                                    364 	.globl _USBOIE
+                                    365 	.globl _USBIIE
+                                    366 	.globl _USBCIF
+                                    367 	.globl _USBOIF
+                                    368 	.globl _USBIIF
+                                    369 	.globl _USBPOW
+                                    370 	.globl _USBADDR
+                                    371 	.globl _CSPT
+                                    372 	.globl _CSPZ
+                                    373 	.globl _CSPY
+                                    374 	.globl _CSPX
+                                    375 	.globl _CSPSTAT
+                                    376 	.globl _CSPCTRL
+                                    377 	.globl _CSPPROG23
+                                    378 	.globl _CSPPROG22
+                                    379 	.globl _CSPPROG21
+                                    380 	.globl _CSPPROG20
+                                    381 	.globl _CSPPROG19
+                                    382 	.globl _CSPPROG18
+                                    383 	.globl _CSPPROG17
+                                    384 	.globl _CSPPROG16
+                                    385 	.globl _CSPPROG15
+                                    386 	.globl _CSPPROG14
+                                    387 	.globl _CSPPROG13
+                                    388 	.globl _CSPPROG12
+                                    389 	.globl _CSPPROG11
+                                    390 	.globl _CSPPROG10
+                                    391 	.globl _CSPPROG9
+                                    392 	.globl _CSPPROG8
+                                    393 	.globl _CSPPROG7
+                                    394 	.globl _CSPPROG6
+                                    395 	.globl _CSPPROG5
+                                    396 	.globl _CSPPROG4
+                                    397 	.globl _CSPPROG3
+                                    398 	.globl _CSPPROG2
+                                    399 	.globl _CSPPROG1
+                                    400 	.globl _CSPPROG0
+                                    401 	.globl _RFC_OBS_CTRL2
+                                    402 	.globl _RFC_OBS_CTRL1
+                                    403 	.globl _RFC_OBS_CTRL0
+                                    404 	.globl _TXFILTCFG
+                                    405 	.globl _PTEST1
+                                    406 	.globl _PTEST0
+                                    407 	.globl _ATEST
+                                    408 	.globl _DACTEST2
+                                    409 	.globl _DACTEST1
+                                    410 	.globl _DACTEST0
+                                    411 	.globl _MDMTEST1
+                                    412 	.globl _MDMTEST0
+                                    413 	.globl _ADCTEST2
+                                    414 	.globl _ADCTEST1
+                                    415 	.globl _ADCTEST0
+                                    416 	.globl _AGCCTRL3
+                                    417 	.globl _AGCCTRL2
+                                    418 	.globl _AGCCTRL1
+                                    419 	.globl _AGCCTRL0
+                                    420 	.globl _FSCAL3
+                                    421 	.globl _FSCAL2
+                                    422 	.globl _FSCAL1
+                                    423 	.globl _FSCAL0
+                                    424 	.globl _FSCTRL
+                                    425 	.globl _RXCTRL
+                                    426 	.globl _FREQEST
+                                    427 	.globl _MDMCTRL1
+                                    428 	.globl _MDMCTRL0
+                                    429 	.globl _RFRND
+                                    430 	.globl _RFERRM
+                                    431 	.globl _RFIRQM1
+                                    432 	.globl _RFIRQM0
+                                    433 	.globl _TXLAST_PTR
+                                    434 	.globl _TXFIRST_PTR
+                                    435 	.globl _RXP1_PTR
+                                    436 	.globl _RXLAST_PTR
+                                    437 	.globl _RXFIRST_PTR
+                                    438 	.globl _TXFIFOCNT
+                                    439 	.globl _RXFIFOCNT
+                                    440 	.globl _RXFIRST
+                                    441 	.globl _RSSISTAT
+                                    442 	.globl _RSSI
+                                    443 	.globl _CCACTRL1
+                                    444 	.globl _CCACTRL0
+                                    445 	.globl _FSMCTRL
+                                    446 	.globl _FIFOPCTRL
+                                    447 	.globl _FSMSTAT1
+                                    448 	.globl _FSMSTAT0
+                                    449 	.globl _TXCTRL
+                                    450 	.globl _TXPOWER
+                                    451 	.globl _FREQCTRL
+                                    452 	.globl _FREQTUNE
+                                    453 	.globl _RXMASKCLR
+                                    454 	.globl _RXMASKSET
+                                    455 	.globl _RXENABLE
+                                    456 	.globl _FRMCTRL1
+                                    457 	.globl _FRMCTRL0
+                                    458 	.globl _SRCEXTEN2
+                                    459 	.globl _SRCEXTEN1
+                                    460 	.globl _SRCEXTEN0
+                                    461 	.globl _SRCSHORTEN2
+                                    462 	.globl _SRCSHORTEN1
+                                    463 	.globl _SRCSHORTEN0
+                                    464 	.globl _SRCMATCH
+                                    465 	.globl _FRMFILT1
+                                    466 	.globl _FRMFILT0
+                                    467 	.globl _SHORT_ADDR1
+                                    468 	.globl _SHORT_ADDR0
+                                    469 	.globl _PAN_ID1
+                                    470 	.globl _PAN_ID0
+                                    471 	.globl _EXT_ADDR7
+                                    472 	.globl _EXT_ADDR6
+                                    473 	.globl _EXT_ADDR5
+                                    474 	.globl _EXT_ADDR4
+                                    475 	.globl _EXT_ADDR3
+                                    476 	.globl _EXT_ADDR2
+                                    477 	.globl _EXT_ADDR1
+                                    478 	.globl _EXT_ADDR0
+                                    479 	.globl _SRCSHORTPENDEN2
+                                    480 	.globl _SRCSHORTPENDEN1
+                                    481 	.globl _SRCSHORTPENDEN0
+                                    482 	.globl _SRCEXTPENDEN2
+                                    483 	.globl _SRCEXTPENDEN1
+                                    484 	.globl _SRCEXTPENDEN0
+                                    485 	.globl _SRCRESINDEX
+                                    486 	.globl _SRCRESMASK2
+                                    487 	.globl _SRCRESMASK1
+                                    488 	.globl _SRCRESMASK0
+                                    489 	.globl _SRC_ADDR_TABLE
+                                    490 	.globl _TXFIFO
+                                    491 	.globl _RXFIFO
+                                    492 	.globl _RFCORE_RAM
+                                    493 	.globl _CMPCTL
+                                    494 	.globl _OPAMPS
+                                    495 	.globl _OPAMPC
+                                    496 	.globl _STCV2
+                                    497 	.globl _STCV1
+                                    498 	.globl _STCV0
+                                    499 	.globl _STCS
+                                    500 	.globl _STCC
+                                    501 	.globl _T1CC4H
+                                    502 	.globl _T1CC4L
+                                    503 	.globl _T1CC3H
+                                    504 	.globl _T1CC3L
+                                    505 	.globl _XX_T1CC2H
+                                    506 	.globl _XX_T1CC2L
+                                    507 	.globl _XX_T1CC1H
+                                    508 	.globl _XX_T1CC1L
+                                    509 	.globl _XX_T1CC0H
+                                    510 	.globl _XX_T1CC0L
+                                    511 	.globl _T1CCTL4
+                                    512 	.globl _T1CCTL3
+                                    513 	.globl _XX_T1CCTL2
+                                    514 	.globl _XX_T1CCTL1
+                                    515 	.globl _XX_T1CCTL0
+                                    516 	.globl _CLD
+                                    517 	.globl _IRCTL
+                                    518 	.globl _CHIPINFO1
+                                    519 	.globl _CHIPINFO0
+                                    520 	.globl _FWDATA
+                                    521 	.globl _FADDRH
+                                    522 	.globl _FADDRL
+                                    523 	.globl _FCTL
+                                    524 	.globl _IVCTRL
+                                    525 	.globl _BATTMON
+                                    526 	.globl _SRCRC
+                                    527 	.globl _DBGDATA
+                                    528 	.globl _TESTREG0
+                                    529 	.globl _CHIPID
+                                    530 	.globl _CHVER
+                                    531 	.globl _OBSSEL5
+                                    532 	.globl _OBSSEL4
+                                    533 	.globl _OBSSEL3
+                                    534 	.globl _OBSSEL2
+                                    535 	.globl _OBSSEL1
+                                    536 	.globl _OBSSEL0
+                                    537 	.globl _I2CIO
+                                    538 	.globl _I2CWC
+                                    539 	.globl _I2CADDR
+                                    540 	.globl _I2CDATA
+                                    541 	.globl _I2CSTAT
+                                    542 	.globl _I2CCFG
+                                    543 	.globl _OPAMPMC
+                                    544 	.globl _MONMUX
+                                    545 	.globl _rpl_verify_header
+                                    546 	.globl _rpl_update_header_empty
+                                    547 	.globl _rpl_update_header_final
+                                    548 	.globl _rpl_remove_header
+                                    549 	.globl _rpl_invert_header
+                                    550 ;--------------------------------------------------------
+                                    551 ; special function registers
+                                    552 ;--------------------------------------------------------
+                                    553 	.area RSEG    (ABS,DATA)
+      000000                        554 	.org 0x0000
+                           000080   555 _P0	=	0x0080
+                           000081   556 _SP	=	0x0081
+                           000082   557 _DPL0	=	0x0082
+                           000083   558 _DPH0	=	0x0083
+                           000084   559 _DPL1	=	0x0084
+                           000085   560 _DPH1	=	0x0085
+                           000087   561 _PCON	=	0x0087
+                           000088   562 _TCON	=	0x0088
+                           000090   563 _P1	=	0x0090
+                           000092   564 _DPS	=	0x0092
+                           000098   565 _S0CON	=	0x0098
+                           00009A   566 _IEN2	=	0x009a
+                           00009B   567 _S1CON	=	0x009b
+                           0000A0   568 _P2	=	0x00a0
+                           0000A8   569 _IEN0	=	0x00a8
+                           0000A9   570 _IP0	=	0x00a9
+                           0000B8   571 _IEN1	=	0x00b8
+                           0000B9   572 _IP1	=	0x00b9
+                           0000C0   573 _IRCON	=	0x00c0
+                           0000D0   574 _PSW	=	0x00d0
+                           0000E0   575 _ACC	=	0x00e0
+                           0000E8   576 _IRCON2	=	0x00e8
+                           0000F0   577 _B	=	0x00f0
+                           0000B4   578 _ADCCON1	=	0x00b4
+                           0000B5   579 _ADCCON2	=	0x00b5
+                           0000B6   580 _ADCCON3	=	0x00b6
+                           0000BA   581 _ADCL	=	0x00ba
+                           0000BB   582 _ADCH	=	0x00bb
+                           0000BC   583 _RNDL	=	0x00bc
+                           0000BD   584 _RNDH	=	0x00bd
+                           0000B1   585 _ENCDI	=	0x00b1
+                           0000B2   586 _ENCDO	=	0x00b2
+                           0000B3   587 _ENCCS	=	0x00b3
+                           0000D1   588 _DMAIRQ	=	0x00d1
+                           0000D2   589 _DMA1CFGL	=	0x00d2
+                           0000D3   590 _DMA1CFGH	=	0x00d3
+                           0000D4   591 _DMA0CFGL	=	0x00d4
+                           0000D5   592 _DMA0CFGH	=	0x00d5
+                           0000D6   593 _DMAARM	=	0x00d6
+                           0000D7   594 _DMAREQ	=	0x00d7
+                           000089   595 _P0IFG	=	0x0089
+                           00008A   596 _P1IFG	=	0x008a
+                           00008B   597 _P2IFG	=	0x008b
+                           00008C   598 _PICTL	=	0x008c
+                           0000AB   599 _P0IEN	=	0x00ab
+                           00008D   600 _P1IEN	=	0x008d
+                           0000AC   601 _P2IEN	=	0x00ac
+                           00008F   602 _P0INP	=	0x008f
+                           0000F1   603 _PERCFG	=	0x00f1
+                           0000F2   604 _APCFG	=	0x00f2
+                           0000F3   605 _P0SEL	=	0x00f3
+                           0000F4   606 _P1SEL	=	0x00f4
+                           0000F5   607 _P2SEL	=	0x00f5
+                           0000F6   608 _P1INP	=	0x00f6
+                           0000F7   609 _P2INP	=	0x00f7
+                           0000FD   610 _P0DIR	=	0x00fd
+                           0000FE   611 _P1DIR	=	0x00fe
+                           0000FF   612 _P2DIR	=	0x00ff
+                           0000AE   613 _PMUX	=	0x00ae
+                           000093   614 _MPAGE	=	0x0093
+                           000093   615 __XPAGE	=	0x0093
+                           0000C7   616 _MEMCTR	=	0x00c7
+                           00009F   617 _FMAP	=	0x009f
+                           00009F   618 _PSBANK	=	0x009f
+                           000091   619 _RFIRQF1	=	0x0091
+                           0000D9   620 _RFD	=	0x00d9
+                           0000E1   621 _RFST	=	0x00e1
+                           0000E9   622 _RFIRQF0	=	0x00e9
+                           0000BF   623 _RFERRF	=	0x00bf
+                           000095   624 _ST0	=	0x0095
+                           000096   625 _ST1	=	0x0096
+                           000097   626 _ST2	=	0x0097
+                           0000AD   627 _STLOAD	=	0x00ad
+                           0000BE   628 _SLEEPCMD	=	0x00be
+                           00009D   629 _SLEEPSTA	=	0x009d
+                           0000C6   630 _CLKCONCMD	=	0x00c6
+                           00009E   631 _CLKCONSTA	=	0x009e
+                           0000DA   632 _T1CC0L	=	0x00da
+                           0000DB   633 _T1CC0H	=	0x00db
+                           0000DC   634 _T1CC1L	=	0x00dc
+                           0000DD   635 _T1CC1H	=	0x00dd
+                           0000DE   636 _T1CC2L	=	0x00de
+                           0000DF   637 _T1CC2H	=	0x00df
+                           0000E2   638 _T1CNTL	=	0x00e2
+                           0000E3   639 _T1CNTH	=	0x00e3
+                           0000E4   640 _T1CTL	=	0x00e4
+                           0000E5   641 _T1CCTL0	=	0x00e5
+                           0000E6   642 _T1CCTL1	=	0x00e6
+                           0000E7   643 _T1CCTL2	=	0x00e7
+                           0000AF   644 _T1STAT	=	0x00af
+                           000094   645 _T2CTRL	=	0x0094
+                           00009C   646 _T2EVTCFG	=	0x009c
+                           0000A1   647 _T2IRQF	=	0x00a1
+                           0000A2   648 _T2M0	=	0x00a2
+                           0000A3   649 _T2M1	=	0x00a3
+                           0000A4   650 _T2MOVF0	=	0x00a4
+                           0000A5   651 _T2MOVF1	=	0x00a5
+                           0000A6   652 _T2MOVF2	=	0x00a6
+                           0000A7   653 _T2IRQM	=	0x00a7
+                           0000C3   654 _T2MSEL	=	0x00c3
+                           0000CA   655 _T3CNT	=	0x00ca
+                           0000CB   656 _T3CTL	=	0x00cb
+                           0000CC   657 _T3CCTL0	=	0x00cc
+                           0000CD   658 _T3CC0	=	0x00cd
+                           0000CE   659 _T3CCTL1	=	0x00ce
+                           0000CF   660 _T3CC1	=	0x00cf
+                           0000EA   661 _T4CNT	=	0x00ea
+                           0000EB   662 _T4CTL	=	0x00eb
+                           0000EC   663 _T4CCTL0	=	0x00ec
+                           0000ED   664 _T4CC0	=	0x00ed
+                           0000EE   665 _T4CCTL1	=	0x00ee
+                           0000EF   666 _T4CC1	=	0x00ef
+                           0000D8   667 _TIMIF	=	0x00d8
+                           000086   668 _U0CSR	=	0x0086
+                           0000C1   669 _U0DBUF	=	0x00c1
+                           0000C2   670 _U0BAUD	=	0x00c2
+                           0000C4   671 _U0UCR	=	0x00c4
+                           0000C5   672 _U0GCR	=	0x00c5
+                           0000F8   673 _U1CSR	=	0x00f8
+                           0000F9   674 _U1DBUF	=	0x00f9
+                           0000FA   675 _U1BAUD	=	0x00fa
+                           0000FB   676 _U1UCR	=	0x00fb
+                           0000FC   677 _U1GCR	=	0x00fc
+                           0000C9   678 _WDCTL	=	0x00c9
+                                    679 ;--------------------------------------------------------
+                                    680 ; special function bits
+                                    681 ;--------------------------------------------------------
+                                    682 	.area RSEG    (ABS,DATA)
+      000000                        683 	.org 0x0000
+                           000087   684 _P0_7	=	0x0087
+                           000086   685 _P0_6	=	0x0086
+                           000085   686 _P0_5	=	0x0085
+                           000084   687 _P0_4	=	0x0084
+                           000083   688 _P0_3	=	0x0083
+                           000082   689 _P0_2	=	0x0082
+                           000081   690 _P0_1	=	0x0081
+                           000080   691 _P0_0	=	0x0080
+                           00008F   692 _URX1IF	=	0x008f
+                           00008D   693 _ADCIF	=	0x008d
+                           00008B   694 _URX0IF	=	0x008b
+                           00008A   695 _IT1	=	0x008a
+                           000089   696 _RFERRIF	=	0x0089
+                           000088   697 _IT0	=	0x0088
+                           000097   698 _P1_7	=	0x0097
+                           000096   699 _P1_6	=	0x0096
+                           000095   700 _P1_5	=	0x0095
+                           000094   701 _P1_4	=	0x0094
+                           000093   702 _P1_3	=	0x0093
+                           000092   703 _P1_2	=	0x0092
+                           000091   704 _P1_1	=	0x0091
+                           000090   705 _P1_0	=	0x0090
+                           000099   706 _ENCIF_1	=	0x0099
+                           000098   707 _ENCIF_0	=	0x0098
+                           0000A7   708 _P2_7	=	0x00a7
+                           0000A6   709 _P2_6	=	0x00a6
+                           0000A5   710 _P2_5	=	0x00a5
+                           0000A4   711 _P2_4	=	0x00a4
+                           0000A3   712 _P2_3	=	0x00a3
+                           0000A2   713 _P2_2	=	0x00a2
+                           0000A1   714 _P2_1	=	0x00a1
+                           0000A0   715 _P2_0	=	0x00a0
+                           0000AF   716 _EA	=	0x00af
+                           0000AD   717 _STIE	=	0x00ad
+                           0000AC   718 _ENCIE	=	0x00ac
+                           0000AB   719 _URX1IE	=	0x00ab
+                           0000AA   720 _URX0IE	=	0x00aa
+                           0000A9   721 _ADCIE	=	0x00a9
+                           0000A8   722 _RFERRIE	=	0x00a8
+                           0000BD   723 _P0IE	=	0x00bd
+                           0000BC   724 _T4IE	=	0x00bc
+                           0000BB   725 _T3IE	=	0x00bb
+                           0000BA   726 _T2IE	=	0x00ba
+                           0000B9   727 _T1IE	=	0x00b9
+                           0000B8   728 _DMAIE	=	0x00b8
+                           0000C7   729 _STIF	=	0x00c7
+                           0000C5   730 _P0IF	=	0x00c5
+                           0000C4   731 _T4IF	=	0x00c4
+                           0000C3   732 _T3IF	=	0x00c3
+                           0000C2   733 _T2IF	=	0x00c2
+                           0000C1   734 _T1IF	=	0x00c1
+                           0000C0   735 _DMAIF	=	0x00c0
+                           0000D7   736 _CY	=	0x00d7
+                           0000D6   737 _AC	=	0x00d6
+                           0000D5   738 _F0	=	0x00d5
+                           0000D4   739 _RS1	=	0x00d4
+                           0000D3   740 _RS0	=	0x00d3
+                           0000D2   741 _OV	=	0x00d2
+                           0000D1   742 _F1	=	0x00d1
+                           0000D0   743 _P	=	0x00d0
+                           0000E7   744 _ACC_7	=	0x00e7
+                           0000E6   745 _ACC_6	=	0x00e6
+                           0000E5   746 _ACC_5	=	0x00e5
+                           0000E4   747 _ACC_4	=	0x00e4
+                           0000E3   748 _ACC_3	=	0x00e3
+                           0000E2   749 _ACC_2	=	0x00e2
+                           0000E1   750 _ACC_1	=	0x00e1
+                           0000E0   751 _ACC_0	=	0x00e0
+                           0000EC   752 _WDTIF	=	0x00ec
+                           0000EB   753 _P1IF	=	0x00eb
+                           0000EA   754 _UTX1IF	=	0x00ea
+                           0000E9   755 _UTX0IF	=	0x00e9
+                           0000E8   756 _P2IF	=	0x00e8
+                           0000F7   757 _B_7	=	0x00f7
+                           0000F6   758 _B_6	=	0x00f6
+                           0000F5   759 _B_5	=	0x00f5
+                           0000F4   760 _B_4	=	0x00f4
+                           0000F3   761 _B_3	=	0x00f3
+                           0000F2   762 _B_2	=	0x00f2
+                           0000F1   763 _B_1	=	0x00f1
+                           0000F0   764 _B_0	=	0x00f0
+                           0000DE   765 _OVFIM	=	0x00de
+                           0000DD   766 _T4CH1IF	=	0x00dd
+                           0000DC   767 _T4CH0IF	=	0x00dc
+                           0000DB   768 _T4OVFIF	=	0x00db
+                           0000DA   769 _T3CH1IF	=	0x00da
+                           0000D9   770 _T3CH0IF	=	0x00d9
+                           0000D8   771 _T3OVFIF	=	0x00d8
+                           0000FF   772 _MODE	=	0x00ff
+                           0000FE   773 _RE	=	0x00fe
+                           0000FD   774 _SLAVE	=	0x00fd
+                           0000FC   775 _FE	=	0x00fc
+                           0000FB   776 _ERR	=	0x00fb
+                           0000FA   777 _RX_BYTE	=	0x00fa
+                           0000F9   778 _TX_BYTE	=	0x00f9
+                           0000F8   779 _ACTIVE	=	0x00f8
+                                    780 ;--------------------------------------------------------
+                                    781 ; overlayable register banks
+                                    782 ;--------------------------------------------------------
+                                    783 	.area REG_BANK_0	(REL,OVR,DATA)
+      000000                        784 	.ds 8
+                                    785 ;--------------------------------------------------------
+                                    786 ; internal ram data
+                                    787 ;--------------------------------------------------------
+                                    788 	.area DSEG    (DATA)
+                                    789 ;--------------------------------------------------------
+                                    790 ; overlayable items in internal ram 
+                                    791 ;--------------------------------------------------------
+                                    792 ;--------------------------------------------------------
+                                    793 ; indirectly addressable internal ram data
+                                    794 ;--------------------------------------------------------
+                                    795 	.area ISEG    (DATA)
+                                    796 ;--------------------------------------------------------
+                                    797 ; absolute internal ram data
+                                    798 ;--------------------------------------------------------
+                                    799 	.area IABS    (ABS,DATA)
+                                    800 	.area IABS    (ABS,DATA)
+                                    801 ;--------------------------------------------------------
+                                    802 ; bit data
+                                    803 ;--------------------------------------------------------
+                                    804 	.area BSEG    (BIT)
+                                    805 ;--------------------------------------------------------
+                                    806 ; paged external ram data
+                                    807 ;--------------------------------------------------------
+                                    808 	.area PSEG    (PAG,XDATA)
+                                    809 ;--------------------------------------------------------
+                                    810 ; external ram data
+                                    811 ;--------------------------------------------------------
+                                    812 	.area XSEG    (XDATA)
+                           0061A6   813 _MONMUX	=	0x61a6
+                           0061A6   814 _OPAMPMC	=	0x61a6
+                           006230   815 _I2CCFG	=	0x6230
+                           006231   816 _I2CSTAT	=	0x6231
+                           006232   817 _I2CDATA	=	0x6232
+                           006233   818 _I2CADDR	=	0x6233
+                           006234   819 _I2CWC	=	0x6234
+                           006235   820 _I2CIO	=	0x6235
+                           006243   821 _OBSSEL0	=	0x6243
+                           006244   822 _OBSSEL1	=	0x6244
+                           006245   823 _OBSSEL2	=	0x6245
+                           006246   824 _OBSSEL3	=	0x6246
+                           006247   825 _OBSSEL4	=	0x6247
+                           006248   826 _OBSSEL5	=	0x6248
+                           006249   827 _CHVER	=	0x6249
+                           00624A   828 _CHIPID	=	0x624a
+                           00624B   829 _TESTREG0	=	0x624b
+                           006260   830 _DBGDATA	=	0x6260
+                           006262   831 _SRCRC	=	0x6262
+                           006264   832 _BATTMON	=	0x6264
+                           006265   833 _IVCTRL	=	0x6265
+                           006270   834 _FCTL	=	0x6270
+                           006271   835 _FADDRL	=	0x6271
+                           006272   836 _FADDRH	=	0x6272
+                           006273   837 _FWDATA	=	0x6273
+                           006276   838 _CHIPINFO0	=	0x6276
+                           006277   839 _CHIPINFO1	=	0x6277
+                           006281   840 _IRCTL	=	0x6281
+                           006290   841 _CLD	=	0x6290
+                           0062A0   842 _XX_T1CCTL0	=	0x62a0
+                           0062A1   843 _XX_T1CCTL1	=	0x62a1
+                           0062A2   844 _XX_T1CCTL2	=	0x62a2
+                           0062A3   845 _T1CCTL3	=	0x62a3
+                           0062A4   846 _T1CCTL4	=	0x62a4
+                           0062A6   847 _XX_T1CC0L	=	0x62a6
+                           0062A7   848 _XX_T1CC0H	=	0x62a7
+                           0062A8   849 _XX_T1CC1L	=	0x62a8
+                           0062A9   850 _XX_T1CC1H	=	0x62a9
+                           0062AA   851 _XX_T1CC2L	=	0x62aa
+                           0062AB   852 _XX_T1CC2H	=	0x62ab
+                           0062AC   853 _T1CC3L	=	0x62ac
+                           0062AD   854 _T1CC3H	=	0x62ad
+                           0062AE   855 _T1CC4L	=	0x62ae
+                           0062AF   856 _T1CC4H	=	0x62af
+                           0062B0   857 _STCC	=	0x62b0
+                           0062B1   858 _STCS	=	0x62b1
+                           0062B2   859 _STCV0	=	0x62b2
+                           0062B3   860 _STCV1	=	0x62b3
+                           0062B4   861 _STCV2	=	0x62b4
+                           0062C0   862 _OPAMPC	=	0x62c0
+                           0062C1   863 _OPAMPS	=	0x62c1
+                           0062D0   864 _CMPCTL	=	0x62d0
+                           006000   865 _RFCORE_RAM	=	0x6000
+                           006000   866 _RXFIFO	=	0x6000
+                           006080   867 _TXFIFO	=	0x6080
+                           006100   868 _SRC_ADDR_TABLE	=	0x6100
+                           006160   869 _SRCRESMASK0	=	0x6160
+                           006161   870 _SRCRESMASK1	=	0x6161
+                           006162   871 _SRCRESMASK2	=	0x6162
+                           006163   872 _SRCRESINDEX	=	0x6163
+                           006164   873 _SRCEXTPENDEN0	=	0x6164
+                           006165   874 _SRCEXTPENDEN1	=	0x6165
+                           006166   875 _SRCEXTPENDEN2	=	0x6166
+                           006167   876 _SRCSHORTPENDEN0	=	0x6167
+                           006168   877 _SRCSHORTPENDEN1	=	0x6168
+                           006169   878 _SRCSHORTPENDEN2	=	0x6169
+                           00616A   879 _EXT_ADDR0	=	0x616a
+                           00616B   880 _EXT_ADDR1	=	0x616b
+                           00616C   881 _EXT_ADDR2	=	0x616c
+                           00616D   882 _EXT_ADDR3	=	0x616d
+                           00616E   883 _EXT_ADDR4	=	0x616e
+                           00616F   884 _EXT_ADDR5	=	0x616f
+                           006170   885 _EXT_ADDR6	=	0x6170
+                           006171   886 _EXT_ADDR7	=	0x6171
+                           006172   887 _PAN_ID0	=	0x6172
+                           006173   888 _PAN_ID1	=	0x6173
+                           006174   889 _SHORT_ADDR0	=	0x6174
+                           006175   890 _SHORT_ADDR1	=	0x6175
+                           006180   891 _FRMFILT0	=	0x6180
+                           006181   892 _FRMFILT1	=	0x6181
+                           006182   893 _SRCMATCH	=	0x6182
+                           006183   894 _SRCSHORTEN0	=	0x6183
+                           006184   895 _SRCSHORTEN1	=	0x6184
+                           006185   896 _SRCSHORTEN2	=	0x6185
+                           006186   897 _SRCEXTEN0	=	0x6186
+                           006187   898 _SRCEXTEN1	=	0x6187
+                           006188   899 _SRCEXTEN2	=	0x6188
+                           006189   900 _FRMCTRL0	=	0x6189
+                           00618A   901 _FRMCTRL1	=	0x618a
+                           00618B   902 _RXENABLE	=	0x618b
+                           00618C   903 _RXMASKSET	=	0x618c
+                           00618D   904 _RXMASKCLR	=	0x618d
+                           00618E   905 _FREQTUNE	=	0x618e
+                           00618F   906 _FREQCTRL	=	0x618f
+                           006190   907 _TXPOWER	=	0x6190
+                           006191   908 _TXCTRL	=	0x6191
+                           006192   909 _FSMSTAT0	=	0x6192
+                           006193   910 _FSMSTAT1	=	0x6193
+                           006194   911 _FIFOPCTRL	=	0x6194
+                           006195   912 _FSMCTRL	=	0x6195
+                           006196   913 _CCACTRL0	=	0x6196
+                           006197   914 _CCACTRL1	=	0x6197
+                           006198   915 _RSSI	=	0x6198
+                           006199   916 _RSSISTAT	=	0x6199
+                           00619A   917 _RXFIRST	=	0x619a
+                           00619B   918 _RXFIFOCNT	=	0x619b
+                           00619C   919 _TXFIFOCNT	=	0x619c
+                           00619D   920 _RXFIRST_PTR	=	0x619d
+                           00619E   921 _RXLAST_PTR	=	0x619e
+                           00619F   922 _RXP1_PTR	=	0x619f
+                           0061A1   923 _TXFIRST_PTR	=	0x61a1
+                           0061A2   924 _TXLAST_PTR	=	0x61a2
+                           0061A3   925 _RFIRQM0	=	0x61a3
+                           0061A4   926 _RFIRQM1	=	0x61a4
+                           0061A5   927 _RFERRM	=	0x61a5
+                           0061A7   928 _RFRND	=	0x61a7
+                           0061A8   929 _MDMCTRL0	=	0x61a8
+                           0061A9   930 _MDMCTRL1	=	0x61a9
+                           0061AA   931 _FREQEST	=	0x61aa
+                           0061AB   932 _RXCTRL	=	0x61ab
+                           0061AC   933 _FSCTRL	=	0x61ac
+                           0061AD   934 _FSCAL0	=	0x61ad
+                           0061AE   935 _FSCAL1	=	0x61ae
+                           0061AF   936 _FSCAL2	=	0x61af
+                           0061B0   937 _FSCAL3	=	0x61b0
+                           0061B1   938 _AGCCTRL0	=	0x61b1
+                           0061B2   939 _AGCCTRL1	=	0x61b2
+                           0061B3   940 _AGCCTRL2	=	0x61b3
+                           0061B4   941 _AGCCTRL3	=	0x61b4
+                           0061B5   942 _ADCTEST0	=	0x61b5
+                           0061B6   943 _ADCTEST1	=	0x61b6
+                           0061B7   944 _ADCTEST2	=	0x61b7
+                           0061B8   945 _MDMTEST0	=	0x61b8
+                           0061B9   946 _MDMTEST1	=	0x61b9
+                           0061BA   947 _DACTEST0	=	0x61ba
+                           0061BB   948 _DACTEST1	=	0x61bb
+                           0061BC   949 _DACTEST2	=	0x61bc
+                           0061BD   950 _ATEST	=	0x61bd
+                           0061BE   951 _PTEST0	=	0x61be
+                           0061BF   952 _PTEST1	=	0x61bf
+                           0061FA   953 _TXFILTCFG	=	0x61fa
+                           0061EB   954 _RFC_OBS_CTRL0	=	0x61eb
+                           0061EC   955 _RFC_OBS_CTRL1	=	0x61ec
+                           0061ED   956 _RFC_OBS_CTRL2	=	0x61ed
+                           0061C0   957 _CSPPROG0	=	0x61c0
+                           0061C1   958 _CSPPROG1	=	0x61c1
+                           0061C2   959 _CSPPROG2	=	0x61c2
+                           0061C3   960 _CSPPROG3	=	0x61c3
+                           0061C4   961 _CSPPROG4	=	0x61c4
+                           0061C5   962 _CSPPROG5	=	0x61c5
+                           0061C6   963 _CSPPROG6	=	0x61c6
+                           0061C7   964 _CSPPROG7	=	0x61c7
+                           0061C8   965 _CSPPROG8	=	0x61c8
+                           0061C9   966 _CSPPROG9	=	0x61c9
+                           0061CA   967 _CSPPROG10	=	0x61ca
+                           0061CB   968 _CSPPROG11	=	0x61cb
+                           0061CC   969 _CSPPROG12	=	0x61cc
+                           0061CD   970 _CSPPROG13	=	0x61cd
+                           0061CE   971 _CSPPROG14	=	0x61ce
+                           0061CF   972 _CSPPROG15	=	0x61cf
+                           0061D0   973 _CSPPROG16	=	0x61d0
+                           0061D1   974 _CSPPROG17	=	0x61d1
+                           0061D2   975 _CSPPROG18	=	0x61d2
+                           0061D3   976 _CSPPROG19	=	0x61d3
+                           0061D4   977 _CSPPROG20	=	0x61d4
+                           0061D5   978 _CSPPROG21	=	0x61d5
+                           0061D6   979 _CSPPROG22	=	0x61d6
+                           0061D7   980 _CSPPROG23	=	0x61d7
+                           0061E0   981 _CSPCTRL	=	0x61e0
+                           0061E1   982 _CSPSTAT	=	0x61e1
+                           0061E2   983 _CSPX	=	0x61e2
+                           0061E3   984 _CSPY	=	0x61e3
+                           0061E4   985 _CSPZ	=	0x61e4
+                           0061E5   986 _CSPT	=	0x61e5
+                           006200   987 _USBADDR	=	0x6200
+                           006201   988 _USBPOW	=	0x6201
+                           006202   989 _USBIIF	=	0x6202
+                           006204   990 _USBOIF	=	0x6204
+                           006206   991 _USBCIF	=	0x6206
+                           006207   992 _USBIIE	=	0x6207
+                           006209   993 _USBOIE	=	0x6209
+                           00620B   994 _USBCIE	=	0x620b
+                           00620C   995 _USBFRML	=	0x620c
+                           00620D   996 _USBFRMH	=	0x620d
+                           00620E   997 _USBINDEX	=	0x620e
+                           00620F   998 _USBCTRL	=	0x620f
+                           006210   999 _USBMAXI	=	0x6210
+                           006211  1000 _USBCS0	=	0x6211
+                           006211  1001 _USBCSIL	=	0x6211
+                           006212  1002 _USBCSIH	=	0x6212
+                           006213  1003 _USBMAXO	=	0x6213
+                           006214  1004 _USBCSOL	=	0x6214
+                           006215  1005 _USBCSOH	=	0x6215
+                           006216  1006 _USBCNT0	=	0x6216
+                           006216  1007 _USBCNTL	=	0x6216
+                           006217  1008 _USBCNTH	=	0x6217
+                           006220  1009 _USBF0	=	0x6220
+                           006222  1010 _USBF1	=	0x6222
+                           006224  1011 _USBF2	=	0x6224
+                           006226  1012 _USBF3	=	0x6226
+                           006228  1013 _USBF4	=	0x6228
+                           00622A  1014 _USBF5	=	0x622a
+                           007080  1015 _X_P0	=	0x7080
+                           007086  1016 _X_U0CSR	=	0x7086
+                           007089  1017 _X_P0IFG	=	0x7089
+                           00708A  1018 _X_P1IFG	=	0x708a
+                           00708B  1019 _X_P2IFG	=	0x708b
+                           00708C  1020 _X_PICTL	=	0x708c
+                           00708D  1021 _X_P1IEN	=	0x708d
+                           00708F  1022 _X_P0INP	=	0x708f
+                           007090  1023 _X_P1	=	0x7090
+                           007091  1024 _X_RFIRQF1	=	0x7091
+                           007093  1025 _X_MPAGE	=	0x7093
+                           007093  1026 _X__XPAGE	=	0x7093
+                           007094  1027 _X_T2CTRL	=	0x7094
+                           007095  1028 _X_ST0	=	0x7095
+                           007096  1029 _X_ST1	=	0x7096
+                           007097  1030 _X_ST2	=	0x7097
+                           00709C  1031 _X_T2EVTCFG	=	0x709c
+                           00709D  1032 _X_SLEEPSTA	=	0x709d
+                           00709E  1033 _X_CLKCONSTA	=	0x709e
+                           00709F  1034 _X_FMAP	=	0x709f
+                           00709F  1035 _X_PSBANK	=	0x709f
+                           0070A0  1036 _X_P2	=	0x70a0
+                           0070A1  1037 _X_T2IRQF	=	0x70a1
+                           0070A2  1038 _X_T2M0	=	0x70a2
+                           0070A3  1039 _X_T2M1	=	0x70a3
+                           0070A4  1040 _X_T2MOVF0	=	0x70a4
+                           0070A5  1041 _X_T2MOVF1	=	0x70a5
+                           0070A6  1042 _X_T2MOVF2	=	0x70a6
+                           0070A7  1043 _X_T2IRQM	=	0x70a7
+                           0070AB  1044 _X_P0IEN	=	0x70ab
+                           0070AC  1045 _X_P2IEN	=	0x70ac
+                           0070AD  1046 _X_STLOAD	=	0x70ad
+                           0070AE  1047 _X_PMUX	=	0x70ae
+                           0070AF  1048 _X_T1STAT	=	0x70af
+                           0070B1  1049 _X_ENCDI	=	0x70b1
+                           0070B2  1050 _X_ENCDO	=	0x70b2
+                           0070B3  1051 _X_ENCCS	=	0x70b3
+                           0070B4  1052 _X_ADCCON1	=	0x70b4
+                           0070B5  1053 _X_ADCCON2	=	0x70b5
+                           0070B6  1054 _X_ADCCON3	=	0x70b6
+                           0070BA  1055 _X_ADCL	=	0x70ba
+                           0070BB  1056 _X_ADCH	=	0x70bb
+                           0070BC  1057 _X_RNDL	=	0x70bc
+                           0070BD  1058 _X_RNDH	=	0x70bd
+                           0070BE  1059 _X_SLEEPCMD	=	0x70be
+                           0070BF  1060 _X_RFERRF	=	0x70bf
+                           0070C1  1061 _X_U0DBUF	=	0x70c1
+                           0070C2  1062 _X_U0BAUD	=	0x70c2
+                           0070C3  1063 _X_T2MSEL	=	0x70c3
+                           0070C4  1064 _X_U0UCR	=	0x70c4
+                           0070C5  1065 _X_U0GCR	=	0x70c5
+                           0070C6  1066 _X_CLKCONCMD	=	0x70c6
+                           0070C7  1067 _X_MEMCTR	=	0x70c7
+                           0070C9  1068 _X_WDCTL	=	0x70c9
+                           0070CA  1069 _X_T3CNT	=	0x70ca
+                           0070CB  1070 _X_T3CTL	=	0x70cb
+                           0070CC  1071 _X_T3CCTL0	=	0x70cc
+                           0070CD  1072 _X_T3CC0	=	0x70cd
+                           0070CE  1073 _X_T3CCTL1	=	0x70ce
+                           0070CF  1074 _X_T3CC1	=	0x70cf
+                           0070D1  1075 _X_DMAIRQ	=	0x70d1
+                           0070D2  1076 _X_DMA1CFGL	=	0x70d2
+                           0070D3  1077 _X_DMA1CFGH	=	0x70d3
+                           0070D4  1078 _X_DMA0CFGL	=	0x70d4
+                           0070D5  1079 _X_DMA0CFGH	=	0x70d5
+                           0070D6  1080 _X_DMAARM	=	0x70d6
+                           0070D7  1081 _X_DMAREQ	=	0x70d7
+                           0070D8  1082 _X_TIMIF	=	0x70d8
+                           0070D9  1083 _X_RFD	=	0x70d9
+                           0070DA  1084 _X_T1CC0L	=	0x70da
+                           0070DB  1085 _X_T1CC0H	=	0x70db
+                           0070DC  1086 _X_T1CC1L	=	0x70dc
+                           0070DD  1087 _X_T1CC1H	=	0x70dd
+                           0070DE  1088 _X_T1CC2L	=	0x70de
+                           0070DF  1089 _X_T1CC2H	=	0x70df
+                           0070E1  1090 _X_RFST	=	0x70e1
+                           0070E2  1091 _X_T1CNTL	=	0x70e2
+                           0070E3  1092 _X_T1CNTH	=	0x70e3
+                           0070E4  1093 _X_T1CTL	=	0x70e4
+                           0070E5  1094 _X_T1CCTL0	=	0x70e5
+                           0070E6  1095 _X_T1CCTL1	=	0x70e6
+                           0070E7  1096 _X_T1CCTL2	=	0x70e7
+                           0070E9  1097 _X_RFIRQF0	=	0x70e9
+                           0070EA  1098 _X_T4CNT	=	0x70ea
+                           0070EB  1099 _X_T4CTL	=	0x70eb
+                           0070EC  1100 _X_T4CCTL0	=	0x70ec
+                           0070ED  1101 _X_T4CC0	=	0x70ed
+                           0070EE  1102 _X_T4CCTL1	=	0x70ee
+                           0070EF  1103 _X_T4CC1	=	0x70ef
+                           0070F1  1104 _X_PERCFG	=	0x70f1
+                           0070F2  1105 _X_APCFG	=	0x70f2
+                           0070F3  1106 _X_P0SEL	=	0x70f3
+                           0070F4  1107 _X_P1SEL	=	0x70f4
+                           0070F5  1108 _X_P2SEL	=	0x70f5
+                           0070F6  1109 _X_P1INP	=	0x70f6
+                           0070F7  1110 _X_P2INP	=	0x70f7
+                           0070F8  1111 _X_U1CSR	=	0x70f8
+                           0070F9  1112 _X_U1DBUF	=	0x70f9
+                           0070FA  1113 _X_U1BAUD	=	0x70fa
+                           0070FB  1114 _X_U1UCR	=	0x70fb
+                           0070FC  1115 _X_U1GCR	=	0x70fc
+                           0070FD  1116 _X_P0DIR	=	0x70fd
+                           0070FE  1117 _X_P1DIR	=	0x70fe
+                           0070FF  1118 _X_P2DIR	=	0x70ff
+                           007800  1119 _X_INFOPAGE	=	0x7800
+                           00780C  1120 _X_IEEE_ADDR	=	0x780c
+                                   1121 ;--------------------------------------------------------
+                                   1122 ; absolute external ram data
+                                   1123 ;--------------------------------------------------------
+                                   1124 	.area XABS    (ABS,XDATA)
+                                   1125 ;--------------------------------------------------------
+                                   1126 ; external initialized ram data
+                                   1127 ;--------------------------------------------------------
+                                   1128 	.area XISEG   (XDATA)
+                                   1129 	.area HOME    (CODE)
+                                   1130 	.area GSINIT0 (CODE)
+                                   1131 	.area GSINIT1 (CODE)
+                                   1132 	.area GSINIT2 (CODE)
+                                   1133 	.area GSINIT3 (CODE)
+                                   1134 	.area GSINIT4 (CODE)
+                                   1135 	.area GSINIT5 (CODE)
+                                   1136 	.area GSINIT  (CODE)
+                                   1137 	.area GSFINAL (CODE)
+                                   1138 	.area CSEG    (CODE)
+                                   1139 ;--------------------------------------------------------
+                                   1140 ; global & static initialisations
+                                   1141 ;--------------------------------------------------------
+                                   1142 	.area HOME    (CODE)
+                                   1143 	.area GSINIT  (CODE)
+                                   1144 	.area GSFINAL (CODE)
+                                   1145 	.area GSINIT  (CODE)
+                                   1146 ;--------------------------------------------------------
+                                   1147 ; Home
+                                   1148 ;--------------------------------------------------------
+                                   1149 	.area HOME    (CODE)
+                                   1150 	.area HOME    (CODE)
+                                   1151 ;--------------------------------------------------------
+                                   1152 ; code
+                                   1153 ;--------------------------------------------------------
+                                   1154 	.area BANK1   (CODE)
+                                   1155 ;------------------------------------------------------------
+                                   1156 ;Allocation info for local variables in function 'rpl_verify_header'
+                                   1157 ;------------------------------------------------------------
+                                   1158 ;uip_ext_opt_offset        Allocated to registers r6 r7 
+                                   1159 ;instance                  Allocated to registers r4 r5 r7 
+                                   1160 ;down                      Allocated to stack - sp -1
+                                   1161 ;sender_closer             Allocated to registers r7 
+                                   1162 ;sloc0                     Allocated to stack - sp -2
+                                   1163 ;------------------------------------------------------------
+                                   1164 ;	../../../../core/net/rpl/rpl-ext-header.c:66: rpl_verify_header(int uip_ext_opt_offset)
+                                   1165 ;	-----------------------------------------
+                                   1166 ;	 function rpl_verify_header
+                                   1167 ;	-----------------------------------------
+      000000                       1168 _rpl_verify_header:
+                           000007  1169 	ar7 = 0x07
+                           000006  1170 	ar6 = 0x06
+                           000005  1171 	ar5 = 0x05
+                           000004  1172 	ar4 = 0x04
+                           000003  1173 	ar3 = 0x03
+                           000002  1174 	ar2 = 0x02
+                           000001  1175 	ar1 = 0x01
+                           000000  1176 	ar0 = 0x00
+      000000 05 81            [12] 1177 	inc	sp
+      000002 05 81            [12] 1178 	inc	sp
+      000004 05 81            [12] 1179 	inc	sp
+      000006 AE 82            [24] 1180 	mov	r6,dpl
+                                   1181 ;	../../../../core/net/rpl/rpl-ext-header.c:72: if(UIP_EXT_HDR_OPT_RPL_BUF->opt_len != RPL_HDR_OPT_LEN) {
+      000008 90r00r00         [24] 1182 	mov	dptr,#_uip_ext_len
+      00000B E0               [24] 1183 	movx	a,@dptr
+      00000C FD               [12] 1184 	mov	r5,a
+      00000D 24 28            [12] 1185 	add	a,#0x28
+      00000F 2E               [12] 1186 	add	a,r6
+      000010 24r00            [12] 1187 	add	a,#_uip_aligned_buf
+      000012 FC               [12] 1188 	mov	r4,a
+      000013 E4               [12] 1189 	clr	a
+      000014 34s00            [12] 1190 	addc	a,#(_uip_aligned_buf >> 8)
+      000016 FF               [12] 1191 	mov	r7,a
+      000017 8C 82            [24] 1192 	mov	dpl,r4
+      000019 8F 83            [24] 1193 	mov	dph,r7
+      00001B A3               [24] 1194 	inc	dptr
+      00001C E0               [24] 1195 	movx	a,@dptr
+      00001D FF               [12] 1196 	mov	r7,a
+      00001E BF 04 02         [24] 1197 	cjne	r7,#0x04,00144$
+      000021 80 06            [24] 1198 	sjmp	00102$
+      000023                       1199 00144$:
+                                   1200 ;	../../../../core/net/rpl/rpl-ext-header.c:74: return 1;
+      000023 90 00 01         [24] 1201 	mov	dptr,#0x0001
+      000026 02r01r94         [24] 1202 	ljmp	00118$
+      000029                       1203 00102$:
+                                   1204 ;	../../../../core/net/rpl/rpl-ext-header.c:77: if(UIP_EXT_HDR_OPT_RPL_BUF->flags & RPL_HDR_OPT_FWD_ERR) {
+      000029 74 28            [12] 1205 	mov	a,#0x28
+      00002B 2D               [12] 1206 	add	a,r5
+      00002C 2E               [12] 1207 	add	a,r6
+      00002D 24r00            [12] 1208 	add	a,#_uip_aligned_buf
+      00002F FC               [12] 1209 	mov	r4,a
+      000030 E4               [12] 1210 	clr	a
+      000031 34s00            [12] 1211 	addc	a,#(_uip_aligned_buf >> 8)
+      000033 FF               [12] 1212 	mov	r7,a
+      000034 8C 82            [24] 1213 	mov	dpl,r4
+      000036 8F 83            [24] 1214 	mov	dph,r7
+      000038 A3               [24] 1215 	inc	dptr
+      000039 A3               [24] 1216 	inc	dptr
+      00003A E0               [24] 1217 	movx	a,@dptr
+      00003B FF               [12] 1218 	mov	r7,a
+      00003C 30 E5 06         [24] 1219 	jnb	acc.5,00104$
+                                   1220 ;	../../../../core/net/rpl/rpl-ext-header.c:80: return 2;
+      00003F 90 00 02         [24] 1221 	mov	dptr,#0x0002
+      000042 02r01r94         [24] 1222 	ljmp	00118$
+      000045                       1223 00104$:
+                                   1224 ;	../../../../core/net/rpl/rpl-ext-header.c:83: instance = rpl_get_instance(UIP_EXT_HDR_OPT_RPL_BUF->instance);
+      000045 74 28            [12] 1225 	mov	a,#0x28
+      000047 2D               [12] 1226 	add	a,r5
+      000048 2E               [12] 1227 	add	a,r6
+      000049 24r00            [12] 1228 	add	a,#_uip_aligned_buf
+      00004B FD               [12] 1229 	mov	r5,a
+      00004C E4               [12] 1230 	clr	a
+      00004D 34s00            [12] 1231 	addc	a,#(_uip_aligned_buf >> 8)
+      00004F FF               [12] 1232 	mov	r7,a
+      000050 8D 82            [24] 1233 	mov	dpl,r5
+      000052 8F 83            [24] 1234 	mov	dph,r7
+      000054 A3               [24] 1235 	inc	dptr
+      000055 A3               [24] 1236 	inc	dptr
+      000056 A3               [24] 1237 	inc	dptr
+      000057 E0               [24] 1238 	movx	a,@dptr
+      000058 F5 82            [12] 1239 	mov	dpl,a
+      00005A C0 06            [24] 1240 	push	ar6
+      00005C 78r00            [12] 1241 	mov	r0,#_rpl_get_instance
+      00005E 79s00            [12] 1242 	mov	r1,#(_rpl_get_instance >> 8)
+      000060 7As00            [12] 1243 	mov	r2,#(_rpl_get_instance >> 16)
+      000062 12r00r00         [24] 1244 	lcall	__sdcc_banked_call
+      000065 AC 82            [24] 1245 	mov	r4,dpl
+      000067 AD 83            [24] 1246 	mov	r5,dph
+      000069 AF F0            [24] 1247 	mov	r7,b
+      00006B D0 06            [24] 1248 	pop	ar6
+                                   1249 ;	../../../../core/net/rpl/rpl-ext-header.c:84: if(instance == NULL) {
+      00006D EC               [12] 1250 	mov	a,r4
+      00006E 4D               [12] 1251 	orl	a,r5
+      00006F 70 06            [24] 1252 	jnz	00106$
+                                   1253 ;	../../../../core/net/rpl/rpl-ext-header.c:87: return 1;
+      000071 90 00 01         [24] 1254 	mov	dptr,#0x0001
+      000074 02r01r94         [24] 1255 	ljmp	00118$
+      000077                       1256 00106$:
+                                   1257 ;	../../../../core/net/rpl/rpl-ext-header.c:90: if(!instance->current_dag->joined) {
+      000077 C0 06            [24] 1258 	push	ar6
+      000079 74 0A            [12] 1259 	mov	a,#0x0A
+      00007B 2C               [12] 1260 	add	a,r4
+      00007C FC               [12] 1261 	mov	r4,a
+      00007D E4               [12] 1262 	clr	a
+      00007E 3D               [12] 1263 	addc	a,r5
+      00007F FD               [12] 1264 	mov	r5,a
+      000080 8C 82            [24] 1265 	mov	dpl,r4
+      000082 8D 83            [24] 1266 	mov	dph,r5
+      000084 8F F0            [24] 1267 	mov	b,r7
+      000086 12r00r00         [24] 1268 	lcall	__gptrget
+      000089 FC               [12] 1269 	mov	r4,a
+      00008A A3               [24] 1270 	inc	dptr
+      00008B 12r00r00         [24] 1271 	lcall	__gptrget
+      00008E FD               [12] 1272 	mov	r5,a
+      00008F A3               [24] 1273 	inc	dptr
+      000090 12r00r00         [24] 1274 	lcall	__gptrget
+      000093 FF               [12] 1275 	mov	r7,a
+      000094 74 16            [12] 1276 	mov	a,#0x16
+      000096 2C               [12] 1277 	add	a,r4
+      000097 FA               [12] 1278 	mov	r2,a
+      000098 E4               [12] 1279 	clr	a
+      000099 3D               [12] 1280 	addc	a,r5
+      00009A FB               [12] 1281 	mov	r3,a
+      00009B 8F 06            [24] 1282 	mov	ar6,r7
+      00009D 8A 82            [24] 1283 	mov	dpl,r2
+      00009F 8B 83            [24] 1284 	mov	dph,r3
+      0000A1 8E F0            [24] 1285 	mov	b,r6
+      0000A3 12r00r00         [24] 1286 	lcall	__gptrget
+      0000A6 D0 06            [24] 1287 	pop	ar6
+      0000A8 70 06            [24] 1288 	jnz	00108$
+                                   1289 ;	../../../../core/net/rpl/rpl-ext-header.c:92: return 1;
+      0000AA 90 00 01         [24] 1290 	mov	dptr,#0x0001
+      0000AD 02r01r94         [24] 1291 	ljmp	00118$
+      0000B0                       1292 00108$:
+                                   1293 ;	../../../../core/net/rpl/rpl-ext-header.c:95: down = 0;
+      0000B0 C0 04            [24] 1294 	push	ar4
+      0000B2 C0 05            [24] 1295 	push	ar5
+      0000B4 C0 07            [24] 1296 	push	ar7
+      0000B6 E5 81            [12] 1297 	mov	a,sp
+      0000B8 24 FC            [12] 1298 	add	a,#0xfc
+      0000BA F8               [12] 1299 	mov	r0,a
+      0000BB E4               [12] 1300 	clr	a
+      0000BC F6               [12] 1301 	mov	@r0,a
+      0000BD 08               [12] 1302 	inc	r0
+      0000BE F6               [12] 1303 	mov	@r0,a
+                                   1304 ;	../../../../core/net/rpl/rpl-ext-header.c:96: if(UIP_EXT_HDR_OPT_RPL_BUF->flags & RPL_HDR_OPT_DOWN) {
+      0000BF 90r00r00         [24] 1305 	mov	dptr,#_uip_ext_len
+      0000C2 E5 81            [12] 1306 	mov	a,sp
+      0000C4 24 FB            [12] 1307 	add	a,#0xfb
+      0000C6 F8               [12] 1308 	mov	r0,a
+      0000C7 E0               [24] 1309 	movx	a,@dptr
+      0000C8 F6               [12] 1310 	mov	@r0,a
+      0000C9 E5 81            [12] 1311 	mov	a,sp
+      0000CB 24 FB            [12] 1312 	add	a,#0xfb
+      0000CD F8               [12] 1313 	mov	r0,a
+      0000CE 74 28            [12] 1314 	mov	a,#0x28
+      0000D0 26               [12] 1315 	add	a,@r0
+      0000D1 2E               [12] 1316 	add	a,r6
+      0000D2 24r00            [12] 1317 	add	a,#_uip_aligned_buf
+      0000D4 FD               [12] 1318 	mov	r5,a
+      0000D5 E4               [12] 1319 	clr	a
+      0000D6 34s00            [12] 1320 	addc	a,#(_uip_aligned_buf >> 8)
+      0000D8 FF               [12] 1321 	mov	r7,a
+      0000D9 8D 82            [24] 1322 	mov	dpl,r5
+      0000DB 8F 83            [24] 1323 	mov	dph,r7
+      0000DD A3               [24] 1324 	inc	dptr
+      0000DE A3               [24] 1325 	inc	dptr
+      0000DF E0               [24] 1326 	movx	a,@dptr
+      0000E0 D0 07            [24] 1327 	pop	ar7
+      0000E2 D0 05            [24] 1328 	pop	ar5
+      0000E4 D0 04            [24] 1329 	pop	ar4
+      0000E6 30 E7 08         [24] 1330 	jnb	acc.7,00110$
+                                   1331 ;	../../../../core/net/rpl/rpl-ext-header.c:97: down = 1;
+      0000E9 A8 81            [24] 1332 	mov	r0,sp
+      0000EB 18               [12] 1333 	dec	r0
+      0000EC 76 01            [12] 1334 	mov	@r0,#0x01
+      0000EE 08               [12] 1335 	inc	r0
+      0000EF 76 00            [12] 1336 	mov	@r0,#0x00
+      0000F1                       1337 00110$:
+                                   1338 ;	../../../../core/net/rpl/rpl-ext-header.c:100: sender_closer = UIP_EXT_HDR_OPT_RPL_BUF->senderrank < instance->current_dag->rank;
+      0000F1 A8 81            [24] 1339 	mov	r0,sp
+      0000F3 18               [12] 1340 	dec	r0
+      0000F4 18               [12] 1341 	dec	r0
+      0000F5 74 28            [12] 1342 	mov	a,#0x28
+      0000F7 26               [12] 1343 	add	a,@r0
+      0000F8 2E               [12] 1344 	add	a,r6
+      0000F9 24r00            [12] 1345 	add	a,#_uip_aligned_buf
+      0000FB FA               [12] 1346 	mov	r2,a
+      0000FC E4               [12] 1347 	clr	a
+      0000FD 34s00            [12] 1348 	addc	a,#(_uip_aligned_buf >> 8)
+      0000FF FB               [12] 1349 	mov	r3,a
+      000100 8A 82            [24] 1350 	mov	dpl,r2
+      000102 8B 83            [24] 1351 	mov	dph,r3
+      000104 A3               [24] 1352 	inc	dptr
+      000105 A3               [24] 1353 	inc	dptr
+      000106 A3               [24] 1354 	inc	dptr
+      000107 A3               [24] 1355 	inc	dptr
+      000108 E0               [24] 1356 	movx	a,@dptr
+      000109 FA               [12] 1357 	mov	r2,a
+      00010A A3               [24] 1358 	inc	dptr
+      00010B E0               [24] 1359 	movx	a,@dptr
+      00010C FB               [12] 1360 	mov	r3,a
+      00010D 74 1A            [12] 1361 	mov	a,#0x1A
+      00010F 2C               [12] 1362 	add	a,r4
+      000110 FC               [12] 1363 	mov	r4,a
+      000111 E4               [12] 1364 	clr	a
+      000112 3D               [12] 1365 	addc	a,r5
+      000113 FD               [12] 1366 	mov	r5,a
+      000114 8C 82            [24] 1367 	mov	dpl,r4
+      000116 8D 83            [24] 1368 	mov	dph,r5
+      000118 8F F0            [24] 1369 	mov	b,r7
+      00011A 12r00r00         [24] 1370 	lcall	__gptrget
+      00011D FC               [12] 1371 	mov	r4,a
+      00011E A3               [24] 1372 	inc	dptr
+      00011F 12r00r00         [24] 1373 	lcall	__gptrget
+      000122 FD               [12] 1374 	mov	r5,a
+      000123 C3               [12] 1375 	clr	c
+      000124 EA               [12] 1376 	mov	a,r2
+      000125 9C               [12] 1377 	subb	a,r4
+      000126 EB               [12] 1378 	mov	a,r3
+      000127 9D               [12] 1379 	subb	a,r5
+      000128 E4               [12] 1380 	clr	a
+      000129 33               [12] 1381 	rlc	a
+      00012A FA               [12] 1382 	mov	r2,a
+      00012B FF               [12] 1383 	mov	r7,a
+                                   1384 ;	../../../../core/net/rpl/rpl-ext-header.c:108: if((down && !sender_closer) || (!down && sender_closer)) {
+      00012C A8 81            [24] 1385 	mov	r0,sp
+      00012E 18               [12] 1386 	dec	r0
+      00012F E6               [12] 1387 	mov	a,@r0
+      000130 08               [12] 1388 	inc	r0
+      000131 46               [12] 1389 	orl	a,@r0
+      000132 60 03            [24] 1390 	jz	00117$
+      000134 EF               [12] 1391 	mov	a,r7
+      000135 60 0B            [24] 1392 	jz	00113$
+      000137                       1393 00117$:
+      000137 A8 81            [24] 1394 	mov	r0,sp
+      000139 18               [12] 1395 	dec	r0
+      00013A E6               [12] 1396 	mov	a,@r0
+      00013B 08               [12] 1397 	inc	r0
+      00013C 46               [12] 1398 	orl	a,@r0
+      00013D 70 52            [24] 1399 	jnz	00114$
+      00013F EF               [12] 1400 	mov	a,r7
+      000140 60 4F            [24] 1401 	jz	00114$
+      000142                       1402 00113$:
+                                   1403 ;	../../../../core/net/rpl/rpl-ext-header.c:112: if(UIP_EXT_HDR_OPT_RPL_BUF->flags & RPL_HDR_OPT_RANK_ERR) {
+      000142 A8 81            [24] 1404 	mov	r0,sp
+      000144 18               [12] 1405 	dec	r0
+      000145 18               [12] 1406 	dec	r0
+      000146 74 28            [12] 1407 	mov	a,#0x28
+      000148 26               [12] 1408 	add	a,@r0
+      000149 2E               [12] 1409 	add	a,r6
+      00014A 24r00            [12] 1410 	add	a,#_uip_aligned_buf
+      00014C FD               [12] 1411 	mov	r5,a
+      00014D E4               [12] 1412 	clr	a
+      00014E 34s00            [12] 1413 	addc	a,#(_uip_aligned_buf >> 8)
+      000150 FF               [12] 1414 	mov	r7,a
+      000151 8D 82            [24] 1415 	mov	dpl,r5
+      000153 8F 83            [24] 1416 	mov	dph,r7
+      000155 A3               [24] 1417 	inc	dptr
+      000156 A3               [24] 1418 	inc	dptr
+      000157 E0               [24] 1419 	movx	a,@dptr
+      000158 FF               [12] 1420 	mov	r7,a
+      000159 30 E6 05         [24] 1421 	jnb	acc.6,00112$
+                                   1422 ;	../../../../core/net/rpl/rpl-ext-header.c:115: return 3;
+      00015C 90 00 03         [24] 1423 	mov	dptr,#0x0003
+      00015F 80 33            [24] 1424 	sjmp	00118$
+      000161                       1425 00112$:
+                                   1426 ;	../../../../core/net/rpl/rpl-ext-header.c:118: UIP_EXT_HDR_OPT_RPL_BUF->flags |= RPL_HDR_OPT_RANK_ERR;
+      000161 A8 81            [24] 1427 	mov	r0,sp
+      000163 18               [12] 1428 	dec	r0
+      000164 18               [12] 1429 	dec	r0
+      000165 74 28            [12] 1430 	mov	a,#0x28
+      000167 26               [12] 1431 	add	a,@r0
+      000168 2E               [12] 1432 	add	a,r6
+      000169 24r00            [12] 1433 	add	a,#_uip_aligned_buf
+      00016B FE               [12] 1434 	mov	r6,a
+      00016C E4               [12] 1435 	clr	a
+      00016D 34s00            [12] 1436 	addc	a,#(_uip_aligned_buf >> 8)
+      00016F FF               [12] 1437 	mov	r7,a
+      000170 8E 04            [24] 1438 	mov	ar4,r6
+      000172 8F 05            [24] 1439 	mov	ar5,r7
+      000174 74 02            [12] 1440 	mov	a,#0x02
+      000176 2C               [12] 1441 	add	a,r4
+      000177 FC               [12] 1442 	mov	r4,a
+      000178 E4               [12] 1443 	clr	a
+      000179 3D               [12] 1444 	addc	a,r5
+      00017A FD               [12] 1445 	mov	r5,a
+      00017B 8E 82            [24] 1446 	mov	dpl,r6
+      00017D 8F 83            [24] 1447 	mov	dph,r7
+      00017F A3               [24] 1448 	inc	dptr
+      000180 A3               [24] 1449 	inc	dptr
+      000181 E0               [24] 1450 	movx	a,@dptr
+      000182 FF               [12] 1451 	mov	r7,a
+      000183 43 07 40         [24] 1452 	orl	ar7,#0x40
+      000186 8C 82            [24] 1453 	mov	dpl,r4
+      000188 8D 83            [24] 1454 	mov	dph,r5
+      00018A EF               [12] 1455 	mov	a,r7
+      00018B F0               [24] 1456 	movx	@dptr,a
+                                   1457 ;	../../../../core/net/rpl/rpl-ext-header.c:119: return 0;
+      00018C 90 00 00         [24] 1458 	mov	dptr,#0x0000
+      00018F 80 03            [24] 1459 	sjmp	00118$
+      000191                       1460 00114$:
+                                   1461 ;	../../../../core/net/rpl/rpl-ext-header.c:124: return 0;
+      000191 90 00 00         [24] 1462 	mov	dptr,#0x0000
+      000194                       1463 00118$:
+      000194 15 81            [12] 1464 	dec	sp
+      000196 15 81            [12] 1465 	dec	sp
+      000198 15 81            [12] 1466 	dec	sp
+      00019A 02r00r00         [24] 1467 	ljmp	__sdcc_banked_ret
+                                   1468 ;------------------------------------------------------------
+                                   1469 ;Allocation info for local variables in function 'set_rpl_opt'
+                                   1470 ;------------------------------------------------------------
+                                   1471 ;uip_ext_opt_offset        Allocated to stack - sp -4
+                                   1472 ;temp_len                  Allocated to stack - sp +0
+                                   1473 ;sloc0                     Allocated to stack - sp -2
+                                   1474 ;------------------------------------------------------------
+                                   1475 ;	../../../../core/net/rpl/rpl-ext-header.c:128: set_rpl_opt(unsigned uip_ext_opt_offset)
+                                   1476 ;	-----------------------------------------
+                                   1477 ;	 function set_rpl_opt
+                                   1478 ;	-----------------------------------------
+      00019D                       1479 _set_rpl_opt:
+      00019D C0 82            [24] 1480 	push	dpl
+      00019F C0 83            [24] 1481 	push	dph
+      0001A1 05 81            [12] 1482 	inc	sp
+      0001A3 05 81            [12] 1483 	inc	sp
+      0001A5 05 81            [12] 1484 	inc	sp
+                                   1485 ;	../../../../core/net/rpl/rpl-ext-header.c:132: memmove(UIP_HBHO_NEXT_BUF, UIP_EXT_BUF, uip_len - UIP_IPH_LEN);
+      0001A7 90r00r00         [24] 1486 	mov	dptr,#_uip_len
+      0001AA E0               [24] 1487 	movx	a,@dptr
+      0001AB FC               [12] 1488 	mov	r4,a
+      0001AC A3               [24] 1489 	inc	dptr
+      0001AD E0               [24] 1490 	movx	a,@dptr
+      0001AE FD               [12] 1491 	mov	r5,a
+      0001AF A8 81            [24] 1492 	mov	r0,sp
+      0001B1 18               [12] 1493 	dec	r0
+      0001B2 18               [12] 1494 	dec	r0
+      0001B3 EC               [12] 1495 	mov	a,r4
+      0001B4 24 D8            [12] 1496 	add	a,#0xD8
+      0001B6 F6               [12] 1497 	mov	@r0,a
+      0001B7 ED               [12] 1498 	mov	a,r5
+      0001B8 34 FF            [12] 1499 	addc	a,#0xFF
+      0001BA 08               [12] 1500 	inc	r0
+      0001BB F6               [12] 1501 	mov	@r0,a
+      0001BC 90r00r00         [24] 1502 	mov	dptr,#_uip_ext_len
+      0001BF E0               [24] 1503 	movx	a,@dptr
+      0001C0 FB               [12] 1504 	mov	r3,a
+      0001C1 24 28            [12] 1505 	add	a,#0x28
+      0001C3 24r00            [12] 1506 	add	a,#_uip_aligned_buf
+      0001C5 FA               [12] 1507 	mov	r2,a
+      0001C6 E4               [12] 1508 	clr	a
+      0001C7 34s00            [12] 1509 	addc	a,#(_uip_aligned_buf >> 8)
+      0001C9 FF               [12] 1510 	mov	r7,a
+      0001CA 7E 00            [12] 1511 	mov	r6,#0x00
+      0001CC 74 30            [12] 1512 	mov	a,#0x30
+      0001CE 2B               [12] 1513 	add	a,r3
+      0001CF 24r00            [12] 1514 	add	a,#_uip_aligned_buf
+      0001D1 FB               [12] 1515 	mov	r3,a
+      0001D2 E4               [12] 1516 	clr	a
+      0001D3 34s00            [12] 1517 	addc	a,#(_uip_aligned_buf >> 8)
+      0001D5 FD               [12] 1518 	mov	r5,a
+      0001D6 7C 00            [12] 1519 	mov	r4,#0x00
+      0001D8 A8 81            [24] 1520 	mov	r0,sp
+      0001DA 18               [12] 1521 	dec	r0
+      0001DB 18               [12] 1522 	dec	r0
+      0001DC E6               [12] 1523 	mov	a,@r0
+      0001DD C0 E0            [24] 1524 	push	acc
+      0001DF 08               [12] 1525 	inc	r0
+      0001E0 E6               [12] 1526 	mov	a,@r0
+      0001E1 C0 E0            [24] 1527 	push	acc
+      0001E3 C0 02            [24] 1528 	push	ar2
+      0001E5 C0 07            [24] 1529 	push	ar7
+      0001E7 C0 06            [24] 1530 	push	ar6
+      0001E9 8B 82            [24] 1531 	mov	dpl,r3
+      0001EB 8D 83            [24] 1532 	mov	dph,r5
+      0001ED 8C F0            [24] 1533 	mov	b,r4
+      0001EF 78r00            [12] 1534 	mov	r0,#_memmove
+      0001F1 79s00            [12] 1535 	mov	r1,#(_memmove >> 8)
+      0001F3 7As00            [12] 1536 	mov	r2,#(_memmove >> 16)
+      0001F5 12r00r00         [24] 1537 	lcall	__sdcc_banked_call
+      0001F8 E5 81            [12] 1538 	mov	a,sp
+      0001FA 24 FB            [12] 1539 	add	a,#0xfb
+      0001FC F5 81            [12] 1540 	mov	sp,a
+                                   1541 ;	../../../../core/net/rpl/rpl-ext-header.c:133: memset(UIP_HBHO_BUF, 0, RPL_HOP_BY_HOP_LEN);
+      0001FE 90r00r00         [24] 1542 	mov	dptr,#_uip_ext_len
+      000201 E0               [24] 1543 	movx	a,@dptr
+      000202 24 28            [12] 1544 	add	a,#0x28
+      000204 24r00            [12] 1545 	add	a,#_uip_aligned_buf
+      000206 FE               [12] 1546 	mov	r6,a
+      000207 E4               [12] 1547 	clr	a
+      000208 34s00            [12] 1548 	addc	a,#(_uip_aligned_buf >> 8)
+      00020A FF               [12] 1549 	mov	r7,a
+      00020B 7D 00            [12] 1550 	mov	r5,#0x00
+      00020D 74 08            [12] 1551 	mov	a,#0x08
+      00020F C0 E0            [24] 1552 	push	acc
+      000211 E4               [12] 1553 	clr	a
+      000212 C0 E0            [24] 1554 	push	acc
+      000214 E4               [12] 1555 	clr	a
+      000215 C0 E0            [24] 1556 	push	acc
+      000217 8E 82            [24] 1557 	mov	dpl,r6
+      000219 8F 83            [24] 1558 	mov	dph,r7
+      00021B 8D F0            [24] 1559 	mov	b,r5
+      00021D 78r00            [12] 1560 	mov	r0,#_memset
+      00021F 79s00            [12] 1561 	mov	r1,#(_memset >> 8)
+      000221 7As00            [12] 1562 	mov	r2,#(_memset >> 16)
+      000223 12r00r00         [24] 1563 	lcall	__sdcc_banked_call
+      000226 15 81            [12] 1564 	dec	sp
+      000228 15 81            [12] 1565 	dec	sp
+      00022A 15 81            [12] 1566 	dec	sp
+                                   1567 ;	../../../../core/net/rpl/rpl-ext-header.c:134: UIP_HBHO_BUF->next = UIP_IP_BUF->proto;
+      00022C 90r00r00         [24] 1568 	mov	dptr,#_uip_ext_len
+      00022F E0               [24] 1569 	movx	a,@dptr
+      000230 24 28            [12] 1570 	add	a,#0x28
+      000232 24r00            [12] 1571 	add	a,#_uip_aligned_buf
+      000234 FE               [12] 1572 	mov	r6,a
+      000235 E4               [12] 1573 	clr	a
+      000236 34s00            [12] 1574 	addc	a,#(_uip_aligned_buf >> 8)
+      000238 FF               [12] 1575 	mov	r7,a
+      000239 7Cr00            [12] 1576 	mov	r4,#_uip_aligned_buf
+      00023B 7Ds00            [12] 1577 	mov	r5,#(_uip_aligned_buf >> 8)
+      00023D 74 06            [12] 1578 	mov	a,#0x06
+      00023F 2C               [12] 1579 	add	a,r4
+      000240 F5 82            [12] 1580 	mov	dpl,a
+      000242 E4               [12] 1581 	clr	a
+      000243 3D               [12] 1582 	addc	a,r5
+      000244 F5 83            [12] 1583 	mov	dph,a
+      000246 E0               [24] 1584 	movx	a,@dptr
+      000247 8E 82            [24] 1585 	mov	dpl,r6
+      000249 8F 83            [24] 1586 	mov	dph,r7
+      00024B F0               [24] 1587 	movx	@dptr,a
+                                   1588 ;	../../../../core/net/rpl/rpl-ext-header.c:135: UIP_IP_BUF->proto = UIP_PROTO_HBHO;
+      00024C 7Er00            [12] 1589 	mov	r6,#_uip_aligned_buf
+      00024E 7Fs00            [12] 1590 	mov	r7,#(_uip_aligned_buf >> 8)
+      000250 74 06            [12] 1591 	mov	a,#0x06
+      000252 2E               [12] 1592 	add	a,r6
+      000253 F5 82            [12] 1593 	mov	dpl,a
+      000255 E4               [12] 1594 	clr	a
+      000256 3F               [12] 1595 	addc	a,r7
+      000257 F5 83            [12] 1596 	mov	dph,a
+      000259 E4               [12] 1597 	clr	a
+      00025A F0               [24] 1598 	movx	@dptr,a
+                                   1599 ;	../../../../core/net/rpl/rpl-ext-header.c:136: UIP_HBHO_BUF->len = RPL_HOP_BY_HOP_LEN - 8;
+      00025B 90r00r00         [24] 1600 	mov	dptr,#_uip_ext_len
+      00025E E0               [24] 1601 	movx	a,@dptr
+      00025F 24 28            [12] 1602 	add	a,#0x28
+      000261 24r00            [12] 1603 	add	a,#_uip_aligned_buf
+      000263 FE               [12] 1604 	mov	r6,a
+      000264 E4               [12] 1605 	clr	a
+      000265 34s00            [12] 1606 	addc	a,#(_uip_aligned_buf >> 8)
+      000267 FF               [12] 1607 	mov	r7,a
+      000268 8E 82            [24] 1608 	mov	dpl,r6
+      00026A 8F 83            [24] 1609 	mov	dph,r7
+      00026C A3               [24] 1610 	inc	dptr
+      00026D E4               [12] 1611 	clr	a
+      00026E F0               [24] 1612 	movx	@dptr,a
+                                   1613 ;	../../../../core/net/rpl/rpl-ext-header.c:137: UIP_EXT_HDR_OPT_RPL_BUF->opt_type = UIP_EXT_HDR_OPT_RPL;
+      00026F 90r00r00         [24] 1614 	mov	dptr,#_uip_ext_len
+      000272 E0               [24] 1615 	movx	a,@dptr
+      000273 24 28            [12] 1616 	add	a,#0x28
+      000275 FF               [12] 1617 	mov	r7,a
+      000276 E5 81            [12] 1618 	mov	a,sp
+      000278 24 FC            [12] 1619 	add	a,#0xfc
+      00027A F8               [12] 1620 	mov	r0,a
+      00027B E6               [12] 1621 	mov	a,@r0
+      00027C FE               [12] 1622 	mov	r6,a
+      00027D 2F               [12] 1623 	add	a,r7
+      00027E 24r00            [12] 1624 	add	a,#_uip_aligned_buf
+      000280 F5 82            [12] 1625 	mov	dpl,a
+      000282 E4               [12] 1626 	clr	a
+      000283 34s00            [12] 1627 	addc	a,#(_uip_aligned_buf >> 8)
+      000285 F5 83            [12] 1628 	mov	dph,a
+      000287 74 63            [12] 1629 	mov	a,#0x63
+      000289 F0               [24] 1630 	movx	@dptr,a
+                                   1631 ;	../../../../core/net/rpl/rpl-ext-header.c:138: UIP_EXT_HDR_OPT_RPL_BUF->opt_len = RPL_HDR_OPT_LEN;
+      00028A 90r00r00         [24] 1632 	mov	dptr,#_uip_ext_len
+      00028D E0               [24] 1633 	movx	a,@dptr
+      00028E 24 28            [12] 1634 	add	a,#0x28
+      000290 2E               [12] 1635 	add	a,r6
+      000291 24r00            [12] 1636 	add	a,#_uip_aligned_buf
+      000293 FD               [12] 1637 	mov	r5,a
+      000294 E4               [12] 1638 	clr	a
+      000295 34s00            [12] 1639 	addc	a,#(_uip_aligned_buf >> 8)
+      000297 FF               [12] 1640 	mov	r7,a
+      000298 8D 82            [24] 1641 	mov	dpl,r5
+      00029A 8F 83            [24] 1642 	mov	dph,r7
+      00029C A3               [24] 1643 	inc	dptr
+      00029D 74 04            [12] 1644 	mov	a,#0x04
+      00029F F0               [24] 1645 	movx	@dptr,a
+                                   1646 ;	../../../../core/net/rpl/rpl-ext-header.c:139: UIP_EXT_HDR_OPT_RPL_BUF->flags = 0;
+      0002A0 90r00r00         [24] 1647 	mov	dptr,#_uip_ext_len
+      0002A3 E0               [24] 1648 	movx	a,@dptr
+      0002A4 24 28            [12] 1649 	add	a,#0x28
+      0002A6 2E               [12] 1650 	add	a,r6
+      0002A7 24r00            [12] 1651 	add	a,#_uip_aligned_buf
+      0002A9 FD               [12] 1652 	mov	r5,a
+      0002AA E4               [12] 1653 	clr	a
+      0002AB 34s00            [12] 1654 	addc	a,#(_uip_aligned_buf >> 8)
+      0002AD FF               [12] 1655 	mov	r7,a
+      0002AE 8D 82            [24] 1656 	mov	dpl,r5
+      0002B0 8F 83            [24] 1657 	mov	dph,r7
+      0002B2 A3               [24] 1658 	inc	dptr
+      0002B3 A3               [24] 1659 	inc	dptr
+      0002B4 E4               [12] 1660 	clr	a
+      0002B5 F0               [24] 1661 	movx	@dptr,a
+                                   1662 ;	../../../../core/net/rpl/rpl-ext-header.c:140: UIP_EXT_HDR_OPT_RPL_BUF->instance = 0;
+      0002B6 90r00r00         [24] 1663 	mov	dptr,#_uip_ext_len
+      0002B9 E0               [24] 1664 	movx	a,@dptr
+      0002BA 24 28            [12] 1665 	add	a,#0x28
+      0002BC 2E               [12] 1666 	add	a,r6
+      0002BD 24r00            [12] 1667 	add	a,#_uip_aligned_buf
+      0002BF FD               [12] 1668 	mov	r5,a
+      0002C0 E4               [12] 1669 	clr	a
+      0002C1 34s00            [12] 1670 	addc	a,#(_uip_aligned_buf >> 8)
+      0002C3 FF               [12] 1671 	mov	r7,a
+      0002C4 8D 82            [24] 1672 	mov	dpl,r5
+      0002C6 8F 83            [24] 1673 	mov	dph,r7
+      0002C8 A3               [24] 1674 	inc	dptr
+      0002C9 A3               [24] 1675 	inc	dptr
+      0002CA A3               [24] 1676 	inc	dptr
+      0002CB E4               [12] 1677 	clr	a
+      0002CC F0               [24] 1678 	movx	@dptr,a
+                                   1679 ;	../../../../core/net/rpl/rpl-ext-header.c:141: UIP_EXT_HDR_OPT_RPL_BUF->senderrank = 0;
+      0002CD 90r00r00         [24] 1680 	mov	dptr,#_uip_ext_len
+      0002D0 E0               [24] 1681 	movx	a,@dptr
+      0002D1 24 28            [12] 1682 	add	a,#0x28
+      0002D3 2E               [12] 1683 	add	a,r6
+      0002D4 24r00            [12] 1684 	add	a,#_uip_aligned_buf
+      0002D6 FE               [12] 1685 	mov	r6,a
+      0002D7 E4               [12] 1686 	clr	a
+      0002D8 34s00            [12] 1687 	addc	a,#(_uip_aligned_buf >> 8)
+      0002DA FF               [12] 1688 	mov	r7,a
+      0002DB 8E 82            [24] 1689 	mov	dpl,r6
+      0002DD 8F 83            [24] 1690 	mov	dph,r7
+      0002DF A3               [24] 1691 	inc	dptr
+      0002E0 A3               [24] 1692 	inc	dptr
+      0002E1 A3               [24] 1693 	inc	dptr
+      0002E2 A3               [24] 1694 	inc	dptr
+      0002E3 E4               [12] 1695 	clr	a
+      0002E4 F0               [24] 1696 	movx	@dptr,a
+      0002E5 E4               [12] 1697 	clr	a
+      0002E6 A3               [24] 1698 	inc	dptr
+      0002E7 F0               [24] 1699 	movx	@dptr,a
+                                   1700 ;	../../../../core/net/rpl/rpl-ext-header.c:142: uip_len += RPL_HOP_BY_HOP_LEN;
+      0002E8 90r00r00         [24] 1701 	mov	dptr,#_uip_len
+      0002EB E0               [24] 1702 	movx	a,@dptr
+      0002EC FE               [12] 1703 	mov	r6,a
+      0002ED A3               [24] 1704 	inc	dptr
+      0002EE E0               [24] 1705 	movx	a,@dptr
+      0002EF FF               [12] 1706 	mov	r7,a
+      0002F0 90r00r00         [24] 1707 	mov	dptr,#_uip_len
+      0002F3 74 08            [12] 1708 	mov	a,#0x08
+      0002F5 2E               [12] 1709 	add	a,r6
+      0002F6 F0               [24] 1710 	movx	@dptr,a
+      0002F7 E4               [12] 1711 	clr	a
+      0002F8 3F               [12] 1712 	addc	a,r7
+      0002F9 A3               [24] 1713 	inc	dptr
+      0002FA F0               [24] 1714 	movx	@dptr,a
+                                   1715 ;	../../../../core/net/rpl/rpl-ext-header.c:143: temp_len = UIP_IP_BUF->len[1];
+      0002FB 7Er00            [12] 1716 	mov	r6,#_uip_aligned_buf
+      0002FD 7Fs00            [12] 1717 	mov	r7,#(_uip_aligned_buf >> 8)
+      0002FF 8E 82            [24] 1718 	mov	dpl,r6
+      000301 8F 83            [24] 1719 	mov	dph,r7
+      000303 A3               [24] 1720 	inc	dptr
+      000304 A3               [24] 1721 	inc	dptr
+      000305 A3               [24] 1722 	inc	dptr
+      000306 A3               [24] 1723 	inc	dptr
+      000307 A3               [24] 1724 	inc	dptr
+      000308 A8 81            [24] 1725 	mov	r0,sp
+      00030A E0               [24] 1726 	movx	a,@dptr
+      00030B F6               [12] 1727 	mov	@r0,a
+                                   1728 ;	../../../../core/net/rpl/rpl-ext-header.c:144: UIP_IP_BUF->len[1] += UIP_HBHO_BUF->len + 8;
+      00030C 7Dr00            [12] 1729 	mov	r5,#_uip_aligned_buf
+      00030E 7Es00            [12] 1730 	mov	r6,#(_uip_aligned_buf >> 8)
+      000310 74 05            [12] 1731 	mov	a,#0x05
+      000312 2D               [12] 1732 	add	a,r5
+      000313 FD               [12] 1733 	mov	r5,a
+      000314 E4               [12] 1734 	clr	a
+      000315 3E               [12] 1735 	addc	a,r6
+      000316 FE               [12] 1736 	mov	r6,a
+      000317 7Br00            [12] 1737 	mov	r3,#_uip_aligned_buf
+      000319 7Cs00            [12] 1738 	mov	r4,#(_uip_aligned_buf >> 8)
+      00031B 74 05            [12] 1739 	mov	a,#0x05
+      00031D 2B               [12] 1740 	add	a,r3
+      00031E FB               [12] 1741 	mov	r3,a
+      00031F E4               [12] 1742 	clr	a
+      000320 3C               [12] 1743 	addc	a,r4
+      000321 FC               [12] 1744 	mov	r4,a
+      000322 90r00r00         [24] 1745 	mov	dptr,#_uip_ext_len
+      000325 E0               [24] 1746 	movx	a,@dptr
+      000326 24 28            [12] 1747 	add	a,#0x28
+      000328 24r00            [12] 1748 	add	a,#_uip_aligned_buf
+      00032A FA               [12] 1749 	mov	r2,a
+      00032B E4               [12] 1750 	clr	a
+      00032C 34s00            [12] 1751 	addc	a,#(_uip_aligned_buf >> 8)
+      00032E FF               [12] 1752 	mov	r7,a
+      00032F 8A 82            [24] 1753 	mov	dpl,r2
+      000331 8F 83            [24] 1754 	mov	dph,r7
+      000333 A3               [24] 1755 	inc	dptr
+      000334 E0               [24] 1756 	movx	a,@dptr
+      000335 24 08            [12] 1757 	add	a,#0x08
+      000337 FF               [12] 1758 	mov	r7,a
+      000338 8B 82            [24] 1759 	mov	dpl,r3
+      00033A 8C 83            [24] 1760 	mov	dph,r4
+      00033C E0               [24] 1761 	movx	a,@dptr
+      00033D FB               [12] 1762 	mov	r3,a
+      00033E 2F               [12] 1763 	add	a,r7
+      00033F 8D 82            [24] 1764 	mov	dpl,r5
+      000341 8E 83            [24] 1765 	mov	dph,r6
+      000343 F0               [24] 1766 	movx	@dptr,a
+                                   1767 ;	../../../../core/net/rpl/rpl-ext-header.c:145: if(UIP_IP_BUF->len[1] < temp_len) {
+      000344 7Er00            [12] 1768 	mov	r6,#_uip_aligned_buf
+      000346 7Fs00            [12] 1769 	mov	r7,#(_uip_aligned_buf >> 8)
+      000348 8E 82            [24] 1770 	mov	dpl,r6
+      00034A 8F 83            [24] 1771 	mov	dph,r7
+      00034C A3               [24] 1772 	inc	dptr
+      00034D A3               [24] 1773 	inc	dptr
+      00034E A3               [24] 1774 	inc	dptr
+      00034F A3               [24] 1775 	inc	dptr
+      000350 A3               [24] 1776 	inc	dptr
+      000351 E0               [24] 1777 	movx	a,@dptr
+      000352 FF               [12] 1778 	mov	r7,a
+      000353 A8 81            [24] 1779 	mov	r0,sp
+      000355 C3               [12] 1780 	clr	c
+      000356 EF               [12] 1781 	mov	a,r7
+      000357 96               [12] 1782 	subb	a,@r0
+      000358 50 18            [24] 1783 	jnc	00103$
+                                   1784 ;	../../../../core/net/rpl/rpl-ext-header.c:146: UIP_IP_BUF->len[0]++;
+      00035A 7Er00            [12] 1785 	mov	r6,#_uip_aligned_buf
+      00035C 7Fs00            [12] 1786 	mov	r7,#(_uip_aligned_buf >> 8)
+      00035E 74 04            [12] 1787 	mov	a,#0x04
+      000360 2E               [12] 1788 	add	a,r6
+      000361 FE               [12] 1789 	mov	r6,a
+      000362 E4               [12] 1790 	clr	a
+      000363 3F               [12] 1791 	addc	a,r7
+      000364 FF               [12] 1792 	mov	r7,a
+      000365 8E 82            [24] 1793 	mov	dpl,r6
+      000367 8F 83            [24] 1794 	mov	dph,r7
+      000369 E0               [24] 1795 	movx	a,@dptr
+      00036A FD               [12] 1796 	mov	r5,a
+      00036B 0D               [12] 1797 	inc	r5
+      00036C 8E 82            [24] 1798 	mov	dpl,r6
+      00036E 8F 83            [24] 1799 	mov	dph,r7
+      000370 ED               [12] 1800 	mov	a,r5
+      000371 F0               [24] 1801 	movx	@dptr,a
+      000372                       1802 00103$:
+      000372 E5 81            [12] 1803 	mov	a,sp
+      000374 24 FB            [12] 1804 	add	a,#0xFB
+      000376 F5 81            [12] 1805 	mov	sp,a
+      000378 02r00r00         [24] 1806 	ljmp	__sdcc_banked_ret
+                                   1807 ;------------------------------------------------------------
+                                   1808 ;Allocation info for local variables in function 'rpl_update_header_empty'
+                                   1809 ;------------------------------------------------------------
+                                   1810 ;instance                  Allocated to registers r3 r4 r5 
+                                   1811 ;uip_ext_opt_offset        Allocated to registers 
+                                   1812 ;last_uip_ext_len          Allocated to registers r6 r7 
+                                   1813 ;------------------------------------------------------------
+                                   1814 ;	../../../../core/net/rpl/rpl-ext-header.c:151: rpl_update_header_empty(void)
+                                   1815 ;	-----------------------------------------
+                                   1816 ;	 function rpl_update_header_empty
+                                   1817 ;	-----------------------------------------
+      00037B                       1818 _rpl_update_header_empty:
+                                   1819 ;	../../../../core/net/rpl/rpl-ext-header.c:157: last_uip_ext_len = uip_ext_len;
+      00037B 90r00r00         [24] 1820 	mov	dptr,#_uip_ext_len
+      00037E E0               [24] 1821 	movx	a,@dptr
+      00037F FE               [12] 1822 	mov	r6,a
+      000380 7F 00            [12] 1823 	mov	r7,#0x00
+                                   1824 ;	../../../../core/net/rpl/rpl-ext-header.c:158: uip_ext_len = 0;
+      000382 90r00r00         [24] 1825 	mov	dptr,#_uip_ext_len
+      000385 E4               [12] 1826 	clr	a
+      000386 F0               [24] 1827 	movx	@dptr,a
+                                   1828 ;	../../../../core/net/rpl/rpl-ext-header.c:163: switch(UIP_IP_BUF->proto) {
+      000387 7Cr00            [12] 1829 	mov	r4,#_uip_aligned_buf
+      000389 7Ds00            [12] 1830 	mov	r5,#(_uip_aligned_buf >> 8)
+      00038B 74 06            [12] 1831 	mov	a,#0x06
+      00038D 2C               [12] 1832 	add	a,r4
+      00038E F5 82            [12] 1833 	mov	dpl,a
+      000390 E4               [12] 1834 	clr	a
+      000391 3D               [12] 1835 	addc	a,r5
+      000392 F5 83            [12] 1836 	mov	dph,a
+      000394 E0               [24] 1837 	movx	a,@dptr
+      000395 FD               [12] 1838 	mov	r5,a
+      000396 60 03            [24] 1839 	jz	00142$
+      000398 02r04r32         [24] 1840 	ljmp	00108$
+      00039B                       1841 00142$:
+                                   1842 ;	../../../../core/net/rpl/rpl-ext-header.c:165: if(UIP_HBHO_BUF->len != RPL_HOP_BY_HOP_LEN - 8) {
+      00039B 7Cr28            [12] 1843 	mov	r4,#(_uip_aligned_buf + 0x0028)
+      00039D 7Ds00            [12] 1844 	mov	r5,#((_uip_aligned_buf + 0x0028) >> 8)
+      00039F 0C               [12] 1845 	inc	r4
+      0003A0 BC 00 01         [24] 1846 	cjne	r4,#0x00,00143$
+      0003A3 0D               [12] 1847 	inc	r5
+      0003A4                       1848 00143$:
+      0003A4 8C 82            [24] 1849 	mov	dpl,r4
+      0003A6 8D 83            [24] 1850 	mov	dph,r5
+      0003A8 E0               [24] 1851 	movx	a,@dptr
+      0003A9 60 08            [24] 1852 	jz	00103$
+                                   1853 ;	../../../../core/net/rpl/rpl-ext-header.c:167: uip_ext_len = last_uip_ext_len;
+      0003AB 90r00r00         [24] 1854 	mov	dptr,#_uip_ext_len
+      0003AE EE               [12] 1855 	mov	a,r6
+      0003AF F0               [24] 1856 	movx	@dptr,a
+                                   1857 ;	../../../../core/net/rpl/rpl-ext-header.c:168: return;
+      0003B0 02r05r69         [24] 1858 	ljmp	00118$
+      0003B3                       1859 00103$:
+                                   1860 ;	../../../../core/net/rpl/rpl-ext-header.c:170: instance = rpl_get_instance(UIP_EXT_HDR_OPT_RPL_BUF->instance);
+      0003B3 7Cr2A            [12] 1861 	mov	r4,#(_uip_aligned_buf + 0x002a)
+      0003B5 7Ds00            [12] 1862 	mov	r5,#((_uip_aligned_buf + 0x002a) >> 8)
+      0003B7 8C 82            [24] 1863 	mov	dpl,r4
+      0003B9 8D 83            [24] 1864 	mov	dph,r5
+      0003BB A3               [24] 1865 	inc	dptr
+      0003BC A3               [24] 1866 	inc	dptr
+      0003BD A3               [24] 1867 	inc	dptr
+      0003BE E0               [24] 1868 	movx	a,@dptr
+      0003BF F5 82            [12] 1869 	mov	dpl,a
+      0003C1 C0 07            [24] 1870 	push	ar7
+      0003C3 C0 06            [24] 1871 	push	ar6
+      0003C5 78r00            [12] 1872 	mov	r0,#_rpl_get_instance
+      0003C7 79s00            [12] 1873 	mov	r1,#(_rpl_get_instance >> 8)
+      0003C9 7As00            [12] 1874 	mov	r2,#(_rpl_get_instance >> 16)
+      0003CB 12r00r00         [24] 1875 	lcall	__sdcc_banked_call
+      0003CE AB 82            [24] 1876 	mov	r3,dpl
+      0003D0 AC 83            [24] 1877 	mov	r4,dph
+      0003D2 AD F0            [24] 1878 	mov	r5,b
+      0003D4 D0 06            [24] 1879 	pop	ar6
+      0003D6 D0 07            [24] 1880 	pop	ar7
+                                   1881 ;	../../../../core/net/rpl/rpl-ext-header.c:171: if(instance == NULL || !instance->used || !instance->current_dag->joined) {
+      0003D8 EB               [12] 1882 	mov	a,r3
+      0003D9 4C               [12] 1883 	orl	a,r4
+      0003DA 60 53            [24] 1884 	jz	00104$
+      0003DC C0 06            [24] 1885 	push	ar6
+      0003DE C0 07            [24] 1886 	push	ar7
+      0003E0 74 87            [12] 1887 	mov	a,#0x87
+      0003E2 2B               [12] 1888 	add	a,r3
+      0003E3 FA               [12] 1889 	mov	r2,a
+      0003E4 E4               [12] 1890 	clr	a
+      0003E5 3C               [12] 1891 	addc	a,r4
+      0003E6 FE               [12] 1892 	mov	r6,a
+      0003E7 8D 07            [24] 1893 	mov	ar7,r5
+      0003E9 8A 82            [24] 1894 	mov	dpl,r2
+      0003EB 8E 83            [24] 1895 	mov	dph,r6
+      0003ED 8F F0            [24] 1896 	mov	b,r7
+      0003EF 12r00r00         [24] 1897 	lcall	__gptrget
+      0003F2 D0 07            [24] 1898 	pop	ar7
+      0003F4 D0 06            [24] 1899 	pop	ar6
+      0003F6 60 37            [24] 1900 	jz	00104$
+      0003F8 C0 06            [24] 1901 	push	ar6
+      0003FA C0 07            [24] 1902 	push	ar7
+      0003FC 74 0A            [12] 1903 	mov	a,#0x0A
+      0003FE 2B               [12] 1904 	add	a,r3
+      0003FF FB               [12] 1905 	mov	r3,a
+      000400 E4               [12] 1906 	clr	a
+      000401 3C               [12] 1907 	addc	a,r4
+      000402 FC               [12] 1908 	mov	r4,a
+      000403 8B 82            [24] 1909 	mov	dpl,r3
+      000405 8C 83            [24] 1910 	mov	dph,r4
+      000407 8D F0            [24] 1911 	mov	b,r5
+      000409 12r00r00         [24] 1912 	lcall	__gptrget
+      00040C FB               [12] 1913 	mov	r3,a
+      00040D A3               [24] 1914 	inc	dptr
+      00040E 12r00r00         [24] 1915 	lcall	__gptrget
+      000411 FC               [12] 1916 	mov	r4,a
+      000412 A3               [24] 1917 	inc	dptr
+      000413 12r00r00         [24] 1918 	lcall	__gptrget
+      000416 FD               [12] 1919 	mov	r5,a
+      000417 74 16            [12] 1920 	mov	a,#0x16
+      000419 2B               [12] 1921 	add	a,r3
+      00041A FA               [12] 1922 	mov	r2,a
+      00041B E4               [12] 1923 	clr	a
+      00041C 3C               [12] 1924 	addc	a,r4
+      00041D FE               [12] 1925 	mov	r6,a
+      00041E 8D 07            [24] 1926 	mov	ar7,r5
+      000420 8A 82            [24] 1927 	mov	dpl,r2
+      000422 8E 83            [24] 1928 	mov	dph,r6
+      000424 8F F0            [24] 1929 	mov	b,r7
+      000426 12r00r00         [24] 1930 	lcall	__gptrget
+      000429 D0 07            [24] 1931 	pop	ar7
+      00042B D0 06            [24] 1932 	pop	ar6
+      00042D 70 4A            [24] 1933 	jnz	00111$
+      00042F                       1934 00104$:
+                                   1935 ;	../../../../core/net/rpl/rpl-ext-header.c:173: return;
+      00042F 02r05r69         [24] 1936 	ljmp	00118$
+                                   1937 ;	../../../../core/net/rpl/rpl-ext-header.c:176: default:
+      000432                       1938 00108$:
+                                   1939 ;	../../../../core/net/rpl/rpl-ext-header.c:178: if(uip_len + RPL_HOP_BY_HOP_LEN > UIP_BUFSIZE) {
+      000432 C0 06            [24] 1940 	push	ar6
+      000434 C0 07            [24] 1941 	push	ar7
+      000436 90r00r00         [24] 1942 	mov	dptr,#_uip_len
+      000439 E0               [24] 1943 	movx	a,@dptr
+      00043A FA               [12] 1944 	mov	r2,a
+      00043B A3               [24] 1945 	inc	dptr
+      00043C E0               [24] 1946 	movx	a,@dptr
+      00043D FF               [12] 1947 	mov	r7,a
+      00043E 74 08            [12] 1948 	mov	a,#0x08
+      000440 2A               [12] 1949 	add	a,r2
+      000441 FA               [12] 1950 	mov	r2,a
+      000442 E4               [12] 1951 	clr	a
+      000443 3F               [12] 1952 	addc	a,r7
+      000444 FF               [12] 1953 	mov	r7,a
+      000445 C3               [12] 1954 	clr	c
+      000446 74 F0            [12] 1955 	mov	a,#0xF0
+      000448 9A               [12] 1956 	subb	a,r2
+      000449 E4               [12] 1957 	clr	a
+      00044A 9F               [12] 1958 	subb	a,r7
+      00044B D0 07            [24] 1959 	pop	ar7
+      00044D D0 06            [24] 1960 	pop	ar6
+      00044F 50 08            [24] 1961 	jnc	00110$
+                                   1962 ;	../../../../core/net/rpl/rpl-ext-header.c:180: uip_ext_len = last_uip_ext_len;
+      000451 90r00r00         [24] 1963 	mov	dptr,#_uip_ext_len
+      000454 EE               [12] 1964 	mov	a,r6
+      000455 F0               [24] 1965 	movx	@dptr,a
+                                   1966 ;	../../../../core/net/rpl/rpl-ext-header.c:181: return;
+      000456 02r05r69         [24] 1967 	ljmp	00118$
+      000459                       1968 00110$:
+                                   1969 ;	../../../../core/net/rpl/rpl-ext-header.c:183: set_rpl_opt(uip_ext_opt_offset);
+      000459 90 00 02         [24] 1970 	mov	dptr,#0x0002
+      00045C C0 07            [24] 1971 	push	ar7
+      00045E C0 06            [24] 1972 	push	ar6
+      000460 78r9D            [12] 1973 	mov	r0,#_set_rpl_opt
+      000462 79s01            [12] 1974 	mov	r1,#(_set_rpl_opt >> 8)
+      000464 7As00            [12] 1975 	mov	r2,#(_set_rpl_opt >> 16)
+      000466 12r00r00         [24] 1976 	lcall	__sdcc_banked_call
+      000469 D0 06            [24] 1977 	pop	ar6
+      00046B D0 07            [24] 1978 	pop	ar7
+                                   1979 ;	../../../../core/net/rpl/rpl-ext-header.c:184: uip_ext_len = last_uip_ext_len + RPL_HOP_BY_HOP_LEN;
+      00046D 8E 02            [24] 1980 	mov	ar2,r6
+      00046F 90r00r00         [24] 1981 	mov	dptr,#_uip_ext_len
+      000472 74 08            [12] 1982 	mov	a,#0x08
+      000474 2A               [12] 1983 	add	a,r2
+      000475 F0               [24] 1984 	movx	@dptr,a
+                                   1985 ;	../../../../core/net/rpl/rpl-ext-header.c:185: return;
+      000476 02r05r69         [24] 1986 	ljmp	00118$
+                                   1987 ;	../../../../core/net/rpl/rpl-ext-header.c:186: }
+      000479                       1988 00111$:
+                                   1989 ;	../../../../core/net/rpl/rpl-ext-header.c:188: switch(UIP_EXT_HDR_OPT_BUF->type) {
+      000479 C0 03            [24] 1990 	push	ar3
+      00047B C0 04            [24] 1991 	push	ar4
+      00047D C0 05            [24] 1992 	push	ar5
+      00047F 90r00r00         [24] 1993 	mov	dptr,#_uip_ext_len
+      000482 E0               [24] 1994 	movx	a,@dptr
+      000483 FA               [12] 1995 	mov	r2,a
+      000484 24 28            [12] 1996 	add	a,#0x28
+      000486 24 02            [12] 1997 	add	a,#0x02
+      000488 24r00            [12] 1998 	add	a,#_uip_aligned_buf
+      00048A F5 82            [12] 1999 	mov	dpl,a
+      00048C E4               [12] 2000 	clr	a
+      00048D 34s00            [12] 2001 	addc	a,#(_uip_aligned_buf >> 8)
+      00048F F5 83            [12] 2002 	mov	dph,a
+      000491 E0               [24] 2003 	movx	a,@dptr
+      000492 FD               [12] 2004 	mov	r5,a
+      000493 BD 63 02         [24] 2005 	cjne	r5,#0x63,00149$
+      000496 80 09            [24] 2006 	sjmp	00150$
+      000498                       2007 00149$:
+      000498 D0 05            [24] 2008 	pop	ar5
+      00049A D0 04            [24] 2009 	pop	ar4
+      00049C D0 03            [24] 2010 	pop	ar3
+      00049E 02r05r64         [24] 2011 	ljmp	00116$
+      0004A1                       2012 00150$:
+      0004A1 D0 05            [24] 2013 	pop	ar5
+      0004A3 D0 04            [24] 2014 	pop	ar4
+      0004A5 D0 03            [24] 2015 	pop	ar3
+                                   2016 ;	../../../../core/net/rpl/rpl-ext-header.c:191: UIP_EXT_HDR_OPT_RPL_BUF->senderrank = instance->current_dag->rank;
+      0004A7 C0 06            [24] 2017 	push	ar6
+      0004A9 C0 07            [24] 2018 	push	ar7
+      0004AB 74 28            [12] 2019 	mov	a,#0x28
+      0004AD 2A               [12] 2020 	add	a,r2
+      0004AE 24 02            [12] 2021 	add	a,#0x02
+      0004B0 24r00            [12] 2022 	add	a,#_uip_aligned_buf
+      0004B2 FA               [12] 2023 	mov	r2,a
+      0004B3 E4               [12] 2024 	clr	a
+      0004B4 34s00            [12] 2025 	addc	a,#(_uip_aligned_buf >> 8)
+      0004B6 FF               [12] 2026 	mov	r7,a
+      0004B7 74 04            [12] 2027 	mov	a,#0x04
+      0004B9 2A               [12] 2028 	add	a,r2
+      0004BA FA               [12] 2029 	mov	r2,a
+      0004BB E4               [12] 2030 	clr	a
+      0004BC 3F               [12] 2031 	addc	a,r7
+      0004BD FF               [12] 2032 	mov	r7,a
+      0004BE 74 1A            [12] 2033 	mov	a,#0x1A
+      0004C0 2B               [12] 2034 	add	a,r3
+      0004C1 FB               [12] 2035 	mov	r3,a
+      0004C2 E4               [12] 2036 	clr	a
+      0004C3 3C               [12] 2037 	addc	a,r4
+      0004C4 FC               [12] 2038 	mov	r4,a
+      0004C5 8B 82            [24] 2039 	mov	dpl,r3
+      0004C7 8C 83            [24] 2040 	mov	dph,r4
+      0004C9 8D F0            [24] 2041 	mov	b,r5
+      0004CB 12r00r00         [24] 2042 	lcall	__gptrget
+      0004CE FB               [12] 2043 	mov	r3,a
+      0004CF A3               [24] 2044 	inc	dptr
+      0004D0 12r00r00         [24] 2045 	lcall	__gptrget
+      0004D3 FC               [12] 2046 	mov	r4,a
+      0004D4 8A 82            [24] 2047 	mov	dpl,r2
+      0004D6 8F 83            [24] 2048 	mov	dph,r7
+      0004D8 EB               [12] 2049 	mov	a,r3
+      0004D9 F0               [24] 2050 	movx	@dptr,a
+      0004DA EC               [12] 2051 	mov	a,r4
+      0004DB A3               [24] 2052 	inc	dptr
+      0004DC F0               [24] 2053 	movx	@dptr,a
+                                   2054 ;	../../../../core/net/rpl/rpl-ext-header.c:198: if(uip_ds6_route_lookup(&UIP_IP_BUF->destipaddr) == NULL) {
+      0004DD 7Er00            [12] 2055 	mov	r6,#_uip_aligned_buf
+      0004DF 7Fs00            [12] 2056 	mov	r7,#(_uip_aligned_buf >> 8)
+      0004E1 74 18            [12] 2057 	mov	a,#0x18
+      0004E3 2E               [12] 2058 	add	a,r6
+      0004E4 FE               [12] 2059 	mov	r6,a
+      0004E5 E4               [12] 2060 	clr	a
+      0004E6 3F               [12] 2061 	addc	a,r7
+      0004E7 FF               [12] 2062 	mov	r7,a
+      0004E8 7D 00            [12] 2063 	mov	r5,#0x00
+      0004EA 8E 82            [24] 2064 	mov	dpl,r6
+      0004EC 8F 83            [24] 2065 	mov	dph,r7
+      0004EE 8D F0            [24] 2066 	mov	b,r5
+      0004F0 78r00            [12] 2067 	mov	r0,#_uip_ds6_route_lookup
+      0004F2 79s00            [12] 2068 	mov	r1,#(_uip_ds6_route_lookup >> 8)
+      0004F4 7As00            [12] 2069 	mov	r2,#(_uip_ds6_route_lookup >> 16)
+      0004F6 12r00r00         [24] 2070 	lcall	__sdcc_banked_call
+      0004F9 AD 82            [24] 2071 	mov	r5,dpl
+      0004FB AE 83            [24] 2072 	mov	r6,dph
+      0004FD ED               [12] 2073 	mov	a,r5
+      0004FE 4E               [12] 2074 	orl	a,r6
+      0004FF D0 07            [24] 2075 	pop	ar7
+      000501 D0 06            [24] 2076 	pop	ar6
+      000503 70 2D            [24] 2077 	jnz	00114$
+                                   2078 ;	../../../../core/net/rpl/rpl-ext-header.c:201: UIP_EXT_HDR_OPT_RPL_BUF->flags &= ~RPL_HDR_OPT_DOWN;
+      000505 90r00r00         [24] 2079 	mov	dptr,#_uip_ext_len
+      000508 E0               [24] 2080 	movx	a,@dptr
+      000509 24 28            [12] 2081 	add	a,#0x28
+      00050B 24 02            [12] 2082 	add	a,#0x02
+      00050D 24r00            [12] 2083 	add	a,#_uip_aligned_buf
+      00050F FC               [12] 2084 	mov	r4,a
+      000510 E4               [12] 2085 	clr	a
+      000511 34s00            [12] 2086 	addc	a,#(_uip_aligned_buf >> 8)
+      000513 FD               [12] 2087 	mov	r5,a
+      000514 8C 02            [24] 2088 	mov	ar2,r4
+      000516 8D 03            [24] 2089 	mov	ar3,r5
+      000518 74 02            [12] 2090 	mov	a,#0x02
+      00051A 2A               [12] 2091 	add	a,r2
+      00051B FA               [12] 2092 	mov	r2,a
+      00051C E4               [12] 2093 	clr	a
+      00051D 3B               [12] 2094 	addc	a,r3
+      00051E FB               [12] 2095 	mov	r3,a
+      00051F 8C 82            [24] 2096 	mov	dpl,r4
+      000521 8D 83            [24] 2097 	mov	dph,r5
+      000523 A3               [24] 2098 	inc	dptr
+      000524 A3               [24] 2099 	inc	dptr
+      000525 E0               [24] 2100 	movx	a,@dptr
+      000526 FD               [12] 2101 	mov	r5,a
+      000527 53 05 7F         [24] 2102 	anl	ar5,#0x7F
+      00052A 8A 82            [24] 2103 	mov	dpl,r2
+      00052C 8B 83            [24] 2104 	mov	dph,r3
+      00052E ED               [12] 2105 	mov	a,r5
+      00052F F0               [24] 2106 	movx	@dptr,a
+      000530 80 2B            [24] 2107 	sjmp	00115$
+      000532                       2108 00114$:
+                                   2109 ;	../../../../core/net/rpl/rpl-ext-header.c:204: UIP_EXT_HDR_OPT_RPL_BUF->flags |= RPL_HDR_OPT_DOWN;
+      000532 90r00r00         [24] 2110 	mov	dptr,#_uip_ext_len
+      000535 E0               [24] 2111 	movx	a,@dptr
+      000536 24 28            [12] 2112 	add	a,#0x28
+      000538 24 02            [12] 2113 	add	a,#0x02
+      00053A 24r00            [12] 2114 	add	a,#_uip_aligned_buf
+      00053C FC               [12] 2115 	mov	r4,a
+      00053D E4               [12] 2116 	clr	a
+      00053E 34s00            [12] 2117 	addc	a,#(_uip_aligned_buf >> 8)
+      000540 FD               [12] 2118 	mov	r5,a
+      000541 8C 02            [24] 2119 	mov	ar2,r4
+      000543 8D 03            [24] 2120 	mov	ar3,r5
+      000545 74 02            [12] 2121 	mov	a,#0x02
+      000547 2A               [12] 2122 	add	a,r2
+      000548 FA               [12] 2123 	mov	r2,a
+      000549 E4               [12] 2124 	clr	a
+      00054A 3B               [12] 2125 	addc	a,r3
+      00054B FB               [12] 2126 	mov	r3,a
+      00054C 8C 82            [24] 2127 	mov	dpl,r4
+      00054E 8D 83            [24] 2128 	mov	dph,r5
+      000550 A3               [24] 2129 	inc	dptr
+      000551 A3               [24] 2130 	inc	dptr
+      000552 E0               [24] 2131 	movx	a,@dptr
+      000553 FD               [12] 2132 	mov	r5,a
+      000554 43 05 80         [24] 2133 	orl	ar5,#0x80
+      000557 8A 82            [24] 2134 	mov	dpl,r2
+      000559 8B 83            [24] 2135 	mov	dph,r3
+      00055B ED               [12] 2136 	mov	a,r5
+      00055C F0               [24] 2137 	movx	@dptr,a
+      00055D                       2138 00115$:
+                                   2139 ;	../../../../core/net/rpl/rpl-ext-header.c:207: uip_ext_len = last_uip_ext_len;
+      00055D 90r00r00         [24] 2140 	mov	dptr,#_uip_ext_len
+      000560 EE               [12] 2141 	mov	a,r6
+      000561 F0               [24] 2142 	movx	@dptr,a
+                                   2143 ;	../../../../core/net/rpl/rpl-ext-header.c:208: return;
+                                   2144 ;	../../../../core/net/rpl/rpl-ext-header.c:209: default:
+      000562 80 05            [24] 2145 	sjmp	00118$
+      000564                       2146 00116$:
+                                   2147 ;	../../../../core/net/rpl/rpl-ext-header.c:211: uip_ext_len = last_uip_ext_len;
+      000564 90r00r00         [24] 2148 	mov	dptr,#_uip_ext_len
+      000567 EE               [12] 2149 	mov	a,r6
+      000568 F0               [24] 2150 	movx	@dptr,a
+                                   2151 ;	../../../../core/net/rpl/rpl-ext-header.c:212: return;
+                                   2152 ;	../../../../core/net/rpl/rpl-ext-header.c:213: }
+      000569                       2153 00118$:
+      000569 02r00r00         [24] 2154 	ljmp	__sdcc_banked_ret
+                                   2155 ;------------------------------------------------------------
+                                   2156 ;Allocation info for local variables in function 'rpl_update_header_final'
+                                   2157 ;------------------------------------------------------------
+                                   2158 ;addr                      Allocated to stack - sp -4
+                                   2159 ;parent                    Allocated to registers r5 r6 r7 
+                                   2160 ;uip_ext_opt_offset        Allocated to registers 
+                                   2161 ;last_uip_ext_len          Allocated to stack - sp -1
+                                   2162 ;------------------------------------------------------------
+                                   2163 ;	../../../../core/net/rpl/rpl-ext-header.c:217: rpl_update_header_final(uip_ipaddr_t *addr)
+                                   2164 ;	-----------------------------------------
+                                   2165 ;	 function rpl_update_header_final
+                                   2166 ;	-----------------------------------------
+      00056C                       2167 _rpl_update_header_final:
+      00056C C0 82            [24] 2168 	push	dpl
+      00056E C0 83            [24] 2169 	push	dph
+      000570 C0 F0            [24] 2170 	push	b
+      000572 05 81            [12] 2171 	inc	sp
+      000574 05 81            [12] 2172 	inc	sp
+                                   2173 ;	../../../../core/net/rpl/rpl-ext-header.c:223: last_uip_ext_len = uip_ext_len;
+      000576 90r00r00         [24] 2174 	mov	dptr,#_uip_ext_len
+      000579 E0               [24] 2175 	movx	a,@dptr
+      00057A FC               [12] 2176 	mov	r4,a
+      00057B A8 81            [24] 2177 	mov	r0,sp
+      00057D 18               [12] 2178 	dec	r0
+      00057E A6 04            [24] 2179 	mov	@r0,ar4
+      000580 08               [12] 2180 	inc	r0
+      000581 76 00            [12] 2181 	mov	@r0,#0x00
+                                   2182 ;	../../../../core/net/rpl/rpl-ext-header.c:224: uip_ext_len = 0;
+      000583 90r00r00         [24] 2183 	mov	dptr,#_uip_ext_len
+      000586 E4               [12] 2184 	clr	a
+      000587 F0               [24] 2185 	movx	@dptr,a
+                                   2186 ;	../../../../core/net/rpl/rpl-ext-header.c:227: if(UIP_IP_BUF->proto == UIP_PROTO_HBHO) {
+      000588 7Ar00            [12] 2187 	mov	r2,#_uip_aligned_buf
+      00058A 7Fs00            [12] 2188 	mov	r7,#(_uip_aligned_buf >> 8)
+      00058C 74 06            [12] 2189 	mov	a,#0x06
+      00058E 2A               [12] 2190 	add	a,r2
+      00058F FA               [12] 2191 	mov	r2,a
+      000590 E4               [12] 2192 	clr	a
+      000591 3F               [12] 2193 	addc	a,r7
+      000592 FF               [12] 2194 	mov	r7,a
+      000593 8A 82            [24] 2195 	mov	dpl,r2
+      000595 8F 83            [24] 2196 	mov	dph,r7
+      000597 E0               [24] 2197 	movx	a,@dptr
+      000598 60 03            [24] 2198 	jz	00139$
+      00059A 02r07r67         [24] 2199 	ljmp	00115$
+      00059D                       2200 00139$:
+                                   2201 ;	../../../../core/net/rpl/rpl-ext-header.c:228: if(UIP_HBHO_BUF->len != RPL_HOP_BY_HOP_LEN - 8) {
+      00059D 7Er28            [12] 2202 	mov	r6,#(_uip_aligned_buf + 0x0028)
+      00059F 7Fs00            [12] 2203 	mov	r7,#((_uip_aligned_buf + 0x0028) >> 8)
+      0005A1 0E               [12] 2204 	inc	r6
+      0005A2 BE 00 01         [24] 2205 	cjne	r6,#0x00,00140$
+      0005A5 0F               [12] 2206 	inc	r7
+      0005A6                       2207 00140$:
+      0005A6 8E 82            [24] 2208 	mov	dpl,r6
+      0005A8 8F 83            [24] 2209 	mov	dph,r7
+      0005AA E0               [24] 2210 	movx	a,@dptr
+      0005AB 60 0E            [24] 2211 	jz	00102$
+                                   2212 ;	../../../../core/net/rpl/rpl-ext-header.c:230: uip_ext_len = last_uip_ext_len;
+      0005AD A8 81            [24] 2213 	mov	r0,sp
+      0005AF 18               [12] 2214 	dec	r0
+      0005B0 90r00r00         [24] 2215 	mov	dptr,#_uip_ext_len
+      0005B3 E6               [12] 2216 	mov	a,@r0
+      0005B4 F0               [24] 2217 	movx	@dptr,a
+                                   2218 ;	../../../../core/net/rpl/rpl-ext-header.c:231: return 0;
+      0005B5 90 00 00         [24] 2219 	mov	dptr,#0x0000
+      0005B8 02r07r6A         [24] 2220 	ljmp	00116$
+      0005BB                       2221 00102$:
+                                   2222 ;	../../../../core/net/rpl/rpl-ext-header.c:234: if(UIP_EXT_HDR_OPT_BUF->type == UIP_EXT_HDR_OPT_RPL) {
+      0005BB 90r00r2A         [24] 2223 	mov	dptr,#(_uip_aligned_buf + 0x002a)
+      0005BE E0               [24] 2224 	movx	a,@dptr
+      0005BF FF               [12] 2225 	mov	r7,a
+      0005C0 BF 63 02         [24] 2226 	cjne	r7,#0x63,00142$
+      0005C3 80 03            [24] 2227 	sjmp	00143$
+      0005C5                       2228 00142$:
+      0005C5 02r07r67         [24] 2229 	ljmp	00115$
+      0005C8                       2230 00143$:
+                                   2231 ;	../../../../core/net/rpl/rpl-ext-header.c:235: if(UIP_EXT_HDR_OPT_RPL_BUF->senderrank == 0) {
+      0005C8 7Er2A            [12] 2232 	mov	r6,#(_uip_aligned_buf + 0x002a)
+      0005CA 7Fs00            [12] 2233 	mov	r7,#((_uip_aligned_buf + 0x002a) >> 8)
+      0005CC 8E 82            [24] 2234 	mov	dpl,r6
+      0005CE 8F 83            [24] 2235 	mov	dph,r7
+      0005D0 A3               [24] 2236 	inc	dptr
+      0005D1 A3               [24] 2237 	inc	dptr
+      0005D2 A3               [24] 2238 	inc	dptr
+      0005D3 A3               [24] 2239 	inc	dptr
+      0005D4 E0               [24] 2240 	movx	a,@dptr
+      0005D5 FE               [12] 2241 	mov	r6,a
+      0005D6 A3               [24] 2242 	inc	dptr
+      0005D7 E0               [24] 2243 	movx	a,@dptr
+      0005D8 FF               [12] 2244 	mov	r7,a
+      0005D9 4E               [12] 2245 	orl	a,r6
+      0005DA 60 03            [24] 2246 	jz	00144$
+      0005DC 02r07r67         [24] 2247 	ljmp	00115$
+      0005DF                       2248 00144$:
+                                   2249 ;	../../../../core/net/rpl/rpl-ext-header.c:237: if(default_instance == NULL || !default_instance->used || !default_instance->current_dag->joined) {
+      0005DF 90r00r00         [24] 2250 	mov	dptr,#_default_instance
+      0005E2 E0               [24] 2251 	movx	a,@dptr
+      0005E3 FD               [12] 2252 	mov	r5,a
+      0005E4 A3               [24] 2253 	inc	dptr
+      0005E5 E0               [24] 2254 	movx	a,@dptr
+      0005E6 FE               [12] 2255 	mov	r6,a
+      0005E7 A3               [24] 2256 	inc	dptr
+      0005E8 E0               [24] 2257 	movx	a,@dptr
+      0005E9 FF               [12] 2258 	mov	r7,a
+      0005EA ED               [12] 2259 	mov	a,r5
+      0005EB 4E               [12] 2260 	orl	a,r6
+      0005EC 60 43            [24] 2261 	jz	00103$
+      0005EE 74 87            [12] 2262 	mov	a,#0x87
+      0005F0 2D               [12] 2263 	add	a,r5
+      0005F1 FA               [12] 2264 	mov	r2,a
+      0005F2 E4               [12] 2265 	clr	a
+      0005F3 3E               [12] 2266 	addc	a,r6
+      0005F4 FB               [12] 2267 	mov	r3,a
+      0005F5 8F 04            [24] 2268 	mov	ar4,r7
+      0005F7 8A 82            [24] 2269 	mov	dpl,r2
+      0005F9 8B 83            [24] 2270 	mov	dph,r3
+      0005FB 8C F0            [24] 2271 	mov	b,r4
+      0005FD 12r00r00         [24] 2272 	lcall	__gptrget
+      000600 60 2F            [24] 2273 	jz	00103$
+      000602 74 0A            [12] 2274 	mov	a,#0x0A
+      000604 2D               [12] 2275 	add	a,r5
+      000605 FD               [12] 2276 	mov	r5,a
+      000606 E4               [12] 2277 	clr	a
+      000607 3E               [12] 2278 	addc	a,r6
+      000608 FE               [12] 2279 	mov	r6,a
+      000609 8D 82            [24] 2280 	mov	dpl,r5
+      00060B 8E 83            [24] 2281 	mov	dph,r6
+      00060D 8F F0            [24] 2282 	mov	b,r7
+      00060F 12r00r00         [24] 2283 	lcall	__gptrget
+      000612 FD               [12] 2284 	mov	r5,a
+      000613 A3               [24] 2285 	inc	dptr
+      000614 12r00r00         [24] 2286 	lcall	__gptrget
+      000617 FE               [12] 2287 	mov	r6,a
+      000618 A3               [24] 2288 	inc	dptr
+      000619 12r00r00         [24] 2289 	lcall	__gptrget
+      00061C FF               [12] 2290 	mov	r7,a
+      00061D 74 16            [12] 2291 	mov	a,#0x16
+      00061F 2D               [12] 2292 	add	a,r5
+      000620 FA               [12] 2293 	mov	r2,a
+      000621 E4               [12] 2294 	clr	a
+      000622 3E               [12] 2295 	addc	a,r6
+      000623 FB               [12] 2296 	mov	r3,a
+      000624 8F 04            [24] 2297 	mov	ar4,r7
+      000626 8A 82            [24] 2298 	mov	dpl,r2
+      000628 8B 83            [24] 2299 	mov	dph,r3
+      00062A 8C F0            [24] 2300 	mov	b,r4
+      00062C 12r00r00         [24] 2301 	lcall	__gptrget
+      00062F 70 06            [24] 2302 	jnz	00104$
+      000631                       2303 00103$:
+                                   2304 ;	../../../../core/net/rpl/rpl-ext-header.c:239: return 1;
+      000631 90 00 01         [24] 2305 	mov	dptr,#0x0001
+      000634 02r07r6A         [24] 2306 	ljmp	00116$
+      000637                       2307 00104$:
+                                   2308 ;	../../../../core/net/rpl/rpl-ext-header.c:241: parent = rpl_find_parent(default_instance->current_dag, addr);
+      000637 E5 81            [12] 2309 	mov	a,sp
+      000639 24 FC            [12] 2310 	add	a,#0xfc
+      00063B F8               [12] 2311 	mov	r0,a
+      00063C E6               [12] 2312 	mov	a,@r0
+      00063D C0 E0            [24] 2313 	push	acc
+      00063F 08               [12] 2314 	inc	r0
+      000640 E6               [12] 2315 	mov	a,@r0
+      000641 C0 E0            [24] 2316 	push	acc
+      000643 08               [12] 2317 	inc	r0
+      000644 E6               [12] 2318 	mov	a,@r0
+      000645 C0 E0            [24] 2319 	push	acc
+      000647 8D 82            [24] 2320 	mov	dpl,r5
+      000649 8E 83            [24] 2321 	mov	dph,r6
+      00064B 8F F0            [24] 2322 	mov	b,r7
+      00064D 78r00            [12] 2323 	mov	r0,#_rpl_find_parent
+      00064F 79s00            [12] 2324 	mov	r1,#(_rpl_find_parent >> 8)
+      000651 7As00            [12] 2325 	mov	r2,#(_rpl_find_parent >> 16)
+      000653 12r00r00         [24] 2326 	lcall	__sdcc_banked_call
+      000656 AD 82            [24] 2327 	mov	r5,dpl
+      000658 AE 83            [24] 2328 	mov	r6,dph
+      00065A AF F0            [24] 2329 	mov	r7,b
+      00065C 15 81            [12] 2330 	dec	sp
+      00065E 15 81            [12] 2331 	dec	sp
+      000660 15 81            [12] 2332 	dec	sp
+                                   2333 ;	../../../../core/net/rpl/rpl-ext-header.c:242: if(parent == NULL || parent != parent->dag->preferred_parent) {
+      000662 ED               [12] 2334 	mov	a,r5
+      000663 4E               [12] 2335 	orl	a,r6
+      000664 60 4F            [24] 2336 	jz	00107$
+      000666 74 03            [12] 2337 	mov	a,#0x03
+      000668 2D               [12] 2338 	add	a,r5
+      000669 FA               [12] 2339 	mov	r2,a
+      00066A E4               [12] 2340 	clr	a
+      00066B 3E               [12] 2341 	addc	a,r6
+      00066C FB               [12] 2342 	mov	r3,a
+      00066D 8F 04            [24] 2343 	mov	ar4,r7
+      00066F 8A 82            [24] 2344 	mov	dpl,r2
+      000671 8B 83            [24] 2345 	mov	dph,r3
+      000673 8C F0            [24] 2346 	mov	b,r4
+      000675 12r00r00         [24] 2347 	lcall	__gptrget
+      000678 FA               [12] 2348 	mov	r2,a
+      000679 A3               [24] 2349 	inc	dptr
+      00067A 12r00r00         [24] 2350 	lcall	__gptrget
+      00067D FB               [12] 2351 	mov	r3,a
+      00067E A3               [24] 2352 	inc	dptr
+      00067F 12r00r00         [24] 2353 	lcall	__gptrget
+      000682 FC               [12] 2354 	mov	r4,a
+      000683 74 17            [12] 2355 	mov	a,#0x17
+      000685 2A               [12] 2356 	add	a,r2
+      000686 FA               [12] 2357 	mov	r2,a
+      000687 E4               [12] 2358 	clr	a
+      000688 3B               [12] 2359 	addc	a,r3
+      000689 FB               [12] 2360 	mov	r3,a
+      00068A 8A 82            [24] 2361 	mov	dpl,r2
+      00068C 8B 83            [24] 2362 	mov	dph,r3
+      00068E 8C F0            [24] 2363 	mov	b,r4
+      000690 12r00r00         [24] 2364 	lcall	__gptrget
+      000693 FA               [12] 2365 	mov	r2,a
+      000694 A3               [24] 2366 	inc	dptr
+      000695 12r00r00         [24] 2367 	lcall	__gptrget
+      000698 FB               [12] 2368 	mov	r3,a
+      000699 A3               [24] 2369 	inc	dptr
+      00069A 12r00r00         [24] 2370 	lcall	__gptrget
+      00069D FC               [12] 2371 	mov	r4,a
+      00069E C0 02            [24] 2372 	push	ar2
+      0006A0 C0 03            [24] 2373 	push	ar3
+      0006A2 C0 04            [24] 2374 	push	ar4
+      0006A4 8D 82            [24] 2375 	mov	dpl,r5
+      0006A6 8E 83            [24] 2376 	mov	dph,r6
+      0006A8 8F F0            [24] 2377 	mov	b,r7
+      0006AA 12r00r00         [24] 2378 	lcall	___gptr_cmp
+      0006AD 15 81            [12] 2379 	dec	sp
+      0006AF 15 81            [12] 2380 	dec	sp
+      0006B1 15 81            [12] 2381 	dec	sp
+      0006B3 60 18            [24] 2382 	jz	00108$
+      0006B5                       2383 00107$:
+                                   2384 ;	../../../../core/net/rpl/rpl-ext-header.c:243: UIP_EXT_HDR_OPT_RPL_BUF->flags = RPL_HDR_OPT_DOWN;
+      0006B5 90r00r00         [24] 2385 	mov	dptr,#_uip_ext_len
+      0006B8 E0               [24] 2386 	movx	a,@dptr
+      0006B9 24 28            [12] 2387 	add	a,#0x28
+      0006BB 24 02            [12] 2388 	add	a,#0x02
+      0006BD 24r00            [12] 2389 	add	a,#_uip_aligned_buf
+      0006BF FE               [12] 2390 	mov	r6,a
+      0006C0 E4               [12] 2391 	clr	a
+      0006C1 34s00            [12] 2392 	addc	a,#(_uip_aligned_buf >> 8)
+      0006C3 FF               [12] 2393 	mov	r7,a
+      0006C4 8E 82            [24] 2394 	mov	dpl,r6
+      0006C6 8F 83            [24] 2395 	mov	dph,r7
+      0006C8 A3               [24] 2396 	inc	dptr
+      0006C9 A3               [24] 2397 	inc	dptr
+      0006CA 74 80            [12] 2398 	mov	a,#0x80
+      0006CC F0               [24] 2399 	movx	@dptr,a
+      0006CD                       2400 00108$:
+                                   2401 ;	../../../../core/net/rpl/rpl-ext-header.c:245: UIP_EXT_HDR_OPT_RPL_BUF->instance = default_instance->instance_id;
+      0006CD 90r00r00         [24] 2402 	mov	dptr,#_uip_ext_len
+      0006D0 E0               [24] 2403 	movx	a,@dptr
+      0006D1 24 28            [12] 2404 	add	a,#0x28
+      0006D3 24 02            [12] 2405 	add	a,#0x02
+      0006D5 24r00            [12] 2406 	add	a,#_uip_aligned_buf
+      0006D7 FE               [12] 2407 	mov	r6,a
+      0006D8 E4               [12] 2408 	clr	a
+      0006D9 34s00            [12] 2409 	addc	a,#(_uip_aligned_buf >> 8)
+      0006DB FF               [12] 2410 	mov	r7,a
+      0006DC 74 03            [12] 2411 	mov	a,#0x03
+      0006DE 2E               [12] 2412 	add	a,r6
+      0006DF FE               [12] 2413 	mov	r6,a
+      0006E0 E4               [12] 2414 	clr	a
+      0006E1 3F               [12] 2415 	addc	a,r7
+      0006E2 FF               [12] 2416 	mov	r7,a
+      0006E3 90r00r00         [24] 2417 	mov	dptr,#_default_instance
+      0006E6 E0               [24] 2418 	movx	a,@dptr
+      0006E7 FA               [12] 2419 	mov	r2,a
+      0006E8 A3               [24] 2420 	inc	dptr
+      0006E9 E0               [24] 2421 	movx	a,@dptr
+      0006EA FC               [12] 2422 	mov	r4,a
+      0006EB A3               [24] 2423 	inc	dptr
+      0006EC E0               [24] 2424 	movx	a,@dptr
+      0006ED FD               [12] 2425 	mov	r5,a
+      0006EE 74 86            [12] 2426 	mov	a,#0x86
+      0006F0 2A               [12] 2427 	add	a,r2
+      0006F1 FA               [12] 2428 	mov	r2,a
+      0006F2 E4               [12] 2429 	clr	a
+      0006F3 3C               [12] 2430 	addc	a,r4
+      0006F4 FC               [12] 2431 	mov	r4,a
+      0006F5 8A 82            [24] 2432 	mov	dpl,r2
+      0006F7 8C 83            [24] 2433 	mov	dph,r4
+      0006F9 8D F0            [24] 2434 	mov	b,r5
+      0006FB 12r00r00         [24] 2435 	lcall	__gptrget
+      0006FE FA               [12] 2436 	mov	r2,a
+      0006FF 8E 82            [24] 2437 	mov	dpl,r6
+      000701 8F 83            [24] 2438 	mov	dph,r7
+      000703 F0               [24] 2439 	movx	@dptr,a
+                                   2440 ;	../../../../core/net/rpl/rpl-ext-header.c:246: UIP_EXT_HDR_OPT_RPL_BUF->senderrank = default_instance->current_dag->rank;
+      000704 90r00r00         [24] 2441 	mov	dptr,#_uip_ext_len
+      000707 E0               [24] 2442 	movx	a,@dptr
+      000708 24 28            [12] 2443 	add	a,#0x28
+      00070A 24 02            [12] 2444 	add	a,#0x02
+      00070C 24r00            [12] 2445 	add	a,#_uip_aligned_buf
+      00070E FE               [12] 2446 	mov	r6,a
+      00070F E4               [12] 2447 	clr	a
+      000710 34s00            [12] 2448 	addc	a,#(_uip_aligned_buf >> 8)
+      000712 FF               [12] 2449 	mov	r7,a
+      000713 74 04            [12] 2450 	mov	a,#0x04
+      000715 2E               [12] 2451 	add	a,r6
+      000716 FE               [12] 2452 	mov	r6,a
+      000717 E4               [12] 2453 	clr	a
+      000718 3F               [12] 2454 	addc	a,r7
+      000719 FF               [12] 2455 	mov	r7,a
+      00071A 90r00r00         [24] 2456 	mov	dptr,#_default_instance
+      00071D E0               [24] 2457 	movx	a,@dptr
+      00071E FB               [12] 2458 	mov	r3,a
+      00071F A3               [24] 2459 	inc	dptr
+      000720 E0               [24] 2460 	movx	a,@dptr
+      000721 FC               [12] 2461 	mov	r4,a
+      000722 A3               [24] 2462 	inc	dptr
+      000723 E0               [24] 2463 	movx	a,@dptr
+      000724 FD               [12] 2464 	mov	r5,a
+      000725 74 0A            [12] 2465 	mov	a,#0x0A
+      000727 2B               [12] 2466 	add	a,r3
+      000728 FB               [12] 2467 	mov	r3,a
+      000729 E4               [12] 2468 	clr	a
+      00072A 3C               [12] 2469 	addc	a,r4
+      00072B FC               [12] 2470 	mov	r4,a
+      00072C 8B 82            [24] 2471 	mov	dpl,r3
+      00072E 8C 83            [24] 2472 	mov	dph,r4
+      000730 8D F0            [24] 2473 	mov	b,r5
+      000732 12r00r00         [24] 2474 	lcall	__gptrget
+      000735 FB               [12] 2475 	mov	r3,a
+      000736 A3               [24] 2476 	inc	dptr
+      000737 12r00r00         [24] 2477 	lcall	__gptrget
+      00073A FC               [12] 2478 	mov	r4,a
+      00073B A3               [24] 2479 	inc	dptr
+      00073C 12r00r00         [24] 2480 	lcall	__gptrget
+      00073F FD               [12] 2481 	mov	r5,a
+      000740 74 1A            [12] 2482 	mov	a,#0x1A
+      000742 2B               [12] 2483 	add	a,r3
+      000743 FB               [12] 2484 	mov	r3,a
+      000744 E4               [12] 2485 	clr	a
+      000745 3C               [12] 2486 	addc	a,r4
+      000746 FC               [12] 2487 	mov	r4,a
+      000747 8B 82            [24] 2488 	mov	dpl,r3
+      000749 8C 83            [24] 2489 	mov	dph,r4
+      00074B 8D F0            [24] 2490 	mov	b,r5
+      00074D 12r00r00         [24] 2491 	lcall	__gptrget
+      000750 FB               [12] 2492 	mov	r3,a
+      000751 A3               [24] 2493 	inc	dptr
+      000752 12r00r00         [24] 2494 	lcall	__gptrget
+      000755 FC               [12] 2495 	mov	r4,a
+      000756 8E 82            [24] 2496 	mov	dpl,r6
+      000758 8F 83            [24] 2497 	mov	dph,r7
+      00075A EB               [12] 2498 	mov	a,r3
+      00075B F0               [24] 2499 	movx	@dptr,a
+      00075C EC               [12] 2500 	mov	a,r4
+      00075D A3               [24] 2501 	inc	dptr
+      00075E F0               [24] 2502 	movx	@dptr,a
+                                   2503 ;	../../../../core/net/rpl/rpl-ext-header.c:247: uip_ext_len = last_uip_ext_len;
+      00075F A8 81            [24] 2504 	mov	r0,sp
+      000761 18               [12] 2505 	dec	r0
+      000762 90r00r00         [24] 2506 	mov	dptr,#_uip_ext_len
+      000765 E6               [12] 2507 	mov	a,@r0
+      000766 F0               [24] 2508 	movx	@dptr,a
+      000767                       2509 00115$:
+                                   2510 ;	../../../../core/net/rpl/rpl-ext-header.c:251: return 0;
+      000767 90 00 00         [24] 2511 	mov	dptr,#0x0000
+      00076A                       2512 00116$:
+      00076A E5 81            [12] 2513 	mov	a,sp
+      00076C 24 FB            [12] 2514 	add	a,#0xFB
+      00076E F5 81            [12] 2515 	mov	sp,a
+      000770 02r00r00         [24] 2516 	ljmp	__sdcc_banked_ret
+                                   2517 ;------------------------------------------------------------
+                                   2518 ;Allocation info for local variables in function 'rpl_remove_header'
+                                   2519 ;------------------------------------------------------------
+                                   2520 ;last_uip_ext_len          Allocated to registers 
+                                   2521 ;temp_len                  Allocated to stack - sp +0
+                                   2522 ;sloc0                     Allocated to stack - sp -2
+                                   2523 ;------------------------------------------------------------
+                                   2524 ;	../../../../core/net/rpl/rpl-ext-header.c:255: rpl_remove_header(void)
+                                   2525 ;	-----------------------------------------
+                                   2526 ;	 function rpl_remove_header
+                                   2527 ;	-----------------------------------------
+      000773                       2528 _rpl_remove_header:
+      000773 05 81            [12] 2529 	inc	sp
+      000775 05 81            [12] 2530 	inc	sp
+      000777 05 81            [12] 2531 	inc	sp
+                                   2532 ;	../../../../core/net/rpl/rpl-ext-header.c:261: uip_ext_len = 0;
+      000779 90r00r00         [24] 2533 	mov	dptr,#_uip_ext_len
+      00077C E4               [12] 2534 	clr	a
+      00077D F0               [24] 2535 	movx	@dptr,a
+                                   2536 ;	../../../../core/net/rpl/rpl-ext-header.c:264: switch(UIP_IP_BUF->proto){
+      00077E 7Er00            [12] 2537 	mov	r6,#_uip_aligned_buf
+      000780 7Fs00            [12] 2538 	mov	r7,#(_uip_aligned_buf >> 8)
+      000782 74 06            [12] 2539 	mov	a,#0x06
+      000784 2E               [12] 2540 	add	a,r6
+      000785 F5 82            [12] 2541 	mov	dpl,a
+      000787 E4               [12] 2542 	clr	a
+      000788 3F               [12] 2543 	addc	a,r7
+      000789 F5 83            [12] 2544 	mov	dph,a
+      00078B E0               [24] 2545 	movx	a,@dptr
+      00078C FF               [12] 2546 	mov	r7,a
+      00078D 60 03            [24] 2547 	jz	00115$
+      00078F 02r08r83         [24] 2548 	ljmp	00106$
+      000792                       2549 00115$:
+                                   2550 ;	../../../../core/net/rpl/rpl-ext-header.c:267: UIP_IP_BUF->proto = UIP_HBHO_BUF->next;
+      000792 7Er00            [12] 2551 	mov	r6,#_uip_aligned_buf
+      000794 7Fs00            [12] 2552 	mov	r7,#(_uip_aligned_buf >> 8)
+      000796 74 06            [12] 2553 	mov	a,#0x06
+      000798 2E               [12] 2554 	add	a,r6
+      000799 FE               [12] 2555 	mov	r6,a
+      00079A E4               [12] 2556 	clr	a
+      00079B 3F               [12] 2557 	addc	a,r7
+      00079C FF               [12] 2558 	mov	r7,a
+      00079D 90r00r28         [24] 2559 	mov	dptr,#(_uip_aligned_buf + 0x0028)
+      0007A0 E0               [24] 2560 	movx	a,@dptr
+      0007A1 8E 82            [24] 2561 	mov	dpl,r6
+      0007A3 8F 83            [24] 2562 	mov	dph,r7
+      0007A5 F0               [24] 2563 	movx	@dptr,a
+                                   2564 ;	../../../../core/net/rpl/rpl-ext-header.c:268: temp_len = UIP_IP_BUF->len[1];
+      0007A6 7Er00            [12] 2565 	mov	r6,#_uip_aligned_buf
+      0007A8 7Fs00            [12] 2566 	mov	r7,#(_uip_aligned_buf >> 8)
+      0007AA 8E 82            [24] 2567 	mov	dpl,r6
+      0007AC 8F 83            [24] 2568 	mov	dph,r7
+      0007AE A3               [24] 2569 	inc	dptr
+      0007AF A3               [24] 2570 	inc	dptr
+      0007B0 A3               [24] 2571 	inc	dptr
+      0007B1 A3               [24] 2572 	inc	dptr
+      0007B2 A3               [24] 2573 	inc	dptr
+      0007B3 A8 81            [24] 2574 	mov	r0,sp
+      0007B5 E0               [24] 2575 	movx	a,@dptr
+      0007B6 F6               [12] 2576 	mov	@r0,a
+                                   2577 ;	../../../../core/net/rpl/rpl-ext-header.c:269: uip_len -= UIP_HBHO_BUF->len + 8;
+      0007B7 7Dr28            [12] 2578 	mov	r5,#(_uip_aligned_buf + 0x0028)
+      0007B9 7Es00            [12] 2579 	mov	r6,#((_uip_aligned_buf + 0x0028) >> 8)
+      0007BB 8D 82            [24] 2580 	mov	dpl,r5
+      0007BD 8E 83            [24] 2581 	mov	dph,r6
+      0007BF A3               [24] 2582 	inc	dptr
+      0007C0 E0               [24] 2583 	movx	a,@dptr
+      0007C1 FE               [12] 2584 	mov	r6,a
+      0007C2 7D 00            [12] 2585 	mov	r5,#0x00
+      0007C4 74 08            [12] 2586 	mov	a,#0x08
+      0007C6 2E               [12] 2587 	add	a,r6
+      0007C7 FE               [12] 2588 	mov	r6,a
+      0007C8 E4               [12] 2589 	clr	a
+      0007C9 3D               [12] 2590 	addc	a,r5
+      0007CA FD               [12] 2591 	mov	r5,a
+      0007CB 90r00r00         [24] 2592 	mov	dptr,#_uip_len
+      0007CE E0               [24] 2593 	movx	a,@dptr
+      0007CF FB               [12] 2594 	mov	r3,a
+      0007D0 A3               [24] 2595 	inc	dptr
+      0007D1 E0               [24] 2596 	movx	a,@dptr
+      0007D2 FC               [12] 2597 	mov	r4,a
+      0007D3 90r00r00         [24] 2598 	mov	dptr,#_uip_len
+      0007D6 EB               [12] 2599 	mov	a,r3
+      0007D7 C3               [12] 2600 	clr	c
+      0007D8 9E               [12] 2601 	subb	a,r6
+      0007D9 F0               [24] 2602 	movx	@dptr,a
+      0007DA EC               [12] 2603 	mov	a,r4
+      0007DB 9D               [12] 2604 	subb	a,r5
+      0007DC A3               [24] 2605 	inc	dptr
+      0007DD F0               [24] 2606 	movx	@dptr,a
+                                   2607 ;	../../../../core/net/rpl/rpl-ext-header.c:270: UIP_IP_BUF->len[1] -= UIP_HBHO_BUF->len + 8;
+      0007DE 7Dr00            [12] 2608 	mov	r5,#_uip_aligned_buf
+      0007E0 7Es00            [12] 2609 	mov	r6,#(_uip_aligned_buf >> 8)
+      0007E2 74 05            [12] 2610 	mov	a,#0x05
+      0007E4 2D               [12] 2611 	add	a,r5
+      0007E5 FD               [12] 2612 	mov	r5,a
+      0007E6 E4               [12] 2613 	clr	a
+      0007E7 3E               [12] 2614 	addc	a,r6
+      0007E8 FE               [12] 2615 	mov	r6,a
+      0007E9 7Br00            [12] 2616 	mov	r3,#_uip_aligned_buf
+      0007EB 7Cs00            [12] 2617 	mov	r4,#(_uip_aligned_buf >> 8)
+      0007ED 74 05            [12] 2618 	mov	a,#0x05
+      0007EF 2B               [12] 2619 	add	a,r3
+      0007F0 FB               [12] 2620 	mov	r3,a
+      0007F1 E4               [12] 2621 	clr	a
+      0007F2 3C               [12] 2622 	addc	a,r4
+      0007F3 FC               [12] 2623 	mov	r4,a
+      0007F4 7Ar28            [12] 2624 	mov	r2,#(_uip_aligned_buf + 0x0028)
+      0007F6 7Fs00            [12] 2625 	mov	r7,#((_uip_aligned_buf + 0x0028) >> 8)
+      0007F8 8A 82            [24] 2626 	mov	dpl,r2
+      0007FA 8F 83            [24] 2627 	mov	dph,r7
+      0007FC A3               [24] 2628 	inc	dptr
+      0007FD E0               [24] 2629 	movx	a,@dptr
+      0007FE 24 08            [12] 2630 	add	a,#0x08
+      000800 FF               [12] 2631 	mov	r7,a
+      000801 8B 82            [24] 2632 	mov	dpl,r3
+      000803 8C 83            [24] 2633 	mov	dph,r4
+      000805 E0               [24] 2634 	movx	a,@dptr
+      000806 FB               [12] 2635 	mov	r3,a
+      000807 C3               [12] 2636 	clr	c
+      000808 9F               [12] 2637 	subb	a,r7
+      000809 8D 82            [24] 2638 	mov	dpl,r5
+      00080B 8E 83            [24] 2639 	mov	dph,r6
+      00080D F0               [24] 2640 	movx	@dptr,a
+                                   2641 ;	../../../../core/net/rpl/rpl-ext-header.c:271: if(UIP_IP_BUF->len[1] > temp_len) {
+      00080E 7Er00            [12] 2642 	mov	r6,#_uip_aligned_buf
+      000810 7Fs00            [12] 2643 	mov	r7,#(_uip_aligned_buf >> 8)
+      000812 8E 82            [24] 2644 	mov	dpl,r6
+      000814 8F 83            [24] 2645 	mov	dph,r7
+      000816 A3               [24] 2646 	inc	dptr
+      000817 A3               [24] 2647 	inc	dptr
+      000818 A3               [24] 2648 	inc	dptr
+      000819 A3               [24] 2649 	inc	dptr
+      00081A A3               [24] 2650 	inc	dptr
+      00081B E0               [24] 2651 	movx	a,@dptr
+      00081C FF               [12] 2652 	mov	r7,a
+      00081D A8 81            [24] 2653 	mov	r0,sp
+      00081F C3               [12] 2654 	clr	c
+      000820 E6               [12] 2655 	mov	a,@r0
+      000821 9F               [12] 2656 	subb	a,r7
+      000822 50 18            [24] 2657 	jnc	00103$
+                                   2658 ;	../../../../core/net/rpl/rpl-ext-header.c:272: UIP_IP_BUF->len[0]--;
+      000824 7Er00            [12] 2659 	mov	r6,#_uip_aligned_buf
+      000826 7Fs00            [12] 2660 	mov	r7,#(_uip_aligned_buf >> 8)
+      000828 74 04            [12] 2661 	mov	a,#0x04
+      00082A 2E               [12] 2662 	add	a,r6
+      00082B FE               [12] 2663 	mov	r6,a
+      00082C E4               [12] 2664 	clr	a
+      00082D 3F               [12] 2665 	addc	a,r7
+      00082E FF               [12] 2666 	mov	r7,a
+      00082F 8E 82            [24] 2667 	mov	dpl,r6
+      000831 8F 83            [24] 2668 	mov	dph,r7
+      000833 E0               [24] 2669 	movx	a,@dptr
+      000834 FD               [12] 2670 	mov	r5,a
+      000835 1D               [12] 2671 	dec	r5
+      000836 8E 82            [24] 2672 	mov	dpl,r6
+      000838 8F 83            [24] 2673 	mov	dph,r7
+      00083A ED               [12] 2674 	mov	a,r5
+      00083B F0               [24] 2675 	movx	@dptr,a
+      00083C                       2676 00103$:
+                                   2677 ;	../../../../core/net/rpl/rpl-ext-header.c:274: memmove(UIP_EXT_BUF, UIP_HBHO_NEXT_BUF, uip_len - UIP_IPH_LEN);
+      00083C 90r00r00         [24] 2678 	mov	dptr,#_uip_len
+      00083F E0               [24] 2679 	movx	a,@dptr
+      000840 FE               [12] 2680 	mov	r6,a
+      000841 A3               [24] 2681 	inc	dptr
+      000842 E0               [24] 2682 	movx	a,@dptr
+      000843 FF               [12] 2683 	mov	r7,a
+      000844 A8 81            [24] 2684 	mov	r0,sp
+      000846 18               [12] 2685 	dec	r0
+      000847 18               [12] 2686 	dec	r0
+      000848 EE               [12] 2687 	mov	a,r6
+      000849 24 D8            [12] 2688 	add	a,#0xD8
+      00084B F6               [12] 2689 	mov	@r0,a
+      00084C EF               [12] 2690 	mov	a,r7
+      00084D 34 FF            [12] 2691 	addc	a,#0xFF
+      00084F 08               [12] 2692 	inc	r0
+      000850 F6               [12] 2693 	mov	@r0,a
+      000851 7Cr30            [12] 2694 	mov	r4,#(_uip_aligned_buf + 0x0030)
+      000853 7Ds00            [12] 2695 	mov	r5,#((_uip_aligned_buf + 0x0030) >> 8)
+      000855 7B 00            [12] 2696 	mov	r3,#0x00
+      000857 7Ar28            [12] 2697 	mov	r2,#(_uip_aligned_buf + 0x0028)
+      000859 7Fs00            [12] 2698 	mov	r7,#((_uip_aligned_buf + 0x0028) >> 8)
+      00085B 7E 00            [12] 2699 	mov	r6,#0x00
+      00085D A8 81            [24] 2700 	mov	r0,sp
+      00085F 18               [12] 2701 	dec	r0
+      000860 18               [12] 2702 	dec	r0
+      000861 E6               [12] 2703 	mov	a,@r0
+      000862 C0 E0            [24] 2704 	push	acc
+      000864 08               [12] 2705 	inc	r0
+      000865 E6               [12] 2706 	mov	a,@r0
+      000866 C0 E0            [24] 2707 	push	acc
+      000868 C0 04            [24] 2708 	push	ar4
+      00086A C0 05            [24] 2709 	push	ar5
+      00086C C0 03            [24] 2710 	push	ar3
+      00086E 8A 82            [24] 2711 	mov	dpl,r2
+      000870 8F 83            [24] 2712 	mov	dph,r7
+      000872 8E F0            [24] 2713 	mov	b,r6
+      000874 78r00            [12] 2714 	mov	r0,#_memmove
+      000876 79s00            [12] 2715 	mov	r1,#(_memmove >> 8)
+      000878 7As00            [12] 2716 	mov	r2,#(_memmove >> 16)
+      00087A 12r00r00         [24] 2717 	lcall	__sdcc_banked_call
+      00087D E5 81            [12] 2718 	mov	a,sp
+      00087F 24 FB            [12] 2719 	add	a,#0xfb
+      000881 F5 81            [12] 2720 	mov	sp,a
+                                   2721 ;	../../../../core/net/rpl/rpl-ext-header.c:278: }
+      000883                       2722 00106$:
+      000883 15 81            [12] 2723 	dec	sp
+      000885 15 81            [12] 2724 	dec	sp
+      000887 15 81            [12] 2725 	dec	sp
+      000889 02r00r00         [24] 2726 	ljmp	__sdcc_banked_ret
+                                   2727 ;------------------------------------------------------------
+                                   2728 ;Allocation info for local variables in function 'rpl_invert_header'
+                                   2729 ;------------------------------------------------------------
+                                   2730 ;uip_ext_opt_offset        Allocated to registers 
+                                   2731 ;last_uip_ext_len          Allocated to registers r7 
+                                   2732 ;------------------------------------------------------------
+                                   2733 ;	../../../../core/net/rpl/rpl-ext-header.c:282: rpl_invert_header(void)
+                                   2734 ;	-----------------------------------------
+                                   2735 ;	 function rpl_invert_header
+                                   2736 ;	-----------------------------------------
+      00088C                       2737 _rpl_invert_header:
+                                   2738 ;	../../../../core/net/rpl/rpl-ext-header.c:287: last_uip_ext_len = uip_ext_len;
+      00088C 90r00r00         [24] 2739 	mov	dptr,#_uip_ext_len
+      00088F E0               [24] 2740 	movx	a,@dptr
+      000890 FF               [12] 2741 	mov	r7,a
+                                   2742 ;	../../../../core/net/rpl/rpl-ext-header.c:288: uip_ext_len = 0;
+      000891 90r00r00         [24] 2743 	mov	dptr,#_uip_ext_len
+      000894 E4               [12] 2744 	clr	a
+      000895 F0               [24] 2745 	movx	@dptr,a
+                                   2746 ;	../../../../core/net/rpl/rpl-ext-header.c:292: switch(UIP_IP_BUF->proto) {
+      000896 7Dr00            [12] 2747 	mov	r5,#_uip_aligned_buf
+      000898 7Es00            [12] 2748 	mov	r6,#(_uip_aligned_buf >> 8)
+      00089A 74 06            [12] 2749 	mov	a,#0x06
+      00089C 2D               [12] 2750 	add	a,r5
+      00089D F5 82            [12] 2751 	mov	dpl,a
+      00089F E4               [12] 2752 	clr	a
+      0008A0 3E               [12] 2753 	addc	a,r6
+      0008A1 F5 83            [12] 2754 	mov	dph,a
+      0008A3 E0               [24] 2755 	movx	a,@dptr
+      0008A4 FE               [12] 2756 	mov	r6,a
+      0008A5 60 0B            [24] 2757 	jz	00103$
+                                   2758 ;	../../../../core/net/rpl/rpl-ext-header.c:297: uip_ext_len = last_uip_ext_len;
+      0008A7 90r00r00         [24] 2759 	mov	dptr,#_uip_ext_len
+      0008AA EF               [12] 2760 	mov	a,r7
+      0008AB F0               [24] 2761 	movx	@dptr,a
+                                   2762 ;	../../../../core/net/rpl/rpl-ext-header.c:298: return 0;
+      0008AC 75 82 00         [24] 2763 	mov	dpl,#0x00
+      0008AF 02r09r7F         [24] 2764 	ljmp	00107$
+                                   2765 ;	../../../../core/net/rpl/rpl-ext-header.c:299: }
+      0008B2                       2766 00103$:
+                                   2767 ;	../../../../core/net/rpl/rpl-ext-header.c:301: switch (UIP_EXT_HDR_OPT_BUF->type) {
+      0008B2 90r00r2A         [24] 2768 	mov	dptr,#(_uip_aligned_buf + 0x002a)
+      0008B5 E0               [24] 2769 	movx	a,@dptr
+      0008B6 FE               [12] 2770 	mov	r6,a
+      0008B7 BE 63 02         [24] 2771 	cjne	r6,#0x63,00116$
+      0008BA 80 03            [24] 2772 	sjmp	00117$
+      0008BC                       2773 00116$:
+      0008BC 02r09r77         [24] 2774 	ljmp	00105$
+      0008BF                       2775 00117$:
+                                   2776 ;	../../../../core/net/rpl/rpl-ext-header.c:304: UIP_EXT_HDR_OPT_RPL_BUF->flags &= RPL_HDR_OPT_DOWN;
+      0008BF 7Dr2A            [12] 2777 	mov	r5,#(_uip_aligned_buf + 0x002a)
+      0008C1 7Es00            [12] 2778 	mov	r6,#((_uip_aligned_buf + 0x002a) >> 8)
+      0008C3 74 02            [12] 2779 	mov	a,#0x02
+      0008C5 2D               [12] 2780 	add	a,r5
+      0008C6 FD               [12] 2781 	mov	r5,a
+      0008C7 E4               [12] 2782 	clr	a
+      0008C8 3E               [12] 2783 	addc	a,r6
+      0008C9 FE               [12] 2784 	mov	r6,a
+      0008CA 7Br2A            [12] 2785 	mov	r3,#(_uip_aligned_buf + 0x002a)
+      0008CC 7Cs00            [12] 2786 	mov	r4,#((_uip_aligned_buf + 0x002a) >> 8)
+      0008CE 8B 82            [24] 2787 	mov	dpl,r3
+      0008D0 8C 83            [24] 2788 	mov	dph,r4
+      0008D2 A3               [24] 2789 	inc	dptr
+      0008D3 A3               [24] 2790 	inc	dptr
+      0008D4 E0               [24] 2791 	movx	a,@dptr
+      0008D5 FC               [12] 2792 	mov	r4,a
+      0008D6 53 04 80         [24] 2793 	anl	ar4,#0x80
+      0008D9 8D 82            [24] 2794 	mov	dpl,r5
+      0008DB 8E 83            [24] 2795 	mov	dph,r6
+      0008DD EC               [12] 2796 	mov	a,r4
+      0008DE F0               [24] 2797 	movx	@dptr,a
+                                   2798 ;	../../../../core/net/rpl/rpl-ext-header.c:305: UIP_EXT_HDR_OPT_RPL_BUF->flags ^= RPL_HDR_OPT_DOWN;
+      0008DF 7Dr2A            [12] 2799 	mov	r5,#(_uip_aligned_buf + 0x002a)
+      0008E1 7Es00            [12] 2800 	mov	r6,#((_uip_aligned_buf + 0x002a) >> 8)
+      0008E3 74 02            [12] 2801 	mov	a,#0x02
+      0008E5 2D               [12] 2802 	add	a,r5
+      0008E6 FD               [12] 2803 	mov	r5,a
+      0008E7 E4               [12] 2804 	clr	a
+      0008E8 3E               [12] 2805 	addc	a,r6
+      0008E9 FE               [12] 2806 	mov	r6,a
+      0008EA 7Br2A            [12] 2807 	mov	r3,#(_uip_aligned_buf + 0x002a)
+      0008EC 7Cs00            [12] 2808 	mov	r4,#((_uip_aligned_buf + 0x002a) >> 8)
+      0008EE 8B 82            [24] 2809 	mov	dpl,r3
+      0008F0 8C 83            [24] 2810 	mov	dph,r4
+      0008F2 A3               [24] 2811 	inc	dptr
+      0008F3 A3               [24] 2812 	inc	dptr
+      0008F4 E0               [24] 2813 	movx	a,@dptr
+      0008F5 FC               [12] 2814 	mov	r4,a
+      0008F6 63 04 80         [24] 2815 	xrl	ar4,#0x80
+      0008F9 8D 82            [24] 2816 	mov	dpl,r5
+      0008FB 8E 83            [24] 2817 	mov	dph,r6
+      0008FD EC               [12] 2818 	mov	a,r4
+      0008FE F0               [24] 2819 	movx	@dptr,a
+                                   2820 ;	../../../../core/net/rpl/rpl-ext-header.c:306: UIP_EXT_HDR_OPT_RPL_BUF->senderrank = rpl_get_instance(UIP_EXT_HDR_OPT_RPL_BUF->instance)->current_dag->rank;
+      0008FF 7Dr2A            [12] 2821 	mov	r5,#(_uip_aligned_buf + 0x002a)
+      000901 7Es00            [12] 2822 	mov	r6,#((_uip_aligned_buf + 0x002a) >> 8)
+      000903 74 04            [12] 2823 	mov	a,#0x04
+      000905 2D               [12] 2824 	add	a,r5
+      000906 FD               [12] 2825 	mov	r5,a
+      000907 E4               [12] 2826 	clr	a
+      000908 3E               [12] 2827 	addc	a,r6
+      000909 FE               [12] 2828 	mov	r6,a
+      00090A 7Br2A            [12] 2829 	mov	r3,#(_uip_aligned_buf + 0x002a)
+      00090C 7Cs00            [12] 2830 	mov	r4,#((_uip_aligned_buf + 0x002a) >> 8)
+      00090E 8B 82            [24] 2831 	mov	dpl,r3
+      000910 8C 83            [24] 2832 	mov	dph,r4
+      000912 A3               [24] 2833 	inc	dptr
+      000913 A3               [24] 2834 	inc	dptr
+      000914 A3               [24] 2835 	inc	dptr
+      000915 E0               [24] 2836 	movx	a,@dptr
+      000916 F5 82            [12] 2837 	mov	dpl,a
+      000918 C0 07            [24] 2838 	push	ar7
+      00091A C0 06            [24] 2839 	push	ar6
+      00091C C0 05            [24] 2840 	push	ar5
+      00091E 78r00            [12] 2841 	mov	r0,#_rpl_get_instance
+      000920 79s00            [12] 2842 	mov	r1,#(_rpl_get_instance >> 8)
+      000922 7As00            [12] 2843 	mov	r2,#(_rpl_get_instance >> 16)
+      000924 12r00r00         [24] 2844 	lcall	__sdcc_banked_call
+      000927 AA 82            [24] 2845 	mov	r2,dpl
+      000929 AB 83            [24] 2846 	mov	r3,dph
+      00092B AC F0            [24] 2847 	mov	r4,b
+      00092D D0 05            [24] 2848 	pop	ar5
+      00092F D0 06            [24] 2849 	pop	ar6
+      000931 D0 07            [24] 2850 	pop	ar7
+      000933 74 0A            [12] 2851 	mov	a,#0x0A
+      000935 2A               [12] 2852 	add	a,r2
+      000936 FA               [12] 2853 	mov	r2,a
+      000937 E4               [12] 2854 	clr	a
+      000938 3B               [12] 2855 	addc	a,r3
+      000939 FB               [12] 2856 	mov	r3,a
+      00093A 8A 82            [24] 2857 	mov	dpl,r2
+      00093C 8B 83            [24] 2858 	mov	dph,r3
+      00093E 8C F0            [24] 2859 	mov	b,r4
+      000940 12r00r00         [24] 2860 	lcall	__gptrget
+      000943 FA               [12] 2861 	mov	r2,a
+      000944 A3               [24] 2862 	inc	dptr
+      000945 12r00r00         [24] 2863 	lcall	__gptrget
+      000948 FB               [12] 2864 	mov	r3,a
+      000949 A3               [24] 2865 	inc	dptr
+      00094A 12r00r00         [24] 2866 	lcall	__gptrget
+      00094D FC               [12] 2867 	mov	r4,a
+      00094E 74 1A            [12] 2868 	mov	a,#0x1A
+      000950 2A               [12] 2869 	add	a,r2
+      000951 FA               [12] 2870 	mov	r2,a
+      000952 E4               [12] 2871 	clr	a
+      000953 3B               [12] 2872 	addc	a,r3
+      000954 FB               [12] 2873 	mov	r3,a
+      000955 8A 82            [24] 2874 	mov	dpl,r2
+      000957 8B 83            [24] 2875 	mov	dph,r3
+      000959 8C F0            [24] 2876 	mov	b,r4
+      00095B 12r00r00         [24] 2877 	lcall	__gptrget
+      00095E FA               [12] 2878 	mov	r2,a
+      00095F A3               [24] 2879 	inc	dptr
+      000960 12r00r00         [24] 2880 	lcall	__gptrget
+      000963 FB               [12] 2881 	mov	r3,a
+      000964 8D 82            [24] 2882 	mov	dpl,r5
+      000966 8E 83            [24] 2883 	mov	dph,r6
+      000968 EA               [12] 2884 	mov	a,r2
+      000969 F0               [24] 2885 	movx	@dptr,a
+      00096A EB               [12] 2886 	mov	a,r3
+      00096B A3               [24] 2887 	inc	dptr
+      00096C F0               [24] 2888 	movx	@dptr,a
+                                   2889 ;	../../../../core/net/rpl/rpl-ext-header.c:307: uip_ext_len = last_uip_ext_len;
+      00096D 90r00r00         [24] 2890 	mov	dptr,#_uip_ext_len
+      000970 EF               [12] 2891 	mov	a,r7
+      000971 F0               [24] 2892 	movx	@dptr,a
+                                   2893 ;	../../../../core/net/rpl/rpl-ext-header.c:308: return RPL_HOP_BY_HOP_LEN;
+      000972 75 82 08         [24] 2894 	mov	dpl,#0x08
+                                   2895 ;	../../../../core/net/rpl/rpl-ext-header.c:309: default:
+      000975 80 08            [24] 2896 	sjmp	00107$
+      000977                       2897 00105$:
+                                   2898 ;	../../../../core/net/rpl/rpl-ext-header.c:311: uip_ext_len = last_uip_ext_len;
+      000977 90r00r00         [24] 2899 	mov	dptr,#_uip_ext_len
+      00097A EF               [12] 2900 	mov	a,r7
+      00097B F0               [24] 2901 	movx	@dptr,a
+                                   2902 ;	../../../../core/net/rpl/rpl-ext-header.c:312: return 0;
+      00097C 75 82 00         [24] 2903 	mov	dpl,#0x00
+                                   2904 ;	../../../../core/net/rpl/rpl-ext-header.c:313: }
+      00097F                       2905 00107$:
+      00097F 02r00r00         [24] 2906 	ljmp	__sdcc_banked_ret
+                                   2907 	.area CSEG    (CODE)
+                                   2908 	.area CONST   (CODE)
+                                   2909 	.area XINIT   (CODE)
+                                   2910 	.area CABS    (ABS,CODE)

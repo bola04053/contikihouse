@@ -1,0 +1,766 @@
+                                      1 ;--------------------------------------------------------
+                                      2 ; File Created by SDCC : free open source ANSI-C Compiler
+                                      3 ; Version 3.3.1 #8804 (Aug  6 2013) (Linux)
+                                      4 ; This file was generated Mon Aug 25 04:16:21 2014
+                                      5 ;--------------------------------------------------------
+                                      6 	.module framer_802154
+                                      7 	.optsdcc -mmcs51 --model-huge
+                                      8 	
+                                      9 ;--------------------------------------------------------
+                                     10 ; Public variables in this module
+                                     11 ;--------------------------------------------------------
+                                     12 	.globl _framer_802154
+                                     13 	.globl _random_rand
+                                     14 	.globl _packetbuf_addr
+                                     15 	.globl _packetbuf_set_addr
+                                     16 	.globl _packetbuf_attr
+                                     17 	.globl _packetbuf_set_attr
+                                     18 	.globl _packetbuf_hdrreduce
+                                     19 	.globl _packetbuf_hdralloc
+                                     20 	.globl _packetbuf_datalen
+                                     21 	.globl _packetbuf_hdrptr
+                                     22 	.globl _packetbuf_dataptr
+                                     23 	.globl _frame802154_parse
+                                     24 	.globl _frame802154_create
+                                     25 	.globl _frame802154_hdrlen
+                                     26 	.globl _rimeaddr_cmp
+                                     27 	.globl _rimeaddr_copy
+                                     28 	.globl _memset
+                                     29 ;--------------------------------------------------------
+                                     30 ; special function registers
+                                     31 ;--------------------------------------------------------
+                                     32 	.area RSEG    (ABS,DATA)
+      000000                         33 	.org 0x0000
+                                     34 ;--------------------------------------------------------
+                                     35 ; special function bits
+                                     36 ;--------------------------------------------------------
+                                     37 	.area RSEG    (ABS,DATA)
+      000000                         38 	.org 0x0000
+                                     39 ;--------------------------------------------------------
+                                     40 ; overlayable register banks
+                                     41 ;--------------------------------------------------------
+                                     42 	.area REG_BANK_0	(REL,OVR,DATA)
+      000000                         43 	.ds 8
+                                     44 ;--------------------------------------------------------
+                                     45 ; internal ram data
+                                     46 ;--------------------------------------------------------
+                                     47 	.area DSEG    (DATA)
+                                     48 ;--------------------------------------------------------
+                                     49 ; overlayable items in internal ram 
+                                     50 ;--------------------------------------------------------
+                                     51 ;--------------------------------------------------------
+                                     52 ; indirectly addressable internal ram data
+                                     53 ;--------------------------------------------------------
+                                     54 	.area ISEG    (DATA)
+                                     55 ;--------------------------------------------------------
+                                     56 ; absolute internal ram data
+                                     57 ;--------------------------------------------------------
+                                     58 	.area IABS    (ABS,DATA)
+                                     59 	.area IABS    (ABS,DATA)
+                                     60 ;--------------------------------------------------------
+                                     61 ; bit data
+                                     62 ;--------------------------------------------------------
+                                     63 	.area BSEG    (BIT)
+                                     64 ;--------------------------------------------------------
+                                     65 ; paged external ram data
+                                     66 ;--------------------------------------------------------
+                                     67 	.area PSEG    (PAG,XDATA)
+                                     68 ;--------------------------------------------------------
+                                     69 ; external ram data
+                                     70 ;--------------------------------------------------------
+                                     71 	.area XSEG    (XDATA)
+      000000                         72 _mac_dsn:
+      000000                         73 	.ds 1
+      000001                         74 _frame:
+      000001                         75 	.ds 49
+      000032                         76 _len:
+      000032                         77 	.ds 1
+                                     78 ;--------------------------------------------------------
+                                     79 ; absolute external ram data
+                                     80 ;--------------------------------------------------------
+                                     81 	.area XABS    (ABS,XDATA)
+                                     82 ;--------------------------------------------------------
+                                     83 ; external initialized ram data
+                                     84 ;--------------------------------------------------------
+                                     85 	.area XISEG   (XDATA)
+      000000                         86 _initialized:
+      000000                         87 	.ds 1
+                                     88 	.area HOME    (CODE)
+                                     89 	.area GSINIT0 (CODE)
+                                     90 	.area GSINIT1 (CODE)
+                                     91 	.area GSINIT2 (CODE)
+                                     92 	.area GSINIT3 (CODE)
+                                     93 	.area GSINIT4 (CODE)
+                                     94 	.area GSINIT5 (CODE)
+                                     95 	.area GSINIT  (CODE)
+                                     96 	.area GSFINAL (CODE)
+                                     97 	.area CSEG    (CODE)
+                                     98 ;--------------------------------------------------------
+                                     99 ; global & static initialisations
+                                    100 ;--------------------------------------------------------
+                                    101 	.area HOME    (CODE)
+                                    102 	.area GSINIT  (CODE)
+                                    103 	.area GSFINAL (CODE)
+                                    104 	.area GSINIT  (CODE)
+                                    105 ;--------------------------------------------------------
+                                    106 ; Home
+                                    107 ;--------------------------------------------------------
+                                    108 	.area HOME    (CODE)
+                                    109 	.area HOME    (CODE)
+                                    110 ;--------------------------------------------------------
+                                    111 ; code
+                                    112 ;--------------------------------------------------------
+                                    113 	.area BANK1   (CODE)
+                                    114 ;------------------------------------------------------------
+                                    115 ;Allocation info for local variables in function 'is_broadcast_addr'
+                                    116 ;------------------------------------------------------------
+                                    117 ;addr                      Allocated to stack - sp -5
+                                    118 ;mode                      Allocated to registers r7 
+                                    119 ;i                         Allocated to registers 
+                                    120 ;------------------------------------------------------------
+                                    121 ;	../../../../core/net/mac/framer-802154.c:68: is_broadcast_addr(uint8_t mode, uint8_t *addr)
+                                    122 ;	-----------------------------------------
+                                    123 ;	 function is_broadcast_addr
+                                    124 ;	-----------------------------------------
+      000000                        125 _is_broadcast_addr:
+                           000007   126 	ar7 = 0x07
+                           000006   127 	ar6 = 0x06
+                           000005   128 	ar5 = 0x05
+                           000004   129 	ar4 = 0x04
+                           000003   130 	ar3 = 0x03
+                           000002   131 	ar2 = 0x02
+                           000001   132 	ar1 = 0x01
+                           000000   133 	ar0 = 0x00
+      000000 AF 82            [24]  134 	mov	r7,dpl
+                                    135 ;	../../../../core/net/mac/framer-802154.c:70: int i = mode == FRAME802154_SHORTADDRMODE ? 2 : 8;
+      000002 BF 02 04         [24]  136 	cjne	r7,#0x02,00108$
+      000005 7F 02            [12]  137 	mov	r7,#0x02
+      000007 80 02            [24]  138 	sjmp	00109$
+      000009                        139 00108$:
+      000009 7F 08            [12]  140 	mov	r7,#0x08
+      00000B                        141 00109$:
+      00000B 8F 06            [24]  142 	mov	ar6,r7
+      00000D 7F 00            [12]  143 	mov	r7,#0x00
+                                    144 ;	../../../../core/net/mac/framer-802154.c:71: while(i-- > 0) {
+      00000F                        145 00103$:
+      00000F 8E 04            [24]  146 	mov	ar4,r6
+      000011 8F 05            [24]  147 	mov	ar5,r7
+      000013 1E               [12]  148 	dec	r6
+      000014 BE FF 01         [24]  149 	cjne	r6,#0xFF,00124$
+      000017 1F               [12]  150 	dec	r7
+      000018                        151 00124$:
+      000018 C3               [12]  152 	clr	c
+      000019 E4               [12]  153 	clr	a
+      00001A 9C               [12]  154 	subb	a,r4
+      00001B E4               [12]  155 	clr	a
+      00001C 64 80            [12]  156 	xrl	a,#0x80
+      00001E 8D F0            [24]  157 	mov	b,r5
+      000020 63 F0 80         [24]  158 	xrl	b,#0x80
+      000023 95 F0            [12]  159 	subb	a,b
+      000025 50 23            [24]  160 	jnc	00105$
+                                    161 ;	../../../../core/net/mac/framer-802154.c:72: if(addr[i] != 0xff) {
+      000027 E5 81            [12]  162 	mov	a,sp
+      000029 24 FB            [12]  163 	add	a,#0xfb
+      00002B F8               [12]  164 	mov	r0,a
+      00002C EE               [12]  165 	mov	a,r6
+      00002D 26               [12]  166 	add	a,@r0
+      00002E FB               [12]  167 	mov	r3,a
+      00002F EF               [12]  168 	mov	a,r7
+      000030 08               [12]  169 	inc	r0
+      000031 36               [12]  170 	addc	a,@r0
+      000032 FC               [12]  171 	mov	r4,a
+      000033 08               [12]  172 	inc	r0
+      000034 86 05            [24]  173 	mov	ar5,@r0
+      000036 8B 82            [24]  174 	mov	dpl,r3
+      000038 8C 83            [24]  175 	mov	dph,r4
+      00003A 8D F0            [24]  176 	mov	b,r5
+      00003C 12r00r00         [24]  177 	lcall	__gptrget
+      00003F FB               [12]  178 	mov	r3,a
+      000040 BB FF 02         [24]  179 	cjne	r3,#0xFF,00126$
+      000043 80 CA            [24]  180 	sjmp	00103$
+      000045                        181 00126$:
+                                    182 ;	../../../../core/net/mac/framer-802154.c:73: return 0;
+      000045 90 00 00         [24]  183 	mov	dptr,#0x0000
+      000048 80 03            [24]  184 	sjmp	00106$
+      00004A                        185 00105$:
+                                    186 ;	../../../../core/net/mac/framer-802154.c:76: return 1;
+      00004A 90 00 01         [24]  187 	mov	dptr,#0x0001
+      00004D                        188 00106$:
+      00004D 02r00r00         [24]  189 	ljmp	__sdcc_banked_ret
+                                    190 ;------------------------------------------------------------
+                                    191 ;Allocation info for local variables in function 'create'
+                                    192 ;------------------------------------------------------------
+                                    193 ;	../../../../core/net/mac/framer-802154.c:80: create(void)
+                                    194 ;	-----------------------------------------
+                                    195 ;	 function create
+                                    196 ;	-----------------------------------------
+      000050                        197 _create:
+                                    198 ;	../../../../core/net/mac/framer-802154.c:84: memset(&frame, 0, sizeof(frame));
+      000050 74 31            [12]  199 	mov	a,#0x31
+      000052 C0 E0            [24]  200 	push	acc
+      000054 E4               [12]  201 	clr	a
+      000055 C0 E0            [24]  202 	push	acc
+      000057 E4               [12]  203 	clr	a
+      000058 C0 E0            [24]  204 	push	acc
+      00005A 90r00r01         [24]  205 	mov	dptr,#_frame
+      00005D 75 F0 00         [24]  206 	mov	b,#0x00
+      000060 78r00            [12]  207 	mov	r0,#_memset
+      000062 79s00            [12]  208 	mov	r1,#(_memset >> 8)
+      000064 7As00            [12]  209 	mov	r2,#(_memset >> 16)
+      000066 12r00r00         [24]  210 	lcall	__sdcc_banked_call
+      000069 15 81            [12]  211 	dec	sp
+      00006B 15 81            [12]  212 	dec	sp
+      00006D 15 81            [12]  213 	dec	sp
+                                    214 ;	../../../../core/net/mac/framer-802154.c:86: if(!initialized) {
+      00006F 90r00r00         [24]  215 	mov	dptr,#_initialized
+      000072 E0               [24]  216 	movx	a,@dptr
+      000073 FF               [12]  217 	mov	r7,a
+      000074 70 1C            [24]  218 	jnz	00102$
+                                    219 ;	../../../../core/net/mac/framer-802154.c:87: initialized = 1;
+      000076 90r00r00         [24]  220 	mov	dptr,#_initialized
+      000079 74 01            [12]  221 	mov	a,#0x01
+      00007B F0               [24]  222 	movx	@dptr,a
+                                    223 ;	../../../../core/net/mac/framer-802154.c:88: mac_dsn = random_rand() & 0xff;
+      00007C 78r00            [12]  224 	mov	r0,#_random_rand
+      00007E 79s00            [12]  225 	mov	r1,#(_random_rand >> 8)
+      000080 7As00            [12]  226 	mov	r2,#(_random_rand >> 16)
+      000082 12r00r00         [24]  227 	lcall	__sdcc_banked_call
+      000085 E5 82            [12]  228 	mov	a,dpl
+      000087 85 83 F0         [24]  229 	mov	b,dph
+      00008A FE               [12]  230 	mov	r6,a
+      00008B 7F 00            [12]  231 	mov	r7,#0x00
+      00008D 90r00r00         [24]  232 	mov	dptr,#_mac_dsn
+      000090 EE               [12]  233 	mov	a,r6
+      000091 F0               [24]  234 	movx	@dptr,a
+      000092                        235 00102$:
+                                    236 ;	../../../../core/net/mac/framer-802154.c:92: frame.fcf.frame_type = FRAME802154_DATAFRAME;
+      000092 90r00r01         [24]  237 	mov	dptr,#_frame
+      000095 74 01            [12]  238 	mov	a,#0x01
+      000097 F0               [24]  239 	movx	@dptr,a
+                                    240 ;	../../../../core/net/mac/framer-802154.c:93: frame.fcf.security_enabled = 0;
+      000098 90r00r02         [24]  241 	mov	dptr,#(_frame + 0x0001)
+      00009B E4               [12]  242 	clr	a
+      00009C F0               [24]  243 	movx	@dptr,a
+                                    244 ;	../../../../core/net/mac/framer-802154.c:94: frame.fcf.frame_pending = packetbuf_attr(PACKETBUF_ATTR_PENDING);
+      00009D 75 82 12         [24]  245 	mov	dpl,#0x12
+      0000A0 78r00            [12]  246 	mov	r0,#_packetbuf_attr
+      0000A2 79s00            [12]  247 	mov	r1,#(_packetbuf_attr >> 8)
+      0000A4 7As00            [12]  248 	mov	r2,#(_packetbuf_attr >> 16)
+      0000A6 12r00r00         [24]  249 	lcall	__sdcc_banked_call
+      0000A9 AE 82            [24]  250 	mov	r6,dpl
+      0000AB 90r00r03         [24]  251 	mov	dptr,#(_frame + 0x0002)
+      0000AE EE               [12]  252 	mov	a,r6
+      0000AF F0               [24]  253 	movx	@dptr,a
+                                    254 ;	../../../../core/net/mac/framer-802154.c:95: if(rimeaddr_cmp(packetbuf_addr(PACKETBUF_ADDR_RECEIVER), &rimeaddr_null)) {
+      0000B0 75 82 19         [24]  255 	mov	dpl,#0x19
+      0000B3 78r00            [12]  256 	mov	r0,#_packetbuf_addr
+      0000B5 79s00            [12]  257 	mov	r1,#(_packetbuf_addr >> 8)
+      0000B7 7As00            [12]  258 	mov	r2,#(_packetbuf_addr >> 16)
+      0000B9 12r00r00         [24]  259 	lcall	__sdcc_banked_call
+      0000BC AD 82            [24]  260 	mov	r5,dpl
+      0000BE AE 83            [24]  261 	mov	r6,dph
+      0000C0 AF F0            [24]  262 	mov	r7,b
+      0000C2 74r00            [12]  263 	mov	a,#_rimeaddr_null
+      0000C4 C0 E0            [24]  264 	push	acc
+      0000C6 74s00            [12]  265 	mov	a,#(_rimeaddr_null >> 8)
+      0000C8 C0 E0            [24]  266 	push	acc
+      0000CA 74 80            [12]  267 	mov	a,#0x80
+      0000CC C0 E0            [24]  268 	push	acc
+      0000CE 8D 82            [24]  269 	mov	dpl,r5
+      0000D0 8E 83            [24]  270 	mov	dph,r6
+      0000D2 8F F0            [24]  271 	mov	b,r7
+      0000D4 78r00            [12]  272 	mov	r0,#_rimeaddr_cmp
+      0000D6 79s00            [12]  273 	mov	r1,#(_rimeaddr_cmp >> 8)
+      0000D8 7As00            [12]  274 	mov	r2,#(_rimeaddr_cmp >> 16)
+      0000DA 12r00r00         [24]  275 	lcall	__sdcc_banked_call
+      0000DD AE 82            [24]  276 	mov	r6,dpl
+      0000DF AF 83            [24]  277 	mov	r7,dph
+      0000E1 15 81            [12]  278 	dec	sp
+      0000E3 15 81            [12]  279 	dec	sp
+      0000E5 15 81            [12]  280 	dec	sp
+      0000E7 EE               [12]  281 	mov	a,r6
+      0000E8 4F               [12]  282 	orl	a,r7
+      0000E9 60 07            [24]  283 	jz	00104$
+                                    284 ;	../../../../core/net/mac/framer-802154.c:96: frame.fcf.ack_required = 0;
+      0000EB 90r00r04         [24]  285 	mov	dptr,#(_frame + 0x0003)
+      0000EE E4               [12]  286 	clr	a
+      0000EF F0               [24]  287 	movx	@dptr,a
+      0000F0 80 15            [24]  288 	sjmp	00105$
+      0000F2                        289 00104$:
+                                    290 ;	../../../../core/net/mac/framer-802154.c:98: frame.fcf.ack_required = packetbuf_attr(PACKETBUF_ATTR_MAC_ACK);
+      0000F2 75 82 0B         [24]  291 	mov	dpl,#0x0B
+      0000F5 78r00            [12]  292 	mov	r0,#_packetbuf_attr
+      0000F7 79s00            [12]  293 	mov	r1,#(_packetbuf_attr >> 8)
+      0000F9 7As00            [12]  294 	mov	r2,#(_packetbuf_attr >> 16)
+      0000FB 12r00r00         [24]  295 	lcall	__sdcc_banked_call
+      0000FE AE 82            [24]  296 	mov	r6,dpl
+      000100 AF 83            [24]  297 	mov	r7,dph
+      000102 90r00r04         [24]  298 	mov	dptr,#(_frame + 0x0003)
+      000105 EE               [12]  299 	mov	a,r6
+      000106 F0               [24]  300 	movx	@dptr,a
+      000107                        301 00105$:
+                                    302 ;	../../../../core/net/mac/framer-802154.c:100: frame.fcf.panid_compression = 0;
+      000107 90r00r05         [24]  303 	mov	dptr,#(_frame + 0x0004)
+                                    304 ;	../../../../core/net/mac/framer-802154.c:103: frame.fcf.frame_version = FRAME802154_IEEE802154_2003;
+      00010A E4               [12]  305 	clr	a
+      00010B F0               [24]  306 	movx	@dptr,a
+      00010C 90r00r07         [24]  307 	mov	dptr,#(_frame + 0x0006)
+      00010F F0               [24]  308 	movx	@dptr,a
+                                    309 ;	../../../../core/net/mac/framer-802154.c:106: if(packetbuf_attr(PACKETBUF_ATTR_MAC_SEQNO)) {
+      000110 75 82 0A         [24]  310 	mov	dpl,#0x0A
+      000113 78r00            [12]  311 	mov	r0,#_packetbuf_attr
+      000115 79s00            [12]  312 	mov	r1,#(_packetbuf_attr >> 8)
+      000117 7As00            [12]  313 	mov	r2,#(_packetbuf_attr >> 16)
+      000119 12r00r00         [24]  314 	lcall	__sdcc_banked_call
+      00011C E5 82            [12]  315 	mov	a,dpl
+      00011E 85 83 F0         [24]  316 	mov	b,dph
+      000121 45 F0            [12]  317 	orl	a,b
+      000123 60 17            [24]  318 	jz	00107$
+                                    319 ;	../../../../core/net/mac/framer-802154.c:107: frame.seq = packetbuf_attr(PACKETBUF_ATTR_MAC_SEQNO);
+      000125 75 82 0A         [24]  320 	mov	dpl,#0x0A
+      000128 78r00            [12]  321 	mov	r0,#_packetbuf_attr
+      00012A 79s00            [12]  322 	mov	r1,#(_packetbuf_attr >> 8)
+      00012C 7As00            [12]  323 	mov	r2,#(_packetbuf_attr >> 16)
+      00012E 12r00r00         [24]  324 	lcall	__sdcc_banked_call
+      000131 AE 82            [24]  325 	mov	r6,dpl
+      000133 AF 83            [24]  326 	mov	r7,dph
+      000135 90r00r09         [24]  327 	mov	dptr,#(_frame + 0x0008)
+      000138 EE               [12]  328 	mov	a,r6
+      000139 F0               [24]  329 	movx	@dptr,a
+      00013A 80 25            [24]  330 	sjmp	00108$
+      00013C                        331 00107$:
+                                    332 ;	../../../../core/net/mac/framer-802154.c:109: frame.seq = mac_dsn++;
+      00013C 90r00r00         [24]  333 	mov	dptr,#_mac_dsn
+      00013F E0               [24]  334 	movx	a,@dptr
+      000140 FF               [12]  335 	mov	r7,a
+      000141 90r00r00         [24]  336 	mov	dptr,#_mac_dsn
+      000144 04               [12]  337 	inc	a
+      000145 F0               [24]  338 	movx	@dptr,a
+      000146 90r00r09         [24]  339 	mov	dptr,#(_frame + 0x0008)
+      000149 EF               [12]  340 	mov	a,r7
+      00014A F0               [24]  341 	movx	@dptr,a
+                                    342 ;	../../../../core/net/mac/framer-802154.c:110: packetbuf_set_attr(PACKETBUF_ATTR_MAC_SEQNO, frame.seq);
+      00014B 7E 00            [12]  343 	mov	r6,#0x00
+      00014D C0 07            [24]  344 	push	ar7
+      00014F C0 06            [24]  345 	push	ar6
+      000151 75 82 0A         [24]  346 	mov	dpl,#0x0A
+      000154 78r00            [12]  347 	mov	r0,#_packetbuf_set_attr
+      000156 79s00            [12]  348 	mov	r1,#(_packetbuf_set_attr >> 8)
+      000158 7As00            [12]  349 	mov	r2,#(_packetbuf_set_attr >> 16)
+      00015A 12r00r00         [24]  350 	lcall	__sdcc_banked_call
+      00015D 15 81            [12]  351 	dec	sp
+      00015F 15 81            [12]  352 	dec	sp
+      000161                        353 00108$:
+                                    354 ;	../../../../core/net/mac/framer-802154.c:122: frame.fcf.src_addr_mode = FRAME802154_LONGADDRMODE;
+      000161 90r00r08         [24]  355 	mov	dptr,#(_frame + 0x0007)
+      000164 74 03            [12]  356 	mov	a,#0x03
+      000166 F0               [24]  357 	movx	@dptr,a
+                                    358 ;	../../../../core/net/mac/framer-802154.c:124: frame.dest_pid = IEEE802154_PANID;
+      000167 90r00r0A         [24]  359 	mov	dptr,#(_frame + 0x0009)
+      00016A 74 49            [12]  360 	mov	a,#0x49
+      00016C F0               [24]  361 	movx	@dptr,a
+      00016D 74 54            [12]  362 	mov	a,#0x54
+      00016F A3               [24]  363 	inc	dptr
+      000170 F0               [24]  364 	movx	@dptr,a
+                                    365 ;	../../../../core/net/mac/framer-802154.c:130: if(rimeaddr_cmp(packetbuf_addr(PACKETBUF_ADDR_RECEIVER), &rimeaddr_null)) {
+      000171 75 82 19         [24]  366 	mov	dpl,#0x19
+      000174 78r00            [12]  367 	mov	r0,#_packetbuf_addr
+      000176 79s00            [12]  368 	mov	r1,#(_packetbuf_addr >> 8)
+      000178 7As00            [12]  369 	mov	r2,#(_packetbuf_addr >> 16)
+      00017A 12r00r00         [24]  370 	lcall	__sdcc_banked_call
+      00017D AD 82            [24]  371 	mov	r5,dpl
+      00017F AE 83            [24]  372 	mov	r6,dph
+      000181 AF F0            [24]  373 	mov	r7,b
+      000183 74r00            [12]  374 	mov	a,#_rimeaddr_null
+      000185 C0 E0            [24]  375 	push	acc
+      000187 74s00            [12]  376 	mov	a,#(_rimeaddr_null >> 8)
+      000189 C0 E0            [24]  377 	push	acc
+      00018B 74 80            [12]  378 	mov	a,#0x80
+      00018D C0 E0            [24]  379 	push	acc
+      00018F 8D 82            [24]  380 	mov	dpl,r5
+      000191 8E 83            [24]  381 	mov	dph,r6
+      000193 8F F0            [24]  382 	mov	b,r7
+      000195 78r00            [12]  383 	mov	r0,#_rimeaddr_cmp
+      000197 79s00            [12]  384 	mov	r1,#(_rimeaddr_cmp >> 8)
+      000199 7As00            [12]  385 	mov	r2,#(_rimeaddr_cmp >> 16)
+      00019B 12r00r00         [24]  386 	lcall	__sdcc_banked_call
+      00019E AE 82            [24]  387 	mov	r6,dpl
+      0001A0 AF 83            [24]  388 	mov	r7,dph
+      0001A2 15 81            [12]  389 	dec	sp
+      0001A4 15 81            [12]  390 	dec	sp
+      0001A6 15 81            [12]  391 	dec	sp
+      0001A8 EE               [12]  392 	mov	a,r6
+      0001A9 4F               [12]  393 	orl	a,r7
+      0001AA 60 14            [24]  394 	jz	00110$
+                                    395 ;	../../../../core/net/mac/framer-802154.c:132: frame.fcf.dest_addr_mode = FRAME802154_SHORTADDRMODE;
+      0001AC 90r00r06         [24]  396 	mov	dptr,#(_frame + 0x0005)
+      0001AF 74 02            [12]  397 	mov	a,#0x02
+      0001B1 F0               [24]  398 	movx	@dptr,a
+                                    399 ;	../../../../core/net/mac/framer-802154.c:133: frame.dest_addr[0] = 0xFF;
+      0001B2 90r00r0C         [24]  400 	mov	dptr,#(_frame + 0x000b)
+      0001B5 74 FF            [12]  401 	mov	a,#0xFF
+      0001B7 F0               [24]  402 	movx	@dptr,a
+                                    403 ;	../../../../core/net/mac/framer-802154.c:134: frame.dest_addr[1] = 0xFF;
+      0001B8 90r00r0D         [24]  404 	mov	dptr,#(_frame + 0x000c)
+      0001BB 74 FF            [12]  405 	mov	a,#0xFF
+      0001BD F0               [24]  406 	movx	@dptr,a
+      0001BE 80 39            [24]  407 	sjmp	00111$
+      0001C0                        408 00110$:
+                                    409 ;	../../../../core/net/mac/framer-802154.c:138: packetbuf_addr(PACKETBUF_ADDR_RECEIVER));
+      0001C0 75 82 19         [24]  410 	mov	dpl,#0x19
+      0001C3 78r00            [12]  411 	mov	r0,#_packetbuf_addr
+      0001C5 79s00            [12]  412 	mov	r1,#(_packetbuf_addr >> 8)
+      0001C7 7As00            [12]  413 	mov	r2,#(_packetbuf_addr >> 16)
+      0001C9 12r00r00         [24]  414 	lcall	__sdcc_banked_call
+      0001CC AD 82            [24]  415 	mov	r5,dpl
+      0001CE AE 83            [24]  416 	mov	r6,dph
+      0001D0 AF F0            [24]  417 	mov	r7,b
+                                    418 ;	../../../../core/net/mac/framer-802154.c:137: rimeaddr_copy((rimeaddr_t *)&frame.dest_addr,
+      0001D2 7Br0C            [12]  419 	mov	r3,#(_frame + 0x000b)
+      0001D4 7Cs00            [12]  420 	mov	r4,#((_frame + 0x000b) >> 8)
+      0001D6 7A 00            [12]  421 	mov	r2,#0x00
+      0001D8 C0 05            [24]  422 	push	ar5
+      0001DA C0 06            [24]  423 	push	ar6
+      0001DC C0 07            [24]  424 	push	ar7
+      0001DE 8B 82            [24]  425 	mov	dpl,r3
+      0001E0 8C 83            [24]  426 	mov	dph,r4
+      0001E2 8A F0            [24]  427 	mov	b,r2
+      0001E4 78r00            [12]  428 	mov	r0,#_rimeaddr_copy
+      0001E6 79s00            [12]  429 	mov	r1,#(_rimeaddr_copy >> 8)
+      0001E8 7As00            [12]  430 	mov	r2,#(_rimeaddr_copy >> 16)
+      0001EA 12r00r00         [24]  431 	lcall	__sdcc_banked_call
+      0001ED 15 81            [12]  432 	dec	sp
+      0001EF 15 81            [12]  433 	dec	sp
+      0001F1 15 81            [12]  434 	dec	sp
+                                    435 ;	../../../../core/net/mac/framer-802154.c:143: frame.fcf.dest_addr_mode = FRAME802154_LONGADDRMODE;
+      0001F3 90r00r06         [24]  436 	mov	dptr,#(_frame + 0x0005)
+      0001F6 74 03            [12]  437 	mov	a,#0x03
+      0001F8 F0               [24]  438 	movx	@dptr,a
+      0001F9                        439 00111$:
+                                    440 ;	../../../../core/net/mac/framer-802154.c:148: frame.src_pid = IEEE802154_PANID;
+      0001F9 90r00r14         [24]  441 	mov	dptr,#(_frame + 0x0013)
+      0001FC 74 49            [12]  442 	mov	a,#0x49
+      0001FE F0               [24]  443 	movx	@dptr,a
+      0001FF 74 54            [12]  444 	mov	a,#0x54
+      000201 A3               [24]  445 	inc	dptr
+      000202 F0               [24]  446 	movx	@dptr,a
+                                    447 ;	../../../../core/net/mac/framer-802154.c:154: rimeaddr_copy((rimeaddr_t *)&frame.src_addr, &rimeaddr_node_addr);
+      000203 7Er16            [12]  448 	mov	r6,#(_frame + 0x0015)
+      000205 7Fs00            [12]  449 	mov	r7,#((_frame + 0x0015) >> 8)
+      000207 7D 00            [12]  450 	mov	r5,#0x00
+      000209 74r00            [12]  451 	mov	a,#_rimeaddr_node_addr
+      00020B C0 E0            [24]  452 	push	acc
+      00020D 74s00            [12]  453 	mov	a,#(_rimeaddr_node_addr >> 8)
+      00020F C0 E0            [24]  454 	push	acc
+      000211 E4               [12]  455 	clr	a
+      000212 C0 E0            [24]  456 	push	acc
+      000214 8E 82            [24]  457 	mov	dpl,r6
+      000216 8F 83            [24]  458 	mov	dph,r7
+      000218 8D F0            [24]  459 	mov	b,r5
+      00021A 78r00            [12]  460 	mov	r0,#_rimeaddr_copy
+      00021C 79s00            [12]  461 	mov	r1,#(_rimeaddr_copy >> 8)
+      00021E 7As00            [12]  462 	mov	r2,#(_rimeaddr_copy >> 16)
+      000220 12r00r00         [24]  463 	lcall	__sdcc_banked_call
+      000223 15 81            [12]  464 	dec	sp
+      000225 15 81            [12]  465 	dec	sp
+      000227 15 81            [12]  466 	dec	sp
+                                    467 ;	../../../../core/net/mac/framer-802154.c:156: frame.payload = packetbuf_dataptr();
+      000229 78r00            [12]  468 	mov	r0,#_packetbuf_dataptr
+      00022B 79s00            [12]  469 	mov	r1,#(_packetbuf_dataptr >> 8)
+      00022D 7As00            [12]  470 	mov	r2,#(_packetbuf_dataptr >> 16)
+      00022F 12r00r00         [24]  471 	lcall	__sdcc_banked_call
+      000232 AD 82            [24]  472 	mov	r5,dpl
+      000234 AE 83            [24]  473 	mov	r6,dph
+      000236 AF F0            [24]  474 	mov	r7,b
+      000238 90r00r2E         [24]  475 	mov	dptr,#(_frame + 0x002d)
+      00023B ED               [12]  476 	mov	a,r5
+      00023C F0               [24]  477 	movx	@dptr,a
+      00023D EE               [12]  478 	mov	a,r6
+      00023E A3               [24]  479 	inc	dptr
+      00023F F0               [24]  480 	movx	@dptr,a
+      000240 EF               [12]  481 	mov	a,r7
+      000241 A3               [24]  482 	inc	dptr
+      000242 F0               [24]  483 	movx	@dptr,a
+                                    484 ;	../../../../core/net/mac/framer-802154.c:157: frame.payload_len = packetbuf_datalen();
+      000243 78r00            [12]  485 	mov	r0,#_packetbuf_datalen
+      000245 79s00            [12]  486 	mov	r1,#(_packetbuf_datalen >> 8)
+      000247 7As00            [12]  487 	mov	r2,#(_packetbuf_datalen >> 16)
+      000249 12r00r00         [24]  488 	lcall	__sdcc_banked_call
+      00024C AE 82            [24]  489 	mov	r6,dpl
+      00024E 90r00r31         [24]  490 	mov	dptr,#(_frame + 0x0030)
+      000251 EE               [12]  491 	mov	a,r6
+      000252 F0               [24]  492 	movx	@dptr,a
+                                    493 ;	../../../../core/net/mac/framer-802154.c:158: len = frame802154_hdrlen(&frame);
+      000253 90r00r01         [24]  494 	mov	dptr,#_frame
+      000256 75 F0 00         [24]  495 	mov	b,#0x00
+      000259 78r00            [12]  496 	mov	r0,#_frame802154_hdrlen
+      00025B 79s00            [12]  497 	mov	r1,#(_frame802154_hdrlen >> 8)
+      00025D 7As00            [12]  498 	mov	r2,#(_frame802154_hdrlen >> 16)
+      00025F 12r00r00         [24]  499 	lcall	__sdcc_banked_call
+      000262 AF 82            [24]  500 	mov	r7,dpl
+      000264 90r00r32         [24]  501 	mov	dptr,#_len
+      000267 EF               [12]  502 	mov	a,r7
+      000268 F0               [24]  503 	movx	@dptr,a
+                                    504 ;	../../../../core/net/mac/framer-802154.c:159: if(packetbuf_hdralloc(len)) {
+      000269 7E 00            [12]  505 	mov	r6,#0x00
+      00026B 8F 82            [24]  506 	mov	dpl,r7
+      00026D 8E 83            [24]  507 	mov	dph,r6
+      00026F 78r00            [12]  508 	mov	r0,#_packetbuf_hdralloc
+      000271 79s00            [12]  509 	mov	r1,#(_packetbuf_hdralloc >> 8)
+      000273 7As00            [12]  510 	mov	r2,#(_packetbuf_hdralloc >> 16)
+      000275 12r00r00         [24]  511 	lcall	__sdcc_banked_call
+      000278 E5 82            [12]  512 	mov	a,dpl
+      00027A 85 83 F0         [24]  513 	mov	b,dph
+      00027D 45 F0            [12]  514 	orl	a,b
+      00027F 60 3E            [24]  515 	jz	00113$
+                                    516 ;	../../../../core/net/mac/framer-802154.c:160: frame802154_create(&frame, packetbuf_hdrptr(), len);
+      000281 90r00r32         [24]  517 	mov	dptr,#_len
+      000284 E0               [24]  518 	movx	a,@dptr
+      000285 FF               [12]  519 	mov	r7,a
+      000286 C0 07            [24]  520 	push	ar7
+      000288 78r00            [12]  521 	mov	r0,#_packetbuf_hdrptr
+      00028A 79s00            [12]  522 	mov	r1,#(_packetbuf_hdrptr >> 8)
+      00028C 7As00            [12]  523 	mov	r2,#(_packetbuf_hdrptr >> 16)
+      00028E 12r00r00         [24]  524 	lcall	__sdcc_banked_call
+      000291 AC 82            [24]  525 	mov	r4,dpl
+      000293 AD 83            [24]  526 	mov	r5,dph
+      000295 AE F0            [24]  527 	mov	r6,b
+      000297 C0 04            [24]  528 	push	ar4
+      000299 C0 05            [24]  529 	push	ar5
+      00029B C0 06            [24]  530 	push	ar6
+      00029D 90r00r01         [24]  531 	mov	dptr,#_frame
+      0002A0 75 F0 00         [24]  532 	mov	b,#0x00
+      0002A3 78r00            [12]  533 	mov	r0,#_frame802154_create
+      0002A5 79s00            [12]  534 	mov	r1,#(_frame802154_create >> 8)
+      0002A7 7As00            [12]  535 	mov	r2,#(_frame802154_create >> 16)
+      0002A9 12r00r00         [24]  536 	lcall	__sdcc_banked_call
+      0002AC E5 81            [12]  537 	mov	a,sp
+      0002AE 24 FC            [12]  538 	add	a,#0xfc
+      0002B0 F5 81            [12]  539 	mov	sp,a
+                                    540 ;	../../../../core/net/mac/framer-802154.c:166: return len;
+      0002B2 90r00r32         [24]  541 	mov	dptr,#_len
+      0002B5 E0               [24]  542 	movx	a,@dptr
+      0002B6 FF               [12]  543 	mov	r7,a
+      0002B7 7E 00            [12]  544 	mov	r6,#0x00
+      0002B9 8F 82            [24]  545 	mov	dpl,r7
+      0002BB 8E 83            [24]  546 	mov	dph,r6
+      0002BD 80 03            [24]  547 	sjmp	00115$
+      0002BF                        548 00113$:
+                                    549 ;	../../../../core/net/mac/framer-802154.c:169: return FRAMER_FAILED;
+      0002BF 90 FF FF         [24]  550 	mov	dptr,#0xFFFF
+      0002C2                        551 00115$:
+      0002C2 02r00r00         [24]  552 	ljmp	__sdcc_banked_ret
+                                    553 ;------------------------------------------------------------
+                                    554 ;Allocation info for local variables in function 'parse'
+                                    555 ;------------------------------------------------------------
+                                    556 ;	../../../../core/net/mac/framer-802154.c:174: parse(void)
+                                    557 ;	-----------------------------------------
+                                    558 ;	 function parse
+                                    559 ;	-----------------------------------------
+      0002C5                        560 _parse:
+                                    561 ;	../../../../core/net/mac/framer-802154.c:176: len = packetbuf_datalen();
+      0002C5 78r00            [12]  562 	mov	r0,#_packetbuf_datalen
+      0002C7 79s00            [12]  563 	mov	r1,#(_packetbuf_datalen >> 8)
+      0002C9 7As00            [12]  564 	mov	r2,#(_packetbuf_datalen >> 16)
+      0002CB 12r00r00         [24]  565 	lcall	__sdcc_banked_call
+      0002CE AE 82            [24]  566 	mov	r6,dpl
+      0002D0 90r00r32         [24]  567 	mov	dptr,#_len
+      0002D3 EE               [12]  568 	mov	a,r6
+      0002D4 F0               [24]  569 	movx	@dptr,a
+                                    570 ;	../../../../core/net/mac/framer-802154.c:177: if(frame802154_parse(packetbuf_dataptr(), len, &frame) &&
+      0002D5 C0 06            [24]  571 	push	ar6
+      0002D7 78r00            [12]  572 	mov	r0,#_packetbuf_dataptr
+      0002D9 79s00            [12]  573 	mov	r1,#(_packetbuf_dataptr >> 8)
+      0002DB 7As00            [12]  574 	mov	r2,#(_packetbuf_dataptr >> 16)
+      0002DD 12r00r00         [24]  575 	lcall	__sdcc_banked_call
+      0002E0 AC 82            [24]  576 	mov	r4,dpl
+      0002E2 AD 83            [24]  577 	mov	r5,dph
+      0002E4 AF F0            [24]  578 	mov	r7,b
+      0002E6 D0 06            [24]  579 	pop	ar6
+      0002E8 74r01            [12]  580 	mov	a,#_frame
+      0002EA C0 E0            [24]  581 	push	acc
+      0002EC 74s00            [12]  582 	mov	a,#(_frame >> 8)
+      0002EE C0 E0            [24]  583 	push	acc
+      0002F0 E4               [12]  584 	clr	a
+      0002F1 C0 E0            [24]  585 	push	acc
+      0002F3 C0 06            [24]  586 	push	ar6
+      0002F5 8C 82            [24]  587 	mov	dpl,r4
+      0002F7 8D 83            [24]  588 	mov	dph,r5
+      0002F9 8F F0            [24]  589 	mov	b,r7
+      0002FB 78r00            [12]  590 	mov	r0,#_frame802154_parse
+      0002FD 79s00            [12]  591 	mov	r1,#(_frame802154_parse >> 8)
+      0002FF 7As00            [12]  592 	mov	r2,#(_frame802154_parse >> 16)
+      000301 12r00r00         [24]  593 	lcall	__sdcc_banked_call
+      000304 AF 82            [24]  594 	mov	r7,dpl
+      000306 E5 81            [12]  595 	mov	a,sp
+      000308 24 FC            [12]  596 	add	a,#0xfc
+      00030A F5 81            [12]  597 	mov	sp,a
+      00030C EF               [12]  598 	mov	a,r7
+      00030D 70 03            [24]  599 	jnz	00131$
+      00030F 02r04r15         [24]  600 	ljmp	00109$
+      000312                        601 00131$:
+                                    602 ;	../../../../core/net/mac/framer-802154.c:178: packetbuf_hdrreduce(len - frame.payload_len)) {
+      000312 90r00r32         [24]  603 	mov	dptr,#_len
+      000315 E0               [24]  604 	movx	a,@dptr
+      000316 FF               [12]  605 	mov	r7,a
+      000317 7E 00            [12]  606 	mov	r6,#0x00
+      000319 90r00r31         [24]  607 	mov	dptr,#(_frame + 0x0030)
+      00031C E0               [24]  608 	movx	a,@dptr
+      00031D FD               [12]  609 	mov	r5,a
+      00031E 7C 00            [12]  610 	mov	r4,#0x00
+      000320 EF               [12]  611 	mov	a,r7
+      000321 C3               [12]  612 	clr	c
+      000322 9D               [12]  613 	subb	a,r5
+      000323 FF               [12]  614 	mov	r7,a
+      000324 EE               [12]  615 	mov	a,r6
+      000325 9C               [12]  616 	subb	a,r4
+      000326 FE               [12]  617 	mov	r6,a
+      000327 8F 82            [24]  618 	mov	dpl,r7
+      000329 8E 83            [24]  619 	mov	dph,r6
+      00032B 78r00            [12]  620 	mov	r0,#_packetbuf_hdrreduce
+      00032D 79s00            [12]  621 	mov	r1,#(_packetbuf_hdrreduce >> 8)
+      00032F 7As00            [12]  622 	mov	r2,#(_packetbuf_hdrreduce >> 16)
+      000331 12r00r00         [24]  623 	lcall	__sdcc_banked_call
+      000334 E5 82            [12]  624 	mov	a,dpl
+      000336 85 83 F0         [24]  625 	mov	b,dph
+      000339 45 F0            [12]  626 	orl	a,b
+      00033B 70 03            [24]  627 	jnz	00132$
+      00033D 02r04r15         [24]  628 	ljmp	00109$
+      000340                        629 00132$:
+                                    630 ;	../../../../core/net/mac/framer-802154.c:179: if(frame.fcf.dest_addr_mode) {
+      000340 90r00r06         [24]  631 	mov	dptr,#(_frame + 0x0005)
+      000343 E0               [24]  632 	movx	a,@dptr
+      000344 FF               [12]  633 	mov	r7,a
+      000345 60 5F            [24]  634 	jz	00107$
+                                    635 ;	../../../../core/net/mac/framer-802154.c:180: if(frame.dest_pid != IEEE802154_PANID &&
+      000347 90r00r0A         [24]  636 	mov	dptr,#(_frame + 0x0009)
+      00034A E0               [24]  637 	movx	a,@dptr
+      00034B FD               [12]  638 	mov	r5,a
+      00034C A3               [24]  639 	inc	dptr
+      00034D E0               [24]  640 	movx	a,@dptr
+      00034E FE               [12]  641 	mov	r6,a
+      00034F BD 49 05         [24]  642 	cjne	r5,#0x49,00134$
+      000352 BE 54 02         [24]  643 	cjne	r6,#0x54,00134$
+      000355 80 0E            [24]  644 	sjmp	00102$
+      000357                        645 00134$:
+                                    646 ;	../../../../core/net/mac/framer-802154.c:181: frame.dest_pid != FRAME802154_BROADCASTPANDID) {
+      000357 BD FF 05         [24]  647 	cjne	r5,#0xFF,00135$
+      00035A BE FF 02         [24]  648 	cjne	r6,#0xFF,00135$
+      00035D 80 06            [24]  649 	sjmp	00102$
+      00035F                        650 00135$:
+                                    651 ;	../../../../core/net/mac/framer-802154.c:184: return FRAMER_FAILED;
+      00035F 90 FF FF         [24]  652 	mov	dptr,#0xFFFF
+      000362 02r04r18         [24]  653 	ljmp	00111$
+      000365                        654 00102$:
+                                    655 ;	../../../../core/net/mac/framer-802154.c:186: if(!is_broadcast_addr(frame.fcf.dest_addr_mode, frame.dest_addr)) {
+      000365 74r0C            [12]  656 	mov	a,#(_frame + 0x000b)
+      000367 C0 E0            [24]  657 	push	acc
+      000369 74s00            [12]  658 	mov	a,#((_frame + 0x000b) >> 8)
+      00036B C0 E0            [24]  659 	push	acc
+      00036D E4               [12]  660 	clr	a
+      00036E C0 E0            [24]  661 	push	acc
+      000370 8F 82            [24]  662 	mov	dpl,r7
+      000372 78r00            [12]  663 	mov	r0,#_is_broadcast_addr
+      000374 79s00            [12]  664 	mov	r1,#(_is_broadcast_addr >> 8)
+      000376 7As00            [12]  665 	mov	r2,#(_is_broadcast_addr >> 16)
+      000378 12r00r00         [24]  666 	lcall	__sdcc_banked_call
+      00037B AE 82            [24]  667 	mov	r6,dpl
+      00037D AF 83            [24]  668 	mov	r7,dph
+      00037F 15 81            [12]  669 	dec	sp
+      000381 15 81            [12]  670 	dec	sp
+      000383 15 81            [12]  671 	dec	sp
+      000385 EE               [12]  672 	mov	a,r6
+      000386 4F               [12]  673 	orl	a,r7
+                                    674 ;	../../../../core/net/mac/framer-802154.c:187: packetbuf_set_addr(PACKETBUF_ADDR_RECEIVER, (rimeaddr_t *)&frame.dest_addr);
+      000387 70 1D            [24]  675 	jnz	00107$
+      000389 7Er0C            [12]  676 	mov	r6,#(_frame + 0x000b)
+      00038B 7Fs00            [12]  677 	mov	r7,#((_frame + 0x000b) >> 8)
+      00038D FD               [12]  678 	mov	r5,a
+      00038E C0 06            [24]  679 	push	ar6
+      000390 C0 07            [24]  680 	push	ar7
+      000392 C0 05            [24]  681 	push	ar5
+      000394 75 82 19         [24]  682 	mov	dpl,#0x19
+      000397 78r00            [12]  683 	mov	r0,#_packetbuf_set_addr
+      000399 79s00            [12]  684 	mov	r1,#(_packetbuf_set_addr >> 8)
+      00039B 7As00            [12]  685 	mov	r2,#(_packetbuf_set_addr >> 16)
+      00039D 12r00r00         [24]  686 	lcall	__sdcc_banked_call
+      0003A0 15 81            [12]  687 	dec	sp
+      0003A2 15 81            [12]  688 	dec	sp
+      0003A4 15 81            [12]  689 	dec	sp
+      0003A6                        690 00107$:
+                                    691 ;	../../../../core/net/mac/framer-802154.c:190: packetbuf_set_addr(PACKETBUF_ADDR_SENDER, (rimeaddr_t *)&frame.src_addr);
+      0003A6 7Er16            [12]  692 	mov	r6,#(_frame + 0x0015)
+      0003A8 7Fs00            [12]  693 	mov	r7,#((_frame + 0x0015) >> 8)
+      0003AA 7D 00            [12]  694 	mov	r5,#0x00
+      0003AC C0 06            [24]  695 	push	ar6
+      0003AE C0 07            [24]  696 	push	ar7
+      0003B0 C0 05            [24]  697 	push	ar5
+      0003B2 75 82 18         [24]  698 	mov	dpl,#0x18
+      0003B5 78r00            [12]  699 	mov	r0,#_packetbuf_set_addr
+      0003B7 79s00            [12]  700 	mov	r1,#(_packetbuf_set_addr >> 8)
+      0003B9 7As00            [12]  701 	mov	r2,#(_packetbuf_set_addr >> 16)
+      0003BB 12r00r00         [24]  702 	lcall	__sdcc_banked_call
+      0003BE 15 81            [12]  703 	dec	sp
+      0003C0 15 81            [12]  704 	dec	sp
+      0003C2 15 81            [12]  705 	dec	sp
+                                    706 ;	../../../../core/net/mac/framer-802154.c:191: packetbuf_set_attr(PACKETBUF_ATTR_PENDING, frame.fcf.frame_pending);
+      0003C4 90r00r03         [24]  707 	mov	dptr,#(_frame + 0x0002)
+      0003C7 E0               [24]  708 	movx	a,@dptr
+      0003C8 FF               [12]  709 	mov	r7,a
+      0003C9 7E 00            [12]  710 	mov	r6,#0x00
+      0003CB C0 07            [24]  711 	push	ar7
+      0003CD C0 06            [24]  712 	push	ar6
+      0003CF 75 82 12         [24]  713 	mov	dpl,#0x12
+      0003D2 78r00            [12]  714 	mov	r0,#_packetbuf_set_attr
+      0003D4 79s00            [12]  715 	mov	r1,#(_packetbuf_set_attr >> 8)
+      0003D6 7As00            [12]  716 	mov	r2,#(_packetbuf_set_attr >> 16)
+      0003D8 12r00r00         [24]  717 	lcall	__sdcc_banked_call
+      0003DB 15 81            [12]  718 	dec	sp
+      0003DD 15 81            [12]  719 	dec	sp
+                                    720 ;	../../../../core/net/mac/framer-802154.c:193: packetbuf_set_attr(PACKETBUF_ATTR_PACKET_ID, frame.seq);
+      0003DF 90r00r09         [24]  721 	mov	dptr,#(_frame + 0x0008)
+      0003E2 E0               [24]  722 	movx	a,@dptr
+      0003E3 FF               [12]  723 	mov	r7,a
+      0003E4 7E 00            [12]  724 	mov	r6,#0x00
+      0003E6 C0 07            [24]  725 	push	ar7
+      0003E8 C0 06            [24]  726 	push	ar6
+      0003EA 75 82 0D         [24]  727 	mov	dpl,#0x0D
+      0003ED 78r00            [12]  728 	mov	r0,#_packetbuf_set_attr
+      0003EF 79s00            [12]  729 	mov	r1,#(_packetbuf_set_attr >> 8)
+      0003F1 7As00            [12]  730 	mov	r2,#(_packetbuf_set_attr >> 16)
+      0003F3 12r00r00         [24]  731 	lcall	__sdcc_banked_call
+      0003F6 15 81            [12]  732 	dec	sp
+      0003F8 15 81            [12]  733 	dec	sp
+                                    734 ;	../../../../core/net/mac/framer-802154.c:200: return len - frame.payload_len;
+      0003FA 90r00r32         [24]  735 	mov	dptr,#_len
+      0003FD E0               [24]  736 	movx	a,@dptr
+      0003FE FF               [12]  737 	mov	r7,a
+      0003FF 7E 00            [12]  738 	mov	r6,#0x00
+      000401 90r00r31         [24]  739 	mov	dptr,#(_frame + 0x0030)
+      000404 E0               [24]  740 	movx	a,@dptr
+      000405 FD               [12]  741 	mov	r5,a
+      000406 7C 00            [12]  742 	mov	r4,#0x00
+      000408 EF               [12]  743 	mov	a,r7
+      000409 C3               [12]  744 	clr	c
+      00040A 9D               [12]  745 	subb	a,r5
+      00040B FF               [12]  746 	mov	r7,a
+      00040C EE               [12]  747 	mov	a,r6
+      00040D 9C               [12]  748 	subb	a,r4
+      00040E FE               [12]  749 	mov	r6,a
+      00040F 8F 82            [24]  750 	mov	dpl,r7
+      000411 8E 83            [24]  751 	mov	dph,r6
+      000413 80 03            [24]  752 	sjmp	00111$
+      000415                        753 00109$:
+                                    754 ;	../../../../core/net/mac/framer-802154.c:202: return FRAMER_FAILED;
+      000415 90 FF FF         [24]  755 	mov	dptr,#0xFFFF
+      000418                        756 00111$:
+      000418 02r00r00         [24]  757 	ljmp	__sdcc_banked_ret
+                                    758 	.area CSEG    (CODE)
+                                    759 	.area CONST   (CODE)
+      000000                        760 _framer_802154:
+      000000r50s00s00               761 	.byte _create,(_create >> 8),(_create >> 16)
+      000003rC5s02s00               762 	.byte _parse,(_parse >> 8),(_parse >> 16)
+                                    763 	.area XINIT   (CODE)
+      000000                        764 __xinit__initialized:
+      000000 00                     765 	.db #0x00	; 0
+                                    766 	.area CABS    (ABS,CODE)

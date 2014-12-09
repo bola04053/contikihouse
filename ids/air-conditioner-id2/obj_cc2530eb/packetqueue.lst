@@ -1,0 +1,1124 @@
+                                      1 ;--------------------------------------------------------
+                                      2 ; File Created by SDCC : free open source ANSI-C Compiler
+                                      3 ; Version 3.3.1 #8804 (Aug  6 2013) (Linux)
+                                      4 ; This file was generated Mon Aug 25 04:16:31 2014
+                                      5 ;--------------------------------------------------------
+                                      6 	.module packetqueue
+                                      7 	.optsdcc -mmcs51 --model-huge
+                                      8 	
+                                      9 ;--------------------------------------------------------
+                                     10 ; Public variables in this module
+                                     11 ;--------------------------------------------------------
+                                     12 	.globl _queuebuf_free
+                                     13 	.globl _queuebuf_new_from_packetbuf
+                                     14 	.globl _memb_free
+                                     15 	.globl _memb_alloc
+                                     16 	.globl _memb_init
+                                     17 	.globl _list_length
+                                     18 	.globl _list_remove
+                                     19 	.globl _list_add
+                                     20 	.globl _list_head
+                                     21 	.globl _list_init
+                                     22 	.globl _ctimer_stop
+                                     23 	.globl _ctimer_set
+                                     24 	.globl _packetqueue_init
+                                     25 	.globl _packetqueue_enqueue_packetbuf
+                                     26 	.globl _packetqueue_first
+                                     27 	.globl _packetqueue_dequeue
+                                     28 	.globl _packetqueue_len
+                                     29 	.globl _packetqueue_queuebuf
+                                     30 	.globl _packetqueue_ptr
+                                     31 ;--------------------------------------------------------
+                                     32 ; special function registers
+                                     33 ;--------------------------------------------------------
+                                     34 	.area RSEG    (ABS,DATA)
+      000000                         35 	.org 0x0000
+                                     36 ;--------------------------------------------------------
+                                     37 ; special function bits
+                                     38 ;--------------------------------------------------------
+                                     39 	.area RSEG    (ABS,DATA)
+      000000                         40 	.org 0x0000
+                                     41 ;--------------------------------------------------------
+                                     42 ; overlayable register banks
+                                     43 ;--------------------------------------------------------
+                                     44 	.area REG_BANK_0	(REL,OVR,DATA)
+      000000                         45 	.ds 8
+                                     46 ;--------------------------------------------------------
+                                     47 ; internal ram data
+                                     48 ;--------------------------------------------------------
+                                     49 	.area DSEG    (DATA)
+                                     50 ;--------------------------------------------------------
+                                     51 ; overlayable items in internal ram 
+                                     52 ;--------------------------------------------------------
+                                     53 ;--------------------------------------------------------
+                                     54 ; indirectly addressable internal ram data
+                                     55 ;--------------------------------------------------------
+                                     56 	.area ISEG    (DATA)
+                                     57 ;--------------------------------------------------------
+                                     58 ; absolute internal ram data
+                                     59 ;--------------------------------------------------------
+                                     60 	.area IABS    (ABS,DATA)
+                                     61 	.area IABS    (ABS,DATA)
+                                     62 ;--------------------------------------------------------
+                                     63 ; bit data
+                                     64 ;--------------------------------------------------------
+                                     65 	.area BSEG    (BIT)
+                                     66 ;--------------------------------------------------------
+                                     67 ; paged external ram data
+                                     68 ;--------------------------------------------------------
+                                     69 	.area PSEG    (PAG,XDATA)
+                                     70 ;--------------------------------------------------------
+                                     71 ; external ram data
+                                     72 ;--------------------------------------------------------
+                                     73 	.area XSEG    (XDATA)
+                                     74 ;--------------------------------------------------------
+                                     75 ; absolute external ram data
+                                     76 ;--------------------------------------------------------
+                                     77 	.area XABS    (ABS,XDATA)
+                                     78 ;--------------------------------------------------------
+                                     79 ; external initialized ram data
+                                     80 ;--------------------------------------------------------
+                                     81 	.area XISEG   (XDATA)
+                                     82 	.area HOME    (CODE)
+                                     83 	.area GSINIT0 (CODE)
+                                     84 	.area GSINIT1 (CODE)
+                                     85 	.area GSINIT2 (CODE)
+                                     86 	.area GSINIT3 (CODE)
+                                     87 	.area GSINIT4 (CODE)
+                                     88 	.area GSINIT5 (CODE)
+                                     89 	.area GSINIT  (CODE)
+                                     90 	.area GSFINAL (CODE)
+                                     91 	.area CSEG    (CODE)
+                                     92 ;--------------------------------------------------------
+                                     93 ; global & static initialisations
+                                     94 ;--------------------------------------------------------
+                                     95 	.area HOME    (CODE)
+                                     96 	.area GSINIT  (CODE)
+                                     97 	.area GSFINAL (CODE)
+                                     98 	.area GSINIT  (CODE)
+                                     99 ;--------------------------------------------------------
+                                    100 ; Home
+                                    101 ;--------------------------------------------------------
+                                    102 	.area HOME    (CODE)
+                                    103 	.area HOME    (CODE)
+                                    104 ;--------------------------------------------------------
+                                    105 ; code
+                                    106 ;--------------------------------------------------------
+                                    107 	.area BANK1   (CODE)
+                                    108 ;------------------------------------------------------------
+                                    109 ;Allocation info for local variables in function 'packetqueue_init'
+                                    110 ;------------------------------------------------------------
+                                    111 ;q                         Allocated to registers r5 r6 r7 
+                                    112 ;------------------------------------------------------------
+                                    113 ;	../../../../core/net/packetqueue.c:49: packetqueue_init(struct packetqueue *q)
+                                    114 ;	-----------------------------------------
+                                    115 ;	 function packetqueue_init
+                                    116 ;	-----------------------------------------
+      000000                        117 _packetqueue_init:
+                           000007   118 	ar7 = 0x07
+                           000006   119 	ar6 = 0x06
+                           000005   120 	ar5 = 0x05
+                           000004   121 	ar4 = 0x04
+                           000003   122 	ar3 = 0x03
+                           000002   123 	ar2 = 0x02
+                           000001   124 	ar1 = 0x01
+                           000000   125 	ar0 = 0x00
+                                    126 ;	../../../../core/net/packetqueue.c:51: list_init(*q->list);
+      000000 AD 82            [24]  127 	mov	r5,dpl
+      000002 AE 83            [24]  128 	mov	r6,dph
+      000004 AF F0            [24]  129 	mov	r7,b
+      000006 12r00r00         [24]  130 	lcall	__gptrget
+      000009 FA               [12]  131 	mov	r2,a
+      00000A A3               [24]  132 	inc	dptr
+      00000B 12r00r00         [24]  133 	lcall	__gptrget
+      00000E FB               [12]  134 	mov	r3,a
+      00000F A3               [24]  135 	inc	dptr
+      000010 12r00r00         [24]  136 	lcall	__gptrget
+      000013 FC               [12]  137 	mov	r4,a
+      000014 8A 82            [24]  138 	mov	dpl,r2
+      000016 8B 83            [24]  139 	mov	dph,r3
+      000018 8C F0            [24]  140 	mov	b,r4
+      00001A 12r00r00         [24]  141 	lcall	__gptrget
+      00001D FA               [12]  142 	mov	r2,a
+      00001E A3               [24]  143 	inc	dptr
+      00001F 12r00r00         [24]  144 	lcall	__gptrget
+      000022 FB               [12]  145 	mov	r3,a
+      000023 A3               [24]  146 	inc	dptr
+      000024 12r00r00         [24]  147 	lcall	__gptrget
+      000027 FC               [12]  148 	mov	r4,a
+      000028 8A 82            [24]  149 	mov	dpl,r2
+      00002A 8B 83            [24]  150 	mov	dph,r3
+      00002C 8C F0            [24]  151 	mov	b,r4
+      00002E C0 07            [24]  152 	push	ar7
+      000030 C0 06            [24]  153 	push	ar6
+      000032 C0 05            [24]  154 	push	ar5
+      000034 78r00            [12]  155 	mov	r0,#_list_init
+      000036 79s00            [12]  156 	mov	r1,#(_list_init >> 8)
+      000038 7As00            [12]  157 	mov	r2,#(_list_init >> 16)
+      00003A 12r00r00         [24]  158 	lcall	__sdcc_banked_call
+      00003D D0 05            [24]  159 	pop	ar5
+      00003F D0 06            [24]  160 	pop	ar6
+      000041 D0 07            [24]  161 	pop	ar7
+                                    162 ;	../../../../core/net/packetqueue.c:52: memb_init(q->memb);
+      000043 74 03            [12]  163 	mov	a,#0x03
+      000045 2D               [12]  164 	add	a,r5
+      000046 FD               [12]  165 	mov	r5,a
+      000047 E4               [12]  166 	clr	a
+      000048 3E               [12]  167 	addc	a,r6
+      000049 FE               [12]  168 	mov	r6,a
+      00004A 8D 82            [24]  169 	mov	dpl,r5
+      00004C 8E 83            [24]  170 	mov	dph,r6
+      00004E 8F F0            [24]  171 	mov	b,r7
+      000050 12r00r00         [24]  172 	lcall	__gptrget
+      000053 FD               [12]  173 	mov	r5,a
+      000054 A3               [24]  174 	inc	dptr
+      000055 12r00r00         [24]  175 	lcall	__gptrget
+      000058 FE               [12]  176 	mov	r6,a
+      000059 A3               [24]  177 	inc	dptr
+      00005A 12r00r00         [24]  178 	lcall	__gptrget
+      00005D FF               [12]  179 	mov	r7,a
+      00005E 8D 82            [24]  180 	mov	dpl,r5
+      000060 8E 83            [24]  181 	mov	dph,r6
+      000062 8F F0            [24]  182 	mov	b,r7
+      000064 78r00            [12]  183 	mov	r0,#_memb_init
+      000066 79s00            [12]  184 	mov	r1,#(_memb_init >> 8)
+      000068 7As00            [12]  185 	mov	r2,#(_memb_init >> 16)
+      00006A 12r00r00         [24]  186 	lcall	__sdcc_banked_call
+      00006D 02r00r00         [24]  187 	ljmp	__sdcc_banked_ret
+                                    188 ;------------------------------------------------------------
+                                    189 ;Allocation info for local variables in function 'remove_queued_packet'
+                                    190 ;------------------------------------------------------------
+                                    191 ;item                      Allocated to registers r5 r6 r7 
+                                    192 ;i                         Allocated to stack - sp -5
+                                    193 ;q                         Allocated to stack - sp -2
+                                    194 ;------------------------------------------------------------
+                                    195 ;	../../../../core/net/packetqueue.c:56: remove_queued_packet(void *item)
+                                    196 ;	-----------------------------------------
+                                    197 ;	 function remove_queued_packet
+                                    198 ;	-----------------------------------------
+      000070                        199 _remove_queued_packet:
+      000070 E5 81            [12]  200 	mov	a,sp
+      000072 24 06            [12]  201 	add	a,#0x06
+      000074 F5 81            [12]  202 	mov	sp,a
+      000076 AD 82            [24]  203 	mov	r5,dpl
+      000078 AE 83            [24]  204 	mov	r6,dph
+      00007A AF F0            [24]  205 	mov	r7,b
+                                    206 ;	../../../../core/net/packetqueue.c:58: struct packetqueue_item *i = item;
+      00007C E5 81            [12]  207 	mov	a,sp
+      00007E 24 FB            [12]  208 	add	a,#0xfb
+      000080 F8               [12]  209 	mov	r0,a
+      000081 A6 05            [24]  210 	mov	@r0,ar5
+      000083 08               [12]  211 	inc	r0
+      000084 A6 06            [24]  212 	mov	@r0,ar6
+      000086 08               [12]  213 	inc	r0
+      000087 A6 07            [24]  214 	mov	@r0,ar7
+                                    215 ;	../../../../core/net/packetqueue.c:59: struct packetqueue *q = i->queue;
+      000089 E5 81            [12]  216 	mov	a,sp
+      00008B 24 FB            [12]  217 	add	a,#0xfb
+      00008D F8               [12]  218 	mov	r0,a
+      00008E 74 06            [12]  219 	mov	a,#0x06
+      000090 26               [12]  220 	add	a,@r0
+      000091 FA               [12]  221 	mov	r2,a
+      000092 E4               [12]  222 	clr	a
+      000093 08               [12]  223 	inc	r0
+      000094 36               [12]  224 	addc	a,@r0
+      000095 FB               [12]  225 	mov	r3,a
+      000096 08               [12]  226 	inc	r0
+      000097 86 04            [24]  227 	mov	ar4,@r0
+      000099 8A 82            [24]  228 	mov	dpl,r2
+      00009B 8B 83            [24]  229 	mov	dph,r3
+      00009D 8C F0            [24]  230 	mov	b,r4
+      00009F A8 81            [24]  231 	mov	r0,sp
+      0000A1 18               [12]  232 	dec	r0
+      0000A2 18               [12]  233 	dec	r0
+      0000A3 12r00r00         [24]  234 	lcall	__gptrget
+      0000A6 F6               [12]  235 	mov	@r0,a
+      0000A7 A3               [24]  236 	inc	dptr
+      0000A8 12r00r00         [24]  237 	lcall	__gptrget
+      0000AB 08               [12]  238 	inc	r0
+      0000AC F6               [12]  239 	mov	@r0,a
+      0000AD A3               [24]  240 	inc	dptr
+      0000AE 12r00r00         [24]  241 	lcall	__gptrget
+      0000B1 08               [12]  242 	inc	r0
+      0000B2 F6               [12]  243 	mov	@r0,a
+                                    244 ;	../../../../core/net/packetqueue.c:61: list_remove(*q->list, i);
+      0000B3 E5 81            [12]  245 	mov	a,sp
+      0000B5 24 FB            [12]  246 	add	a,#0xfb
+      0000B7 F8               [12]  247 	mov	r0,a
+      0000B8 86 05            [24]  248 	mov	ar5,@r0
+      0000BA 08               [12]  249 	inc	r0
+      0000BB 86 06            [24]  250 	mov	ar6,@r0
+      0000BD 08               [12]  251 	inc	r0
+      0000BE 86 07            [24]  252 	mov	ar7,@r0
+      0000C0 A8 81            [24]  253 	mov	r0,sp
+      0000C2 18               [12]  254 	dec	r0
+      0000C3 18               [12]  255 	dec	r0
+      0000C4 86 82            [24]  256 	mov	dpl,@r0
+      0000C6 08               [12]  257 	inc	r0
+      0000C7 86 83            [24]  258 	mov	dph,@r0
+      0000C9 08               [12]  259 	inc	r0
+      0000CA 86 F0            [24]  260 	mov	b,@r0
+      0000CC 12r00r00         [24]  261 	lcall	__gptrget
+      0000CF FA               [12]  262 	mov	r2,a
+      0000D0 A3               [24]  263 	inc	dptr
+      0000D1 12r00r00         [24]  264 	lcall	__gptrget
+      0000D4 FB               [12]  265 	mov	r3,a
+      0000D5 A3               [24]  266 	inc	dptr
+      0000D6 12r00r00         [24]  267 	lcall	__gptrget
+      0000D9 FC               [12]  268 	mov	r4,a
+      0000DA 8A 82            [24]  269 	mov	dpl,r2
+      0000DC 8B 83            [24]  270 	mov	dph,r3
+      0000DE 8C F0            [24]  271 	mov	b,r4
+      0000E0 12r00r00         [24]  272 	lcall	__gptrget
+      0000E3 FA               [12]  273 	mov	r2,a
+      0000E4 A3               [24]  274 	inc	dptr
+      0000E5 12r00r00         [24]  275 	lcall	__gptrget
+      0000E8 FB               [12]  276 	mov	r3,a
+      0000E9 A3               [24]  277 	inc	dptr
+      0000EA 12r00r00         [24]  278 	lcall	__gptrget
+      0000ED FC               [12]  279 	mov	r4,a
+      0000EE C0 05            [24]  280 	push	ar5
+      0000F0 C0 06            [24]  281 	push	ar6
+      0000F2 C0 07            [24]  282 	push	ar7
+      0000F4 8A 82            [24]  283 	mov	dpl,r2
+      0000F6 8B 83            [24]  284 	mov	dph,r3
+      0000F8 8C F0            [24]  285 	mov	b,r4
+      0000FA 78r00            [12]  286 	mov	r0,#_list_remove
+      0000FC 79s00            [12]  287 	mov	r1,#(_list_remove >> 8)
+      0000FE 7As00            [12]  288 	mov	r2,#(_list_remove >> 16)
+      000100 12r00r00         [24]  289 	lcall	__sdcc_banked_call
+      000103 15 81            [12]  290 	dec	sp
+      000105 15 81            [12]  291 	dec	sp
+      000107 15 81            [12]  292 	dec	sp
+                                    293 ;	../../../../core/net/packetqueue.c:62: queuebuf_free(i->buf);
+      000109 E5 81            [12]  294 	mov	a,sp
+      00010B 24 FB            [12]  295 	add	a,#0xfb
+      00010D F8               [12]  296 	mov	r0,a
+      00010E 74 03            [12]  297 	mov	a,#0x03
+      000110 26               [12]  298 	add	a,@r0
+      000111 FD               [12]  299 	mov	r5,a
+      000112 E4               [12]  300 	clr	a
+      000113 08               [12]  301 	inc	r0
+      000114 36               [12]  302 	addc	a,@r0
+      000115 FE               [12]  303 	mov	r6,a
+      000116 08               [12]  304 	inc	r0
+      000117 86 07            [24]  305 	mov	ar7,@r0
+      000119 8D 82            [24]  306 	mov	dpl,r5
+      00011B 8E 83            [24]  307 	mov	dph,r6
+      00011D 8F F0            [24]  308 	mov	b,r7
+      00011F 12r00r00         [24]  309 	lcall	__gptrget
+      000122 FD               [12]  310 	mov	r5,a
+      000123 A3               [24]  311 	inc	dptr
+      000124 12r00r00         [24]  312 	lcall	__gptrget
+      000127 FE               [12]  313 	mov	r6,a
+      000128 A3               [24]  314 	inc	dptr
+      000129 12r00r00         [24]  315 	lcall	__gptrget
+      00012C FF               [12]  316 	mov	r7,a
+      00012D 8D 82            [24]  317 	mov	dpl,r5
+      00012F 8E 83            [24]  318 	mov	dph,r6
+      000131 8F F0            [24]  319 	mov	b,r7
+      000133 78r00            [12]  320 	mov	r0,#_queuebuf_free
+      000135 79s00            [12]  321 	mov	r1,#(_queuebuf_free >> 8)
+      000137 7As00            [12]  322 	mov	r2,#(_queuebuf_free >> 16)
+      000139 12r00r00         [24]  323 	lcall	__sdcc_banked_call
+                                    324 ;	../../../../core/net/packetqueue.c:63: ctimer_stop(&i->lifetimer);
+      00013C E5 81            [12]  325 	mov	a,sp
+      00013E 24 FB            [12]  326 	add	a,#0xfb
+      000140 F8               [12]  327 	mov	r0,a
+      000141 74 09            [12]  328 	mov	a,#0x09
+      000143 26               [12]  329 	add	a,@r0
+      000144 FD               [12]  330 	mov	r5,a
+      000145 E4               [12]  331 	clr	a
+      000146 08               [12]  332 	inc	r0
+      000147 36               [12]  333 	addc	a,@r0
+      000148 FE               [12]  334 	mov	r6,a
+      000149 08               [12]  335 	inc	r0
+      00014A 86 07            [24]  336 	mov	ar7,@r0
+      00014C 8D 82            [24]  337 	mov	dpl,r5
+      00014E 8E 83            [24]  338 	mov	dph,r6
+      000150 8F F0            [24]  339 	mov	b,r7
+      000152 78r00            [12]  340 	mov	r0,#_ctimer_stop
+      000154 79s00            [12]  341 	mov	r1,#(_ctimer_stop >> 8)
+      000156 7As00            [12]  342 	mov	r2,#(_ctimer_stop >> 16)
+      000158 12r00r00         [24]  343 	lcall	__sdcc_banked_call
+                                    344 ;	../../../../core/net/packetqueue.c:64: memb_free(q->memb, i);
+      00015B E5 81            [12]  345 	mov	a,sp
+      00015D 24 FB            [12]  346 	add	a,#0xfb
+      00015F F8               [12]  347 	mov	r0,a
+      000160 86 05            [24]  348 	mov	ar5,@r0
+      000162 08               [12]  349 	inc	r0
+      000163 86 06            [24]  350 	mov	ar6,@r0
+      000165 08               [12]  351 	inc	r0
+      000166 86 07            [24]  352 	mov	ar7,@r0
+      000168 A8 81            [24]  353 	mov	r0,sp
+      00016A 18               [12]  354 	dec	r0
+      00016B 18               [12]  355 	dec	r0
+      00016C 74 03            [12]  356 	mov	a,#0x03
+      00016E 26               [12]  357 	add	a,@r0
+      00016F FA               [12]  358 	mov	r2,a
+      000170 E4               [12]  359 	clr	a
+      000171 08               [12]  360 	inc	r0
+      000172 36               [12]  361 	addc	a,@r0
+      000173 FB               [12]  362 	mov	r3,a
+      000174 08               [12]  363 	inc	r0
+      000175 86 04            [24]  364 	mov	ar4,@r0
+      000177 8A 82            [24]  365 	mov	dpl,r2
+      000179 8B 83            [24]  366 	mov	dph,r3
+      00017B 8C F0            [24]  367 	mov	b,r4
+      00017D 12r00r00         [24]  368 	lcall	__gptrget
+      000180 FA               [12]  369 	mov	r2,a
+      000181 A3               [24]  370 	inc	dptr
+      000182 12r00r00         [24]  371 	lcall	__gptrget
+      000185 FB               [12]  372 	mov	r3,a
+      000186 A3               [24]  373 	inc	dptr
+      000187 12r00r00         [24]  374 	lcall	__gptrget
+      00018A FC               [12]  375 	mov	r4,a
+      00018B C0 05            [24]  376 	push	ar5
+      00018D C0 06            [24]  377 	push	ar6
+      00018F C0 07            [24]  378 	push	ar7
+      000191 8A 82            [24]  379 	mov	dpl,r2
+      000193 8B 83            [24]  380 	mov	dph,r3
+      000195 8C F0            [24]  381 	mov	b,r4
+      000197 78r00            [12]  382 	mov	r0,#_memb_free
+      000199 79s00            [12]  383 	mov	r1,#(_memb_free >> 8)
+      00019B 7As00            [12]  384 	mov	r2,#(_memb_free >> 16)
+      00019D 12r00r00         [24]  385 	lcall	__sdcc_banked_call
+      0001A0 15 81            [12]  386 	dec	sp
+      0001A2 15 81            [12]  387 	dec	sp
+      0001A4 15 81            [12]  388 	dec	sp
+      0001A6 E5 81            [12]  389 	mov	a,sp
+      0001A8 24 FA            [12]  390 	add	a,#0xFA
+      0001AA F5 81            [12]  391 	mov	sp,a
+      0001AC 02r00r00         [24]  392 	ljmp	__sdcc_banked_ret
+                                    393 ;------------------------------------------------------------
+                                    394 ;Allocation info for local variables in function 'packetqueue_enqueue_packetbuf'
+                                    395 ;------------------------------------------------------------
+                                    396 ;lifetime                  Allocated to stack - sp -10
+                                    397 ;ptr                       Allocated to stack - sp -13
+                                    398 ;q                         Allocated to stack - sp -5
+                                    399 ;i                         Allocated to stack - sp -2
+                                    400 ;------------------------------------------------------------
+                                    401 ;	../../../../core/net/packetqueue.c:69: packetqueue_enqueue_packetbuf(struct packetqueue *q, clock_time_t lifetime,
+                                    402 ;	-----------------------------------------
+                                    403 ;	 function packetqueue_enqueue_packetbuf
+                                    404 ;	-----------------------------------------
+      0001AF                        405 _packetqueue_enqueue_packetbuf:
+      0001AF C0 82            [24]  406 	push	dpl
+      0001B1 C0 83            [24]  407 	push	dph
+      0001B3 C0 F0            [24]  408 	push	b
+      0001B5 05 81            [12]  409 	inc	sp
+      0001B7 05 81            [12]  410 	inc	sp
+      0001B9 05 81            [12]  411 	inc	sp
+                                    412 ;	../../../../core/net/packetqueue.c:75: i = memb_alloc(q->memb);
+      0001BB E5 81            [12]  413 	mov	a,sp
+      0001BD 24 FB            [12]  414 	add	a,#0xfb
+      0001BF F8               [12]  415 	mov	r0,a
+      0001C0 74 03            [12]  416 	mov	a,#0x03
+      0001C2 26               [12]  417 	add	a,@r0
+      0001C3 FA               [12]  418 	mov	r2,a
+      0001C4 E4               [12]  419 	clr	a
+      0001C5 08               [12]  420 	inc	r0
+      0001C6 36               [12]  421 	addc	a,@r0
+      0001C7 FB               [12]  422 	mov	r3,a
+      0001C8 08               [12]  423 	inc	r0
+      0001C9 86 04            [24]  424 	mov	ar4,@r0
+      0001CB 8A 82            [24]  425 	mov	dpl,r2
+      0001CD 8B 83            [24]  426 	mov	dph,r3
+      0001CF 8C F0            [24]  427 	mov	b,r4
+      0001D1 12r00r00         [24]  428 	lcall	__gptrget
+      0001D4 FD               [12]  429 	mov	r5,a
+      0001D5 A3               [24]  430 	inc	dptr
+      0001D6 12r00r00         [24]  431 	lcall	__gptrget
+      0001D9 FE               [12]  432 	mov	r6,a
+      0001DA A3               [24]  433 	inc	dptr
+      0001DB 12r00r00         [24]  434 	lcall	__gptrget
+      0001DE FF               [12]  435 	mov	r7,a
+      0001DF 8D 82            [24]  436 	mov	dpl,r5
+      0001E1 8E 83            [24]  437 	mov	dph,r6
+      0001E3 8F F0            [24]  438 	mov	b,r7
+      0001E5 C0 04            [24]  439 	push	ar4
+      0001E7 C0 03            [24]  440 	push	ar3
+      0001E9 C0 02            [24]  441 	push	ar2
+      0001EB 78r00            [12]  442 	mov	r0,#_memb_alloc
+      0001ED 79s00            [12]  443 	mov	r1,#(_memb_alloc >> 8)
+      0001EF 7As00            [12]  444 	mov	r2,#(_memb_alloc >> 16)
+      0001F1 12r00r00         [24]  445 	lcall	__sdcc_banked_call
+      0001F4 AD 82            [24]  446 	mov	r5,dpl
+      0001F6 AE 83            [24]  447 	mov	r6,dph
+      0001F8 AF F0            [24]  448 	mov	r7,b
+      0001FA D0 02            [24]  449 	pop	ar2
+      0001FC D0 03            [24]  450 	pop	ar3
+      0001FE D0 04            [24]  451 	pop	ar4
+      000200 A8 81            [24]  452 	mov	r0,sp
+      000202 18               [12]  453 	dec	r0
+      000203 18               [12]  454 	dec	r0
+      000204 A6 05            [24]  455 	mov	@r0,ar5
+      000206 08               [12]  456 	inc	r0
+      000207 A6 06            [24]  457 	mov	@r0,ar6
+      000209 08               [12]  458 	inc	r0
+      00020A A6 07            [24]  459 	mov	@r0,ar7
+                                    460 ;	../../../../core/net/packetqueue.c:77: if(i == NULL) {
+      00020C A8 81            [24]  461 	mov	r0,sp
+      00020E 18               [12]  462 	dec	r0
+      00020F 18               [12]  463 	dec	r0
+      000210 E6               [12]  464 	mov	a,@r0
+      000211 08               [12]  465 	inc	r0
+      000212 46               [12]  466 	orl	a,@r0
+      000213 70 06            [24]  467 	jnz	00102$
+                                    468 ;	../../../../core/net/packetqueue.c:78: return 0;
+      000215 90 00 00         [24]  469 	mov	dptr,#0x0000
+      000218 02r03rB0         [24]  470 	ljmp	00107$
+      00021B                        471 00102$:
+                                    472 ;	../../../../core/net/packetqueue.c:82: i->buf = queuebuf_new_from_packetbuf();
+      00021B C0 02            [24]  473 	push	ar2
+      00021D C0 03            [24]  474 	push	ar3
+      00021F C0 04            [24]  475 	push	ar4
+      000221 E5 81            [12]  476 	mov	a,sp
+      000223 24 FB            [12]  477 	add	a,#0xfb
+      000225 F8               [12]  478 	mov	r0,a
+      000226 74 03            [12]  479 	mov	a,#0x03
+      000228 26               [12]  480 	add	a,@r0
+      000229 FA               [12]  481 	mov	r2,a
+      00022A E4               [12]  482 	clr	a
+      00022B 08               [12]  483 	inc	r0
+      00022C 36               [12]  484 	addc	a,@r0
+      00022D FB               [12]  485 	mov	r3,a
+      00022E 08               [12]  486 	inc	r0
+      00022F 86 04            [24]  487 	mov	ar4,@r0
+      000231 C0 04            [24]  488 	push	ar4
+      000233 C0 03            [24]  489 	push	ar3
+      000235 C0 02            [24]  490 	push	ar2
+      000237 78r00            [12]  491 	mov	r0,#_queuebuf_new_from_packetbuf
+      000239 79s00            [12]  492 	mov	r1,#(_queuebuf_new_from_packetbuf >> 8)
+      00023B 7As00            [12]  493 	mov	r2,#(_queuebuf_new_from_packetbuf >> 16)
+      00023D 12r00r00         [24]  494 	lcall	__sdcc_banked_call
+      000240 AD 82            [24]  495 	mov	r5,dpl
+      000242 AE 83            [24]  496 	mov	r6,dph
+      000244 AF F0            [24]  497 	mov	r7,b
+      000246 D0 02            [24]  498 	pop	ar2
+      000248 D0 03            [24]  499 	pop	ar3
+      00024A D0 04            [24]  500 	pop	ar4
+      00024C 8A 82            [24]  501 	mov	dpl,r2
+      00024E 8B 83            [24]  502 	mov	dph,r3
+      000250 8C F0            [24]  503 	mov	b,r4
+      000252 ED               [12]  504 	mov	a,r5
+      000253 12r00r00         [24]  505 	lcall	__gptrput
+      000256 A3               [24]  506 	inc	dptr
+      000257 EE               [12]  507 	mov	a,r6
+      000258 12r00r00         [24]  508 	lcall	__gptrput
+      00025B A3               [24]  509 	inc	dptr
+      00025C EF               [12]  510 	mov	a,r7
+      00025D 12r00r00         [24]  511 	lcall	__gptrput
+                                    512 ;	../../../../core/net/packetqueue.c:84: if(i->buf == NULL) {
+      000260 D0 04            [24]  513 	pop	ar4
+      000262 D0 03            [24]  514 	pop	ar3
+      000264 D0 02            [24]  515 	pop	ar2
+      000266 ED               [12]  516 	mov	a,r5
+      000267 4E               [12]  517 	orl	a,r6
+      000268 70 41            [24]  518 	jnz	00104$
+                                    519 ;	../../../../core/net/packetqueue.c:85: memb_free(q->memb, i);
+      00026A A8 81            [24]  520 	mov	r0,sp
+      00026C 18               [12]  521 	dec	r0
+      00026D 18               [12]  522 	dec	r0
+      00026E 86 05            [24]  523 	mov	ar5,@r0
+      000270 08               [12]  524 	inc	r0
+      000271 86 06            [24]  525 	mov	ar6,@r0
+      000273 08               [12]  526 	inc	r0
+      000274 86 07            [24]  527 	mov	ar7,@r0
+      000276 8A 82            [24]  528 	mov	dpl,r2
+      000278 8B 83            [24]  529 	mov	dph,r3
+      00027A 8C F0            [24]  530 	mov	b,r4
+      00027C 12r00r00         [24]  531 	lcall	__gptrget
+      00027F FA               [12]  532 	mov	r2,a
+      000280 A3               [24]  533 	inc	dptr
+      000281 12r00r00         [24]  534 	lcall	__gptrget
+      000284 FB               [12]  535 	mov	r3,a
+      000285 A3               [24]  536 	inc	dptr
+      000286 12r00r00         [24]  537 	lcall	__gptrget
+      000289 FC               [12]  538 	mov	r4,a
+      00028A C0 05            [24]  539 	push	ar5
+      00028C C0 06            [24]  540 	push	ar6
+      00028E C0 07            [24]  541 	push	ar7
+      000290 8A 82            [24]  542 	mov	dpl,r2
+      000292 8B 83            [24]  543 	mov	dph,r3
+      000294 8C F0            [24]  544 	mov	b,r4
+      000296 78r00            [12]  545 	mov	r0,#_memb_free
+      000298 79s00            [12]  546 	mov	r1,#(_memb_free >> 8)
+      00029A 7As00            [12]  547 	mov	r2,#(_memb_free >> 16)
+      00029C 12r00r00         [24]  548 	lcall	__sdcc_banked_call
+      00029F 15 81            [12]  549 	dec	sp
+      0002A1 15 81            [12]  550 	dec	sp
+      0002A3 15 81            [12]  551 	dec	sp
+                                    552 ;	../../../../core/net/packetqueue.c:86: return 0;
+      0002A5 90 00 00         [24]  553 	mov	dptr,#0x0000
+      0002A8 02r03rB0         [24]  554 	ljmp	00107$
+      0002AB                        555 00104$:
+                                    556 ;	../../../../core/net/packetqueue.c:89: i->queue = q;
+      0002AB A8 81            [24]  557 	mov	r0,sp
+      0002AD 18               [12]  558 	dec	r0
+      0002AE 18               [12]  559 	dec	r0
+      0002AF 74 06            [12]  560 	mov	a,#0x06
+      0002B1 26               [12]  561 	add	a,@r0
+      0002B2 FD               [12]  562 	mov	r5,a
+      0002B3 E4               [12]  563 	clr	a
+      0002B4 08               [12]  564 	inc	r0
+      0002B5 36               [12]  565 	addc	a,@r0
+      0002B6 FE               [12]  566 	mov	r6,a
+      0002B7 08               [12]  567 	inc	r0
+      0002B8 86 07            [24]  568 	mov	ar7,@r0
+      0002BA 8D 82            [24]  569 	mov	dpl,r5
+      0002BC 8E 83            [24]  570 	mov	dph,r6
+      0002BE 8F F0            [24]  571 	mov	b,r7
+      0002C0 E5 81            [12]  572 	mov	a,sp
+      0002C2 24 FB            [12]  573 	add	a,#0xfb
+      0002C4 F8               [12]  574 	mov	r0,a
+      0002C5 E6               [12]  575 	mov	a,@r0
+      0002C6 12r00r00         [24]  576 	lcall	__gptrput
+      0002C9 A3               [24]  577 	inc	dptr
+      0002CA 08               [12]  578 	inc	r0
+      0002CB E6               [12]  579 	mov	a,@r0
+      0002CC 12r00r00         [24]  580 	lcall	__gptrput
+      0002CF A3               [24]  581 	inc	dptr
+      0002D0 08               [12]  582 	inc	r0
+      0002D1 E6               [12]  583 	mov	a,@r0
+      0002D2 12r00r00         [24]  584 	lcall	__gptrput
+                                    585 ;	../../../../core/net/packetqueue.c:90: i->ptr = ptr;
+      0002D5 A8 81            [24]  586 	mov	r0,sp
+      0002D7 18               [12]  587 	dec	r0
+      0002D8 18               [12]  588 	dec	r0
+      0002D9 74 1F            [12]  589 	mov	a,#0x1F
+      0002DB 26               [12]  590 	add	a,@r0
+      0002DC FD               [12]  591 	mov	r5,a
+      0002DD E4               [12]  592 	clr	a
+      0002DE 08               [12]  593 	inc	r0
+      0002DF 36               [12]  594 	addc	a,@r0
+      0002E0 FE               [12]  595 	mov	r6,a
+      0002E1 08               [12]  596 	inc	r0
+      0002E2 86 07            [24]  597 	mov	ar7,@r0
+      0002E4 8D 82            [24]  598 	mov	dpl,r5
+      0002E6 8E 83            [24]  599 	mov	dph,r6
+      0002E8 8F F0            [24]  600 	mov	b,r7
+      0002EA E5 81            [12]  601 	mov	a,sp
+      0002EC 24 F3            [12]  602 	add	a,#0xf3
+      0002EE F8               [12]  603 	mov	r0,a
+      0002EF E6               [12]  604 	mov	a,@r0
+      0002F0 12r00r00         [24]  605 	lcall	__gptrput
+      0002F3 A3               [24]  606 	inc	dptr
+      0002F4 08               [12]  607 	inc	r0
+      0002F5 E6               [12]  608 	mov	a,@r0
+      0002F6 12r00r00         [24]  609 	lcall	__gptrput
+      0002F9 A3               [24]  610 	inc	dptr
+      0002FA 08               [12]  611 	inc	r0
+      0002FB E6               [12]  612 	mov	a,@r0
+      0002FC 12r00r00         [24]  613 	lcall	__gptrput
+                                    614 ;	../../../../core/net/packetqueue.c:95: if(lifetime > 0) {
+      0002FF E5 81            [12]  615 	mov	a,sp
+      000301 24 F6            [12]  616 	add	a,#0xf6
+      000303 F8               [12]  617 	mov	r0,a
+      000304 E6               [12]  618 	mov	a,@r0
+      000305 08               [12]  619 	inc	r0
+      000306 46               [12]  620 	orl	a,@r0
+      000307 60 4E            [24]  621 	jz	00106$
+                                    622 ;	../../../../core/net/packetqueue.c:96: ctimer_set(&i->lifetimer, lifetime, remove_queued_packet, i);
+      000309 A8 81            [24]  623 	mov	r0,sp
+      00030B 18               [12]  624 	dec	r0
+      00030C 18               [12]  625 	dec	r0
+      00030D 86 05            [24]  626 	mov	ar5,@r0
+      00030F 08               [12]  627 	inc	r0
+      000310 86 06            [24]  628 	mov	ar6,@r0
+      000312 08               [12]  629 	inc	r0
+      000313 86 07            [24]  630 	mov	ar7,@r0
+      000315 A8 81            [24]  631 	mov	r0,sp
+      000317 18               [12]  632 	dec	r0
+      000318 18               [12]  633 	dec	r0
+      000319 74 09            [12]  634 	mov	a,#0x09
+      00031B 26               [12]  635 	add	a,@r0
+      00031C FA               [12]  636 	mov	r2,a
+      00031D E4               [12]  637 	clr	a
+      00031E 08               [12]  638 	inc	r0
+      00031F 36               [12]  639 	addc	a,@r0
+      000320 FB               [12]  640 	mov	r3,a
+      000321 08               [12]  641 	inc	r0
+      000322 86 04            [24]  642 	mov	ar4,@r0
+      000324 C0 05            [24]  643 	push	ar5
+      000326 C0 06            [24]  644 	push	ar6
+      000328 C0 07            [24]  645 	push	ar7
+      00032A 74r70            [12]  646 	mov	a,#_remove_queued_packet
+      00032C C0 E0            [24]  647 	push	acc
+      00032E 74s00            [12]  648 	mov	a,#(_remove_queued_packet >> 8)
+      000330 C0 E0            [24]  649 	push	acc
+      000332 74s00            [12]  650 	mov	a,#(_remove_queued_packet >> 16)
+      000334 C0 E0            [24]  651 	push	acc
+      000336 E5 81            [12]  652 	mov	a,sp
+      000338 24 F0            [12]  653 	add	a,#0xf0
+      00033A F8               [12]  654 	mov	r0,a
+      00033B E6               [12]  655 	mov	a,@r0
+      00033C C0 E0            [24]  656 	push	acc
+      00033E 08               [12]  657 	inc	r0
+      00033F E6               [12]  658 	mov	a,@r0
+      000340 C0 E0            [24]  659 	push	acc
+      000342 8A 82            [24]  660 	mov	dpl,r2
+      000344 8B 83            [24]  661 	mov	dph,r3
+      000346 8C F0            [24]  662 	mov	b,r4
+      000348 78r00            [12]  663 	mov	r0,#_ctimer_set
+      00034A 79s00            [12]  664 	mov	r1,#(_ctimer_set >> 8)
+      00034C 7As00            [12]  665 	mov	r2,#(_ctimer_set >> 16)
+      00034E 12r00r00         [24]  666 	lcall	__sdcc_banked_call
+      000351 E5 81            [12]  667 	mov	a,sp
+      000353 24 F8            [12]  668 	add	a,#0xf8
+      000355 F5 81            [12]  669 	mov	sp,a
+      000357                        670 00106$:
+                                    671 ;	../../../../core/net/packetqueue.c:100: list_add(*q->list, i);
+      000357 A8 81            [24]  672 	mov	r0,sp
+      000359 18               [12]  673 	dec	r0
+      00035A 18               [12]  674 	dec	r0
+      00035B 86 05            [24]  675 	mov	ar5,@r0
+      00035D 08               [12]  676 	inc	r0
+      00035E 86 06            [24]  677 	mov	ar6,@r0
+      000360 08               [12]  678 	inc	r0
+      000361 86 07            [24]  679 	mov	ar7,@r0
+      000363 E5 81            [12]  680 	mov	a,sp
+      000365 24 FB            [12]  681 	add	a,#0xfb
+      000367 F8               [12]  682 	mov	r0,a
+      000368 86 82            [24]  683 	mov	dpl,@r0
+      00036A 08               [12]  684 	inc	r0
+      00036B 86 83            [24]  685 	mov	dph,@r0
+      00036D 08               [12]  686 	inc	r0
+      00036E 86 F0            [24]  687 	mov	b,@r0
+      000370 12r00r00         [24]  688 	lcall	__gptrget
+      000373 FA               [12]  689 	mov	r2,a
+      000374 A3               [24]  690 	inc	dptr
+      000375 12r00r00         [24]  691 	lcall	__gptrget
+      000378 FB               [12]  692 	mov	r3,a
+      000379 A3               [24]  693 	inc	dptr
+      00037A 12r00r00         [24]  694 	lcall	__gptrget
+      00037D FC               [12]  695 	mov	r4,a
+      00037E 8A 82            [24]  696 	mov	dpl,r2
+      000380 8B 83            [24]  697 	mov	dph,r3
+      000382 8C F0            [24]  698 	mov	b,r4
+      000384 12r00r00         [24]  699 	lcall	__gptrget
+      000387 FA               [12]  700 	mov	r2,a
+      000388 A3               [24]  701 	inc	dptr
+      000389 12r00r00         [24]  702 	lcall	__gptrget
+      00038C FB               [12]  703 	mov	r3,a
+      00038D A3               [24]  704 	inc	dptr
+      00038E 12r00r00         [24]  705 	lcall	__gptrget
+      000391 FC               [12]  706 	mov	r4,a
+      000392 C0 05            [24]  707 	push	ar5
+      000394 C0 06            [24]  708 	push	ar6
+      000396 C0 07            [24]  709 	push	ar7
+      000398 8A 82            [24]  710 	mov	dpl,r2
+      00039A 8B 83            [24]  711 	mov	dph,r3
+      00039C 8C F0            [24]  712 	mov	b,r4
+      00039E 78r00            [12]  713 	mov	r0,#_list_add
+      0003A0 79s00            [12]  714 	mov	r1,#(_list_add >> 8)
+      0003A2 7As00            [12]  715 	mov	r2,#(_list_add >> 16)
+      0003A4 12r00r00         [24]  716 	lcall	__sdcc_banked_call
+      0003A7 15 81            [12]  717 	dec	sp
+      0003A9 15 81            [12]  718 	dec	sp
+      0003AB 15 81            [12]  719 	dec	sp
+                                    720 ;	../../../../core/net/packetqueue.c:102: return 1;
+      0003AD 90 00 01         [24]  721 	mov	dptr,#0x0001
+      0003B0                        722 00107$:
+      0003B0 E5 81            [12]  723 	mov	a,sp
+      0003B2 24 FA            [12]  724 	add	a,#0xFA
+      0003B4 F5 81            [12]  725 	mov	sp,a
+      0003B6 02r00r00         [24]  726 	ljmp	__sdcc_banked_ret
+                                    727 ;------------------------------------------------------------
+                                    728 ;Allocation info for local variables in function 'packetqueue_first'
+                                    729 ;------------------------------------------------------------
+                                    730 ;q                         Allocated to registers r5 r6 r7 
+                                    731 ;------------------------------------------------------------
+                                    732 ;	../../../../core/net/packetqueue.c:106: packetqueue_first(struct packetqueue *q)
+                                    733 ;	-----------------------------------------
+                                    734 ;	 function packetqueue_first
+                                    735 ;	-----------------------------------------
+      0003B9                        736 _packetqueue_first:
+                                    737 ;	../../../../core/net/packetqueue.c:108: return list_head(*q->list);
+      0003B9 12r00r00         [24]  738 	lcall	__gptrget
+      0003BC FD               [12]  739 	mov	r5,a
+      0003BD A3               [24]  740 	inc	dptr
+      0003BE 12r00r00         [24]  741 	lcall	__gptrget
+      0003C1 FE               [12]  742 	mov	r6,a
+      0003C2 A3               [24]  743 	inc	dptr
+      0003C3 12r00r00         [24]  744 	lcall	__gptrget
+      0003C6 FF               [12]  745 	mov	r7,a
+      0003C7 8D 82            [24]  746 	mov	dpl,r5
+      0003C9 8E 83            [24]  747 	mov	dph,r6
+      0003CB 8F F0            [24]  748 	mov	b,r7
+      0003CD 12r00r00         [24]  749 	lcall	__gptrget
+      0003D0 FD               [12]  750 	mov	r5,a
+      0003D1 A3               [24]  751 	inc	dptr
+      0003D2 12r00r00         [24]  752 	lcall	__gptrget
+      0003D5 FE               [12]  753 	mov	r6,a
+      0003D6 A3               [24]  754 	inc	dptr
+      0003D7 12r00r00         [24]  755 	lcall	__gptrget
+      0003DA FF               [12]  756 	mov	r7,a
+      0003DB 8D 82            [24]  757 	mov	dpl,r5
+      0003DD 8E 83            [24]  758 	mov	dph,r6
+      0003DF 8F F0            [24]  759 	mov	b,r7
+      0003E1 78r00            [12]  760 	mov	r0,#_list_head
+      0003E3 79s00            [12]  761 	mov	r1,#(_list_head >> 8)
+      0003E5 7As00            [12]  762 	mov	r2,#(_list_head >> 16)
+      0003E7 12r00r00         [24]  763 	lcall	__sdcc_banked_call
+      0003EA AD 82            [24]  764 	mov	r5,dpl
+      0003EC AE 83            [24]  765 	mov	r6,dph
+      0003EE AF F0            [24]  766 	mov	r7,b
+      0003F0 02r00r00         [24]  767 	ljmp	__sdcc_banked_ret
+                                    768 ;------------------------------------------------------------
+                                    769 ;Allocation info for local variables in function 'packetqueue_dequeue'
+                                    770 ;------------------------------------------------------------
+                                    771 ;q                         Allocated to stack - sp -5
+                                    772 ;i                         Allocated to stack - sp -2
+                                    773 ;------------------------------------------------------------
+                                    774 ;	../../../../core/net/packetqueue.c:112: packetqueue_dequeue(struct packetqueue *q)
+                                    775 ;	-----------------------------------------
+                                    776 ;	 function packetqueue_dequeue
+                                    777 ;	-----------------------------------------
+      0003F3                        778 _packetqueue_dequeue:
+      0003F3 C0 82            [24]  779 	push	dpl
+      0003F5 C0 83            [24]  780 	push	dph
+      0003F7 C0 F0            [24]  781 	push	b
+      0003F9 05 81            [12]  782 	inc	sp
+      0003FB 05 81            [12]  783 	inc	sp
+      0003FD 05 81            [12]  784 	inc	sp
+                                    785 ;	../../../../core/net/packetqueue.c:116: i = list_head(*q->list);
+      0003FF E5 81            [12]  786 	mov	a,sp
+      000401 24 FB            [12]  787 	add	a,#0xfb
+      000403 F8               [12]  788 	mov	r0,a
+      000404 86 82            [24]  789 	mov	dpl,@r0
+      000406 08               [12]  790 	inc	r0
+      000407 86 83            [24]  791 	mov	dph,@r0
+      000409 08               [12]  792 	inc	r0
+      00040A 86 F0            [24]  793 	mov	b,@r0
+      00040C 12r00r00         [24]  794 	lcall	__gptrget
+      00040F FA               [12]  795 	mov	r2,a
+      000410 A3               [24]  796 	inc	dptr
+      000411 12r00r00         [24]  797 	lcall	__gptrget
+      000414 FB               [12]  798 	mov	r3,a
+      000415 A3               [24]  799 	inc	dptr
+      000416 12r00r00         [24]  800 	lcall	__gptrget
+      000419 FC               [12]  801 	mov	r4,a
+      00041A 8A 82            [24]  802 	mov	dpl,r2
+      00041C 8B 83            [24]  803 	mov	dph,r3
+      00041E 8C F0            [24]  804 	mov	b,r4
+      000420 12r00r00         [24]  805 	lcall	__gptrget
+      000423 FA               [12]  806 	mov	r2,a
+      000424 A3               [24]  807 	inc	dptr
+      000425 12r00r00         [24]  808 	lcall	__gptrget
+      000428 FB               [12]  809 	mov	r3,a
+      000429 A3               [24]  810 	inc	dptr
+      00042A 12r00r00         [24]  811 	lcall	__gptrget
+      00042D FC               [12]  812 	mov	r4,a
+      00042E 8A 82            [24]  813 	mov	dpl,r2
+      000430 8B 83            [24]  814 	mov	dph,r3
+      000432 8C F0            [24]  815 	mov	b,r4
+      000434 78r00            [12]  816 	mov	r0,#_list_head
+      000436 79s00            [12]  817 	mov	r1,#(_list_head >> 8)
+      000438 7As00            [12]  818 	mov	r2,#(_list_head >> 16)
+      00043A 12r00r00         [24]  819 	lcall	__sdcc_banked_call
+      00043D AA 82            [24]  820 	mov	r2,dpl
+      00043F AB 83            [24]  821 	mov	r3,dph
+      000441 AC F0            [24]  822 	mov	r4,b
+      000443 A8 81            [24]  823 	mov	r0,sp
+      000445 18               [12]  824 	dec	r0
+      000446 18               [12]  825 	dec	r0
+      000447 A6 02            [24]  826 	mov	@r0,ar2
+      000449 08               [12]  827 	inc	r0
+      00044A A6 03            [24]  828 	mov	@r0,ar3
+      00044C 08               [12]  829 	inc	r0
+      00044D A6 04            [24]  830 	mov	@r0,ar4
+                                    831 ;	../../../../core/net/packetqueue.c:117: if(i != NULL) {
+      00044F A8 81            [24]  832 	mov	r0,sp
+      000451 18               [12]  833 	dec	r0
+      000452 18               [12]  834 	dec	r0
+      000453 E6               [12]  835 	mov	a,@r0
+      000454 08               [12]  836 	inc	r0
+      000455 46               [12]  837 	orl	a,@r0
+      000456 70 03            [24]  838 	jnz	00108$
+      000458 02r05r4C         [24]  839 	ljmp	00103$
+      00045B                        840 00108$:
+                                    841 ;	../../../../core/net/packetqueue.c:118: list_remove(*q->list, i);
+      00045B A8 81            [24]  842 	mov	r0,sp
+      00045D 18               [12]  843 	dec	r0
+      00045E 18               [12]  844 	dec	r0
+      00045F 86 02            [24]  845 	mov	ar2,@r0
+      000461 08               [12]  846 	inc	r0
+      000462 86 03            [24]  847 	mov	ar3,@r0
+      000464 08               [12]  848 	inc	r0
+      000465 86 04            [24]  849 	mov	ar4,@r0
+      000467 E5 81            [12]  850 	mov	a,sp
+      000469 24 FB            [12]  851 	add	a,#0xfb
+      00046B F8               [12]  852 	mov	r0,a
+      00046C 86 82            [24]  853 	mov	dpl,@r0
+      00046E 08               [12]  854 	inc	r0
+      00046F 86 83            [24]  855 	mov	dph,@r0
+      000471 08               [12]  856 	inc	r0
+      000472 86 F0            [24]  857 	mov	b,@r0
+      000474 12r00r00         [24]  858 	lcall	__gptrget
+      000477 FD               [12]  859 	mov	r5,a
+      000478 A3               [24]  860 	inc	dptr
+      000479 12r00r00         [24]  861 	lcall	__gptrget
+      00047C FE               [12]  862 	mov	r6,a
+      00047D A3               [24]  863 	inc	dptr
+      00047E 12r00r00         [24]  864 	lcall	__gptrget
+      000481 FF               [12]  865 	mov	r7,a
+      000482 8D 82            [24]  866 	mov	dpl,r5
+      000484 8E 83            [24]  867 	mov	dph,r6
+      000486 8F F0            [24]  868 	mov	b,r7
+      000488 12r00r00         [24]  869 	lcall	__gptrget
+      00048B FD               [12]  870 	mov	r5,a
+      00048C A3               [24]  871 	inc	dptr
+      00048D 12r00r00         [24]  872 	lcall	__gptrget
+      000490 FE               [12]  873 	mov	r6,a
+      000491 A3               [24]  874 	inc	dptr
+      000492 12r00r00         [24]  875 	lcall	__gptrget
+      000495 FF               [12]  876 	mov	r7,a
+      000496 C0 02            [24]  877 	push	ar2
+      000498 C0 03            [24]  878 	push	ar3
+      00049A C0 04            [24]  879 	push	ar4
+      00049C 8D 82            [24]  880 	mov	dpl,r5
+      00049E 8E 83            [24]  881 	mov	dph,r6
+      0004A0 8F F0            [24]  882 	mov	b,r7
+      0004A2 78r00            [12]  883 	mov	r0,#_list_remove
+      0004A4 79s00            [12]  884 	mov	r1,#(_list_remove >> 8)
+      0004A6 7As00            [12]  885 	mov	r2,#(_list_remove >> 16)
+      0004A8 12r00r00         [24]  886 	lcall	__sdcc_banked_call
+      0004AB 15 81            [12]  887 	dec	sp
+      0004AD 15 81            [12]  888 	dec	sp
+      0004AF 15 81            [12]  889 	dec	sp
+                                    890 ;	../../../../core/net/packetqueue.c:119: queuebuf_free(i->buf);
+      0004B1 A8 81            [24]  891 	mov	r0,sp
+      0004B3 18               [12]  892 	dec	r0
+      0004B4 18               [12]  893 	dec	r0
+      0004B5 74 03            [12]  894 	mov	a,#0x03
+      0004B7 26               [12]  895 	add	a,@r0
+      0004B8 FD               [12]  896 	mov	r5,a
+      0004B9 E4               [12]  897 	clr	a
+      0004BA 08               [12]  898 	inc	r0
+      0004BB 36               [12]  899 	addc	a,@r0
+      0004BC FE               [12]  900 	mov	r6,a
+      0004BD 08               [12]  901 	inc	r0
+      0004BE 86 07            [24]  902 	mov	ar7,@r0
+      0004C0 8D 82            [24]  903 	mov	dpl,r5
+      0004C2 8E 83            [24]  904 	mov	dph,r6
+      0004C4 8F F0            [24]  905 	mov	b,r7
+      0004C6 12r00r00         [24]  906 	lcall	__gptrget
+      0004C9 FD               [12]  907 	mov	r5,a
+      0004CA A3               [24]  908 	inc	dptr
+      0004CB 12r00r00         [24]  909 	lcall	__gptrget
+      0004CE FE               [12]  910 	mov	r6,a
+      0004CF A3               [24]  911 	inc	dptr
+      0004D0 12r00r00         [24]  912 	lcall	__gptrget
+      0004D3 FF               [12]  913 	mov	r7,a
+      0004D4 8D 82            [24]  914 	mov	dpl,r5
+      0004D6 8E 83            [24]  915 	mov	dph,r6
+      0004D8 8F F0            [24]  916 	mov	b,r7
+      0004DA 78r00            [12]  917 	mov	r0,#_queuebuf_free
+      0004DC 79s00            [12]  918 	mov	r1,#(_queuebuf_free >> 8)
+      0004DE 7As00            [12]  919 	mov	r2,#(_queuebuf_free >> 16)
+      0004E0 12r00r00         [24]  920 	lcall	__sdcc_banked_call
+                                    921 ;	../../../../core/net/packetqueue.c:120: ctimer_stop(&i->lifetimer);
+      0004E3 A8 81            [24]  922 	mov	r0,sp
+      0004E5 18               [12]  923 	dec	r0
+      0004E6 18               [12]  924 	dec	r0
+      0004E7 74 09            [12]  925 	mov	a,#0x09
+      0004E9 26               [12]  926 	add	a,@r0
+      0004EA FD               [12]  927 	mov	r5,a
+      0004EB E4               [12]  928 	clr	a
+      0004EC 08               [12]  929 	inc	r0
+      0004ED 36               [12]  930 	addc	a,@r0
+      0004EE FE               [12]  931 	mov	r6,a
+      0004EF 08               [12]  932 	inc	r0
+      0004F0 86 07            [24]  933 	mov	ar7,@r0
+      0004F2 8D 82            [24]  934 	mov	dpl,r5
+      0004F4 8E 83            [24]  935 	mov	dph,r6
+      0004F6 8F F0            [24]  936 	mov	b,r7
+      0004F8 78r00            [12]  937 	mov	r0,#_ctimer_stop
+      0004FA 79s00            [12]  938 	mov	r1,#(_ctimer_stop >> 8)
+      0004FC 7As00            [12]  939 	mov	r2,#(_ctimer_stop >> 16)
+      0004FE 12r00r00         [24]  940 	lcall	__sdcc_banked_call
+                                    941 ;	../../../../core/net/packetqueue.c:121: memb_free(q->memb, i);
+      000501 A8 81            [24]  942 	mov	r0,sp
+      000503 18               [12]  943 	dec	r0
+      000504 18               [12]  944 	dec	r0
+      000505 86 02            [24]  945 	mov	ar2,@r0
+      000507 08               [12]  946 	inc	r0
+      000508 86 03            [24]  947 	mov	ar3,@r0
+      00050A 08               [12]  948 	inc	r0
+      00050B 86 04            [24]  949 	mov	ar4,@r0
+      00050D E5 81            [12]  950 	mov	a,sp
+      00050F 24 FB            [12]  951 	add	a,#0xfb
+      000511 F8               [12]  952 	mov	r0,a
+      000512 74 03            [12]  953 	mov	a,#0x03
+      000514 26               [12]  954 	add	a,@r0
+      000515 FD               [12]  955 	mov	r5,a
+      000516 E4               [12]  956 	clr	a
+      000517 08               [12]  957 	inc	r0
+      000518 36               [12]  958 	addc	a,@r0
+      000519 FE               [12]  959 	mov	r6,a
+      00051A 08               [12]  960 	inc	r0
+      00051B 86 07            [24]  961 	mov	ar7,@r0
+      00051D 8D 82            [24]  962 	mov	dpl,r5
+      00051F 8E 83            [24]  963 	mov	dph,r6
+      000521 8F F0            [24]  964 	mov	b,r7
+      000523 12r00r00         [24]  965 	lcall	__gptrget
+      000526 FD               [12]  966 	mov	r5,a
+      000527 A3               [24]  967 	inc	dptr
+      000528 12r00r00         [24]  968 	lcall	__gptrget
+      00052B FE               [12]  969 	mov	r6,a
+      00052C A3               [24]  970 	inc	dptr
+      00052D 12r00r00         [24]  971 	lcall	__gptrget
+      000530 FF               [12]  972 	mov	r7,a
+      000531 C0 02            [24]  973 	push	ar2
+      000533 C0 03            [24]  974 	push	ar3
+      000535 C0 04            [24]  975 	push	ar4
+      000537 8D 82            [24]  976 	mov	dpl,r5
+      000539 8E 83            [24]  977 	mov	dph,r6
+      00053B 8F F0            [24]  978 	mov	b,r7
+      00053D 78r00            [12]  979 	mov	r0,#_memb_free
+      00053F 79s00            [12]  980 	mov	r1,#(_memb_free >> 8)
+      000541 7As00            [12]  981 	mov	r2,#(_memb_free >> 16)
+      000543 12r00r00         [24]  982 	lcall	__sdcc_banked_call
+      000546 15 81            [12]  983 	dec	sp
+      000548 15 81            [12]  984 	dec	sp
+      00054A 15 81            [12]  985 	dec	sp
+      00054C                        986 00103$:
+      00054C E5 81            [12]  987 	mov	a,sp
+      00054E 24 FA            [12]  988 	add	a,#0xFA
+      000550 F5 81            [12]  989 	mov	sp,a
+      000552 02r00r00         [24]  990 	ljmp	__sdcc_banked_ret
+                                    991 ;------------------------------------------------------------
+                                    992 ;Allocation info for local variables in function 'packetqueue_len'
+                                    993 ;------------------------------------------------------------
+                                    994 ;q                         Allocated to registers r5 r6 r7 
+                                    995 ;------------------------------------------------------------
+                                    996 ;	../../../../core/net/packetqueue.c:126: packetqueue_len(struct packetqueue *q)
+                                    997 ;	-----------------------------------------
+                                    998 ;	 function packetqueue_len
+                                    999 ;	-----------------------------------------
+      000555                       1000 _packetqueue_len:
+                                   1001 ;	../../../../core/net/packetqueue.c:128: return list_length(*q->list);
+      000555 12r00r00         [24] 1002 	lcall	__gptrget
+      000558 FD               [12] 1003 	mov	r5,a
+      000559 A3               [24] 1004 	inc	dptr
+      00055A 12r00r00         [24] 1005 	lcall	__gptrget
+      00055D FE               [12] 1006 	mov	r6,a
+      00055E A3               [24] 1007 	inc	dptr
+      00055F 12r00r00         [24] 1008 	lcall	__gptrget
+      000562 FF               [12] 1009 	mov	r7,a
+      000563 8D 82            [24] 1010 	mov	dpl,r5
+      000565 8E 83            [24] 1011 	mov	dph,r6
+      000567 8F F0            [24] 1012 	mov	b,r7
+      000569 12r00r00         [24] 1013 	lcall	__gptrget
+      00056C FD               [12] 1014 	mov	r5,a
+      00056D A3               [24] 1015 	inc	dptr
+      00056E 12r00r00         [24] 1016 	lcall	__gptrget
+      000571 FE               [12] 1017 	mov	r6,a
+      000572 A3               [24] 1018 	inc	dptr
+      000573 12r00r00         [24] 1019 	lcall	__gptrget
+      000576 FF               [12] 1020 	mov	r7,a
+      000577 8D 82            [24] 1021 	mov	dpl,r5
+      000579 8E 83            [24] 1022 	mov	dph,r6
+      00057B 8F F0            [24] 1023 	mov	b,r7
+      00057D 78r00            [12] 1024 	mov	r0,#_list_length
+      00057F 79s00            [12] 1025 	mov	r1,#(_list_length >> 8)
+      000581 7As00            [12] 1026 	mov	r2,#(_list_length >> 16)
+      000583 12r00r00         [24] 1027 	lcall	__sdcc_banked_call
+      000586 AE 82            [24] 1028 	mov	r6,dpl
+      000588 AF 83            [24] 1029 	mov  r7,dph
+      00058A 02r00r00         [24] 1030 	ljmp	__sdcc_banked_ret
+                                   1031 ;------------------------------------------------------------
+                                   1032 ;Allocation info for local variables in function 'packetqueue_queuebuf'
+                                   1033 ;------------------------------------------------------------
+                                   1034 ;i                         Allocated to registers r5 r6 r7 
+                                   1035 ;------------------------------------------------------------
+                                   1036 ;	../../../../core/net/packetqueue.c:132: packetqueue_queuebuf(struct packetqueue_item *i)
+                                   1037 ;	-----------------------------------------
+                                   1038 ;	 function packetqueue_queuebuf
+                                   1039 ;	-----------------------------------------
+      00058D                       1040 _packetqueue_queuebuf:
+      00058D AD 82            [24] 1041 	mov	r5,dpl
+      00058F AE 83            [24] 1042 	mov	r6,dph
+      000591 AF F0            [24] 1043 	mov	r7,b
+                                   1044 ;	../../../../core/net/packetqueue.c:134: if(i != NULL) {
+      000593 ED               [12] 1045 	mov	a,r5
+      000594 4E               [12] 1046 	orl	a,r6
+      000595 60 23            [24] 1047 	jz	00102$
+                                   1048 ;	../../../../core/net/packetqueue.c:135: return i->buf;
+      000597 74 03            [12] 1049 	mov	a,#0x03
+      000599 2D               [12] 1050 	add	a,r5
+      00059A FD               [12] 1051 	mov	r5,a
+      00059B E4               [12] 1052 	clr	a
+      00059C 3E               [12] 1053 	addc	a,r6
+      00059D FE               [12] 1054 	mov	r6,a
+      00059E 8D 82            [24] 1055 	mov	dpl,r5
+      0005A0 8E 83            [24] 1056 	mov	dph,r6
+      0005A2 8F F0            [24] 1057 	mov	b,r7
+      0005A4 12r00r00         [24] 1058 	lcall	__gptrget
+      0005A7 FD               [12] 1059 	mov	r5,a
+      0005A8 A3               [24] 1060 	inc	dptr
+      0005A9 12r00r00         [24] 1061 	lcall	__gptrget
+      0005AC FE               [12] 1062 	mov	r6,a
+      0005AD A3               [24] 1063 	inc	dptr
+      0005AE 12r00r00         [24] 1064 	lcall	__gptrget
+      0005B1 FF               [12] 1065 	mov	r7,a
+      0005B2 8D 82            [24] 1066 	mov	dpl,r5
+      0005B4 8E 83            [24] 1067 	mov	dph,r6
+      0005B6 8F F0            [24] 1068 	mov	b,r7
+      0005B8 80 06            [24] 1069 	sjmp	00104$
+      0005BA                       1070 00102$:
+                                   1071 ;	../../../../core/net/packetqueue.c:137: return NULL;
+      0005BA 90 00 00         [24] 1072 	mov	dptr,#0x0000
+      0005BD 75 F0 00         [24] 1073 	mov	b,#0x00
+      0005C0                       1074 00104$:
+      0005C0 02r00r00         [24] 1075 	ljmp	__sdcc_banked_ret
+                                   1076 ;------------------------------------------------------------
+                                   1077 ;Allocation info for local variables in function 'packetqueue_ptr'
+                                   1078 ;------------------------------------------------------------
+                                   1079 ;i                         Allocated to registers r5 r6 r7 
+                                   1080 ;------------------------------------------------------------
+                                   1081 ;	../../../../core/net/packetqueue.c:142: packetqueue_ptr(struct packetqueue_item *i)
+                                   1082 ;	-----------------------------------------
+                                   1083 ;	 function packetqueue_ptr
+                                   1084 ;	-----------------------------------------
+      0005C3                       1085 _packetqueue_ptr:
+      0005C3 AD 82            [24] 1086 	mov	r5,dpl
+      0005C5 AE 83            [24] 1087 	mov	r6,dph
+      0005C7 AF F0            [24] 1088 	mov	r7,b
+                                   1089 ;	../../../../core/net/packetqueue.c:144: if(i != NULL) {
+      0005C9 ED               [12] 1090 	mov	a,r5
+      0005CA 4E               [12] 1091 	orl	a,r6
+      0005CB 60 23            [24] 1092 	jz	00102$
+                                   1093 ;	../../../../core/net/packetqueue.c:145: return i->ptr;
+      0005CD 74 1F            [12] 1094 	mov	a,#0x1F
+      0005CF 2D               [12] 1095 	add	a,r5
+      0005D0 FD               [12] 1096 	mov	r5,a
+      0005D1 E4               [12] 1097 	clr	a
+      0005D2 3E               [12] 1098 	addc	a,r6
+      0005D3 FE               [12] 1099 	mov	r6,a
+      0005D4 8D 82            [24] 1100 	mov	dpl,r5
+      0005D6 8E 83            [24] 1101 	mov	dph,r6
+      0005D8 8F F0            [24] 1102 	mov	b,r7
+      0005DA 12r00r00         [24] 1103 	lcall	__gptrget
+      0005DD FD               [12] 1104 	mov	r5,a
+      0005DE A3               [24] 1105 	inc	dptr
+      0005DF 12r00r00         [24] 1106 	lcall	__gptrget
+      0005E2 FE               [12] 1107 	mov	r6,a
+      0005E3 A3               [24] 1108 	inc	dptr
+      0005E4 12r00r00         [24] 1109 	lcall	__gptrget
+      0005E7 FF               [12] 1110 	mov	r7,a
+      0005E8 8D 82            [24] 1111 	mov	dpl,r5
+      0005EA 8E 83            [24] 1112 	mov	dph,r6
+      0005EC 8F F0            [24] 1113 	mov	b,r7
+      0005EE 80 06            [24] 1114 	sjmp	00104$
+      0005F0                       1115 00102$:
+                                   1116 ;	../../../../core/net/packetqueue.c:147: return NULL;
+      0005F0 90 00 00         [24] 1117 	mov	dptr,#0x0000
+      0005F3 75 F0 00         [24] 1118 	mov	b,#0x00
+      0005F6                       1119 00104$:
+      0005F6 02r00r00         [24] 1120 	ljmp	__sdcc_banked_ret
+                                   1121 	.area CSEG    (CODE)
+                                   1122 	.area CONST   (CODE)
+                                   1123 	.area XINIT   (CODE)
+                                   1124 	.area CABS    (ABS,CODE)
